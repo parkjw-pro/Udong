@@ -3,14 +3,14 @@
     <!-- class="pb-5" -->
     <!-- <div id="nav">
       <router-link to="/">Home</router-link> 
-      <router-link to="/story">Newsfeed</router-link>
+      <router-link to="/story">GroupCreate</router-link>
     </div> -->
     <div v-if="!login">
         <Navbar/>
         <hr>
         <div>
           <!-- <Home /> -->
-          <NewsFeed />
+          <GroupProfile />
         </div>
     </div>
     <div v-else style="margin-top: 3%; margin-bottom: 3%;">
@@ -30,7 +30,7 @@ import Navbar from '@/components/app/Navbar'
 
 // 임시
 // import Location from '@/components/app/Location'
-import NewsFeed from '@/views/story/NewsFeed'
+import GroupProfile from '@/views/story/GroupProfile'
 
 import 'vue-select/dist/vue-select.css';
 
@@ -43,7 +43,7 @@ export default {
     Navbar,
 
     // Location,
-    NewsFeed
+    GroupProfile
   },
   data: function () {
     return {
