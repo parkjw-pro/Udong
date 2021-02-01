@@ -21,11 +21,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.udong.dto.UserDto;
 import com.ssafy.udong.service.JwtService;
-import com.ssafy.udong.service.SecurityUtil;
 import com.ssafy.udong.service.UserService;
 
 import io.swagger.annotations.Api;
@@ -54,10 +54,9 @@ public class UserController {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
 		try {
-			// userDto.setUserId("ssafy");
-			// userDto.setPassword("ssafy");
+			System.out.println(userDto.getUserId());
+			System.out.println(userDto.getPassword());
 			UserDto loginUser = userService.login(userDto);
-//			System.out.println(loginUser.getUserId());
 			if (loginUser != null) {
 				// jwt.io에서 확인
 				// 로그인 성공했다면 토큰을 생성한다.
@@ -77,7 +76,7 @@ public class UserController {
 
 			} else {
 				resultMap.put("message", "로그인 실패");
-				status = HttpStatus.ACCEPTED;
+				status = HttpStatus.INTERNAL_SERVER_ERROR;
 			}
 		} catch (Exception e) {
 			logger.error("로그인 실패 : {}", e);
@@ -146,12 +145,15 @@ public class UserController {
 	}
 
 	@ApiOperation(value = "비밀번호 찾기", notes = "사용자가 비밀번호를 분실하였을 경우, 개인정보 확인 후 재설정을 위한 인증코드를 발송합니다.")
-	@GetMapping("/password/{userId}/{email}")
-	public ResponseEntity<UserDto> selectUser(@PathVariable String userId, @PathVariable String email) throws Exception {
-		UserDto resultDto = userService.selectUser(userId, email);
+	@GetMapping("/password")
+	public ResponseEntity<UserDto> selectUser(@RequestParam(value="userId") String userId,@RequestParam(value="email") String email) throws Exception {
+		UserDto userDto = new UserDto();
+		userDto.setUserId(userId);
+		userDto.setEmail(email);
+		UserDto resultDto = userService.selectUser(userDto);
 
 		if (resultDto != null) {// 아이디 비밀번호가있으면 ok
-			userService.gmailSend(email); // 인증코드전송
+			userService.gmailSend(userDto.getEmail()); // 인증코드전송
 			return new ResponseEntity<UserDto>(resultDto, HttpStatus.OK);
 		} else { // 아이디비밀번호가없으면 fail
 			return new ResponseEntity<UserDto>(resultDto, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -220,9 +222,9 @@ public class UserController {
 	}
 
 	@ApiOperation(value = "인증 메일 일치 확인", notes = "인증을 위해 발송한 이메일 코드가 알맞는지 확인합니다.")
-	@PostMapping("/email/code")
-	public ResponseEntity<String> checkDuplicateEmail(@RequestBody String checkCode) throws Exception {
-		int result = userService.gmailCheck(checkCode);
+	@PostMapping("/email/{code}")
+	public ResponseEntity<String> checkDuplicateEmail(@PathVariable String code) throws Exception {
+		int result = userService.gmailCheck(code);
 		if (result == SUCCESS) { // 코드가 일치하면
 			return new ResponseEntity<String>("인증 완료.", HttpStatus.OK);
 		} else { // 코드가 불일치하면

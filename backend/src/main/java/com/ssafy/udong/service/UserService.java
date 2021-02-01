@@ -17,7 +17,7 @@ public interface UserService {
 	public int updateUser(UserDto userDto) throws Exception;
 
 	// 비밀번호 찾기 (부분 유저 조회)
-	public UserDto selectUser(String userid,String email) throws Exception;
+	public UserDto selectUser(UserDto userDto) throws Exception;
 	public int updatePassword(UserDto userDto)throws Exception;
 	//전체 유저 조회
 	public List<UserDto> selectUserAll() throws Exception;

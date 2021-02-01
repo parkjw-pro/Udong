@@ -35,5 +35,7 @@ public interface ClubService {
 	public List<ClubDto> selectAllClubMemberByUserId(String userId);
 
 	public List<ClubDto> selectAllClubMemberWaitingByUserId(String userId);
+
+	public String selectDuplicateClubName(String clubname);
 	
 }

@@ -54,4 +54,6 @@ public interface ClubDao {
 
 	List<String> SelectFileUrl(String id);
 
+	String selectDuplicateClubName(String clubname);
+
 }

@@ -283,4 +283,14 @@ public class ClubServiceImpl implements ClubService {
 		}
 	}
 
+	@Override
+	public String selectDuplicateClubName(String clubname) {
+		try {
+			return clubDao.selectDuplicateClubName(clubname);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 }

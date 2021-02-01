@@ -36,11 +36,17 @@ public class UserServiceImpl implements UserService {
 	public UserDto login(UserDto userDto) throws Exception {
 		try {
 			//return sqlSession.getMapper(UserDao.class).login(userDto);
-			if(dao.login(userDto).getUserState().equals("1")) {
-
+			UserDto dto = new UserDto();
+			SecurityUtil securityUtil = new SecurityUtil();
+			userDto.setPassword(securityUtil.encryptSHA256(userDto.getPassword()));
+			System.out.println(userDto.getPassword());
+			dto = dao.login(userDto);
+			if( dto.getUserState() == null) { // 정지상태
+				return dto;
+			}else {
 				return null;
-			}	
-			return dao.login(userDto);
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -59,11 +65,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserDto selectUser(String userId , String email) throws Exception {
+	public UserDto selectUser(UserDto userDto) throws Exception {
 		try {
-			UserDto userDto = new UserDto();
-			userDto.setUserId(userId);
-			userDto.setEmail(email);
+			
 			return dao.selectUser(userDto);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -87,6 +91,9 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int insertUser(UserDto userDto) throws Exception {
 		try {
+			SecurityUtil securityUtil = new SecurityUtil();
+			userDto.setPassword(securityUtil.encryptSHA256(userDto.getPassword()));
+
 			return dao.insertUser(userDto);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -96,7 +103,11 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public int updateUser(UserDto userDto) throws Exception {
+		
 		try {
+			SecurityUtil securityUtil = new SecurityUtil();
+			userDto.setPassword(securityUtil.encryptSHA256(userDto.getPassword()));
+
 			return dao.updateUser(userDto);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -142,7 +153,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void gmailSend(String email) throws Exception{
 		String user = "youngug159@gmail.com"; // 네이버일 경우 네이버 계정, gmail경우 gmail 계정
-		String password = "qazWSX159";   // 패스워드
+		String password = "d1n7qkqh12";   // 패스워드
 
 		// SMTP 서버 정보를 설정한다.
 		Properties prop = new Properties();
@@ -189,7 +200,7 @@ public class UserServiceImpl implements UserService {
 	public int gmailCheck(String checkCode) throws Exception {
 		//	this.code = "a";
 		try {
-			if(checkCode.equals(this.code)) {
+			if(checkCode.equals(this	.code)) {
 				return 1;
 			}else {
 				return 0;
