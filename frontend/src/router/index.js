@@ -7,28 +7,41 @@ import NewsFeed from '@/views/story/NewsFeed.vue'
 import Signup from '@/views/account/Signup.vue'
 import FindPassword from '@/views/account/FindPassword.vue'
 import FindLocation from '@/views/app/FindLocation.vue'
+<<<<<<< HEAD
+import Admin from '@/views/account/Admin.vue'
+=======
 import GroupPage from '@/views/story/GroupPage'
 
+>>>>>>> fa3ecb4ad4ba0f0c296db7d1ec937c652d650332
 Vue.use(VueRouter)
 
+// https://router.vuejs.org/kr/guide/advanced/navigation-guards.html
+const requireAuth = () => (to, from, next) => {
+  const nextRoute = to.path;
+
+  if (store.getters.getAccessToken | localStorage.getItem('Login-token') != undefined) {
+    return next();
+  } else next("/login" + nextRoute);
+};
+
 const routes = [
-  // {
-  //   path: '/',
-  //   name: 'Home',
-  //   component: Home
-  // },
   // {
   //   path: '/about',
   //   name: 'About',
   //   component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   // },
   {
-    path: '',
+    path: '/home',
     name: 'Home',
     component: Home,
   },
   {
-    path: '/user/login',
+    path: '/account/admin',
+    name: 'Admin',
+    component: Admin,
+  },
+  {
+    path: '/',
     name: 'Login',
     component: Login,
   },
