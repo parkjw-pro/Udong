@@ -1,9 +1,10 @@
 <template>
 <div id="app" class="pb-5">
     <div v-if="login">
-     <Navbar/>
+      <Navbar/>
+      <AccountDetail/>
     </div>
-     <router-view><router-view/>   
+     <!-- <router-view><router-view/>    -->
   </div>
 </template>
 
@@ -14,7 +15,7 @@
 
 // 임시
 // import Location from '@/components/app/Location'
-
+import AccountDetail from '@/views/account/AccountDetail'
 import 'vue-select/dist/vue-select.css';
 
 
@@ -26,6 +27,7 @@ export default {
      Navbar,
 
     // Location,
+    AccountDetail,
   },
   data: function () {
     return {

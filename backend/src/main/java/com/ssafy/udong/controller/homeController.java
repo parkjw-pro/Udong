@@ -6,20 +6,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class homeController {
-
-<<<<<<< HEAD
 	
-	@GetMapping(value = "/")
-	public String login() {
-		return "index.html";
+	@GetMapping(value = "/group/update")
+	public String groupUpdate( ) {
+			return "index.html";
 	}
-=======
+	
 	@GetMapping(value = "/")
 	public String home( ) {
 			return "index.html";
 	}
-
->>>>>>> user
+	
+	@GetMapping(value = "/home")
+	public String asd( ) {
+			return "index.html";
+	}
+	
 	@GetMapping(value = "/story")
 	public String index() {
 		return "index.html";

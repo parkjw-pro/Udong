@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 import Home from '@/views/app/Home'
 import Login from '@/views/account/Login.vue'
 import NewsFeed from '@/views/story/NewsFeed.vue'
+import GroupUpdate from '@/views/story/GroupUpdate.vue'
 import Signup from '@/views/account/Signup.vue'
 import FindPassword from '@/views/account/FindPassword.vue'
 import FindLocation from '@/views/app/FindLocation.vue'
@@ -12,13 +13,13 @@ import Admin from '@/views/account/Admin.vue'
 Vue.use(VueRouter)
 
 // https://router.vuejs.org/kr/guide/advanced/navigation-guards.html
-const requireAuth = () => (to, from, next) => {
-  const nextRoute = to.path;
+// const requireAuth = () => (to, from, next) => {
+//   const nextRoute = to.path;
 
-  if (store.getters.getAccessToken | localStorage.getItem('Login-token') != undefined) {
-    return next();
-  } else next("/login" + nextRoute);
-};
+//   if (store.getters.getAccessToken | localStorage.getItem('Login-token') != undefined) {
+//     return next();
+//   } else next("/login" + nextRoute);
+// };
 
 const routes = [
   // {
@@ -61,6 +62,11 @@ const routes = [
     name: 'FindLocation',
     component: FindLocation,
   },
+  {
+    path: '/group/update',
+    name: 'GroupUpdate',
+    component: GroupUpdate,
+  }
 ]
 
 const router = new VueRouter({
