@@ -1,36 +1,25 @@
 <template>
-  <div id="app" class="pb-5">  
-    <!-- class="pb-5" -->
-    <!-- <div id="nav">
-      <router-link to="/">Home</router-link> 
-      <router-link to="/story">Newsfeed</router-link>
-    </div> -->
-    <div v-if="!login">
-        <Navbar/>
-        <hr>
-        <div>
-          <!-- <Home /> -->
-          <NewsFeed />
-        </div>
+  <div id="app" class="pb-5">
+    <div v-if="login">
+     <Navbar/>
     </div>
-    <div v-else style="margin-top: 3%; margin-bottom: 3%;">
-      <!-- <Location /> -->
-      <Login />
-    </div>
-    <!-- <routser-view></router-view> -->
-    <!-- 아래의 코드도 로그인 페이지를 보여준다. -->
-    <!-- <router-view class="container" @login="login = true" :login="login"/> -->
+     <router-view><router-view/>   
+ 
+    
+    
   </div>
 </template>
 
 <script>
 // import Home from '@/views/app/Home'
-import Login from '@/views/account/Login'
-import Navbar from '@/components/app/Navbar'
+// import Login from '@/views/account/Login'
+ import Navbar from '@/components/app/Navbar'
 
 // 임시
 // import Location from '@/components/app/Location'
-import NewsFeed from '@/views/story/NewsFeed'
+// import GroupProfile from '@/views/story/GroupProfile'
+// import ArticleDetail from '@/views/story/ArticleDetail'
+//import MyFeed from '@/views/story/MyFeed'
 
 import 'vue-select/dist/vue-select.css';
 
@@ -39,11 +28,13 @@ export default {
   name: 'App',
   components: {
     // Home,
-    Login,
-    Navbar,
+    // Login,
+     Navbar,
 
     // Location,
-    NewsFeed
+    // GroupProfile,
+    // ArticleDetail,
+   // MyFeed
   },
   data: function () {
     return {
@@ -52,16 +43,19 @@ export default {
   },
   methods: {
     logout: function () {
-      localStorage.removeItem('jwt')  // localStorage에서 JWT 받아오기
+      localStorage.removeItem('jwt')  // localStorage에서 JWT 지우기
       this.login = false
       // this.$router.push({ name: 'Login' })
     }
   },
-  created: function () {
-    const token = localStorage.removeItem('jwt')  // localStorage에서 JWT 받아오기
-    if (token && !this.login) {
+  
+  created(){
+    console.log(localStorage.getItem('auth-token'));  // localStorage에서 JWT 받아오기
+    console.log(this.login)
+    if (localStorage.getItem('auth-token') != undefined) {
         this.login = true
     }
+     console.log(this.login)
   }
 }
 </script>
