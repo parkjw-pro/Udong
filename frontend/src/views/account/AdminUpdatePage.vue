@@ -12,7 +12,6 @@
             <!-- 여기 placeholder에 데이터 값 bind로 넣어주기 -->
             <!-- v-model도 입력해주기 -->
             <b-form-input
-            v-model=""
             class="font-weight-bold"
             :placeholder="club.clubName"
           ></b-form-input>
@@ -20,7 +19,7 @@
         </b-row>
       </b-col>
       <b-button block style="background-color: #695549" @click="update">수정하기</b-button>
-      <b-button block variant="danger" @click="delete">삭제하기</b-button>
+      <b-button block variant="danger" @click="deleteData">삭제하기</b-button>
     </div>
   <!-- </div> -->
 </template>
@@ -32,12 +31,12 @@ export default {
 
   },
   data: function () {
-    retunr {
+    return {
 
     }
   },
   methods: {
-    delete: function () {
+    deleteData: function () {
 
     },
     update: function () {

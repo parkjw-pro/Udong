@@ -1,12 +1,12 @@
 <template>
   <div id="box">
     <b-button block style="background-color: #695549" @click="toGroupArticle">추가하기</b-button>
-    <div v-for="unit in data">
+    <!-- <div v-for="unit in data"> -->
       <b-row>
         <b-col><div>{{ unit }}</div></b-col>
         <b-button block style="background-color: #695549" @click="toUpdate">수정하기</b-button>
       </b-row>
-    </div>
+    <!-- </div> -->
     <!-- <b-table striped hover :items="items" :fields="fields"></b-table> -->
   </div>
 </template>
