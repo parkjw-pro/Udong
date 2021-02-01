@@ -9,6 +9,7 @@ import FindPassword from '@/views/account/FindPassword.vue'
 import FindLocation from '@/views/app/FindLocation.vue'
 import Admin from '@/views/account/Admin.vue'
 import GroupPage from '@/views/story/GroupPage'
+import Badge from '@/views/app/Badge.vue'
 
 Vue.use(VueRouter)
 
@@ -66,6 +67,11 @@ const routes = [
     path: '/club',
     name: 'GroupPage',
     component: GroupPage,
+  },
+  {
+    path: '/badge',
+    name: 'Badge',
+    component: Badge,
   },
 ]
 

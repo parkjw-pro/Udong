@@ -11,7 +11,11 @@ public class homeController {
 	public String asd( ) {
 			return "index.html";
 	}
-
+	
+	@GetMapping(value = "/badge")
+	public String asdf( ) {
+			return "index.html";
+	}
 	
 	@GetMapping(value = "/")
 	public String home( ) {
