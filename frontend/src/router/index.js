@@ -9,6 +9,8 @@ import Signup from '@/views/account/Signup.vue'
 import FindPassword from '@/views/account/FindPassword.vue'
 import FindLocation from '@/views/app/FindLocation.vue'
 import Admin from '@/views/account/Admin.vue'
+import ReviewHome from '@/views/review/ReviewHome'
+
 
 Vue.use(VueRouter)
 
@@ -66,7 +68,12 @@ const routes = [
     path: '/group/update',
     name: 'GroupUpdate',
     component: GroupUpdate,
-  }
+  },
+  {
+    path: '/review',
+    name: 'ReviewHome',
+    component: ReviewHome,
+  },
 ]
 
 const router = new VueRouter({

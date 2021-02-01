@@ -21,44 +21,43 @@
     
     <!-- 2. 햄버거메뉴 -->
     <component :is="currentMenu" :right="side === 'right' ? true: false" >
-        <div class="pl-0" id="menu_options">
-          <span><a href=""><Profile2 /></a></span>
-          <span >
-            이송영님
-            <br>
-            안녕하세요!
-          </span>
-        </div>
-        <br>
+        <b-row class="pl-0" id="option_v2">
+          <b-col><a href=""><Profile2 style="width: 60%;" /></a></b-col>
+          <b-col>
+            <b-row>이송영님</b-row>
+            <b-row>안녕하세요!</b-row>
+          </b-col>
+        </b-row>
         <hr>
-        <a href="#" class="pl-0">
+        <b-row id="option_v1" class="pl-0" @click="toReview">
             <!-- <i class="fas fa-book-open"></i> -->
-            <span id="menu_options">우리동네 리뷰</span>
-        </a>
-        <a href="#" class="pl-0">
+            <b-col id="option_v2">우리동네 리뷰</b-col>
+        </b-row>
+        <b-row id="option_v1" class="pl-0" @click="toNews">
             <!-- <i class="far fa-newspaper"></i> -->
-            <span id="menu_options" style="">우리동네 소식</span>
-        </a>
-        <!-- <router-link :to="{ name: 'NewsFeed' }" class="text-white"><p class="h5 mt-4" id="menu_options">뉴스피드</p></router-link> -->
-        <a href="#" @click="toStory" class="pl-0">
+            <b-col id="option_v2" style="">우리동네 소식</b-col>
+        </b-row>
+        <!-- <router-link :to="{ name: 'NewsFeed' }" class="text-white"><p class="h5 mt-4" id="option_v2">뉴스피드</p></router-link> -->
+        <b-row id="option_v1" class="pl-0" @click="toStory">
             <!-- <i class="fas fa-globe-americas"></i> -->
-            <span id="menu_options">우리동네 이야기</span>
-        </a>
-        <a href="#" class="pl-0">
+            <b-col id="option_v2">우리동네 이야기</b-col>
+        </b-row>
+        <b-row id="option_v1" class="pl-0" @click="toMyfeed">
             <!-- <i class="fas fa-star"></i> -->
-            <span id="menu_options">내 피드</span>
-        </a>
-        <a href="#" class="pl-0">
+            <b-col id="option_v2">내 피드</b-col>
+        </b-row>
+        <b-row id="option_v1" class="pl-0" @click="arrowToggle()" align-h="justify">
             <!-- <i class="fas fa-cog"></i> -->
-            <span id="menu_options">설정</span>
+            <b-col id="option_v2">설정</b-col>
+            <b-col>
+              <b-icon v-if="!toggle" icon="chevron-down" variant="dark"></b-icon>
+              <b-icon v-else icon="chevron-up" variant="dark"></b-icon>
+            </b-col>
             <!-- dropdown 표시하기 -->
-            <!-- <span>
-              <b-nav-item-dropdown text="설정" right>
-                <b-dropdown-item href="#">Account</b-dropdown-item>
-                <b-dropdown-item href="#">Settings</b-dropdown-item>
-              </b-nav-item-dropdown>
-            </span> -->
-        </a>
+        </b-row>
+        <b-col v-if="toggle" class="small" id="option_v3" @click="toAccountDetail">개인정보</b-col>
+        <b-col v-if="toggle" class="small" id="option_v3" @click="logout">로그아웃</b-col>
+        <b-col v-if="toggle" class="small" id="option_v3" @click="toDevelopers">개발진</b-col>
     </component>
   </div>
 </template>
@@ -80,12 +79,39 @@ export default {
   data: function () {
     return {
       side: 'right',
-      currentMenu: 'slide'
+      currentMenu: 'slide',
+      isToggled: false,
+    }
+  },
+  computed: {
+    toggle: function () {
+      return this.isToggled
     }
   },
   methods: {
+    toReview: function () {
+      this.$router.push({name: 'ReviewHome'})
+    },
+    toNews: function () {
+      // this.$router.push({name: 'News'})
+    },
     toStory: function () {
       this.$router.push({name: 'NewsFeed'})
+    },
+    toMyfeed: function () {
+      this.$router.push({name: 'MyFeed'})
+    },
+    toAccountDetail: function () {
+      this.$router.push({name: 'AccountDetail'})
+    },
+    logout: function () {
+
+    },
+    toDevelopers: function () {
+
+    },
+    arrowToggle() {
+      this.isToggled = !this.isToggled;
     }
   },
 }
@@ -96,23 +122,35 @@ export default {
       height: 100%;
     }
 
+    #option_v1 {
+      cursor: pointer;
+    }
+
     // 햄버거 메뉴 글자
-    #menu_options {
+    #option_v2 {
       color: #666666;
       // overflow-x: hidden;
       white-space: pre;
+      font-weight: bold;
+      text-align: left;
+    }
+
+    #option_v3 {
+      text-align: left;
+      color: #666666;
+      cursor: pointer;
     }
 
     // 햄버거 메뉴 항목 색상
-    a {
-      color: #4e4a46;
-      text-decoration: none;
+    // a {
+    //   color: #4e4a46;
+    //   text-decoration: none;
 
-      &:hover,
-      &:focus {
-        color: #c94e50;
-      }
-    }
+    //   &:hover,
+    //   &:focus {
+    //     color: #c94e50;
+    //   }
+    // }
 
     //
     // Burger menu custom styles
@@ -142,15 +180,15 @@ export default {
     .bm-menu {
       background: #ffffff;
 
-      a {
-        color: #b8b7ad;
-        text-decoration: none;
-        &:hover,
-        &:focus {
-          // on_cursor 메뉴 색상 변화
-          // color: #c94e50;
-          color: black;
-        }
-      }
+      // a {
+      //   color: #b8b7ad;
+      //   text-decoration: none;
+      //   &:hover,
+      //   &:focus {
+      //     // on_cursor 메뉴 색상 변화
+      //     // color: #c94e50;
+      //     color: black;
+      //   }
+      // }
     }
 </style>

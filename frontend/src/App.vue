@@ -2,7 +2,7 @@
 <div id="app" class="pb-5">
     <div v-if="login">
       <Navbar/>
-      <Admin/>
+      <GetStore/>
     </div>
      <!-- <router-view><router-view/>    -->
   </div>
@@ -15,7 +15,7 @@
 
 // 임시
 // import Location from '@/components/app/Location'
-import Admin from '@/views/account/Admin'
+import GetStore from '@/views/review/GetStore'
 import 'vue-select/dist/vue-select.css';
 
 
@@ -27,7 +27,7 @@ export default {
      Navbar,
 
     // Location,
-    Admin,
+    GetStore,
   },
   data: function () {
     return {
@@ -92,7 +92,7 @@ export default {
 #box {
   display: block;
   width: 50%;
-  height: 50%;
+  /* height: 50%; */
   position: absolute;
   left: 25%;
   margin-top: 5%;

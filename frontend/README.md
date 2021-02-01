@@ -29,6 +29,7 @@ npm install packery
 npm install --save vue-packery-draggabilly-plugin
 npm install jquery
 npm install mint-ui -S
+npm install mdbvue
 ```
 
 ### 폴더 구조
