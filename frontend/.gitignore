@@ -2,7 +2,7 @@
 # Created by https://www.toptal.com/developers/gitignore/api/java,vue,vuejs,vscode,node
 # Edit at https://www.toptal.com/developers/gitignore?templates=java,vue,vuejs,vscode,node
 
-vue.config.js
+#vue.config.js
 
 ### Java ###
 # Compiled class file

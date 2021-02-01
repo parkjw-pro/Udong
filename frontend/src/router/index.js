@@ -1,13 +1,18 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-// 추가한 router(ABC순 정렬)
-import Home from '@/views/app/Home'
-import Login from '@/views/account/Login.vue'
-import NewsFeed from '@/views/story/NewsFeed.vue'
-import Signup from '@/views/account/Signup.vue'
-import FindPassword from '@/views/account/FindPassword.vue'
-import FindLocation from '@/views/app/FindLocation.vue'
+// 추가한 router(기능별 정렬)
 import Admin from '@/views/account/Admin.vue'
+import Signup from '@/views/account/Signup.vue'
+import Login from '@/views/account/Login.vue'
+import FindPassword from '@/views/account/FindPassword.vue'
+import Account
+import Home from '@/views/app/Home'
+
+import NewsFeed from '@/views/story/NewsFeed.vue'
+
+
+import FindLocation from '@/views/app/FindLocation.vue'
+
 import GroupPage from '@/views/story/GroupPage'
 
 Vue.use(VueRouter)
