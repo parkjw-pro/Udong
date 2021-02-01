@@ -7,11 +7,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class homeController {
 
+<<<<<<< HEAD
 	
 	@GetMapping(value = "/")
 	public String login() {
 		return "index.html";
 	}
+=======
+	@GetMapping(value = "/")
+	public String home( ) {
+			return "index.html";
+	}
+
+>>>>>>> user
 	@GetMapping(value = "/story")
 	public String index() {
 		return "index.html";
