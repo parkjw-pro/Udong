@@ -7,12 +7,7 @@ import NewsFeed from '@/views/story/NewsFeed.vue'
 import Signup from '@/views/account/Signup.vue'
 import FindPassword from '@/views/account/FindPassword.vue'
 import FindLocation from '@/views/app/FindLocation.vue'
-<<<<<<< HEAD
 import Admin from '@/views/account/Admin.vue'
-=======
-import GroupPage from '@/views/story/GroupPage'
-
->>>>>>> fa3ecb4ad4ba0f0c296db7d1ec937c652d650332
 Vue.use(VueRouter)
 
 // https://router.vuejs.org/kr/guide/advanced/navigation-guards.html
@@ -64,11 +59,6 @@ const routes = [
     path: '/location',
     name: 'FindLocation',
     component: FindLocation,
-  },
-  {
-    path: '/club',
-    name: 'GroupPage',
-    component: GroupPage,
   },
 ]
 
