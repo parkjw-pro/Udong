@@ -67,6 +67,17 @@ public class ClubController {
 		}
 		return new ResponseEntity<String>("FAILURE: club creation", HttpStatus.INTERNAL_SERVER_ERROR);
 	}
+	
+	@ApiOperation(value = "아이디 중복 확인", notes = "회원가입 시 입력한 아이디가 기존회원의 아이디와 중복인지 확인합니다.")
+	@GetMapping("/{clubname}")
+	public ResponseEntity<String> selectDuplicateClubName(@PathVariable String clubname) throws Exception {
+		String result = clubService.selectDuplicateClubName(clubname);
+		if (result != null) {
+			return new ResponseEntity<String>("현재 사용중인 그룹명입니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+		} else {
+			return new ResponseEntity<String>("사용 가능한 그룹명입니다.", HttpStatus.OK);
+		}
+	}
 
 	@ApiOperation(value = "그룹 정보 조회", notes = "그룹 정보를 조회합니다.")
 	@GetMapping("/{clubId}")

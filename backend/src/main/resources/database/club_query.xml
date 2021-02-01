@@ -137,4 +137,13 @@
 		where m.user_id = #{userId} and m.club_id = c.club_id;
 	</select>
 	
+	
+	
+		<select id="selectDuplicateClubName"
+		parameterType="String" resultType="String">
+		SELECT  club_name as clubName
+		FROM club
+		WHERE club_name = #{clubName}
+	</select>
+	
 </mapper>
