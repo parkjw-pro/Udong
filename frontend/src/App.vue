@@ -2,7 +2,7 @@
 <div id="app" class="pb-5">
     <div v-if="login">
       <Navbar/>
-      <AccountDetail/>
+      <Admin/>
     </div>
      <!-- <router-view><router-view/>    -->
   </div>
@@ -15,7 +15,7 @@
 
 // 임시
 // import Location from '@/components/app/Location'
-import AccountDetail from '@/views/account/AccountDetail'
+import Admin from '@/views/account/Admin'
 import 'vue-select/dist/vue-select.css';
 
 
@@ -27,7 +27,7 @@ export default {
      Navbar,
 
     // Location,
-    AccountDetail,
+    Admin,
   },
   data: function () {
     return {
