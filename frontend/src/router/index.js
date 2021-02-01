@@ -8,6 +8,8 @@ import Signup from '@/views/account/Signup.vue'
 import FindPassword from '@/views/account/FindPassword.vue'
 import FindLocation from '@/views/app/FindLocation.vue'
 import Admin from '@/views/account/Admin.vue'
+import GroupPage from '@/views/story/GroupPage'
+
 Vue.use(VueRouter)
 
 // https://router.vuejs.org/kr/guide/advanced/navigation-guards.html
