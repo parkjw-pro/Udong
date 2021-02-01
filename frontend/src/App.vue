@@ -1,22 +1,9 @@
 <template>
-  <div id="app" class="pb-5">  
-    <!-- class="pb-5" -->
-    <!-- <div id="nav">
-      <router-link to="/">Home</router-link> 
-      <router-link to="/story">GroupCreate</router-link>
-    </div> -->
-    <div v-if="!login">
-        <Navbar/>
-        <hr>
-        <div>
-          <!-- <Home /> -->
-          <GroupProfile />
-        </div>
+<div id="app" class="pb-5">
+    <div v-if="login">
+     <Navbar/>
     </div>
      <router-view><router-view/>   
- 
-    
-    
   </div>
 </template>
 
@@ -27,7 +14,6 @@
 
 // 임시
 // import Location from '@/components/app/Location'
-import GroupProfile from '@/views/story/GroupProfile'
 
 import 'vue-select/dist/vue-select.css';
 
@@ -40,7 +26,6 @@ export default {
      Navbar,
 
     // Location,
-    GroupProfile
   },
   data: function () {
     return {
