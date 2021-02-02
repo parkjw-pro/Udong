@@ -44,7 +44,6 @@ export default new Vuex.Store({
     }
   },
 
-
   actions: {
     LOGIN(context, user) {
       localStorage.clear();
@@ -58,36 +57,36 @@ export default new Vuex.Store({
           //localStorage.setItem("auth-token",${response.data["auth-token"]});
           axios.defaults.headers.common["auth-token"] = localStorage.getItem('auth-token');
 
-          if (localStorage.getItem('Login-token') == undefined) {
-            localStorage.setItem('Login-token', JSON.stringify(response.data));
-          }
+      if (localStorage.getItem('Login-token') == undefined) {
+        localStorage.setItem('Login-token', JSON.stringify(response.data));
+      }
 
-          axios
-            .get('/user')
-            .then((response) => {
-              console.log("axios login info");
-              localStorage.setItem('Info-token', JSON.stringify(response.data.user));
-              window.location.href = "/location";
-            })
-            .catch(() => {
-              localStorage.clear();
-              window.location.href = "/";
-              alert("로그인 실패 아이디및 비밀번호 확인 부탁드립니다.");
-            });
-
+      axios
+        .get('/user')
+        .then((response) => {
+          console.log("axios login info");
+          localStorage.setItem('Info-token', JSON.stringify(response.data.user));
+          window.location.href = "/location";
         })
         .catch(() => {
           localStorage.clear();
           window.location.href = "/";
           alert("로그인 실패 아이디및 비밀번호 확인 부탁드립니다.");
         });
-    },
-    LOGOUT(context) {
-      context.commit("LOGOUT");
-      axios.defaults.headers.common["auth-token"] = undefined;
+
+    })
+    .catch(() => {
       localStorage.clear();
-      //window.location.reload();
       window.location.href = "/";
-    }
+      alert("로그인 실패 아이디및 비밀번호 확인 부탁드립니다.");
+    });
+},
+LOGOUT(context) {
+  context.commit("LOGOUT");
+  axios.defaults.headers.common["auth-token"] = undefined;
+  localStorage.clear();
+  //window.location.reload();
+  window.location.href = "/";
+}
   },
 })

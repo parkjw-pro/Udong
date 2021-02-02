@@ -66,7 +66,10 @@
     <div id="group_profile_buttons">
       <!-- <b-button class="mx-3" variant="danger">그룹삭제</b-button> -->
       <!-- 1. v-if 가입되어 있으면 -->
-      <b-button v-if="isJoin" class="mx-3" variant="info" @click="getMemberList">회원조회</b-button>
+      <div v-if="isJoin">
+        <b-button class="mx-3" variant="danger" @click="leaveGroup">그룹탈퇴</b-button>
+        <b-button class="mx-3" variant="info" @click="toMemberList">회원조회</b-button>
+      </div>
       <!-- 2. v-else (가입이 안 되어 있으면) -->
       <b-button v-else class="mx-3" type="submit" variant="info" @click="joinGroup">가입하기</b-button>
     </div>
@@ -106,7 +109,7 @@ export default {
     }
   },
   methods: {
-    getMemberList: function () {
+    toMemberList: function () {
       // props 받아온 clubId를 뒤에 넣어준다.
       // this.$router.push({name: 'GroupMemberList', clubId })
     },
@@ -116,6 +119,16 @@ export default {
       axios.post("/club/member", this.user, config)
       .then(() => {
         this.$router.push({name: 'GroupPage', query: {club: this.club}})
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    },
+    leaveGroup: function () {
+      const config = this.getToken()
+      axios.delete("/club/member", this.user, config)
+      .then(() => {
+        this.$router.push({name: 'NewsFeed'})
       })
       .catch((err) => {
         console.log(err)

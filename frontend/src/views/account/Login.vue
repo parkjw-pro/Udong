@@ -65,7 +65,7 @@ export default {
 </script>
 
 <style>
-input[type="password"] {
+input[type="password"] {  
   font:small-caption;font-size:16px;
 }
 ::placeholder {
