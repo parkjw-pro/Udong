@@ -43,6 +43,7 @@
 import axios from 'axios'
 
 export default {
+  
   name: 'Admin',
   data: function () {
     return {
