@@ -119,9 +119,13 @@ export default {
       this.$router.push({name: 'AccountDetail'})
     },
     logout: function () {
-      localStorage.removeItem('jwt')  // localStorage에서 JWT 지우기
-      this.$store.state.isLogin=false
-      this.$router.push({name: 'Login'})
+       this.$store
+        .dispatch("LOGOUT")
+        .then(
+          this.$router.push({name: 'Login'})
+        )
+      // localStorage.removeItem('jwt')  // localStorage에서 JWT 지우기
+      // this.$router.push({name: 'Login'})
     },
     toDevelopers: function () {
       this.$router.push({name: 'Developers'})

@@ -37,8 +37,8 @@ export default {
   data: function () {
     return {
       credentials: {
-      userId: '',
-      password: '',
+        userId: '',
+        password: '',
       },
       error_check_login: true,
     }
@@ -61,9 +61,8 @@ export default {
       this.$store
         .dispatch("LOGIN", this.credentials)
         .then(() => {
-          this.$router.push({ name: 'Home' })
-          // this.$router.replace(`/${this.nextRoute}`)
-          this.$store.state.isLogin=true
+          // this.$router.push({ name: 'Home' })
+          this.$router.replace('/location')
         })
         .catch(({ message }) => (this.msg = message));
     },

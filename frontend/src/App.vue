@@ -40,7 +40,7 @@ export default {
   created(){
     // console.log(localStorage.getItem('auth-token'));  // localStorage에서 JWT 받아오기
     if (localStorage.getItem('auth-token') != undefined) {
-      this.$store.state.isLogin=true
+      // this.$store.state.isLogin=true
       // this.login = true
     }
   }

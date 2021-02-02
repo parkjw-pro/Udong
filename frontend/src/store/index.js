@@ -6,8 +6,6 @@ const SERVER_URL =  process.env.VUE_APP_SERVER_URL
 
 export default new Vuex.Store({
   state: {
-    // 1. 로그인 여부
-    isLogin: false,
     accessToken: null,
     userId: "",
     nickname: ""
@@ -65,7 +63,7 @@ export default new Vuex.Store({
       }
 
       axios
-        .get(`${SERVER_URL}`)
+        .get(`${SERVER_URL}/user`)
         .then((response) => {
           console.log("axios login info");
           localStorage.setItem('Info-token', JSON.stringify(response.data.user));
