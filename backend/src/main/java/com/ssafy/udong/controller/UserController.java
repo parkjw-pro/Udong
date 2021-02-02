@@ -92,10 +92,11 @@ public class UserController {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = HttpStatus.ACCEPTED;
 //		System.out.println(">>>>>> " + jwtService.get(req.getHeader("auth-token")));
+//		System.out.println("여기는 앞! 2/3 axios.get 요청이 안되서 테스트 중!");
 		try {
 			// 사용자에게 전달할 정보이다.
 			// String info = memberService.getServerInfo();
-
+			
 			resultMap.putAll(jwtService.get(req.getHeader("auth-token")));
 			//
 			// resultMap.put("status", true);

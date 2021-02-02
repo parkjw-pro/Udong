@@ -20,8 +20,6 @@
               ></b-form-input>
             </b-col>
           </b-row>
-        </b-col>
-        <b-col>
           <!-- 2. 닉네임 -->
           <b-row id="accountBox" align-h="center">
             <b-col cols="2"><span>닉네임</span></b-col>
@@ -29,15 +27,14 @@
               <b-form-input
                 id="input-1"
                 type="email"
-                :placeholder="user.nickname"
+                v-model='text'
                 style="text-align: center;"
               ></b-form-input>
             </b-col>
-            <!-- <small id = "error2" class="text-danger" style="float:left; margin-top:5px">{{
-                  errors[0]
-                }}</small> -->
           </b-row>
-        </b-col>
+          <b-row v-if="!validation" class="mb-3 ml-5 pl-5 mt-0 pt-0" align-h="center">
+            <small class="text-danger text-align-center">닉네임을 다시 입력해주세요</small>
+          </b-row>
           <!-- 3. 이메일 -->
           <b-row id="accountBox" align-h="center">
             <b-col cols="2"><span>이메일</span></b-col>
@@ -59,6 +56,7 @@
             </b-col>
             
           </b-row>
+      </b-col>
 
       <b-col cols="3" class="pl-0 ml-0">
         <b-row class="my-4"></b-row>
@@ -66,19 +64,19 @@
           <b-button
                 style="margin-top:3px; background-color: #695549;"
                 size="sm"
-                @click="verifyNickname"
+                @click="check_user_nickname"
           >중복확인</b-button>
         </b-row>
-        <b-row class="my-4"></b-row>
+        <b-row class="my-5"></b-row>
         <b-row class="my-4" align-h="left">
-          <b-button variant="danger" size="sm" @click="createGroup">삭제</b-button>
+          <b-button variant="danger" size="sm" @click="deleteLocation">삭제</b-button>
         </b-row>
       </b-col>
       </b-row>
-      <b-button class="mx-3 mb-5" style="background-color: #695549;" @click="createGroup">추가</b-button>
+      <b-button class="mx-3 mb-5" style="background-color: #695549;" @click="addLocation">추가</b-button>
 
       <div>
-        <b-button class="mx-3" variant="danger" @click="deleteAccount">회원탈퇴</b-button>
+        <b-button class="mx-3" variant="danger" >회원탈퇴</b-button>
         <!-- 혹은 router-link 넣어주기!!! -->
         <b-button class="mx-3" style="background-color: #695549;" @click="toDetail">확인</b-button>
       </div>
@@ -88,7 +86,9 @@
 
 <script>
 import axios from 'axios'
-//const SERVER_URL = "http://localhost:8000";
+
+const SERVER_URL = process.env.VUE_APP_SERVER_URL
+
 export default {
   name: 'AccountUpdate',
   data: function () {
@@ -99,9 +99,23 @@ export default {
         nickname: "송송",
         email: "bulgen@naver.com",
       },
+      text: '',
+      isValid: true,
+      checkNickname: false,
+    }
+  },
+  computed: {
+    validation: function () {
+      return this.isValid
     }
   },
   methods: {
+    addLocation: function () {
+      alert("서비스 준비중입니다! 곧 오픈 예정이니 기대해주세요~~")
+    },
+    deleteLocation: function () {
+      alert("최소 하나의 동네가 있어야 합니다!")
+    },
     getToken: function () {
       const token = localStorage.getItem('jwt')
       const config = {
@@ -115,22 +129,23 @@ export default {
       evt.preventDefault()
       alert(JSON.stringify(this.article))
     },
-    verifyNickname: function() {
-       if(this.user.nickname == ""|| document.getElementById("error2").innerHTML != ""){
-        alert("닉네임 다시입력 바랍니다.")
-        this.user.nickname = "";
+    check_user_nickname: function() {
+       if(this.text.length < 4 ){
+        alert("닉네임을 다시 입력해주세요!")
+        this.isValid = false
+        this.text = "";
       }
       else{
         axios
-          .get(`/user/nickname/${this.user.nickname}`)
+          .get(`${SERVER_URL}/user/nickname/${this.text}`)
           .then(() => {
             alert("사용 가능한 닉네임 입니다.");
             this.checkNickname = true;
           })
           .catch(() => {
-            if (this.user.nickname != "") {
+            if (this.text != "") {
               alert("현재 사용중인 닉네임 입니다.");
-              this.user.nickname = "";
+              this.text = "";
             }
           });
       }
@@ -139,12 +154,30 @@ export default {
 
     },
     toDetail: function () {
-
+      if (this.checkNickname) {
+        // 1단계: credentials 정의
+        var credentials = {
+              userId: this.user.userId,
+              nickname: this.user.nickname,
+              email: this.user.email,
+              // password: "",
+            }
+        axios.put(`${SERVER_URL}/user`, credentials)
+        .then(()=>{
+          alert("회원가입 성공");
+          this.$router.push({ name: 'AccountDetail' })
+          
+        })
+        .catch(()=>{
+          alert("서버에 문제가 생겼습니다. 다시 가입 바랍니다.");
+        });
+      }
     },
   },
   mounted() {
     this.user.userId = JSON.parse(localStorage.getItem('Login-token'))["user-id"]
     this.user.nickname = JSON.parse(localStorage.getItem('Login-token'))["user-name"]
+    this.text = this.user.nickname
   }
 }
 </script>

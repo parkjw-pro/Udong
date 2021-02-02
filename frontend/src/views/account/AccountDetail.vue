@@ -63,6 +63,9 @@
 </template>
 
 <script>
+import axios from 'axios'
+
+const SERVER_URL = process.env.VUE_APP_SERVER_URL
 //const SERVER_URL = "http://localhost:8000";
 export default {
   name: 'AccountDetail',
@@ -77,6 +80,18 @@ export default {
     }
   },
   methods: {
+    // 회원정보 가져오기 (GET요청)
+    getUser: function () {
+      axios.get(`${SERVER_URL}/user`)
+        .then((res) => {
+          this.user = res
+          console.log(res)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+
     getToken: function () {
       const token = localStorage.getItem('jwt')
       const config = {
@@ -95,8 +110,10 @@ export default {
     }
   },
   mounted() {
-    this.user.userId = JSON.parse(localStorage.getItem('Login-token'))["user-id"]
-    this.user.nickname = JSON.parse(localStorage.getItem('Login-token'))["user-name"]
+    this.getUser()
+    console.log('hello')
+    // this.user.userId = JSON.parse(localStorage.getItem('Login-token'))["user-id"]
+    // this.user.nickname = JSON.parse(localStorage.getItem('Login-token'))["user-name"]
   }
 }
 </script>
