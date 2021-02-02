@@ -201,7 +201,7 @@ b-form-group확인해주는거에서 안넘어가는듯
     <button
       class="btn btn-secondary"
       style="float:left;"
-      @click="$router.push('/')"
+      @click="$router.push('/account')"
     >
       뒤로가기
     </button>
