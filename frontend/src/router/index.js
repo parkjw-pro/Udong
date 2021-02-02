@@ -52,14 +52,14 @@ import NewsFeed from '@/views/story/NewsFeed.vue'
 
 Vue.use(VueRouter)
 
-//https://router.vuejs.org/kr/guide/advanced/navigation-guards.html
-const requireAuth = () => (to, from, next) => {
-  const nextRoute = to.path;
+// //https://router.vuejs.org/kr/guide/advanced/navigation-guards.html
+// const requireAuth = () => (to, from, next) => {
+//   const nextRoute = to.path;
 
-  if (store.getters.getAccessToken | localStorage.getItem('Login-token') != undefined) {
-    return next();
-  } else next("/login" + nextRoute);
-};
+//   if (store.getters.getAccessToken | localStorage.getItem('Login-token') != undefined) {
+//     return next();
+//   } else next("/login" + nextRoute);
+// };
 
 const routes = [
   //유저
@@ -152,7 +152,7 @@ const routes = [
   },
   {
     path: '/review/article/detail',
-    name: 'ArticleDetail',
+    name: 'ReviewDetail',
     component: ReviewDetail,
   },
   //스토리
