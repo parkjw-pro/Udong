@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.udong.dao.AreaDao">
+
+	<!--동으로 조회 -->
+	<select id="SearchDong" parameterType="map"
+		resultType="com.ssafy.udong.dto.AreaDto">
+
+		select dongcode as dongCode, city, gugun, dong
+		from dongcode
+		where dong = #{searchWord}
+	</select>
+
+	<!--구,군으로 조회 -->
+	<select id="SearchGugun" parameterType="map"
+		resultType="com.ssafy.udong.dto.AreaDto">
+
+		select gugun_name as gugun
+		from guguncode
+		where gugun_name = #{searchWord}
+	</select>
+
+	<!--시,도으로 조회 -->
+	<select id="SearchSido" parameterType="map"
+		resultType="com.ssafy.udong.dto.AreaDto">
+
+		select sido_name as city
+		from sidocode
+		where sido_name = #{searchWord}
+	</select>
+
+
+	<!--지역코드로 조회 -->
+	<select id="SearchAreaCode" parameterType="map"
+		resultType="com.ssafy.udong.dto.AreaDto">
+
+		select dongcode as dongCode, city, gugun, dong
+		from dongcode
+		where dongcode = #{searchWord};
+	</select>
+
+
+
+
+
+
+
+
+</mapper>

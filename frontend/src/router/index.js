@@ -4,31 +4,42 @@ import VueRouter from 'vue-router'
 import Home from '@/views/app/Home'
 import Login from '@/views/account/Login.vue'
 import NewsFeed from '@/views/story/NewsFeed.vue'
+import GroupUpdate from '@/views/story/GroupUpdate.vue'
 import Signup from '@/views/account/Signup.vue'
 import FindPassword from '@/views/account/FindPassword.vue'
 import FindLocation from '@/views/app/FindLocation.vue'
-import GroupPage from '@/views/story/GroupPage'
+import Admin from '@/views/account/Admin.vue'
+import Badge from '@/views/app/Badge.vue'
 
 Vue.use(VueRouter)
 
+// https://router.vuejs.org/kr/guide/advanced/navigation-guards.html
+// const requireAuth = () => (to, from, next) => {
+//   const nextRoute = to.path;
+
+//   if (store.getters.getAccessToken | localStorage.getItem('Login-token') != undefined) {
+//     return next();
+//   } else next("/login" + nextRoute);
+// };
+
 const routes = [
-  // {
-  //   path: '/',
-  //   name: 'Home',
-  //   component: Home
-  // },
   // {
   //   path: '/about',
   //   name: 'About',
   //   component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   // },
   {
-    path: '',
+    path: '/home',
     name: 'Home',
     component: Home,
   },
   {
-    path: '/user/login',
+    path: '/account/admin',
+    name: 'Admin',
+    component: Admin,
+  },
+  {
+    path: '/',
     name: 'Login',
     component: Login,
   },
@@ -53,9 +64,14 @@ const routes = [
     component: FindLocation,
   },
   {
-    path: '/club',
-    name: 'GroupPage',
-    component: GroupPage,
+    path: '/group/update',
+    name: 'GroupUpdate',
+    component: GroupUpdate,
+  },
+  {
+    path: '/badge',
+    name: 'Badge',
+    component: Badge,
   },
 ]
 

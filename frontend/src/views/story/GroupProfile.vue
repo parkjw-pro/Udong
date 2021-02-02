@@ -4,6 +4,7 @@
     <b-row class="pb-5"  align-h="between">
       <!-- 프로필 이미지 -->
       <b-col class="ml-3">
+        <!-- props:  :fileId="Club.fileId" -->
         <Profile />
       </b-col>
 
@@ -14,7 +15,7 @@
         </b-row> -->
         <b-row class="mb-3" align-h="center">
           <toggle-button
-            :value="group.isPublic"
+            :value="club.isOpen"
             :width="80"
             :height="35"
             :labels="{checked: '공개', unchecked: '비공개'}"
@@ -25,26 +26,11 @@
             disabled
           />
         </b-row>
-        <!-- bootstrap > Form File 참고하면 나와있음 -->
-        <b-row align-h="center">
-          <b-form-file
-            v-model="group.file"
-            :state="Boolean(group.file)"
-            placeholder="첨부파일 없음"
-            drop-placeholder="Drop file here..."
-            style="width: 70%; text-align: left;"
-            variant="info"
-            :color="{
-              checked: 'black', unchecked: 'white'
-            }"
-          ></b-form-file>
-          <!-- <div class="mt-3">Selected file: {{ file1 ? file1.name : '' }}</div> -->
-        </b-row>
       </b-col>
     </b-row>
     <!-- 동네 이름 -->
     <b-row class="ml-3 mb-5">
-      <h3 style="text-align: left;"><span class="large">역삼동</span> 그룹</h3>
+      <h3 style="text-align: left;"><span class="large">{{ dong }}</span> 그룹</h3>
     </b-row>
 
     <!-- 그룹명 -->
@@ -58,8 +44,7 @@
           <b-col sm="7">
             <b-form-input
             class="font-weight-bold"
-            v-model="group.name"
-            placeholder="다이어트"
+            :placeholder="club.clubName"
             disabled            
           ></b-form-input>
           </b-col>
@@ -71,8 +56,7 @@
       <b-col>
         <h4 class="font-weight-bold mb-4">소개글</h4>
           <b-form-textarea
-            v-model="group.intro"
-            placeholder="그룹을 소개해보세요!"
+            :placeholder="club.clubContent"
             rows="8"
             disabled            
           ></b-form-textarea>
@@ -82,31 +66,73 @@
     <div id="group_profile_buttons">
       <!-- <b-button class="mx-3" variant="danger">그룹삭제</b-button> -->
       <!-- 1. v-if 가입되어 있으면 -->
-      <b-button class="mx-3" variant="success">회원조회</b-button>
+      <div v-if="isJoin">
+        <b-button class="mx-3" variant="danger" @click="leaveGroup">그룹탈퇴</b-button>
+        <b-button class="mx-3" variant="info" @click="toMemberList">회원조회</b-button>
+      </div>
       <!-- 2. v-else (가입이 안 되어 있으면) -->
-      <b-button class="mx-3" type="submit" variant="#D5D6EA" style="color: #D5D6EA; background-color: #F3DDF2;">가입하기</b-button>
+      <b-button v-else class="mx-3" type="submit" variant="info" @click="joinGroup">가입하기</b-button>
     </div>
-    <div>여기에는 추후 가입여부에 따른 조건을 분기해준다!!</div>
+    <br>
+    <br>
   </b-form>
 </template>
 
 <script>
 import Profile from '@/components/app/Profile'
+import axios from 'axios'
 
 export default {
   name: 'GroupProfile',
   components: {
     Profile,
   },
+    // clubId를 props 받아온다.
+  props: {
+  },
   data: function () {
     return {
-      group: {
-        name: "",
-        intro: "",
-        isPublic: true,
-        imgURL: "",
-        file: false,
-      }
+      user: '',
+      dong: '역삼동',
+      club: {
+        clubName: "다이어트",
+        clubContent: "하이하이",
+        isOpen: true,
+        fileId: "",
+      },
+      isJoined: false,
+    }
+  },
+  computed: {
+    isJoin: function () {
+      return this.isJoined
+    }
+  },
+  methods: {
+    toMemberList: function () {
+      // props 받아온 clubId를 뒤에 넣어준다.
+      // this.$router.push({name: 'GroupMemberList', clubId })
+    },
+    joinGroup: function () {
+      const config = this.getToken()
+      // 해당 club 정보도 넘겨줘야하는거 아닌지??
+      axios.post("/club/member", this.user, config)
+      .then(() => {
+        this.$router.push({name: 'GroupPage', query: {club: this.club}})
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    },
+    leaveGroup: function () {
+      const config = this.getToken()
+      axios.delete("/club/member", this.user, config)
+      .then(() => {
+        this.$router.push({name: 'NewsFeed'})
+      })
+      .catch((err) => {
+        console.log(err)
+      })
     }
   }
 }

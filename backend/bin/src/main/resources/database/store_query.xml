@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.udong.dao.StoreDao">
+
+
+	<!--검색어+지역코드로 리뷰 조회 -->
+	<select id="SelectDetailStore" parameterType="map"
+		resultType="com.ssafy.udong.dto.StoreDto">
+
+		select *from store
+		where (store_name like CONCAT('%',
+		#{param1} ,'%')
+		or store_gugun_name like CONCAT('%', #{param1} ,'%') or
+		store_ctg_2 like CONCAT('%', #{param1} ,'%'))
+		and store_dong_name like
+		CONCAT('%', #{param2} ,'%')
+
+	</select>
+
+	<select id="SelectArea" parameterType="map"
+		resultType="com.ssafy.udong.dto.StoreDto">
+
+		select *from store
+		where store_dong_name like CONCAT('%', #{searchWord} ,'%') or store_dong2_name
+		like CONCAT('%', #{searchWord} ,'%')
+
+	</select>
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper>
