@@ -10,55 +10,60 @@ import com.ssafy.udong.dto.CommentDto;
 import com.ssafy.udong.dto.ImageDto;
 import com.ssafy.udong.dto.LikeDto;
 import com.ssafy.udong.dto.ReportDto;
-import com.ssafy.udong.dto.UserBoardDto;
-import com.ssafy.udong.dto.UserBoardParamDto;
+import com.ssafy.udong.dto.UserPostDto;
+import com.ssafy.udong.dto.UserPostParamDto;
 
 @Mapper
 public interface ClubPostDao {
 	
 	//글쓰기
-	public int createPost(ClubPostDto clubPostDto);
+	public int createClubPost(ClubPostDto clubPostDto);
 	public int createClubPostFile(ImageDto imageDto);
 	public int connectionFile(ClubPostDto clubPostDto);
 
-
 	//게시물 리스트 가져오기
-	public List<ClubPostDto> listPost(ClubPostParamDto clubPostParamDto);
-	public List<ClubPostDto> searchWordListPost(ClubPostParamDto clubPostParamDto);
+	public List<ClubPostDto> selectAllClubPost(ClubPostParamDto clubPostParamDto);
+	public List<ClubPostDto> selectClubPostBySearchWord(ClubPostParamDto clubPostParamDto);
+	
 	//게시물 상세가져오기 
-	public ClubPostDto detailPost(String postId);
+	public ClubPostDto selectClubPost(String postId);
+	public List<String> selectFileUrl(String postId);
+	
 	//조회수 가져오고 증가시키기
-	public int postUserReadCount(String postId); 
-	public int postReadCountUpdate(String postId);
+	public int selectClubPostViews(String postId); 
+	public int updateClubPostViews(String postId);
 		
 	//게시글 총개수 
-	public int totalCountPostList();
-	public int searchWordTotalCountPostList(ClubPostParamDto clubPostParamDto);
+	public int clubPostTotalCount();
+	public int clubPostBySearchWordTotalCount(ClubPostParamDto clubPostParamDto);
 
 	//게시물 수정
-	public int updatePost(ClubPostDto clubPostDto);
+	public int updateClubPost(ClubPostDto clubPostDto);
 	
 	//게시물 지우기
-	public int deletePost(String postId);
+	public int deleteClubPost(String postId);
 	
 	//댓글 입력
-	public int createPostCom(CommentDto commentDto);
+	public int createClubPostComment(CommentDto commentDto);
+	
 	//댓글 조회
-	public List<ClubPostDto> selectPostDat(ClubPostDto clubPostDto);
-	//파일 관련된것 
+	public List<CommentDto> selectClubPostComment(String postId);
+	public int userPostCommentTotalCount();
 	
-	public List<String> SelectFileUrl(String postId);
-	public List<CommentDto> selectPostCom(String postId);
-	public int totalCountcomList();
-	public int createPostLike(LikeDto likeDto);
-	public String selectPostLike(LikeDto likeDto);
-	public void deletePostLike(LikeDto likeDto);
-	public String selectPostCommLike(LikeDto likeDto);
-	public void createPostCommLike(LikeDto likeDto);
-	public void deletePostCommLike(LikeDto likeDto);
-	public void createPostReport(ReportDto reportDto);
-	public void createPostCommReport(ReportDto reportDto);
+	//좋아요
+	public String selectClubPostLike(LikeDto likeDto);
+	public int createClubPostLike(LikeDto likeDto);
+	public void deleteClubPostLike(LikeDto likeDto);
 	
-	
+	//댓글 좋아요
+	public String selectClubPostCommentLike(LikeDto likeDto);
+	public void createClubPostCommentLike(LikeDto likeDto);
+	public void deleteClubPostCommentLike(LikeDto likeDto);
 
+	//신고
+	public void createClubPostReport(ReportDto reportDto);
+	public void createClubPostCommentReport(ReportDto reportDto);
+	
+	public List<ClubPostDto> selectPostDat(ClubPostDto clubPostDto);
+	
 }

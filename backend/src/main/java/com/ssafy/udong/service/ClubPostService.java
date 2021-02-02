@@ -14,28 +14,28 @@ import com.ssafy.udong.dto.ReportDto;
 
 public interface ClubPostService {
 
-	int createPost(ClubPostDto clubPostDto, List<MultipartFile> files);
+	int createClubPost(ClubPostDto clubPostDto, List<MultipartFile> files);
 
-	ClubPostResultDto listPost(ClubPostParamDto clubPostParamDto);
+	ClubPostResultDto selectAllClubPost(ClubPostParamDto clubPostParamDto);
 
-	ClubPostResultDto searchWordListPost(ClubPostParamDto clubPostParamDto);
+	ClubPostResultDto selectClubPostBySearchWord(ClubPostParamDto clubPostParamDto);
 
-	ClubPostResultDto detailPost(String postId);
+	ClubPostResultDto selectClubPost(String postId);
 
-	int updatePost(ClubPostDto clubPostDto);
+	int updateClubPost(ClubPostDto clubPostDto);
 
-	int deletePost(String postId);
+	int deleteClubPost(String postId);
 
-	int createPostCom(CommentDto commentDto);
+	int createClubPostComment(CommentDto commentDto);
 
-	CommentResultDto selectPostCom(String postId);
+	CommentResultDto selectClubPostComment(String postId);
 
-	int createPostLike(LikeDto likeDto);
+	int createClubPostLike(LikeDto likeDto);
 
-	int createPostCommLike(LikeDto likeDto);
+	int createClubPostCommentLike(LikeDto likeDto);
 
-	int createPostReport(ReportDto reportDto);
+	int createClubPostReport(ReportDto reportDto);
 
-	int createPostCommReport(ReportDto reportDto);
+	int createClubPostCommentReport(ReportDto reportDto);
 
 }

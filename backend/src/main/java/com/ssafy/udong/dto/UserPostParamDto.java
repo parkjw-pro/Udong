@@ -1,12 +1,15 @@
 package com.ssafy.udong.dto;
 
-public class UserBoardParamDto {
+public class UserPostParamDto {
 
 	private int limit;
 	private int offset;
 	private String searchWord;
-	private int boardId;
+	private int postId;
 	private int userId;
+	
+	public UserPostParamDto() {}
+	
 	public int getLimit() {
 		return limit;
 	}
@@ -22,14 +25,14 @@ public class UserBoardParamDto {
 	public String getSearchWord() {
 		return searchWord;
 	}
-	public void setSearchWord(String serchWord) {
-		this.searchWord = serchWord;
+	public void setSearchWord(String searchWord) {
+		this.searchWord = searchWord;
 	}
-	public int getBoardId() {
-		return boardId;
+	public int getPostId() {
+		return postId;
 	}
-	public void setBoardId(int boardId) {
-		this.boardId = boardId;
+	public void setPostId(int postId) {
+		this.postId = postId;
 	}
 	public int getUserId() {
 		return userId;
@@ -37,5 +40,5 @@ public class UserBoardParamDto {
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
-	
+
 }

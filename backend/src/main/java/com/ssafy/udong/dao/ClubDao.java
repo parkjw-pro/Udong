@@ -14,10 +14,16 @@ public interface ClubDao {
 
 	int createClub(ClubDto club);
 	
+	int createClubFile(ImageDto imageDto);
+	
 	int createClubNoFile(ClubDto club);
+	
+	String selectDuplicateClubName(String clubname, String areaCode);
 
-	ClubDto selectClub(String clubId);
 	String selectClubId();
+	ClubDto selectClub(String clubId);
+	
+	List<String> selectFileUrl(String id);
 
 	String selectNickname(String userId);
 	
@@ -49,11 +55,5 @@ public interface ClubDao {
 	List<ClubDto> selectAllClubByUserId(String userId);
 
 	List<ClubDto> selectAllClubWaitingByUserId(String userId);
-
-	int createClubFile(ImageDto imageDto);
-
-	List<String> SelectFileUrl(String id);
-
-	String selectDuplicateClubName(String clubname);
 
 }

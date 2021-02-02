@@ -1,8 +1,6 @@
 package com.ssafy.udong.dto;
 
-import java.util.List;
-
-public class UserBoardDto {
+public class UserPostDto {
 	private String postId ;
 	private String userId;
 	private String nickname;
@@ -18,6 +16,9 @@ public class UserBoardDto {
 	private String postCommentCount;
 
 	
+	
+	public UserPostDto() {}
+
 	public String getNickname() {
 		return nickname;
 	}

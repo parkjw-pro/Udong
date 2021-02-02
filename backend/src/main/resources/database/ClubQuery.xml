@@ -10,7 +10,7 @@
 		values(#{clubName}, 1, #{clubContent}, #{isOpen}, #{areaCode}, #{userId}, (select max(file_id) from image))
 	</insert>
 	
-	<!--클럽 이미지삽입 -->
+	<!--club 대표 이미지 삽입 -->
 	<insert id="createClubFile"
 		parameterType="com.ssafy.udong.dto.ImageDto" useGeneratedKeys="true"
 		keyProperty="fileId">
@@ -25,10 +25,18 @@
 		insert into club(club_name, member_number, club_content, is_open, area_code, user_id, file_id)
 		values(#{clubName}, 1, #{clubContent}, #{isOpen}, #{areaCode}, #{userId}, 0)
 	</insert>
+		
+	<!-- clubName 중복 확인 -->
+	<select id="selectDuplicateClubName"
+		parameterType="String" resultType="String">
+		SELECT  club_name
+		FROM club
+		WHERE club_name = #{clubName} and area_code = #{areaCode}
+	</select>
 	
 	<!-- 방금만든 클럽id가져오기 -->
 	<select id="selectClubId" resultType="String">
-	select max(club_id) from club
+		select max(club_id) from club
 	</select>
 
 	<!-- club 한 개 선택 -->
@@ -37,10 +45,8 @@
 		where club_id = #{clubId}
 	</select>
 	
-	<!--해당리뷰의 파일 url찾기 -->
-	<select id="SelectFileUrl" parameterType="String"
-		resultType="String">
-
+	<!--club 대표 이미지의 파일 url찾기 -->
+	<select id="SelectFileUrl" parameterType="String" resultType="String">
 		select file_url from image
 		where file_id = #{id};
 	</select>
@@ -122,7 +128,7 @@
 
 	<delete id="deleteClubMemberWaiting" parameterType="String">
 		delete from club_member_waiting
-		where club_id = #{param1} and user_id = #{param2}
+		where club_id = #{clubId} and user_id = #{userId}
 	</delete>
 
 	<select id="selectAllClubByUserId" parameterType="String" resultType="com.ssafy.udong.dto.ClubDto">
@@ -135,15 +141,6 @@
 		select c.club_id, club_name, member_number, club_content, is_open, created_at, area_code, c.user_id, file_id
 		from club c, club_member_waiting m
 		where m.user_id = #{userId} and m.club_id = c.club_id;
-	</select>
-	
-	
-	
-		<select id="selectDuplicateClubName"
-		parameterType="String" resultType="String">
-		SELECT  club_name as clubName
-		FROM club
-		WHERE club_name = #{clubName}
 	</select>
 	
 </mapper>

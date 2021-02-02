@@ -23,7 +23,7 @@ import com.ssafy.udong.dto.CommentResultDto;
 import com.ssafy.udong.dto.ImageDto;
 import com.ssafy.udong.dto.LikeDto;
 import com.ssafy.udong.dto.ReportDto;
-import com.ssafy.udong.dto.UserBoardDto;
+import com.ssafy.udong.dto.UserPostDto;
 
 @Service
 public class ClubPostServiceImpl implements ClubPostService {
@@ -31,15 +31,15 @@ public class ClubPostServiceImpl implements ClubPostService {
 	private final Path root = Paths.get("uploads");
 
 	@Autowired
-	ClubPostDao dao;
+	ClubPostDao clubPostDao;
 
 	private static final int SUCCESS = 1;
 	private static final int FAIL = -1;
 
 	@Override
-	public int createPost(ClubPostDto clubPostDto, List<MultipartFile> files) {
+	public int createClubPost(ClubPostDto clubPostDto, List<MultipartFile> files) {
 		try {
-			dao.createPost(clubPostDto);
+			clubPostDao.createClubPost(clubPostDto);
 
 			if (files != null && !files.isEmpty()) {
 				File uploadDir = new File(
@@ -84,8 +84,8 @@ public class ClubPostServiceImpl implements ClubPostService {
 							+ "/" + fileName;
 					imageDto.setFileUrl(imageFileUrl);
 
-					dao.createClubPostFile(imageDto);
-					dao.connectionFile(clubPostDto);
+					clubPostDao.createClubPostFile(imageDto);
+					clubPostDao.connectionFile(clubPostDto);
 
 				}
 			}
@@ -98,13 +98,13 @@ public class ClubPostServiceImpl implements ClubPostService {
 	}
 
 	@Override
-	public ClubPostResultDto listPost(ClubPostParamDto clubPostParamDto) {
+	public ClubPostResultDto selectAllClubPost(ClubPostParamDto clubPostParamDto) {
 
 		ClubPostResultDto clubPostResultDto = new ClubPostResultDto();
 		try {
 
-			int count = dao.totalCountPostList();
-			List<ClubPostDto> list = dao.listPost(clubPostParamDto);
+			int count = clubPostDao.clubPostTotalCount();
+			List<ClubPostDto> list = clubPostDao.selectAllClubPost(clubPostParamDto);
 
 			clubPostResultDto.setList(list);
 			clubPostResultDto.setCount(count);
@@ -118,13 +118,13 @@ public class ClubPostServiceImpl implements ClubPostService {
 	}
 
 	@Override
-	public ClubPostResultDto searchWordListPost(ClubPostParamDto clubPostParamDto) {
+	public ClubPostResultDto selectClubPostBySearchWord(ClubPostParamDto clubPostParamDto) {
 
 		ClubPostResultDto clubPostResultDto = new ClubPostResultDto();
 		try {
 			// 게시물 총개수
-			int count = dao.searchWordTotalCountPostList(clubPostParamDto);
-			List<ClubPostDto> list = dao.searchWordListPost(clubPostParamDto);
+			int count = clubPostDao.clubPostBySearchWordTotalCount(clubPostParamDto);
+			List<ClubPostDto> list = clubPostDao.selectClubPostBySearchWord(clubPostParamDto);
 
 			clubPostResultDto.setList(list);
 			clubPostResultDto.setCount(count);
@@ -139,17 +139,17 @@ public class ClubPostServiceImpl implements ClubPostService {
 	}
 
 	@Override
-	public ClubPostResultDto detailPost(String postId) {
+	public ClubPostResultDto selectClubPost(String postId) {
 
 		ClubPostDto clubPostDto = new ClubPostDto();
 		ClubPostResultDto clubPostResultDto = new ClubPostResultDto();
 
 		try {
 
-			dao.postReadCountUpdate(postId); // 조회수 1증가
-			clubPostDto = dao.detailPost(postId); // 상세 리스트 가져오기
+			clubPostDao.updateClubPostViews(postId); // 조회수 1증가
+			clubPostDto = clubPostDao.selectClubPost(postId); // 상세 리스트 가져오기
 
-			List<String> list = dao.SelectFileUrl(postId);
+			List<String> list = clubPostDao.selectFileUrl(postId);
 
 			clubPostResultDto.setDto(clubPostDto);
 			clubPostResultDto.setFileUrl(list);
@@ -164,10 +164,10 @@ public class ClubPostServiceImpl implements ClubPostService {
 	}
 
 	@Override
-	public int updatePost(ClubPostDto clubPostDto) {
+	public int updateClubPost(ClubPostDto clubPostDto) {
 
 		try {
-			return dao.updatePost(clubPostDto);
+			return clubPostDao.updateClubPost(clubPostDto);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -175,10 +175,10 @@ public class ClubPostServiceImpl implements ClubPostService {
 	}
 
 	@Override
-	public int deletePost(String postId) {
+	public int deleteClubPost(String postId) {
 
 		try {
-			return dao.deletePost(postId);
+			return clubPostDao.deleteClubPost(postId);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -187,10 +187,10 @@ public class ClubPostServiceImpl implements ClubPostService {
 	}
 
 	@Override
-	public int createPostCom(CommentDto commentDto) {
+	public int createClubPostComment(CommentDto commentDto) {
 
 		try {
-			return dao.createPostCom(commentDto);
+			return clubPostDao.createClubPostComment(commentDto);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -199,14 +199,14 @@ public class ClubPostServiceImpl implements ClubPostService {
 	}
 
 	@Override
-	public CommentResultDto selectPostCom(String postId) {
+	public CommentResultDto selectClubPostComment(String postId) {
 
 		CommentResultDto commentResultDto = new CommentResultDto();
 
 		try {
 
-			int count = dao.totalCountcomList();
-			List<CommentDto> list = dao.selectPostCom(postId);
+			int count = clubPostDao.userPostCommentTotalCount();
+			List<CommentDto> list = clubPostDao.selectClubPostComment(postId);
 
 			commentResultDto.setList(list);
 			commentResultDto.setCount(count);
@@ -221,14 +221,14 @@ public class ClubPostServiceImpl implements ClubPostService {
 	}
 
 	@Override
-	public int createPostLike(LikeDto likeDto) {
+	public int createClubPostLike(LikeDto likeDto) {
 
 		try {
-			if (dao.selectPostLike(likeDto) == null) {
-				dao.createPostLike(likeDto);
+			if (clubPostDao.selectClubPostLike(likeDto) == null) {
+				clubPostDao.createClubPostLike(likeDto);
 				return 1;
 			} else {
-				dao.deletePostLike(likeDto);
+				clubPostDao.deleteClubPostLike(likeDto);
 				return 2;
 			}
 		} catch (Exception e) {
@@ -238,13 +238,13 @@ public class ClubPostServiceImpl implements ClubPostService {
 	}
 
 	@Override
-	public int createPostCommLike(LikeDto likeDto) {
+	public int createClubPostCommentLike(LikeDto likeDto) {
 		try {
-			if (dao.selectPostCommLike(likeDto) == null) {
-				dao.createPostCommLike(likeDto);
+			if (clubPostDao.selectClubPostCommentLike(likeDto) == null) {
+				clubPostDao.createClubPostCommentLike(likeDto);
 				return 1;
 			} else {
-				dao.deletePostCommLike(likeDto);
+				clubPostDao.deleteClubPostCommentLike(likeDto);
 				return 2;
 			}
 		} catch (Exception e) {
@@ -255,9 +255,9 @@ public class ClubPostServiceImpl implements ClubPostService {
 	}
 
 	@Override
-	public int createPostReport(ReportDto reportDto) {
+	public int createClubPostReport(ReportDto reportDto) {
 		try {
-			dao.createPostReport(reportDto);
+			clubPostDao.createClubPostReport(reportDto);
 			return 1;
 
 		} catch (Exception e) {
@@ -267,9 +267,9 @@ public class ClubPostServiceImpl implements ClubPostService {
 	}
 
 	@Override
-	public int createPostCommReport(ReportDto reportDto) {
+	public int createClubPostCommentReport(ReportDto reportDto) {
 		try {
-			dao.createPostCommReport(reportDto);
+			clubPostDao.createClubPostCommentReport(reportDto);
 			return 1;
 
 		} catch (Exception e) {
