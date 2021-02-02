@@ -1,28 +1,38 @@
 <template>
-    <div class="vue_component__upload--image" v-bind:class="{ 'dragover': onDragover }">
-        <form v-bind:id="'upload_image_form--' + input_id" enctype="multipart/form-data">
-            <div class="upload_image_form__thumbnails">
-                <div v-for="(value, key) in files" 
-                    :key=key
-                    class="upload_image_form__thumbnail"
-                     v-on:click="fileClick($event, key)"
-                     v-bind:class="{ 'uploaded': value.uploaded, 'bad-size': value.bad_size }">
-                    <span v-on:click="fileDelete($event, key)">
-                    &#x2716;
-                    </span>
-                    <img v-bind:src="image[key]" v-bind:class="{ 'show': image[key]}">
-                </div>
-            </div>
-            <input type="file" v-bind:id="'upload_image_form__input--' + input_id" hidden multiple/>
-            <div>
-                <button type="submit"
-                        v-bind:class="button_class"
-                        v-on:click="submit"
-                        v-bind:disabled="onUploading"
-                        v-html="button_html"></button>
-            </div>
-        </form>
-    </div>
+  <!-- 아래 링크 참고하기 -->
+  <!-- https://github.com/viral-vector/vue-upload-image -->
+  <div class="vue_component__upload--image" v-bind:class="{ 'dragover': onDragover }">
+      <form v-bind:id="'upload_image_form--' + input_id" enctype="multipart/form-data">
+          <div class="upload_image_form__thumbnails">
+              <div v-for="(value, key) in files" 
+                  :key=key
+                  class="upload_image_form__thumbnail"
+                    v-on:click="fileClick($event, key)"
+                    v-bind:class="{ 'uploaded': value.uploaded, 'bad-size': value.bad_size }">
+                  <span v-on:click="fileDelete($event, key)">
+                  &#x2716;
+                  </span>
+                  <img v-bind:src="image[key]" v-bind:class="{ 'show': image[key]}">
+              </div>
+          </div>
+          <input type="file" v-bind:id="'upload_image_form__input--' + input_id" hidden multiple/>
+          <div>
+              <button type="submit"
+                      v-bind:class="button_class"
+                      v-on:click="submit"
+                      v-bind:disabled="onUploading"
+                      v-html="button_html">
+              </button>
+          </div>
+      </form>
+
+       <b-col>
+          <b-form-file
+            placeholder="Choose a file or drop it here..."
+            drop-placeholder="Drop file here..."
+          ></b-form-file>
+    </b-col>
+  </div>
 </template>
 
 <script>

@@ -1,30 +1,32 @@
 <template>
-  <div id="app" class="pb-5">  
+  <div id="app" class="pb-5">
+    <!-- 1. 로그인 되어 있으면 -->
     <div v-if="login">
       <Navbar/>
-      <ReviewCreate/>
+      <router-view></router-view>   
     </div>
-     <hr>
-     <router-view><router-view/>   
+    <!-- 2. 로그인이 안 되어 있으면 -->
+    <div v-else id="box">
+      <Login />
+    </div>
   </div>
 </template>
 
 <script>
-
+import Login from '@/views/account/Login'
+import Navbar from '@/components/app/Navbar'
 // 임시
 // import Location from '@/components/app/Location'
-import ReviewCreate from '@/views/review/ReviewCreate'
 import 'vue-select/dist/vue-select.css';
 
 
 export default {
   name: 'App',
   components: {
-    
+    Login,
      Navbar,
 
     // Location,
-    ReviewCreate,
   },
   data: function () {
     return {

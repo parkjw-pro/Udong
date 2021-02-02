@@ -63,11 +63,13 @@
 </template>
 
 <script>
+// import axios from 'axios'
 import slide from './slide';
 import Menu from '@/views/app/Menu';
 
 import Profile2 from '@/components/app/Profile2'
 
+// const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
 export default {
   name: 'Navbar',
