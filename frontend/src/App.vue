@@ -1,51 +1,24 @@
 <template>
-<<<<<<< HEAD
   <div id="app" class="pb-5">  
     <div v-if="login">
         <Navbar/>
     </div>
      <hr>
      <router-view><router-view/>   
-=======
-<div id="app" class="pb-5">
-    <div v-if="login">
-      <Navbar/>
-      <GetStore/>
-    </div>
-     <!-- <router-view><router-view/>    -->
->>>>>>> community
   </div>
 </template>
 
 <script>
-// import Home from '@/views/app/Home'
-// import Login from '@/views/account/Login'
+
  import Navbar from '@/components/app/Navbar'
-
-// 임시
-// import Location from '@/components/app/Location'
-<<<<<<< HEAD
-//import GroupProfile from '@/views/story/GroupProfile'
-
-=======
-import GetStore from '@/views/review/GetStore'
->>>>>>> community
 import 'vue-select/dist/vue-select.css';
 
 
 export default {
   name: 'App',
   components: {
-    // Home,
-    // Login,
+    
      Navbar,
-
-    // Location,
-<<<<<<< HEAD
-   // GroupProfile
-=======
-    GetStore,
->>>>>>> community
   },
   data: function () {
     return {
