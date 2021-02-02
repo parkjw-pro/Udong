@@ -247,7 +247,7 @@ export default {
            {
              alert("중복체크 및 유효성 검사 확인 바랍니다.")
         }else{
-          axios.post(`${SERVER_URL}/user",this.credentials`)
+          axios.post(`${SERVER_URL}/user`,this.credentials)
           .then(()=>{
            alert("회원가입 성공");
            window.location.href = "/account";
@@ -308,7 +308,7 @@ export default {
       }
       else{
         axios
-          .post(`${SERVER_URL}/user/email",this.credentials`)
+          .post(`${SERVER_URL}/user/email`,this.credentials)
           .then(() => {
             alert("사용 가능한 이메일 입니다. 인증코드 입력바랍니다.");
             this.checkEmail = true;
