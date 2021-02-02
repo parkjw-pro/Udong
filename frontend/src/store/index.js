@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios';
 Vue.use(Vuex)
+const SERVER_URL = "http://localhost:8000";
 
 export default new Vuex.Store({
   state: {
@@ -48,7 +49,7 @@ export default new Vuex.Store({
     LOGIN(context, user) {
       localStorage.clear();
       return axios
-        .post('/user/login', user)
+        .post(`${SERVER_URL}/user/login`, user)
         .then((response) => {
           console.log("axios login");
           context.commit("LOGIN", response.data);
@@ -62,22 +63,22 @@ export default new Vuex.Store({
       }
 
       axios
-        .get('/user')
+        .get(`${SERVER_URL}/user`)
         .then((response) => {
           console.log("axios login info");
           localStorage.setItem('Info-token', JSON.stringify(response.data.user));
-          window.location.href = "/location";
+      
         })
         .catch(() => {
           localStorage.clear();
-          window.location.href = "/";
+          window.location.href = "/account";
           alert("로그인 실패 아이디및 비밀번호 확인 부탁드립니다.");
         });
 
     })
     .catch(() => {
       localStorage.clear();
-      window.location.href = "/";
+      window.location.href = "/account";
       alert("로그인 실패 아이디및 비밀번호 확인 부탁드립니다.");
     });
 },
@@ -86,7 +87,7 @@ LOGOUT(context) {
   axios.defaults.headers.common["auth-token"] = undefined;
   localStorage.clear();
   //window.location.reload();
-  window.location.href = "/";
+  window.location.href = "/account";
 }
   },
 })

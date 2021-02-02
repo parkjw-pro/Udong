@@ -1,33 +1,24 @@
 <template>
-<div id="app" class="pb-5">
+  <div id="app" class="pb-5">  
     <div v-if="login">
-      <Navbar/>
-      <ReviewCreate/>
+        <Navbar/>
     </div>
-     <!-- <router-view><router-view/>    -->
+     <hr>
+     <router-view></router-view>   
   </div>
 </template>
 
 <script>
-// import Home from '@/views/app/Home'
-// import Login from '@/views/account/Login'
- import Navbar from '@/components/app/Navbar'
 
-// 임시
-// import Location from '@/components/app/Location'
-import ReviewCreate from '@/views/review/ReviewCreate'
+ import Navbar from '@/components/app/Navbar'
 import 'vue-select/dist/vue-select.css';
 
 
 export default {
   name: 'App',
   components: {
-    // Home,
-    // Login,
-     Navbar,
 
-    // Location,
-    ReviewCreate,
+     Navbar,
   },
   data: function () {
     return {
