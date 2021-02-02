@@ -25,8 +25,12 @@ import FindLocation from '@/views/app/FindLocation.vue'
 import GroupPage from '@/views/story/GroupPage'
 =======
 import Admin from '@/views/account/Admin.vue'
+<<<<<<< HEAD
 import ReviewHome from '@/views/review/ReviewHome'
 
+>>>>>>> community
+=======
+import Badge from '@/views/app/Badge.vue'
 >>>>>>> community
 
 Vue.use(VueRouter)
@@ -87,9 +91,9 @@ const routes = [
     component: GroupUpdate,
   },
   {
-    path: '/review',
-    name: 'ReviewHome',
-    component: ReviewHome,
+    path: '/badge',
+    name: 'Badge',
+    component: Badge,
   },
 ]
 
