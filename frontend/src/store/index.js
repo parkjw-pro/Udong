@@ -49,7 +49,7 @@ export default new Vuex.Store({
     LOGIN(context, user) {
       localStorage.clear();
       return axios
-        .post('/user/login', user)
+        .post(`${SERVER_URL}/user/login`, user)
         .then((response) => {
           console.log("axios login");
           context.commit("LOGIN", response.data);
@@ -67,7 +67,7 @@ export default new Vuex.Store({
         .then((response) => {
           console.log("axios login info");
           localStorage.setItem('Info-token', JSON.stringify(response.data.user));
-          window.location.href = "/location/first";
+      
         })
         .catch(() => {
           localStorage.clear();

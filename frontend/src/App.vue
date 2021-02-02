@@ -4,7 +4,7 @@
         <Navbar/>
     </div>
      <hr>
-     <router-view><router-view/>   
+     <router-view></router-view>   
   </div>
 </template>
 
@@ -17,7 +17,7 @@ import 'vue-select/dist/vue-select.css';
 export default {
   name: 'App',
   components: {
-    
+
      Navbar,
   },
   data: function () {
