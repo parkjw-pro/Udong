@@ -1,6 +1,6 @@
 <template>
   <div class="mb-5 pb-5">
-    <b-button variant="primary" v-on:click="get_random">SHUFFLE</b-button>
+    <b-button variant="primary" v-on:click="getRandom">SHUFFLE</b-button>
     <br>
     <br>
     <div>
@@ -42,7 +42,7 @@ export default {
     }
   },
   methods: {
-    get_random: function () {
+    getRandom: function () {
       // for문을 돌려줘야 한다!!!!
       var circles = this.circles
       circles.circle1.left = Math.floor(Math.random() * 20)
@@ -60,7 +60,7 @@ export default {
     }
   },
   created: async function() {
-      await this.get_random()
+      await this.getRandom()
   }
 }
 </script>

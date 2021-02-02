@@ -1,10 +1,19 @@
 <template>
+<<<<<<< HEAD
   <div id="app" class="pb-5">  
     <div v-if="login">
         <Navbar/>
     </div>
      <hr>
      <router-view><router-view/>   
+=======
+<div id="app" class="pb-5">
+    <div v-if="login">
+      <Navbar/>
+      <GetStore/>
+    </div>
+     <!-- <router-view><router-view/>    -->
+>>>>>>> community
   </div>
 </template>
 
@@ -15,8 +24,12 @@
 
 // 임시
 // import Location from '@/components/app/Location'
+<<<<<<< HEAD
 //import GroupProfile from '@/views/story/GroupProfile'
 
+=======
+import GetStore from '@/views/review/GetStore'
+>>>>>>> community
 import 'vue-select/dist/vue-select.css';
 
 
@@ -28,7 +41,11 @@ export default {
      Navbar,
 
     // Location,
+<<<<<<< HEAD
    // GroupProfile
+=======
+    GetStore,
+>>>>>>> community
   },
   data: function () {
     return {
@@ -93,7 +110,7 @@ export default {
 #box {
   display: block;
   width: 50%;
-  height: 50%;
+  /* height: 50%; */
   position: absolute;
   left: 25%;
   margin-top: 5%;

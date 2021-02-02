@@ -6,12 +6,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class homeController {
-
+	
+	@GetMapping(value = "/group/update")
+	public String groupUpdate( ) {
+			return "index.html";
+	}
+	
 	@GetMapping(value = "/")
 	public String home( ) {
 			return "index.html";
 	}
-
+	
+	@GetMapping(value = "/home")
+	public String asd( ) {
+			return "index.html";
+	}
+	
 	@GetMapping(value = "/story")
 	public String index() {
 		return "index.html";
