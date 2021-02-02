@@ -9,7 +9,6 @@ import Signup from '@/views/account/Signup.vue'
 import FindPassword from '@/views/account/FindPassword.vue'
 import FindLocation from '@/views/app/FindLocation.vue'
 import Admin from '@/views/account/Admin.vue'
-import GroupPage from '@/views/story/GroupPage'
 import Badge from '@/views/app/Badge.vue'
 
 Vue.use(VueRouter)
@@ -68,11 +67,6 @@ const routes = [
     path: '/group/update',
     name: 'GroupUpdate',
     component: GroupUpdate,
-  },
-  {
-    path: '/review',
-    name: 'ReviewHome',
-    component: ReviewHome,
   },
   {
     path: '/badge',
