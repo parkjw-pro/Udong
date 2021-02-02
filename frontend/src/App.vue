@@ -3,8 +3,8 @@
     <div v-if="login">
         <Navbar/>
     </div>
-     <hr>
-     <router-view></router-view>   
+    <hr>
+    <router-view></router-view>   
   </div>
 </template>
 
