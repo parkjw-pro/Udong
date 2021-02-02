@@ -66,6 +66,7 @@ export default {
   },
   methods: {
     getMyGroup: function () {
+      // 유저 아이디 가져오기
       const userId = this.$store.getters.getUserId
       console.log(userId)
       axios.get(`${SERVER_URL}/${userId}/member`)

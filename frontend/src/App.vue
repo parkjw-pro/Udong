@@ -23,11 +23,7 @@ import 'vue-select/dist/vue-select.css';
 export default {
   name: 'App',
   components: {
-<<<<<<< HEAD
     // Login,
-=======
-
->>>>>>> user
      Navbar,
 
     // Location,
