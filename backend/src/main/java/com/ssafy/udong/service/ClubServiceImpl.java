@@ -30,14 +30,10 @@ public class ClubServiceImpl implements ClubService {
 	@Autowired
 	ClubDao clubDao;
 	
-
-
 	/* CLUB */
 	@Override
 	public String createClub(ClubDto Club, MultipartFile file) {
 		try {
-			
-
 			if (file != null && !file.isEmpty()) {
 				File uploadDir = new File(root + File.separator + "club" + File.separator + Club.getUserId());
 				if (!uploadDir.exists())
@@ -52,7 +48,6 @@ public class ClubServiceImpl implements ClubService {
 				String tempDate = sdFormat.format(nowDate);
 
 				try {
-
 					System.out.println("file service");
 					System.out.println(file.getOriginalFilename());
 					Files.copy(file.getInputStream(), path2.resolve("udong_"+tempDate+file.getOriginalFilename()));
@@ -93,6 +88,16 @@ public class ClubServiceImpl implements ClubService {
 	}
 
 	@Override
+	public String selectDuplicateClubName(String clubName, String areaCode) {
+		try {
+			return clubDao.selectDuplicateClubName(clubName, areaCode);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@Override
 	public ClubResultDto selectClub(String clubId) {
 		ClubResultDto rdto = new ClubResultDto();
 		try {
@@ -100,7 +105,7 @@ public class ClubServiceImpl implements ClubService {
 			String clubLeaderNickname = clubDao.selectNickname(club.getUserId());
 			club.setNickname(clubLeaderNickname);
 			
-			List<String> list = clubDao.SelectFileUrl(club.getFileId());
+			List<String> list = clubDao.selectFileUrl(club.getFileId());
 			
 			rdto.setDto(club);
 			rdto.setFileUrl(list);
@@ -260,6 +265,16 @@ public class ClubServiceImpl implements ClubService {
 			return 0;
 		}
 	}
+	
+	@Override
+	public int deleteClubMemberWaiting(String clubId, String userId) {
+		try {
+			return clubDao.deleteClubMemberWaiting(clubId, userId);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
 
 	@Override
 	public List<ClubDto> selectAllClubMemberByUserId(String userId) {
@@ -283,6 +298,7 @@ public class ClubServiceImpl implements ClubService {
 		}
 	}
 
+<<<<<<< HEAD
 	@Override
 	public String selectDuplicateClubName(String clubname) {
 		try {
@@ -292,5 +308,7 @@ public class ClubServiceImpl implements ClubService {
 		}
 		return null;
 	}
+=======
+>>>>>>> 957186f5317204bf0dcb340e09212b0079d0118f
 
 }
