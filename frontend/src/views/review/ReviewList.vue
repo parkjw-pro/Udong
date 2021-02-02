@@ -4,15 +4,21 @@
       <h3>카테고리명</h3>
       <b-icon id="map_btn" icon="map" font-scale="2"></b-icon>
     </div>
+    <div id="dummy">
+      <h5>페이지가 정상적으로 작동중입니다!!!!</h5>
+      <img alt="Vue logo" src="@/assets/udonge.png" style="width: 10%">
+      <div>데이터 for문을 작성해주세요 개발자님!!!</div>
+    </div>    
+    <!-- for문 돌리기!!!! -->
     <!-- v-for="(idx, store) in stores" :key=idx -->
-    <div >
+    <!-- <div v-for="(idx, stores) in stores" :key=idx >
       <b-card bg-variant="white" text-variant="black" :title="stores[1].storeName">
         <b-card-text>
-          {{ stores}}
+          {{ stores }}
         </b-card-text>
         <b-button href="#" variant="primary">상세</b-button>
       </b-card>
-    </div>
+    </div> -->
   </div>
 </template>
 

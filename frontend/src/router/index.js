@@ -13,6 +13,7 @@ import AccountUpdate from '@/views/account/AccountUpdate.vue'
 
 //앱
 import Badge from '@/views/app/Badge.vue'
+import Developers from '@/views/app/Developers.vue'
 import FindLocation from '@/views/app/FindLocation.vue'
 import GetLocation from '@/views/app/GetLocation.vue'
 import Home from '@/views/app/Home'
@@ -97,6 +98,16 @@ const routes = [
   },
   //앱
   {
+    path: '/badge',
+    name: 'Badge',
+    component: Badge,
+  },
+  {
+    path: '/developers',
+    name: 'Developers',
+    component: Developers,
+  },
+  {
     path: '/location/first',
     name: 'FindLocation',
     component: FindLocation,
@@ -107,14 +118,9 @@ const routes = [
     component: GetLocation,
   },
   {
-    path: '/home',
+    path: '/',
     name: 'Home',
     component: Home,
-  },
-  {
-    path: '/badge',
-    name: 'Badge',
-    component: Badge,
   },
   //리뷰
   {
@@ -144,7 +150,7 @@ const routes = [
   },
   {
     path: '/review/article/detail',
-    name: 'ArticleDetail',
+    name: 'ReviewDetail',
     component: ReviewDetail,
   },
   //스토리

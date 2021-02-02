@@ -1,5 +1,5 @@
 <template>
-  <div class="mx-5">
+  <div id="box" class="mx-5">
     <!-- 검색창 -->
     <b-nav-form>
       <b-form-input class="mr-sm-2 ml-auto" placeholder="Search"></b-form-input>  <!-- 가운데 정렬이 잘 안된다!!!! ㅠㅠㅠ -->
@@ -16,7 +16,7 @@
         </b-button-group>
       </b-col>
       <b-col md="5">
-        <b-button pill end>+</b-button> <!-- variant="outline-secondary" 속성 -->
+        <b-button pill end variant="transparent" @click="toGroupList">+</b-button> <!-- variant="outline-secondary" 속성 -->
       </b-col>
     </b-row>
 
@@ -42,9 +42,12 @@
 </template>
 
 <script>
+import axios from 'axios'
 import Button from '@/components/story/Button'
 import EndBlock from '@/components/story/EndBlock'
 import PostBlock from '@/components/story/PostBlock'
+
+const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
 export default {
   name: 'NewsFeed',
@@ -52,7 +55,35 @@ export default {
     Button,
     EndBlock,
     PostBlock,
-  }
+  },
+  data: function () {
+    return {
+      user: {},
+      myGroup: {
+
+      },
+    }
+  },
+  methods: {
+    getMyGroup: function () {
+      const userId = this.$store.getters.getUserId
+      console.log(userId)
+      axios.get(`${SERVER_URL}/${userId}/member`)
+        .then((res) => {
+          console.log(res, ': 내 그룹 가져오기 성공!')
+          this.myGroup = res
+        })
+        .catcch((err) => {
+          console.log(err, ': 내 그룹을 가져올 수 없습니다.')
+        })
+    },
+    toGroupList: function () {
+      this.$router.push({ name: 'GroupList' })
+    }
+  },
+  created: async function () {
+    await this.getMyGroup() 
+  },
 }
 </script>
 

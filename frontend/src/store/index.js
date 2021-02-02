@@ -6,6 +6,8 @@ const SERVER_URL =  process.env.VUE_APP_SERVER_URL
 
 export default new Vuex.Store({
   state: {
+    // 1. 로그인 여부
+    isLogin: false,
     accessToken: null,
     userId: "",
     nickname: ""

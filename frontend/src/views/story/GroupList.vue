@@ -1,5 +1,5 @@
 <template>
-  <div class="mx-5">
+  <div id='box' class="mx-5">
     <!-- 1. 내 그룹 -->
     <div id="my_group" class="my-5">
         <b-row>

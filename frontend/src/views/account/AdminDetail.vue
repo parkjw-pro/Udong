@@ -8,6 +8,9 @@
       </b-row>
     <!-- </div> -->
     <!-- <b-table striped hover :items="items" :fields="fields"></b-table> -->
+    <!-- <div v-for="asd from data">
+      <div>{{ asd.userId }}</div>
+    </div> -->
   </div>
 </template>
 
@@ -16,7 +19,7 @@
     name: 'AdminDetail',
     props: {
       // 가져온 데이터 여기 입력하기!!!
-      
+      // data: Object
     },
     data() {
       return {

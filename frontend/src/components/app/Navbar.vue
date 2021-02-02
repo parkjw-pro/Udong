@@ -3,7 +3,7 @@
     <!-- 1. Navbar --> <!-- variant="faded" -->
     <b-navbar class="pl-5 mt-3" toggleable="sm" type="light" variant="faded">
       <!-- 1.1 Navbar Logo -->
-      <b-navbar-brand href="#">
+      <b-navbar-brand href="#" @click="toHome">
         <img src="@/assets/logo.png" alt="우동" style="width: 60px; height: 60px;"> 은
       </b-navbar-brand>
       <!-- 1.2 Navbar dropdowns -->
@@ -58,6 +58,7 @@
         <b-col v-if="toggle" class="small" id="option_v3" @click="toAccountDetail">개인정보</b-col>
         <b-col v-if="toggle" class="small" id="option_v3" @click="logout">로그아웃</b-col>
         <b-col v-if="toggle" class="small" id="option_v3" @click="toDevelopers">개발진</b-col>
+        <b-col v-if="toggle && is_manager" class="small" id="option_v3" @click="toDevelopers">관리자페이지</b-col>
     </component>
   </div>
 </template>
@@ -83,14 +84,25 @@ export default {
       side: 'right',
       currentMenu: 'slide',
       isToggled: false,
+      is_manager: false,
     }
   },
   computed: {
     toggle: function () {
       return this.isToggled
-    }
+    },
   },
   methods: {
+    getUser: function () {
+      var check = JSON.parse(localStorage.getItem('Login-token'))["is-manager"]
+      console.log(check)
+      if (check == 1) {
+        this.is_manager = true
+      }
+    },
+    toHome: function () {
+      this.$router.push({name: 'Home'})
+    },
     toReview: function () {
       this.$router.push({name: 'ReviewHome'})
     },
@@ -107,15 +119,20 @@ export default {
       this.$router.push({name: 'AccountDetail'})
     },
     logout: function () {
-
+      localStorage.removeItem('jwt')  // localStorage에서 JWT 지우기
+      this.$store.state.isLogin=false
+      this.$router.push({name: 'Login'})
     },
     toDevelopers: function () {
-
+      this.$router.push({name: 'Developers'})
     },
     arrowToggle() {
       this.isToggled = !this.isToggled;
     }
   },
+  created: async function () {
+    await this.getUser()
+  }
 }
 </script>
 
