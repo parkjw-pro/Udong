@@ -2,7 +2,7 @@
 <div id="app" class="pb-5">
     <div v-if="login">
       <Navbar/>
-      <GetStore/>
+      <ReviewCreate/>
     </div>
      <!-- <router-view><router-view/>    -->
   </div>
@@ -15,7 +15,7 @@
 
 // 임시
 // import Location from '@/components/app/Location'
-import GetStore from '@/views/review/GetStore'
+import ReviewCreate from '@/views/review/ReviewCreate'
 import 'vue-select/dist/vue-select.css';
 
 
@@ -27,7 +27,7 @@ export default {
      Navbar,
 
     // Location,
-    GetStore,
+    ReviewCreate,
   },
   data: function () {
     return {
