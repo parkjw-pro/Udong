@@ -5,7 +5,6 @@ import Admin from '@/views/account/Admin.vue'
 import Signup from '@/views/account/Signup.vue'
 import Login from '@/views/account/Login.vue'
 import FindPassword from '@/views/account/FindPassword.vue'
-import Account
 import Home from '@/views/app/Home'
 
 import NewsFeed from '@/views/story/NewsFeed.vue'
