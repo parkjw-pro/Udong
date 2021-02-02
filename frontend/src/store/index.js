@@ -8,7 +8,10 @@ export default new Vuex.Store({
   state: {
     accessToken: null,
     userId: "",
-    nickname: ""
+    nickname: "",
+    // user: {
+
+    // },
   },
   getters: {
     getAccessToken(state) {
@@ -30,18 +33,28 @@ export default new Vuex.Store({
         return JSON.parse(localStorage.getItem('Login-token'))['user-name'];
       }
       return state.nickname;
-    }
+    },
+    // getUser(state) {
+    //   if (localStorage.getItem('Login-token') != undefined) {
+    //     return JSON.parse(localStorage.getItem('Login-token'));
+    //   }
+    //   return state.user;
+    // },
   },
   mutations: {
     LOGIN(state, payload) {
       state.accessToken = payload["auth-token"];
       state.userId = payload["user-id"];
       state.nickname = payload["user-name"];
+      // state.user = payload
     },
     LOGOUT(state) {
       state.accessToken = null;
       state.userId = "";
       state.nickname = "";
+      state.user = {
+
+      };
     }
   },
 

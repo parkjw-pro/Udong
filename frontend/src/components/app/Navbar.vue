@@ -24,8 +24,8 @@
         <b-row class="pl-0" id="option_v2">
           <b-col><a href=""><Profile2 style="width: 60%;" /></a></b-col>
           <b-col>
-            <b-row>이송영님</b-row>
-            <b-row>안녕하세요!</b-row>
+            <b-row align-h="center" class="mb-2">{{ nickname }}님</b-row>
+            <b-row align-h="center" class="small">안녕하세요!</b-row>
           </b-col>
         </b-row>
         <hr>
@@ -85,6 +85,7 @@ export default {
       currentMenu: 'slide',
       isToggled: false,
       is_manager: false,
+      nickname: '',
     }
   },
   computed: {
@@ -134,8 +135,8 @@ export default {
       this.isToggled = !this.isToggled;
     }
   },
-  created: async function () {
-    await this.getUser()
+  mounted() {
+    this.nickname = JSON.parse(localStorage.getItem('Login-token'))["user-name"]
   }
 }
 </script>
