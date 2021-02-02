@@ -2,7 +2,7 @@
   <div id="box">
      <b-form class="mt-5 pt-5" @submit="onSubmit">
       <!-- 1. 아이디 -->
-      <b-row id="accountBox" align-h="left">
+      <b-row id="accountBox" >
         <b-col cols="2"><span>아이디</span></b-col>
         <b-col cols="5">
           <b-form-input
@@ -15,7 +15,7 @@
         </b-col>
       </b-row>
       <!-- 2. 닉네임 -->
-      <b-row id="accountBox" align-h="left">
+      <b-row id="accountBox" >
         <b-col cols="2"><span>닉네임</span></b-col>
         <b-col cols="5">
           <b-form-input
@@ -31,7 +31,7 @@
             }}</small> -->
       </b-row>
       <!-- 3. 이메일 -->
-      <b-row id="accountBox" align-h="left">
+      <b-row id="accountBox" >
         <b-col cols="2"><span>이메일</span></b-col>
         <b-col cols="5">
           <b-form-input
@@ -44,12 +44,12 @@
         </b-col>
       </b-row>
       <!-- 4. 동네 설정 -->
-      <b-row id="accountBox" align-h="left">
+      <b-row id="accountBox" >
         <b-col cols="2"><span>우리동네</span></b-col>
         <b-col cols="5" class="font-weight-bold">
           {{ dong }}
         </b-col>
-        <b-col cols="4" align-self="left">
+        <b-col cols="4" >
           <!-- <b-button class="mx-3" variant="info" @click="createGroup">수정</b-button> -->
           <!-- <b-button class="mx-3" variant="danger" @click="createGroup">삭제</b-button> -->
         </b-col>
@@ -103,6 +103,5 @@ export default {
   /* margin-right: 30px; */
   margin-bottom: 30px;
 }
-#box {
-}
+
 </style>
