@@ -43,12 +43,10 @@ export default {
   },
   
   created(){
-    console.log(localStorage.getItem('auth-token'));  // localStorage에서 JWT 받아오기
-    console.log(this.login)
+    // console.log(localStorage.getItem('auth-token'));  // localStorage에서 JWT 받아오기
     if (localStorage.getItem('auth-token') != undefined) {
         this.login = true
     }
-     console.log(this.login)
   }
 }
 </script>

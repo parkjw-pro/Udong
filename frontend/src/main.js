@@ -15,8 +15,9 @@ import vSelect from 'vue-select'  // vue-select
 import VuePackeryPlugin from 'vue-packery-plugin'
 import VueDraggabillyPlugin from 'vue-packery-draggabilly-plugin'
 import Mint from 'mint-ui';
-
-
+import UploadImage from 'vue-upload-image';
+// import axios from 'axios'
+ 
 localize('ko', ko)
 extend('email', email)
 extend('required', required)
@@ -30,11 +31,15 @@ Vue.use(ToggleButton)
 Vue.use(VuePackeryPlugin)
 Vue.use(VueDraggabillyPlugin) // Packery Draggabilly
 Vue.use(Mint);  // Mint UI
+Vue.component('upload-image', UploadImage)
 Vue.component('v-select', vSelect)  // vue-select
 Vue.config.productionTip = false
 
 new Vue({
   store,
   router,
+  components: {
+    UploadImage
+  },
   render: h => h(App)
 }).$mount('#app')

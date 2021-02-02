@@ -30,6 +30,7 @@ npm install --save vue-packery-draggabilly-plugin
 npm install jquery
 npm install mint-ui -S
 npm install mdbvue
+npm i vue-upload-image
 ```
 
 ### 폴더 구조

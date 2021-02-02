@@ -6,11 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class homeController {
-<<<<<<< HEAD
-	
-	@GetMapping(value = "/group/update")
-	public String groupUpdate( ) {
-=======
+
 
 	@GetMapping(value = "/home")
 	public String asd( ) {
