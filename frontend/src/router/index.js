@@ -17,6 +17,10 @@ import Developers from '@/views/app/Developers.vue'
 import FindLocation from '@/views/app/FindLocation.vue'
 import GetLocation from '@/views/app/GetLocation.vue'
 import Home from '@/views/app/Home'
+
+//소식
+import NewsHome from '@/views/news/NewsHome'
+
 //리뷰
 import ReviewHome from '@/views/review/ReviewHome.vue'
 import FindStore from '@/views/review/FindStore.vue'
@@ -25,7 +29,6 @@ import GetStore from '@/views/review/GetStore.vue'
 import ReviewCreate from '@/views/review/ReviewCreate.vue'
 import ReviewList from '@/views/review/ReviewList.vue'
 import ReviewDetail from '@/views/review/ReviewDetail.vue'
-import ReviewDetailList from '@/views/review/ReviewDetailList.vue'
 //스토리
 
 import ArticleCreate from '@/views/story/ArticleCreate.vue'
@@ -40,8 +43,6 @@ import GroupUpdate from '@/views/story/GroupUpdate.vue'
 
 import MyFeed from '@/views/story/MyFeed.vue'
 import NewsFeed from '@/views/story/NewsFeed.vue'
-
-
 
 
 
@@ -125,6 +126,12 @@ const routes = [
     name: 'Home',
     component: Home,
   },
+  //소식
+  {
+    path: '/news',
+    name: 'NewsHome',
+    component: NewsHome,
+  },
   //리뷰
   {
     path: '/review',
@@ -155,11 +162,6 @@ const routes = [
     path: '/review/article/detail',
     name: 'ReviewDetail',
     component: ReviewDetail,
-  },
-  {
-    path: '/review/article/Listdetail',
-    name: 'ReviewDetailList',
-    component: ReviewDetailList,
   },
   //스토리
   {

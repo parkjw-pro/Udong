@@ -33,24 +33,14 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserDto login(UserDto userDto) throws Exception {
 		try {
-<<<<<<< HEAD
-			//return sqlSession.getMapper(UserDao.class).login(userDto);
-=======
-			// return sqlSession.getMapper(UserDao.class).login(userDto);
->>>>>>> 957186f5317204bf0dcb340e09212b0079d0118f
+		//return sqlSession.getMapper(UserDao.class).login(userDto);
+
 			UserDto dto = new UserDto();
 			SecurityUtil securityUtil = new SecurityUtil();
 			userDto.setPassword(securityUtil.encryptSHA256(userDto.getPassword()));
 			System.out.println(userDto.getPassword());
-<<<<<<< HEAD
-			dto = dao.login(userDto);
-			if( dto.getUserState() == null) { // 정지상태
-				return dto;
-			}else {
-				return null;
-			}
+
 			
-=======
 			dto = userDao.login(userDto);
 			if (dto.getUserState() == null) { // 정지상태
 				return dto;
@@ -58,7 +48,7 @@ public class UserServiceImpl implements UserService {
 				return null;
 			}
 
->>>>>>> 957186f5317204bf0dcb340e09212b0079d0118f
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -78,13 +68,9 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserDto selectUser(UserDto userDto) throws Exception {
 		try {
-<<<<<<< HEAD
 			
-			return dao.selectUser(userDto);
-=======
-
 			return userDao.selectUser(userDto);
->>>>>>> 957186f5317204bf0dcb340e09212b0079d0118f
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -108,11 +94,8 @@ public class UserServiceImpl implements UserService {
 			SecurityUtil securityUtil = new SecurityUtil();
 			userDto.setPassword(securityUtil.encryptSHA256(userDto.getPassword()));
 
-<<<<<<< HEAD
-			return dao.insertUser(userDto);
-=======
 			return userDao.insertUser(userDto);
->>>>>>> 957186f5317204bf0dcb340e09212b0079d0118f
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -121,20 +104,14 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public int updateUser(UserDto userDto) throws Exception {
-<<<<<<< HEAD
-		
-=======
 
->>>>>>> 957186f5317204bf0dcb340e09212b0079d0118f
+
 		try {
 			SecurityUtil securityUtil = new SecurityUtil();
 			userDto.setPassword(securityUtil.encryptSHA256(userDto.getPassword()));
 
-<<<<<<< HEAD
-			return dao.updateUser(userDto);
-=======
 			return userDao.updateUser(userDto);
->>>>>>> 957186f5317204bf0dcb340e09212b0079d0118f
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -176,11 +153,9 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void gmailSend(String email) throws Exception {
 		String user = "youngug159@gmail.com"; // 네이버일 경우 네이버 계정, gmail경우 gmail 계정
-<<<<<<< HEAD
-		String password = "d1n7qkqh12";   // 패스워드
-=======
+
 		String password = "d1n7qkqh12"; // 패스워드
->>>>>>> 957186f5317204bf0dcb340e09212b0079d0118f
+
 
 		// SMTP 서버 정보를 설정한다.
 		Properties prop = new Properties();
@@ -226,11 +201,9 @@ public class UserServiceImpl implements UserService {
 	public int gmailCheck(String checkCode) throws Exception {
 		// this.code = "a";
 		try {
-<<<<<<< HEAD
-			if(checkCode.equals(this	.code)) {
-=======
+
 			if (checkCode.equals(this.code)) {
->>>>>>> 957186f5317204bf0dcb340e09212b0079d0118f
+
 				return 1;
 			} else {
 				return 0;

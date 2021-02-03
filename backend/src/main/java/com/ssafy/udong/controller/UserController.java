@@ -151,13 +151,10 @@ public class UserController {
 		}
 	}
 
-<<<<<<< HEAD
-	@ApiOperation(value = "비밀번호 찾기", notes = "사용자가 비밀번호를 분실하였을 경우, 개인정보 확인 후 재설정을 위한 인증코드를 발송합니다.")
-=======
 	@ApiOperation(value = "비밀번호 찾기", notes = "사용자가 비밀번호를 분실하였을 경우, 개인정보 확인 후 재설정을 위한 인증코드를 발송합니다.\n" +
 			"## 필수값\n" + " - userId : 사용자 아이디\n"
 						+ " - email : 사용자 이메일 주소\n")
->>>>>>> 957186f5317204bf0dcb340e09212b0079d0118f
+
 	@GetMapping("/password")
 	public ResponseEntity<UserDto> selectUser(@RequestParam(value="userId") String userId,@RequestParam(value="email") String email) throws Exception {
 		UserDto userDto = new UserDto();
@@ -235,12 +232,9 @@ public class UserController {
 		}
 	}
 
-<<<<<<< HEAD
-	@ApiOperation(value = "인증 메일 일치 확인", notes = "인증을 위해 발송한 이메일 코드가 알맞는지 확인합니다.")
-=======
 	@ApiOperation(value = "인증 메일 일치 확인", notes = "인증을 위해 발송한 이메일 코드가 알맞는지 확인합니다.\n" +
 			"## 필수값\n" + " - code : 인증 메일로 발송한 코드\n")
->>>>>>> 957186f5317204bf0dcb340e09212b0079d0118f
+
 	@PostMapping("/email/{code}")
 	public ResponseEntity<String> checkDuplicateEmail(@PathVariable String code) throws Exception {
 		int result = userService.gmailCheck(code);

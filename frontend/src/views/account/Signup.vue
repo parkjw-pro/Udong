@@ -212,7 +212,7 @@ b-form-group확인해주는거에서 안넘어가는듯
 import axios from "axios";
 import { ValidationProvider } from "vee-validate";
 //const SERVER_URL = process.env.VUE_APP_SERVER_URL;
-
+const SERVER_URL = "http://localhost:8000";
 export default {
   components: {
     ValidationProvider,
@@ -247,15 +247,15 @@ export default {
            {
              alert("중복체크 및 유효성 검사 확인 바랍니다.")
         }else{
-          axios.post("/user",this.credentials)
+          axios.post(`${SERVER_URL}/user`,this.credentials)
           .then(()=>{
            alert("회원가입 성공");
-           window.location.href = "/";
+           window.location.href = "/account";
            
           })
           .catch(()=>{
             alert("서버에 문제가 생겼습니다. 다시 가입 바랍니다.");
-             window.location.href = "/";
+             window.location.href = "/account";
           });
         }
       
@@ -268,7 +268,7 @@ export default {
       }
       else{
         axios
-          .get(`/user/id/${this.credentials.userId}`)
+          .get(`${SERVER_URL}/user/id/${this.credentials.userId}`)
           .then(() => {
             alert("사용 가능한 아이디 입니다.");
             this.checkId = true;
@@ -288,7 +288,7 @@ export default {
       }
       else{
         axios
-          .get(`/user/nickname/${this.credentials.nickname}`)
+          .get(`${SERVER_URL}/user/nickname/${this.credentials.nickname}`)
           .then(() => {
             alert("사용 가능한 닉네임 입니다.");
             this.checkNickname = true;
@@ -308,7 +308,7 @@ export default {
       }
       else{
         axios
-          .post("/user/email",this.credentials)
+          .post(`${SERVER_URL}/user/email`,this.credentials)
           .then(() => {
             alert("사용 가능한 이메일 입니다. 인증코드 입력바랍니다.");
             this.checkEmail = true;
@@ -328,7 +328,7 @@ export default {
       }
       else{
         axios
-          .post(`/user/email/${this.emailCode}`)
+          .post(`${SERVER_URL}/user/email/${this.emailCode}`)
           .then(() => {
             this.checkEmailCode = true;
             alert("인증완료");

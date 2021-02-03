@@ -26,7 +26,6 @@ public interface ReviewDao {
 	public ReviewDto selectReview(String reviewId);
 	public List<String> selectFileUrl(String id);
 	
-<<<<<<< HEAD
 	//리뷰수정 1
 	public int UpdateReview(ReviewDto reviewDto);
 	
@@ -45,7 +44,7 @@ public interface ReviewDao {
 	
 	//특정 상점에 달린 리뷰 갯수 조회 1
 	public int ReviewListTotalCount(String store_id);
-=======
+	
 	// 닉네임찾기
 	public String findNickname(String userId);
 
@@ -54,7 +53,6 @@ public interface ReviewDao {
 
 	// 리뷰에 대한 조회수 업데이트
 	public int updateReviewReadCount(String reviewId);
->>>>>>> 957186f5317204bf0dcb340e09212b0079d0118f
 	
 	// 리뷰수정 1
 	public int updateReview(ReviewDto reviewDto);

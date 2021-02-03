@@ -10,19 +10,11 @@
         <span class="title">지금 계신 위치가 이곳이 맞나요?</span>
         <span></span>
         <span id="centerAddr"></span>
-<<<<<<< HEAD
-        <span id="asd"></span>
-      </div>
-    </div>
-    <button type="button" @click="createUserAddress">우리동네로 저장</button>
-    <button type="button" @click="createUserAddress">그냥 둘러볼게요</button>
-=======
         <span id="dong"></span>
       </div>
     </div>
     <button type="button" v-on:click="createUserAddress()">우리동네로 저장</button>
     <button type="button" v-on:click="createUserAddress()">그냥 둘러볼게요</button>
->>>>>>> jong
   </div>
 </template>
 
@@ -48,11 +40,6 @@ export default {
 
     navigator.geolocation.getCurrentPosition(this.success, this.fail);
     
-<<<<<<< HEAD
-    
-   
-=======
->>>>>>> jong
     // this.initMap()
     // this.addScript()
 
@@ -60,8 +47,6 @@ export default {
     // navigator.geolocation.getCurrentPosition(this.success, this.fail);
 
     // await this.searchAddrFromCoords(this.location, this.displayCenterInfo);
-<<<<<<< HEAD
-=======
   },
     computed: {
     before(){ 
@@ -74,7 +59,6 @@ export default {
     }
 
 
->>>>>>> jong
   },
   methods: {
     success(location) {
@@ -84,11 +68,7 @@ export default {
       this.location.lat = this.lat;
       this.location.lng = this.lng;
       
-<<<<<<< HEAD
-   
-=======
       console.log(this.lat, this.lng);
->>>>>>> jong
     },
     fail(msg) {
       // 실패 시 PositionError 객체가 콜백함수에 전달된다.
@@ -120,48 +100,22 @@ export default {
       var marker = new kakao.maps.Marker({ position: map.getCenter() });
 
       marker.setMap(map);
-<<<<<<< HEAD
-     
-      this.addgeocode(map);
-
-      // geocoder.coord2RegionCode(this.location.lat, this.location.lng, callback);
-      //console.log(geocoder);
-      //마커추가하려면 객체를 아래와 같이 하나 만든다.
-
-      // console.log(map.getCenter());
-    },
-
-    addgeocode(map){
-      var geocoder = new kakao.maps.services.Geocoder();
-      var callback = function(result, status){
-      if (status === kakao.maps.services.Status.OK) {
-          var infoDiv = document.getElementById('centerAddr');
-          var dong = document.getElementById('asd');
-=======
       var geocoder = new kakao.maps.services.Geocoder();
       var callback = function(result, status) {
         if (status === kakao.maps.services.Status.OK) {
           var infoDiv = document.getElementById('centerAddr');
           var dong = document.getElementById('dong');
 
->>>>>>> jong
           for (var i = 0; i < result.length; i++) {
             // 행정동의 region_type 값은 'H' 이므로
             // if(i == result.length-1){
             //   this.dong =  this.dong + result[i].address_name;
             // }
             if (result[i].region_type === 'H') {
-<<<<<<< HEAD
-              infoDiv.innerHTML = result[i].address_name;
-              dong.innerHTML = result[i].code;
-         //   this.location.dongcode = result[i].code;
-              
-=======
 
               infoDiv.innerHTML = result[i].address_name;
               dong.innerHTML = result[i].code;
               //this.asd(dong);
->>>>>>> jong
              // console.log(result[i].code);
              // this.$store.state.dongcode ="1111";
               // this.$store.state.dongcode = result[i].code;
@@ -169,30 +123,15 @@ export default {
               //this.location.dongcode = dong;
               break;
             }
-<<<<<<< HEAD
-          }       
-        }    
-      
-    }
-   
-=======
           }
         //  this.asd(dong);
         }
       };
->>>>>>> jong
       var searchAddrFromCoords = function(coords, callback) {
         // 좌표로 행정동 주소 정보를 요청합니다
         geocoder.coord2RegionCode(coords.getLng(), coords.getLat(), callback);
       };
 
-<<<<<<< HEAD
-     
-      searchAddrFromCoords(map.getCenter(), callback);
- 
-    },
-    
-=======
       searchAddrFromCoords(map.getCenter(), callback);
 
       
@@ -207,7 +146,6 @@ export default {
       this.location.dongcode = data;
 
     },
->>>>>>> jong
     addScript() {
       const script = document.createElement('script'); /* global kakao */
       script.onload = () => kakao.maps.load(this.initMap);
@@ -215,12 +153,7 @@ export default {
       document.head.appendChild(script);
     },
     createUserAddress: function() {
-<<<<<<< HEAD
-      console.log(document.getElementById('asd').innerHTML)
-      this.location.dongcode = document.getElementById('asd').innerHTML
-=======
       this.location.dongcode = document.getElementById('dong').innerHTML;
->>>>>>> jong
       console.log(this.location.dongcode);
       this.$store
         .dispatch('createUserAddress', this.location.dongcode)
