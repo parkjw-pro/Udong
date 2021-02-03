@@ -25,6 +25,7 @@ import GetStore from '@/views/review/GetStore.vue'
 import ReviewCreate from '@/views/review/ReviewCreate.vue'
 import ReviewList from '@/views/review/ReviewList.vue'
 import ReviewDetail from '@/views/review/ReviewDetail.vue'
+import ReviewDetailList from '@/views/review/ReviewDetailList.vue'
 //스토리
 
 import ArticleCreate from '@/views/story/ArticleCreate.vue'
@@ -39,6 +40,8 @@ import GroupUpdate from '@/views/story/GroupUpdate.vue'
 
 import MyFeed from '@/views/story/MyFeed.vue'
 import NewsFeed from '@/views/story/NewsFeed.vue'
+
+
 
 
 
@@ -152,6 +155,11 @@ const routes = [
     path: '/review/article/detail',
     name: 'ReviewDetail',
     component: ReviewDetail,
+  },
+  {
+    path: '/review/article/Listdetail',
+    name: 'ReviewDetailList',
+    component: ReviewDetailList,
   },
   //스토리
   {

@@ -40,34 +40,32 @@
 </template>
 
 <script>
-import axios from 'axios'
-const SERVER_URL = "http://localhost:8000";
+// import axios from 'axios'
+
 export default {
-  
   name: 'Admin',
   data: function () {
     return {
       is_manager: null,
-      user: {
-
-      }
     }
   },
   methods: {
+    getUser: function () {
+      // 유저 정보 가져오기
+      // 유저 정보 가져와서 is_manager 값 저장하기
+    },
     toUser: function () {
       // sample !!!! 이하 동일~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~!!!
     
-      //유저 DB 전체 가져오기
-       axios.get(`${SERVER_URL}/user/users`)
-         .then((res) => {
-          // router query로 넘겨주기
-          console.log(res)
-         this.$router.push({name: 'AdminDetail'  , query: {users: res}})
-    
-         })
-         .catch((err) => {
-           console.log(err)
-         })
+      // 유저 DB 전체 가져오기
+      // axios.get("/user")
+      //   .then(() => {
+      //     // router query로 넘겨주기
+      //     this.$router.push({name: 'AdminDetail', query: {user: this.club}})
+      //   })
+      //   .catch((err) => {
+      //     console.log(err)
+      //   })
     },
     toUserArticle: function () {
 

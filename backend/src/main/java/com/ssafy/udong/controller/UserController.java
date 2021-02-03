@@ -92,11 +92,10 @@ public class UserController {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = HttpStatus.ACCEPTED;
 //		System.out.println(">>>>>> " + jwtService.get(req.getHeader("auth-token")));
-//		System.out.println("여기는 앞! 2/3 axios.get 요청이 안되서 테스트 중!");
 		try {
 			// 사용자에게 전달할 정보이다.
 			// String info = memberService.getServerInfo();
-			
+
 			resultMap.putAll(jwtService.get(req.getHeader("auth-token")));
 			//
 			// resultMap.put("status", true);
@@ -113,9 +112,8 @@ public class UserController {
 
 	@ApiOperation(value = "회원 탈퇴", notes = "사용자 정보를 이용해 해당 사용자를 탈퇴처리합니다.")
 	@DeleteMapping
-	public ResponseEntity<String> deleteUser(@RequestParam(value="userId") String userId ) throws Exception {
-		System.out.println(userId);
-		int result = userService.deleteUser(userId);
+	public ResponseEntity<String> deleteUser(@RequestBody UserDto userDto) throws Exception {
+		int result = userService.deleteUser(userDto.getUserId());
 		if (result == SUCCESS) {
 			return new ResponseEntity<String>("회원탈퇴 성공", HttpStatus.OK);
 		} else {
@@ -138,9 +136,7 @@ public class UserController {
 	@ApiOperation(value = "회원수정", notes = "사용자 정보를 수정합니다.")
 	@PutMapping
 	public ResponseEntity<String> updateUser(@RequestBody UserDto userDto) throws Exception {
-		System.out.println(userDto.getNickname());
 		int result = userService.updateUser(userDto);
-		System.out.println(result);
 		if (result == SUCCESS) {
 			return new ResponseEntity<String>("회원수정 성공", HttpStatus.OK);
 		} else {
@@ -233,6 +229,18 @@ public class UserController {
 			return new ResponseEntity<String>("인증 완료.", HttpStatus.OK);
 		} else { // 코드가 불일치하면
 			return new ResponseEntity<String>("일치하지 않는 인증코드 입니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@ApiOperation(value = "주소등록", notes = "사용자 주소를 등록합니다.")
+	@GetMapping("/address/{dongcode}")
+	public ResponseEntity<String> createUserAddress(@PathVariable String dongcode) throws Exception {
+		System.out.println("주소등록");
+		int result = userService.createUserAddress(dongcode);
+		if (result == SUCCESS) {
+			return new ResponseEntity<String>("주소 등록 성공", HttpStatus.OK);
+		} else {
+			return new ResponseEntity<String>("주소 등록 실패", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 

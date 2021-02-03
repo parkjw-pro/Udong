@@ -93,6 +93,7 @@ public class ReviewController {
 	@ApiOperation(value = "상점의 리뷰 조회", notes = "한 상점에 대해 작성된 모든 리뷰를 조회합니다.")
 	@GetMapping(value = "/store/{storeId}")
 	private ResponseEntity<List<ReviewDto>> selectAllReview(@PathVariable String storeId) {
+		System.out.println("상점에 대한 리뷰 조회");
 
 		List<ReviewDto> list = service.SelectAllReview(storeId);
 	//	System.out.println(list.get(0).getReviewContent());
