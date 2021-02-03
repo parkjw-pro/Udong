@@ -250,17 +250,5 @@ public class UserController {
 			return new ResponseEntity<String>("일치하지 않는 인증코드 입니다.\n", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
-	@ApiOperation(value = "주소등록", notes = "사용자 주소를 등록합니다.")
-	@GetMapping("/address/{dongcode}")
-	public ResponseEntity<String> createUserAddress(@PathVariable String dongcode) throws Exception {
-		System.out.println("주소등록");
-		int result = userService.createUserAddress(dongcode);
-		if (result == SUCCESS) {
-			return new ResponseEntity<String>("주소 등록 성공", HttpStatus.OK);
-		} else {
-			return new ResponseEntity<String>("주소 등록 실패", HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
 
 }
