@@ -1,9 +1,8 @@
 <template>
   <div id="app" class="pb-5">  
     <div v-if="login">
-        <Navbar/>
+      <Navbar/>
     </div>
-    <hr>
     <router-view></router-view>   
   </div>
 </template>
@@ -11,7 +10,6 @@
 <script>
 import Navbar from '@/components/app/Navbar'
 import 'vue-select/dist/vue-select.css';
-
 
 export default {
   name: 'App',
@@ -26,7 +24,7 @@ export default {
   },
   methods: {
   },
-  created(){
+  created() {
     if (localStorage.getItem('auth-token') != undefined) {
         this.login = true
     }

@@ -1,7 +1,6 @@
 <template>
   <div>
     <div id="title" class="my-3">
-      <h3>우리동네를 찾아주세요!</h3>
     </div>
     <b-button style="background-color: #695549;" v-on:click="getLocation">클릭하여 우리 동네를 찾아보세요!</b-button>
     <br />

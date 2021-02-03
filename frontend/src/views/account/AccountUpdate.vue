@@ -135,7 +135,6 @@ export default {
         userId: "",
         nickname: "",
         email: "",
-        password: "", // 패스워드
       },
       // 닉네임 중복확인 했는지?
       isCheck: -1,
@@ -215,6 +214,32 @@ export default {
           console.log('닉네임 변경 성공!!!!')
           alert("닉네임이 성공적으로 저장되었습니다!");
           this.isCheck = -1
+
+          // !!!!!!!!!!!!!!!!! 데이터 최신화해주기!!!
+
+          // localStorage.setItem('Info-token')["userId"]
+
+          // localStorage.clear()
+          // this.$store
+          //   .dispatch("LOGIN", this.user)
+          //   .then(() => {
+          //     // this.$router.push({ name: 'Home' })
+          //     this.$router.replace('/location')
+          //   })
+          //   .catch(({ message }) => (this.msg = message));
+          // axios
+          //   .get(`${SERVER_URL}/user`)
+          //   .then((response) => {
+          //     console.log("axios login info");
+          //     localStorage.setItem('Info-token', JSON.stringify(response.data.user));
+          
+          //   })
+          //   .catch(() => {
+          //     localStorage.clear();
+          //     window.location.href = "/account";
+          //     alert("로그인 실패 아이디및 비밀번호 확인 부탁드립니다.");
+          //   });
+
         })
         .catch((err) => {
           console.log(err)
@@ -249,7 +274,6 @@ export default {
     this.user.userId = userInfo["userId"]
     this.user.nickname = userInfo["nickname"]
     this.user.email = userInfo["email"]
-    this.user.password = userInfo["password"]
     console.log(this.user)
   }
 }

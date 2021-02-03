@@ -25,7 +25,7 @@
 
 	<update id="updateUser"
 		parameterType="com.ssafy.udong.dto.UserDto">
-		UPDATE user set password = #{password}, email = #{email}, nickname = #{nickname}
+		UPDATE user set email = #{email}, nickname = #{nickname}
 		WHERE user_id = #{userId}
 	</update>
 

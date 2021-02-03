@@ -57,6 +57,8 @@ public class UserController {
 			System.out.println(userDto.getUserId());
 			System.out.println(userDto.getPassword());
 			UserDto loginUser = userService.login(userDto);
+			System.out.println(loginUser.getUserId());
+			System.out.println(loginUser.getPassword());
 			if (loginUser != null) {
 				// jwt.io에서 확인
 				// 로그인 성공했다면 토큰을 생성한다.

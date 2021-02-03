@@ -36,13 +36,14 @@ public class UserServiceImpl implements UserService {
 		//return sqlSession.getMapper(UserDao.class).login(userDto);
 
 			UserDto dto = new UserDto();
-			SecurityUtil securityUtil = new SecurityUtil();
-			userDto.setPassword(securityUtil.encryptSHA256(userDto.getPassword()));
-			System.out.println(userDto.getPassword());
+//			SecurityUtil securityUtil = new SecurityUtil();
+//			userDto.setPassword(securityUtil.encryptSHA256(userDto.getPassword()));
+//			System.out.println(userDto.getPassword());
 
 			
 			dto = userDao.login(userDto);
 			if (dto.getUserState() == null) { // 정지상태
+				System.out.println(dto.getUserId());
 				return dto;
 			} else {
 				return null;
@@ -107,8 +108,8 @@ public class UserServiceImpl implements UserService {
 
 
 		try {
-			SecurityUtil securityUtil = new SecurityUtil();
-			userDto.setPassword(securityUtil.encryptSHA256(userDto.getPassword()));
+//			SecurityUtil securityUtil = new SecurityUtil();
+//			userDto.setPassword(securityUtil.encryptSHA256(userDto.getPassword()));
 
 			return userDao.updateUser(userDto);
 
@@ -218,9 +219,9 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int updatePassword(UserDto userDto) throws Exception {
 		try {
-			SecurityUtil securityUtil = new SecurityUtil();
-			userDto.setPassword(securityUtil.encryptSHA256(userDto.getPassword()));
-
+//			SecurityUtil securityUtil = new SecurityUtil();
+//			userDto.setPassword(securityUtil.encryptSHA256(userDto.getPassword()));
+			
 			return userDao.updatePassword(userDto);
 		} catch (Exception e) {
 			e.printStackTrace();
