@@ -93,7 +93,7 @@ export default {
       this.$router.push({name: 'ReviewHome'})
     },
     toNews: function () {
-      // this.$router.push({name: 'News'})
+      this.$router.push({name: 'NewsHome'})
     },
     toStory: function () {
       this.$router.push({name: 'NewsFeed'})
@@ -108,7 +108,7 @@ export default {
 
     },
     toDevelopers: function () {
-
+      this.$router.push({name: 'Developers'})
     },
     arrowToggle() {
       this.isToggled = !this.isToggled;

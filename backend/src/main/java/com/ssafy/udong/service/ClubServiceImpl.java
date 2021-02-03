@@ -298,7 +298,6 @@ public class ClubServiceImpl implements ClubService {
 		}
 	}
 
-<<<<<<< HEAD
 	@Override
 	public String selectDuplicateClubName(String clubname) {
 		try {
@@ -308,7 +307,6 @@ public class ClubServiceImpl implements ClubService {
 		}
 		return null;
 	}
-=======
->>>>>>> 957186f5317204bf0dcb340e09212b0079d0118f
+
 
 }
