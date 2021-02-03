@@ -12,7 +12,7 @@ public interface UserService {
 
 
 	// 회원 탈퇴 가입 수정 
-	public int deleteUser(String userId) throws Exception;
+	public int deleteUser(UserDto userDto) throws Exception;
 	public int insertUser(UserDto userDto) throws Exception;
 	public int updateUser(UserDto userDto) throws Exception;
 

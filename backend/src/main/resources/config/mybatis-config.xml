@@ -9,14 +9,13 @@
     </settings>
 
     <mappers>
-
-        <mapper resource="database/review_query.xml" />
-        <mapper resource="database/store_query.xml" />
-        <mapper resource="database/club_query.xml" />
-        <mapper resource="database/area_query.xml" />
-        <mapper resource="database/User.xml" />
-        <mapper resource="database/UserBoardQuery.xml" />
-        <mapper resource="database/ClubPost_query.xml" />
- 
+        <mapper resource="database/AreaQuery.xml" />
+        <mapper resource="database/ClubQuery.xml" />
+        <mapper resource="database/ClubPostQuery.xml" />
+        <mapper resource="database/ReviewQuery.xml" />
+        <mapper resource="database/StoreQuery.xml" />
+        <mapper resource="database/UserQuery.xml" />
+        <mapper resource="database/UserPostQuery.xml" />
     </mappers>
+    
 </configuration>

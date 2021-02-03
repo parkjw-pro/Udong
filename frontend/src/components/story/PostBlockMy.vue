@@ -26,11 +26,37 @@
 
 <script>
 import ImageSlick from '@/components/story/ImageSlick'
+import axios from 'axios';
+const SERVER_URL = "http://localhost:8000";
 
 export default {
   name: 'PostBlockMy',
   components: {
     ImageSlick,
+  },
+  data() {
+    return {
+      posts:[],
+      limit: 3,  //한 페이지에 노출될 게시글의 수
+      offset: 0,  //게시글 번호 오프셋
+    }
+  },
+  mounted() {
+    this.getPostInfos();
+  },
+  methods: {
+    getPostInfos(){
+      axios
+        .get(`${SERVER_URL}/userpost`, {
+          params: {
+            limit: this.limit,
+            offset: this.offset
+          }
+      })
+        .then((response) => {
+          console.log(response);
+        });
+    }
   },
 }
 </script>

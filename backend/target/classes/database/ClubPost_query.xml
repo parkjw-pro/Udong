@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.udong.dao.ClubPostDao">
+
+	<!-- 글쓰기 -->
+	<insert id="createPost"
+		parameterType="com.ssafy.udong.dto.ClubPostDto">
+		INSERT INTO club_post ( club_id, user_id, post_content ,
+		post_views ,
+		is_open, post_like_count, post_tag , is_updated,
+		post_comment_count )
+		VALUES ( #{clubId}, #{userId}, #{postContent},
+		"0", #{isOpen},
+		"0",
+		#{postTag}, #{isUpdated}, "0" )
+	</insert>
+
+	<!--그룹post 이미지삽입 -->
+	<insert id="createClubPostFile"
+		parameterType="com.ssafy.udong.dto.ImageDto" useGeneratedKeys="true"
+		keyProperty="fileId">
+		INSERT INTO image (file_name, file_size, file_contentType,
+		file_url)
+		VALUES (#{fileName}, #{fileSize}, #{fileContentType},
+		#{fileUrl});
+	</insert>
+
+	<!--게시글과 파일 연결 -->
+	<insert id="connectionFile"
+		parameterType="com.ssafy.udong.dto.ClubPostDto"
+		useGeneratedKeys="true">
+		INSERT
+		INTO `club_post_file` (`post_id`, `club_id`,
+		`file_id`
+		)
+		VALUES ((select max(post_id) from club_post), #{clubId},
+		(select max(file_id) from image));
+	</insert>
+
+
+	<!-- 글 가져오기 -->
+	<select id="listPost" parameterType="map"
+		resultType="com.ssafy.udong.dto.ClubPostDto">
+		SELECT p.post_id as postId, p.club_id as clubId, p.user_id
+		as userId, u.nickname
+		,
+		p.post_content as postContent, p.created_at as
+		createdAt,
+		p.post_views as postViews,
+		p.is_open as isOpen,
+		p.post_like_count as
+		postListCount , p.post_tag
+		as postTag, p.is_updated
+		as isUpdated,
+		p.updated_at as updatedAt, p.post_comment_count as
+		postCommentCount
+		FROM club_post p, user u
+		WHERE p.user_id = u.user_id
+		ORDER BY p.post_id
+		DESC
+		LIMIT #{limit} OFFSET #{offset}
+
+	</select>
+
+
+	<!-- 글 가져오기 -->
+	<select id="searchWordListPost" parameterType="map"
+		resultType="com.ssafy.udong.dto.ClubPostDto">
+		SELECT p.post_id as postId, p.club_id as clubId, p.user_id
+		as userId, u.nickname
+		,
+		p.post_content as postContent, p.created_at as
+		createdAt,
+		p.post_views as postViews,
+		p.is_open as isOpen,
+		p.post_like_count as
+		postListCount , p.post_tag
+		as postTag, p.is_updated
+		as isUpdated,
+		p.updated_at as updatedAt, p.post_comment_count as
+		postCommentCount
+		FROM club_post p, user u
+		WHERE p.user_id = u.user_id
+		AND p.post_content
+		LIKE CONCAT('%', #{searchWord} ,'%')
+		ORDER BY
+		p.post_id DESC
+		LIMIT
+		#{limit} OFFSET #{offset}
+	</select>
+
+	<!-- 글 상세 가져오기 -->
+	<select id="detailPost"
+		parameterType="com.ssafy.udong.dto.ClubPostDto"
+		resultType="com.ssafy.udong.dto.ClubPostDto">
+		SELECT p.post_id as postId, p.club_id as clubId, p.user_id
+		as userId, u.nickname
+		, p.post_content as postContent, p.created_at as
+		createdAt, p.post_views as postViews,
+		p.is_open as isOpen,
+		p.post_like_count as postListCount , p.post_tag as postTag
+		,
+		p.is_updated as isUpdated, p.updated_at as updatedAt,
+		p.post_comment_count as postCommentCount
+		FROM club_post p, user u
+		WHERE
+		p.user_id = u.user_id
+		AND p.post_id = #{postId}
+	</select>
+
+	<!--해당게시글의 파일 url찾기 -->
+	<select id="SelectFileUrl" parameterType="String"
+		resultType="String">
+
+		select file_url from image
+		where file_id = ANY(select
+		file_id from club_post_file
+		where post_id = #{postId});
+	</select>
+
+
+
+	<!-- 글 총개수 -->
+	<select id="totalCountPostList" resultType="int">
+		SELECT COUNT(*) FROM
+		club_post
+	</select>
+
+	<!-- 글 총개수(검색어) -->
+	<select id="searchWordTotalCountPostList" parameterType="string"
+		resultType="int">
+		SELECT COUNT()
+		FROM club_post
+		WHERE post_content
+		LIKE
+		CONCAT('%', #{searchWord} ,'%')
+	</select>
+
+	<!-- 글수정 -->
+	<update id="updatePost"
+		parameterType="com.ssafy.udong.dto.ClubPostDto">
+		UPDATE club_post
+		SET post_content = #{postContent},
+		is_open = #{isOpent},
+		post_tag = #{postTag},
+		is_updated = #{isUpdated},
+		updated_at = now()
+		WHERE post_id = #{postId}
+	</update>
+
+	<!-- 글 삭제 -->
+	<delete id="deletePost" parameterType="String">
+		DELETE FROM club_post
+		WHERE
+		post_id = #{postId}
+	</delete>
+
+
+	<!-- 조회수 불러오기 -->
+	<select id="postUserReadCount" parameterType="String"
+		resultType="int">
+		SELECT post_views FROM club_post WHERE post_id =
+		#{postId}
+	</select>
+
+	<!-- 조회수 1증가 시키기 -->
+	<update id="postReadCountUpdate" parameterType="String">
+		UPDATE club_post
+		set
+		post_views = post_views + 1
+		WHERE post_id = #{postId}
+	</update>
+
+
+	<!-- 댓글 입력 -->
+	<insert id="createPostCom"
+		parameterType="com.ssafy.udong.dto.CommentDto">
+		INSERT INTO club_post_comment ( post_id, club_id,
+		user_id,
+		comm_content, comm_like_count)
+		VALUES
+		(#{postId}, #{clubId},
+		#{userId}, #{commContent} ,"0");
+	</insert>
+
+	<!-- 댓글 가져오기 -->
+	<select id="selectPostCom" parameterType="map"
+		resultType="com.ssafy.udong.dto.CommentDto">
+
+		SELECT c.comment_id as commentId, c.post_id as postId,
+		c.club_id as clubId,
+		c.user_id as userId, u.nickname as nickName,
+		c.comm_content as
+		commContent,
+		c.created_at as createdAt,
+		c.comm_like_count as commLikeCount
+		FROM
+		club_post_comment c, user u
+		WHERE c.user_id = u.user_id
+		and c.post_id = #{postId}
+		ORDER BY
+		c.comment_id
+		DESC
+		LIMIT #{limit} OFFSET
+		#{offset}
+	</select>
+
+	<!-- 댓글 총개수 -->
+	<select id="totalCountcomList" resultType="int">
+		SELECT COUNT(*) FROM
+		club_post_comment
+	</select>
+
+
+	<select id="selectPostLike"
+		parameterType="com.ssafy.udong.dto.LikeDto" resultType="String">
+		select user_id
+		as userId
+		from club_post_like
+		where post_id = #{postId}
+		and user_id = #{userId}
+
+	</select>
+
+	<insert id="createPostLike" parameterType="com.ssafy.udong.dto.LikeDto">
+
+		INSERT INTO club_post_like(user_id, post_id, club_id)
+		VALUES (#{userId}, #{postId}, #{clubId});
+	</insert>
+	
+		<delete id="deletePostLike" parameterType="com.ssafy.udong.dto.LikeDto">
+		DELETE FROM club_post_like
+		WHERE
+		post_id = #{postId}
+        and
+        user_id = #{userId}
+	</delete>
+	
+		<select id="selectPostCommLike"
+		parameterType="com.ssafy.udong.dto.LikeDto" resultType="String">
+		select user_id
+		as userId
+		from club_post_comment_like
+		where comment_id = #{commentId}
+		and user_id = #{userId}
+
+	</select>
+
+	<insert id="createPostCommLike" parameterType="com.ssafy.udong.dto.LikeDto">
+
+		INSERT INTO club_post_comment_like(user_id, post_id, club_id, comment_id)
+		VALUES (#{userId}, #{postId}, #{clubId}, #{commentId});
+	</insert>
+	
+		<delete id="deletePostCommLike" parameterType="com.ssafy.udong.dto.LikeDto">
+		DELETE FROM club_post_comment_like
+		WHERE
+		comment_id = #{commentId}
+        and
+        user_id = #{userId}
+	</delete>
+	
+	
+	<insert id="createPostReport" parameterType="com.ssafy.udong.dto.ReportDto">
+
+		INSERT INTO club_post_report(user_id, post_id, club_id, content, category)
+		VALUES (#{userId}, #{postId}, #{clubId}, #{content}, #{category});
+	</insert>
+	
+	<insert id="createPostCommReport" parameterType="com.ssafy.udong.dto.ReportDto">
+
+		INSERT INTO club_post_comment_report(user_id, post_id, club_id, comment_id, content, category)
+		VALUES (#{userId}, #{postId}, #{clubId}, #{commentId}, #{content}, #{category});
+	</insert>
+
+
+
+
+</mapper>
+
+
+
+
+

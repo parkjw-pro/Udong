@@ -11,6 +11,8 @@ import com.ssafy.udong.dto.MemberDto;
 public interface ClubService {
 
 	public String createClub(ClubDto club, MultipartFile file);
+	
+	public String selectDuplicateClubName(String clubname, String areaCode);
 
 	public ClubResultDto selectClub(String clubId);
 
@@ -31,6 +33,8 @@ public interface ClubService {
 	public int createClubMemberWaiting(MemberDto member);
 
 	public int deleteClubMember(String clubId, String userId);
+	
+	public int deleteClubMemberWaiting(String clubId, String userId);
 
 	public List<ClubDto> selectAllClubMemberByUserId(String userId);
 

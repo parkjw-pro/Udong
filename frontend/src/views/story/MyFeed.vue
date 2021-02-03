@@ -10,7 +10,7 @@
       </b-col>
       <b-col cols="2"></b-col>
       <b-col cols="5">
-        <b-row cols="1"><h2>용용이</h2></b-row>
+        <b-row cols="1"><h2>{{nickname}}</h2></b-row>
       </b-col>
     </b-row>
     <!-- 2. 탭 -->
@@ -23,7 +23,7 @@
         <PostBlockMy />
       </b-tab>
       <b-tab title="리뷰">
-        <PostBlockMy />
+        <!-- <PostBlockMy /> -->
       </b-tab>
       <b-tab title="태그">
         <TagBox />
@@ -44,6 +44,10 @@ import GroupBox from '@/components/story/GroupBox'
 import PostBlockMy from '@/components/story/PostBlockMy'
 import Profile2 from '@/components/app/Profile2'
 import TagBox from '@/components/story/TagBox'
+import { mapGetters } from "vuex";
+// import axios from 'axios';
+
+// const SERVER_URL = "http://localhost:8000";
 
 export default {
   name: 'MyFeed',
@@ -52,6 +56,23 @@ export default {
     PostBlockMy,
     Profile2,
     TagBox,
+  },
+  
+  computed: {
+    ...mapGetters(["getUserId"]),
+    ...mapGetters(["getUserName"])
+  },
+  data() {
+    return {
+      id: "",
+      nickname: ""
+    };
+  },
+  created() {
+    this.id = this.getUserId;
+    this.nickname = this.getUserName;
+  },
+  methods: {
   },
   
 }
