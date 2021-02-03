@@ -55,7 +55,7 @@ public class StoreController {
 	@ApiOperation(value = "상점 조회(검색어+위치코드)", notes = "검색어와 위치 코드를 이용하여 상점을 조회합니다.\n" +
 			"## 필수값\n" + " - searchWord : 검색어\n"
 						+ " - areaCode : 지역 코드\n")
-	@GetMapping(value = "/store/{searchWord}/{areaCode}")
+	@GetMapping(value = "/{searchWord}/{areaCode}")
 	private ResponseEntity<List<StoreDto>> selectStore(@PathVariable String searchWord, @PathVariable String areaCode) {
 
 		List<StoreDto> list = service.SelectDetailStore(searchWord, areaCode);
@@ -72,7 +72,7 @@ public class StoreController {
 
 	@ApiOperation(value = "상점 조회(검색어)", notes = "검색어를 이용하여 상점을 조회합니다.\n" +
 			"## 필수값\n" + " - searchWord : 검색어\n")
-	@GetMapping(value = "/store/{searchWord}")
+	@GetMapping(value = "/{searchWord}")
 	private ResponseEntity<List<StoreDto>> selectArea(@PathVariable String searchWord) {
 
 		List<StoreDto> list = service.SelectArea(searchWord);

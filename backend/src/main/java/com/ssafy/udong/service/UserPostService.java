@@ -17,9 +17,17 @@ public interface UserPostService {
 	// 게시물 작성
 	public int createUserPost(UserPostDto userBoardDto, List<MultipartFile> files);
 
-	// 게시물 조회 검색단어가 있을경우 없을경우.(일단 컨텐츠로 조회)
-	public UserPostResultDto selectAllUserPost(UserPostParamDto userBoardParamDto);
-	public UserPostResultDto selectUserPostBySearchWord(UserPostParamDto userBoardParamDto);
+	// 모든 게시물 조회
+	public UserPostResultDto selectAllUserPost(int limit, int offset);
+	
+	// 유저 별 게시물 조회
+	public UserPostResultDto selectAllUserPostByUserId(String userId, int limit, int offset);
+	
+	// 게시물 조회 검색단어가 있을 경우
+	public UserPostResultDto selectUserPostBySearchWord(String searchWord, int limit, int offset);
+	
+	// 유저 별 게시물 조회 검색단어가 있을 경우
+	public UserPostResultDto selectUserPostByUserIdAndWord(String userId, String searchWord, int limit, int offset);
 
 	// 게시물 상세조회
 	public UserPostResultDto selectUserPost(String postId);

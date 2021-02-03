@@ -29,7 +29,6 @@ import com.ssafy.udong.service.ClubPostService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-
 @CrossOrigin
 @RestController
 @RequestMapping("/clubpost")
@@ -42,205 +41,266 @@ public class ClubPostController {
 	private static final int SUCCESS = 1;
 	private static final int FAIL = -1;
 
-	@ApiOperation(value = "그룹에 글 쓰기", notes = "그룹에 노출되는 글을 작성합니다.\n" +
-			"## 필수값\n" + " - userId : 작성자 아이디\n"
-			 			+ " - postContent : 글 내용\n"
-			 			+ " - isOpen : 공개 여부(true/false 또는 1/0으로 구분)\n" + 
- 			"## 가능값\n" + " - postTag : 태그\n")
+	@ApiOperation(value = "그룹에 글 쓰기", notes = "그룹에 노출되는 글을 작성합니다.\n" + "## 필수값\n" + " - userId : 작성자 아이디\n"
+			+ " - postContent : 글 내용\n" + " - isOpen : 공개 여부(true/false 또는 1/0으로 구분)\n" + "## 가능값\n"
+			+ " - postTag : 태그\n")
 	@PostMapping
-	private ResponseEntity<String> createClubPost( @RequestBody ClubPostDto clubPostDto,
+	private ResponseEntity<String> createClubPost(@RequestBody ClubPostDto clubPostDto,
 			@RequestParam(value = "file", required = false) List<MultipartFile> files) {
 		System.out.println("그룹게시판");
 		int result = service.createClubPost(clubPostDto, files);
 
-		if( result == SUCCESS ) {
+		if (result == SUCCESS) {
 			return new ResponseEntity<String>("게시물 작성 성공", HttpStatus.OK);
-		}else {
+		} else {
 			return new ResponseEntity<String>("게시물 작성 실패", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
-	@ApiOperation(value = "그룹 내 모든 글 조회", notes = "그룹 내 노출되는 모든 글을 조회합니다.\n" +
-			"## 필수값\n" + " - limit : 한 페이지에 노출될 게시글 수\n" + " - offset : 오프셋\n" +
- 			"## 가능값\n" + " - searchWord : 검색어\n")
+	@ApiOperation(value = "모든 그룹 게시물 조회", notes = "그룹 게시물로 작성한 모든 글을 조회합니다.\n" + "## 필수값\n"
+			+ " - limit : 한 페이지에 노출될 게시글 수\n" + " - offset : 오프셋\n")
 	@GetMapping
-	private ResponseEntity<ClubPostResultDto> selectAllClubPost(@RequestBody ClubPostParamDto clubPostParamDto){
+	private ResponseEntity<ClubPostResultDto> selectAllClubPost(@RequestParam(value = "limit") int limit,
+			@RequestParam(value = "offset") int offset) {
 
 		ClubPostResultDto clubPostResultDto;
+		clubPostResultDto = service.selectAllClubPost(limit, offset);
 
-		if( clubPostParamDto.getSearchWord().isEmpty() ) { //검색창이 비어 있으면
-			clubPostResultDto = service.selectAllClubPost(clubPostParamDto);
-		}else { // 안비어있으면 
-			clubPostResultDto = service.selectClubPostBySearchWord(clubPostParamDto);
-		}
-
-		if( clubPostResultDto.getResult() == SUCCESS ) {
+		if (clubPostResultDto.getResult() == SUCCESS) {
 			return new ResponseEntity<ClubPostResultDto>(clubPostResultDto, HttpStatus.OK);
-		}else {
+		} else {
 			return new ResponseEntity<ClubPostResultDto>(clubPostResultDto, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
+
+	@ApiOperation(value = "검색어를 포함하는 그룹 게시물 조회", notes = "그룹 게시물로 작성한 모든 글 중 검색어를 포함하는 글을 조회합니다.\n" + "## 필수값\n"
+			+ " - searchWord : 검색어\n" + " - limit : 한 페이지에 노출될 게시글 수\n" + " - offset : 오프셋\n")
+	@GetMapping(value = "/{searchWord}")
+	private ResponseEntity<ClubPostResultDto> selectClubPostBySearchWord(@PathVariable String searchWord,
+			@RequestParam(value = "limit") int limit, @RequestParam(value = "offset") int offset) {
+
+		ClubPostResultDto clubPostResultDto;
+
+		clubPostResultDto = service.selectClubPostBySearchWord(searchWord, limit, offset);
+
+		if (clubPostResultDto.getResult() == SUCCESS) {
+			return new ResponseEntity<ClubPostResultDto>(clubPostResultDto, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<ClubPostResultDto>(clubPostResultDto, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@ApiOperation(value = "그룹 별 게시물 조회", notes = "그룹 내에 작성된 모든 글을 조회합니다.\n" + "## 필수값\n" + " - clubId : 그룹 아이디\n"
+			+ " - limit : 한 페이지에 노출될 게시글 수\n" + " - offset : 오프셋\n")
+	@GetMapping(value = "/club")
+	private ResponseEntity<ClubPostResultDto> selectClubPostByClubId(@RequestParam(value = "clubId") String clubId,
+			@RequestParam(value = "limit") int limit, @RequestParam(value = "offset") int offset) {
+
+		ClubPostResultDto clubPostResultDto;
+
+		clubPostResultDto = service.selectClubPostByClubId(clubId, limit, offset);
+
+		if (clubPostResultDto.getResult() == SUCCESS) {
+			return new ResponseEntity<ClubPostResultDto>(clubPostResultDto, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<ClubPostResultDto>(clubPostResultDto, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@ApiOperation(value = "그룹 별 검색어를 포함하는 게시물 조회", notes = "그룹 내에 작성된 모든 중 검색어를 포함하는 글을 조회합니다.\n" + "## 필수값\n"
+			+ " - clubId : 그룹 아이디\n" + " - searchWord : 검색어\n" + " - limit : 한 페이지에 노출될 게시글 수\n" + " - offset : 오프셋\n")
+	@GetMapping(value = "/club/{searchWord}")
+	private ResponseEntity<ClubPostResultDto> selectClubPostByClubIdAndSearchWord(@PathVariable String searchWord,
+			@RequestParam(value = "clubId") String clubId, @RequestParam(value = "limit") int limit,
+			@RequestParam(value = "offset") int offset) {
+
+		ClubPostResultDto clubPostResultDto;
+
+		clubPostResultDto = service.selectClubPostByClubIdAndSearchWord(clubId, searchWord, limit, offset);
+
+		if (clubPostResultDto.getResult() == SUCCESS) {
+			return new ResponseEntity<ClubPostResultDto>(clubPostResultDto, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<ClubPostResultDto>(clubPostResultDto, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@ApiOperation(value = "유저 별 그룹 게시물 조회", notes = "한 명의 유저가 그룹 게시물로 작성한 모든 글을 조회합니다.\n" + "## 필수값\n"
+			+ " - userId : 유저 아이디\n" + " - limit : 한 페이지에 노출될 게시글 수\n" + " - offset : 오프셋\n")
+	@GetMapping(value = "/user")
+	private ResponseEntity<ClubPostResultDto> selectClubPostByUserId(@RequestParam(value = "userId") String userId,
+			@RequestParam(value = "limit") int limit, @RequestParam(value = "offset") int offset) {
+
+		ClubPostResultDto clubPostResultDto;
+
+		clubPostResultDto = service.selectClubPostByUserId(userId, limit, offset);
+
+		if (clubPostResultDto.getResult() == SUCCESS) {
+			return new ResponseEntity<ClubPostResultDto>(clubPostResultDto, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<ClubPostResultDto>(clubPostResultDto, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@ApiOperation(value = "유저 별 검색어를 포함하는그룹 게시물 조회", notes = "한 명의 유저가 그룹 게시물로 작성한 글 중 검색어를 포함하는 글을 조회합니다.\n"
+			+ "## 필수값\n" + " - userId : 유저 아이디\n" + " - searchWord : 검색어\n" + " - limit : 한 페이지에 노출될 게시글 수\n"
+			+ " - offset : 오프셋\n")
+	@GetMapping(value = "/user/{searchWord}")
+	private ResponseEntity<ClubPostResultDto> selectClubPostByUserId(@PathVariable String searchWord,
+			@RequestParam(value = "userId") String userId, @RequestParam(value = "limit") int limit,
+			@RequestParam(value = "offset") int offset) {
+
+		ClubPostResultDto clubPostResultDto;
+
+		clubPostResultDto = service.selectClubPostByUserIdAndSearchWord(userId, searchWord, limit, offset);
+
+		if (clubPostResultDto.getResult() == SUCCESS) {
+			return new ResponseEntity<ClubPostResultDto>(clubPostResultDto, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<ClubPostResultDto>(clubPostResultDto, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
 	// 글 상세조회
-	@ApiOperation(value = "게시 글 조회", notes = "그룹 피드에 노출되는 글 한 개를 조회합니다.\n" +
-			"## 필수값\n" + " - postId : 조회할 게시글 아이디\n")
-	@GetMapping(value="/{postId}")
-	private ResponseEntity<ClubPostResultDto> selectClubPost(@PathVariable String postId){
+	@ApiOperation(value = "게시 글 조회", notes = "그룹 피드에 노출되는 글 한 개를 조회합니다.\n" + "## 필수값\n" + " - postId : 조회할 게시글 아이디\n")
+	@GetMapping(value = "/{postId}")
+	private ResponseEntity<ClubPostResultDto> selectClubPost(@PathVariable String postId) {
 		System.out.println("clubpost상세조회");
 
 		ClubPostResultDto clubPostResultDto = service.selectClubPost(postId);
 
-		if( clubPostResultDto != null ) {
+		if (clubPostResultDto != null) {
 			return new ResponseEntity<ClubPostResultDto>(clubPostResultDto, HttpStatus.OK);
-		}else {
+		} else {
 			return new ResponseEntity<ClubPostResultDto>(clubPostResultDto, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
-	//글 수정
-	@ApiOperation(value = "게시 글 수정", notes = "그룹의 게시판에 노출되는 글을 수정합니다.\n" +
-			"## 필수값\n" + " - postContent : 글 내용\n"
-						+ " - isOpen : 공개 여부(true/false 또는 1/0으로 구분)\n" +
-			"## 가능값\n" + " - postTag : 태그\n")
-	@PutMapping 
-	private ResponseEntity<String> updateClubPost(@RequestBody ClubPostDto clubPostDto ){
+
+	// 글 수정
+	@ApiOperation(value = "게시 글 수정", notes = "그룹의 게시판에 노출되는 글을 수정합니다.\n" + "## 필수값\n" + " - postContent : 글 내용\n"
+			+ " - isOpen : 공개 여부(true/false 또는 1/0으로 구분)\n" + "## 가능값\n" + " - postTag : 태그\n")
+	@PutMapping
+	private ResponseEntity<String> updateClubPost(@RequestBody ClubPostDto clubPostDto) {
 		int result = service.updateClubPost(clubPostDto);
 
-		if( result == SUCCESS ) {
+		if (result == SUCCESS) {
 			return new ResponseEntity<String>("글 수정 완료", HttpStatus.OK);
-		}else {
+		} else {
 			return new ResponseEntity<String>("글 수정 실패 ", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
-	//글 삭제
-	@ApiOperation(value = "게시 글 삭제", notes = "그룹의 게시판에 노출되는 글을 삭제합니다.\n" +
-			"## 필수값\n" + " - postId : 삭제할 게시글 아이디\n")
+
+	// 글 삭제
+	@ApiOperation(value = "게시 글 삭제", notes = "그룹의 게시판에 노출되는 글을 삭제합니다.\n" + "## 필수값\n" + " - postId : 삭제할 게시글 아이디\n")
 	@DeleteMapping
-	private ResponseEntity<String> deleteClubPost(@RequestBody ClubPostDto clubPostDto){
+	private ResponseEntity<String> deleteClubPost(@RequestBody ClubPostDto clubPostDto) {
 		int result = service.deleteClubPost(clubPostDto.getPostId());
 
-		if( result == SUCCESS ) {
+		if (result == SUCCESS) {
 			return new ResponseEntity<String>("글 삭제 성공", HttpStatus.OK);
-		}else {
+		} else {
 			return new ResponseEntity<String>("글 삭제 실패", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+
 	// 각 글id에 맞는 댓글 넣기
-	@ApiOperation(value = "게시 글 댓글 작성", notes = "그룹 게시판에 노출되는 글에 댓글을 작성합니다.\n" +
-			"## 필수값\n" + " - postId : 댓글이 달릴 게시글 아이디\n"
-			 			+ " - clubId : 게시글이 속한 그룹 아이디\n"
-			 			+ " - userId : 댓글을 다는 유저 아이디\n"
-			 			+ " - commContent : 댓글 내용\n")
-	@PostMapping(value="/comment")
-	private ResponseEntity<String> createClubPostComment(@RequestBody CommentDto commentDto){
+	@ApiOperation(value = "게시 글 댓글 작성", notes = "그룹 게시판에 노출되는 글에 댓글을 작성합니다.\n" + "## 필수값\n"
+			+ " - postId : 댓글이 달릴 게시글 아이디\n" + " - clubId : 게시글이 속한 그룹 아이디\n" + " - userId : 댓글을 다는 유저 아이디\n"
+			+ " - commContent : 댓글 내용\n")
+	@PostMapping(value = "/comment")
+	private ResponseEntity<String> createClubPostComment(@RequestBody CommentDto commentDto) {
 
 		int result = service.createClubPostComment(commentDto);
 
-		if( result == SUCCESS ) {
+		if (result == SUCCESS) {
 			return new ResponseEntity<String>("댓글 작성 성공", HttpStatus.OK);
-		}else {
+		} else {
 			return new ResponseEntity<String>("댓글 작성 실패", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
+
 	// 각 글id에 맞는 댓글 전체조회
-	@ApiOperation(value = "게시 글 댓글 조회", notes = "그룹 게시판에 노출되는 글에 댓글을 조회합니다.\n" + 
-			"## 필수값\n" + " - postId : 댓글이 달릴 게시글 아이디\n"
-						+ " - limit : 한 페이지에 노출될 댓글 수\n" + " - offset : 오프셋\n")
-	@GetMapping(value="/comment/{postId}")
-	private ResponseEntity<CommentResultDto> selectClubPostComment(@PathVariable String postId){
-		
+	@ApiOperation(value = "게시 글 댓글 조회", notes = "그룹 게시판에 노출되는 글에 댓글을 조회합니다.\n" + "## 필수값\n"
+			+ " - postId : 댓글이 달릴 게시글 아이디\n" + " - limit : 한 페이지에 노출될 댓글 수\n" + " - offset : 오프셋\n")
+	@GetMapping(value = "/comment/{postId}")
+	private ResponseEntity<CommentResultDto> selectClubPostComment(@PathVariable String postId) {
+
 		CommentResultDto commentResultDto;
 
 		commentResultDto = service.selectClubPostComment(postId);
 
-		if( commentResultDto.getResult() == SUCCESS ) {
+		if (commentResultDto.getResult() == SUCCESS) {
 			return new ResponseEntity<CommentResultDto>(commentResultDto, HttpStatus.OK);
-		}else {
+		} else {
 			return new ResponseEntity<CommentResultDto>(commentResultDto, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
-	
+
 	// 글에 대한 좋아요기능
-	@ApiOperation(value = "게시 글 좋아요", notes = "그룹 게시판에 노출되는 글에  좋아요를 합니다.\n" + 
-			"## 필수값\n" + " - postId : 좋아요 표시될 게시글 아이디\n"
-						+ " - userId : 좋아요를 누른 사용자 아이디\n"
-						+ " - clubId : 게시글이 속한 그룹 아이디\n")
-	@PostMapping(value="/like")
-	private ResponseEntity<String> createClubPostLike(@RequestBody LikeDto  likeDto){
-		
+	@ApiOperation(value = "게시 글 좋아요", notes = "그룹 게시판에 노출되는 글에  좋아요를 합니다.\n" + "## 필수값\n"
+			+ " - postId : 좋아요 표시될 게시글 아이디\n" + " - userId : 좋아요를 누른 사용자 아이디\n" + " - clubId : 게시글이 속한 그룹 아이디\n")
+	@PostMapping(value = "/like")
+	private ResponseEntity<String> createClubPostLike(@RequestBody LikeDto likeDto) {
+
 		int result = service.createClubPostLike(likeDto);
 
-		if( result == 1 ) {
+		if (result == 1) {
 			return new ResponseEntity<String>("게시글 좋아요 성공", HttpStatus.OK);
-		}else if( result == 2 ) {
+		} else if (result == 2) {
 			return new ResponseEntity<String>("게시글 좋아요 취소 성공", HttpStatus.OK);
-		}else {
+		} else {
 			return new ResponseEntity<String>("게시글 좋아요 실패", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
+
 	// 댓글에 대한 좋아요기능
-	@ApiOperation(value = "게시글 댓글에 좋아요", notes = "그룹 게시판에 노출되는 글의 댓글에 좋아요를 합니다.\n" + 
-			"## 필수값\n" + " - userId : 좋아요를 누른 사용자 아이디\n"
-						+ " - postId : 댓글이 달린 게시글 아이디\n"
-						+ " - clubId : 게시글이 속한 그룹 아이디\n"
-						+ " - commentId : 좋아요 표시될 댓글 아이디\n")
-	@PostMapping(value="/comment/like")
-	private ResponseEntity<String> createClubPostCommentLike(@RequestBody LikeDto  likeDto){
-		
+	@ApiOperation(value = "게시글 댓글에 좋아요", notes = "그룹 게시판에 노출되는 글의 댓글에 좋아요를 합니다.\n" + "## 필수값\n"
+			+ " - userId : 좋아요를 누른 사용자 아이디\n" + " - postId : 댓글이 달린 게시글 아이디\n" + " - clubId : 게시글이 속한 그룹 아이디\n"
+			+ " - commentId : 좋아요 표시될 댓글 아이디\n")
+	@PostMapping(value = "/comment/like")
+	private ResponseEntity<String> createClubPostCommentLike(@RequestBody LikeDto likeDto) {
+
 		int result = service.createClubPostCommentLike(likeDto);
 
-		if( result == 1 ) {
+		if (result == 1) {
 			return new ResponseEntity<String>("댓글 좋아요 성공", HttpStatus.OK);
-		}else if( result == 2 ) {
+		} else if (result == 2) {
 			return new ResponseEntity<String>("댓글 좋아요 취소 성공", HttpStatus.OK);
-		}else {
+		} else {
 			return new ResponseEntity<String>("댓글 좋아요 실패", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
-	
 	// 글에 대한 신고기능
-	@ApiOperation(value = "게시 글 신고하기", notes = "그룹 게시판에 노출되는 글을 신고 합니다.\n" + 
-			"## 필수값\n" + " - userId : 게시글을 신고한 사용자 아이디\n"
-						+ " - postId : 게시글 아이디\n"
-						+ " - clubId : 게시글이 속한 그룹 아이디\n"
-						+ " - content : 신고 내용\n"
-						+ " - category : 신고 항목 구분\n")
-	@PostMapping(value="/report")
-	private ResponseEntity<String> createClubPostReport(@RequestBody ReportDto  reportDto){
-		
+	@ApiOperation(value = "게시 글 신고하기", notes = "그룹 게시판에 노출되는 글을 신고 합니다.\n" + "## 필수값\n"
+			+ " - userId : 게시글을 신고한 사용자 아이디\n" + " - postId : 게시글 아이디\n" + " - clubId : 게시글이 속한 그룹 아이디\n"
+			+ " - content : 신고 내용\n" + " - category : 신고 항목 구분\n")
+	@PostMapping(value = "/report")
+	private ResponseEntity<String> createClubPostReport(@RequestBody ReportDto reportDto) {
+
 		int result = service.createClubPostReport(reportDto);
 
-		if( result == 1 ) {
+		if (result == 1) {
 			return new ResponseEntity<String>("게시글 신고 성공", HttpStatus.OK);
-		}else {
+		} else {
 			return new ResponseEntity<String>("게시글 신고 실패", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
+
 	// 댓글에 대한 신고기능
-	@ApiOperation(value = "게시 글 댓글 신고하기", notes = "그룹 게시판에 노출되는 글의 댓글을 신고 합니다.\n" + 
-			"## 필수값\n" + " - userId : 댓글을 신고한 사용자 아이디\n"
-						+ " - postId : 댓글이 달린 게시글 아이디\n"
-						+ " - clubId : 게시글이 속한 그룹 아이디\n"
-						+ " - commentId :댓글 아이디\n"
-						+ " - content : 신고 내용\n"
-						+ " - category : 신고 항목 구분\n")
-	@PostMapping(value="/comment/report")
-	private ResponseEntity<String> createClubPostCommentReport(@RequestBody ReportDto  reportDto){
-		
+	@ApiOperation(value = "게시 글 댓글 신고하기", notes = "그룹 게시판에 노출되는 글의 댓글을 신고 합니다.\n" + "## 필수값\n"
+			+ " - userId : 댓글을 신고한 사용자 아이디\n" + " - postId : 댓글이 달린 게시글 아이디\n" + " - clubId : 게시글이 속한 그룹 아이디\n"
+			+ " - commentId :댓글 아이디\n" + " - content : 신고 내용\n" + " - category : 신고 항목 구분\n")
+	@PostMapping(value = "/comment/report")
+	private ResponseEntity<String> createClubPostCommentReport(@RequestBody ReportDto reportDto) {
+
 		int result = service.createClubPostCommentReport(reportDto);
 
-		if( result == 1 ) {
+		if (result == 1) {
 			return new ResponseEntity<String>("게시글 댓글 신고 성공", HttpStatus.OK);
-		}else {
+		} else {
 			return new ResponseEntity<String>("게시글 댓글 신고 실패", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-
 
 }

@@ -58,20 +58,50 @@ public class UserPostController {
 		}
 	}
 
-	@ApiOperation(value = "유저 글 조회", notes = "한 유저의 개인 피드에 노출되는 모든 글을 조회하여 반환니다. 단, 검색어가 있으면 검색어를 포함하는 모든 글을 반환합니다.\n" +
-			"## 필수값\n" + " - limit : 한 페이지에 노출될 게시글 수\n" + " - offset : 오프셋\n" +
- 			"## 가능값\n" + " - searchWord : 검색어\n")
+	@ApiOperation(value = "유저 글 조회", notes = "사용자가 개인 피드에 작성한 모든 글을 조회하여 반환합니다.\n" +
+			"## 필수값\n" + " - limit : 한 페이지에 노출될 게시글 수\n" + " - offset : 오프셋\n")
 	@GetMapping
-	private ResponseEntity<UserPostResultDto> selectAllUserPost(@RequestBody UserPostParamDto userPostParamDto){
+	private ResponseEntity<UserPostResultDto> selectAllUserPost(@RequestParam(value="limit") int limit, @RequestParam(value="offset") int offset){
+		UserPostResultDto userPostResultDto = service.selectAllUserPost(limit, offset);
 
-		UserPostResultDto userPostResultDto;
-
-		if( userPostParamDto.getSearchWord().isEmpty() ) { //검색창이 비어 있으면
-			userPostResultDto = service.selectAllUserPost(userPostParamDto);
-		}else { // 안비어있으면 
-			userPostResultDto = service.selectUserPostBySearchWord(userPostParamDto);
+		if( userPostResultDto.getResult() == SUCCESS ) {
+			return new ResponseEntity<UserPostResultDto>(userPostResultDto, HttpStatus.OK);
+		}else {
+			return new ResponseEntity<UserPostResultDto>(userPostResultDto, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+	}	
+	
+	@ApiOperation(value = "유저 별 유저 글 조회", notes = "한 명의 사용자가 개인 피드에 작성한 글을 조회하여 반환합니다.\n" +
+			"## 필수값\n" + " - userId : 작성한 글을 조회할 사용자\n" + " - limit : 한 페이지에 노출될 게시글 수\n" + " - offset : 오프셋\n")
+	@GetMapping(value="/user")
+	private ResponseEntity<UserPostResultDto> selectAllUserPostByUserId(@RequestParam(value="userId") String userId, @RequestParam(value="limit") int limit, @RequestParam(value="offset") int offset){
+		UserPostResultDto userPostResultDto = service.selectAllUserPostByUserId(userId, limit, offset);
 
+		if( userPostResultDto.getResult() == SUCCESS ) {
+			return new ResponseEntity<UserPostResultDto>(userPostResultDto, HttpStatus.OK);
+		}else {
+			return new ResponseEntity<UserPostResultDto>(userPostResultDto, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}	
+	
+	@ApiOperation(value = "검색어를 포함하는 유저 글 조회", notes = "사용자가 개인 피드에 작성한 모든 글 중 검색어를 포함하는 글을 조회하여 반환합니다.\n" +
+			"## 필수값\n" + " - limit : 한 페이지에 노출될 게시글 수\n" + " - offset : 오프셋\n" + " - searchWord : 검색어\n")
+	@GetMapping(value="/word")
+	private ResponseEntity<UserPostResultDto> selectUserPostByWord(@RequestParam(value="searchWord") String searchWord, @RequestParam(value="limit") int limit, @RequestParam(value="offset") int offset){
+		UserPostResultDto userPostResultDto = service.selectUserPostBySearchWord(searchWord, limit, offset);
+		if( userPostResultDto.getResult() == SUCCESS ) {
+			return new ResponseEntity<UserPostResultDto>(userPostResultDto, HttpStatus.OK);
+		}else {
+			return new ResponseEntity<UserPostResultDto>(userPostResultDto, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	
+	@ApiOperation(value = "유저 별 검색어를 포함하는 유저 글 조회", notes = "한 명의 사용자가 개인 피드에 작성한 글 중 검색어를 포함하는 글을 조회하여 반환합니다.\n" +
+			"## 필수값\n" + " - userId : 작성한 글을 조회할 사용자\n" + " - searchWord : 검색어\n" + " - limit : 한 페이지에 노출될 게시글 수\n" + " - offset : 오프셋\n")
+	@GetMapping(value="/user/word")
+	private ResponseEntity<UserPostResultDto> selectUserPostByUserIdAndWord(@RequestParam(value="userId") String userId, @RequestParam(value="searchWord") String searchWord, @RequestParam(value="limit") int limit, @RequestParam(value="offset") int offset){
+		UserPostResultDto userPostResultDto = service.selectUserPostByUserIdAndWord(userId, searchWord, limit, offset);
 		if( userPostResultDto.getResult() == SUCCESS ) {
 			return new ResponseEntity<UserPostResultDto>(userPostResultDto, HttpStatus.OK);
 		}else {
@@ -141,8 +171,8 @@ public class UserPostController {
 	@ApiOperation(value = "게시 글 댓글 조회", notes = "개인피드 노출되는 글에 댓글을 조회합니다.\n" + 
 			"## 필수값\n" + " - postId : 댓글이 달릴 게시글 아이디\n"
 						+ " - limit : 한 페이지에 노출될 댓글 수\n" + " - offset : 오프셋\n")
-	@GetMapping(value="/comment/{postId}")
-	private ResponseEntity<CommentResultDto> selectPostCom(@PathVariable String postId){
+	@GetMapping(value="/comment")
+	private ResponseEntity<CommentResultDto> selectPostCom(@RequestParam(value="postId") String postId){
 		// 각 글id에 맞는 댓글 전체조회
 		CommentResultDto commentResultDto;
 

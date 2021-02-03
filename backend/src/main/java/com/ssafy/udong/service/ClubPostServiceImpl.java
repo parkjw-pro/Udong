@@ -98,12 +98,15 @@ public class ClubPostServiceImpl implements ClubPostService {
 	}
 
 	@Override
-	public ClubPostResultDto selectAllClubPost(ClubPostParamDto clubPostParamDto) {
-
+	public ClubPostResultDto selectAllClubPost(int limit, int offset) {
 		ClubPostResultDto clubPostResultDto = new ClubPostResultDto();
+		
+		ClubPostParamDto clubPostParamDto = new ClubPostParamDto();
+		clubPostParamDto.setLimit(limit);
+		clubPostParamDto.setOffset(offset);
+		
 		try {
-
-			int count = clubPostDao.clubPostTotalCount();
+			int count = clubPostDao.clubPostCount();
 			List<ClubPostDto> list = clubPostDao.selectAllClubPost(clubPostParamDto);
 
 			clubPostResultDto.setList(list);
@@ -118,13 +121,120 @@ public class ClubPostServiceImpl implements ClubPostService {
 	}
 
 	@Override
-	public ClubPostResultDto selectClubPostBySearchWord(ClubPostParamDto clubPostParamDto) {
-
-		ClubPostResultDto clubPostResultDto = new ClubPostResultDto();
+	public ClubPostResultDto selectClubPostBySearchWord(String searchWord, int limit, int offset) {
+		ClubPostResultDto clubPostResultDto = new ClubPostResultDto();	
+		
+		ClubPostParamDto clubPostParamDto = new ClubPostParamDto();
+		clubPostParamDto.setSearchWord(searchWord);
+		clubPostParamDto.setLimit(limit);
+		clubPostParamDto.setOffset(offset);
 		try {
 			// 게시물 총개수
-			int count = clubPostDao.clubPostBySearchWordTotalCount(clubPostParamDto);
+			int count = clubPostDao.clubPostBySearchWordCount(clubPostParamDto);
 			List<ClubPostDto> list = clubPostDao.selectClubPostBySearchWord(clubPostParamDto);
+
+			clubPostResultDto.setList(list);
+			clubPostResultDto.setCount(count);
+			clubPostResultDto.setResult(SUCCESS);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			clubPostResultDto.setResult(FAIL);
+		}
+
+		return clubPostResultDto;
+	}
+
+	@Override
+	public ClubPostResultDto selectClubPostByClubId(String clubId, int limit, int offset) {
+		ClubPostResultDto clubPostResultDto = new ClubPostResultDto();
+		
+		ClubPostParamDto clubPostParamDto = new ClubPostParamDto();
+		clubPostParamDto.setClubId(clubId);
+		clubPostParamDto.setLimit(limit);
+		clubPostParamDto.setOffset(offset);
+		
+		try {
+			int count = clubPostDao.clubPostByClubIdCount(clubPostParamDto);
+			List<ClubPostDto> list = clubPostDao.selectClubPostByClubId(clubPostParamDto);
+
+			clubPostResultDto.setList(list);
+			clubPostResultDto.setCount(count);
+			clubPostResultDto.setResult(SUCCESS);
+		} catch (Exception e) {
+			e.printStackTrace();
+			clubPostResultDto.setResult(FAIL);
+		}
+
+		return clubPostResultDto;
+	}
+
+	@Override
+	public ClubPostResultDto selectClubPostByClubIdAndSearchWord(String clubId, String searchWord, int limit,
+			int offset) {
+		ClubPostResultDto clubPostResultDto = new ClubPostResultDto();	
+		
+		ClubPostParamDto clubPostParamDto = new ClubPostParamDto();
+		clubPostParamDto.setClubId(clubId);
+		clubPostParamDto.setSearchWord(searchWord);
+		clubPostParamDto.setLimit(limit);
+		clubPostParamDto.setOffset(offset);
+		try {
+			// 게시물 총개수
+			int count = clubPostDao.clubPostByClubIdAndSearchWordCount(clubPostParamDto);
+			List<ClubPostDto> list = clubPostDao.selectClubPostByClubIdAndSearchWord(clubPostParamDto);
+
+			clubPostResultDto.setList(list);
+			clubPostResultDto.setCount(count);
+			clubPostResultDto.setResult(SUCCESS);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			clubPostResultDto.setResult(FAIL);
+		}
+
+		return clubPostResultDto;
+	}
+
+	@Override
+	public ClubPostResultDto selectClubPostByUserId(String userId, int limit, int offset) {
+		ClubPostResultDto clubPostResultDto = new ClubPostResultDto();
+		
+		ClubPostParamDto clubPostParamDto = new ClubPostParamDto();
+		clubPostParamDto.setUserId(userId);
+		clubPostParamDto.setLimit(limit);
+		clubPostParamDto.setOffset(offset);
+		
+		try {
+
+			int count = clubPostDao.clubPostByUserIdCount(clubPostParamDto);
+			List<ClubPostDto> list = clubPostDao.selectClubPostByUserId(clubPostParamDto);
+
+			clubPostResultDto.setList(list);
+			clubPostResultDto.setCount(count);
+			clubPostResultDto.setResult(SUCCESS);
+		} catch (Exception e) {
+			e.printStackTrace();
+			clubPostResultDto.setResult(FAIL);
+		}
+
+		return clubPostResultDto;
+	}
+
+	@Override
+	public ClubPostResultDto selectClubPostByUserIdAndSearchWord(String userId, String searchWord, int limit,
+			int offset) {
+		ClubPostResultDto clubPostResultDto = new ClubPostResultDto();	
+		
+		ClubPostParamDto clubPostParamDto = new ClubPostParamDto();
+		clubPostParamDto.setUserId(userId);
+		clubPostParamDto.setSearchWord(searchWord);
+		clubPostParamDto.setLimit(limit);
+		clubPostParamDto.setOffset(offset);
+		try {
+			// 게시물 총개수
+			int count = clubPostDao.clubPostByUserIdAndSearchWordCount(clubPostParamDto);
+			List<ClubPostDto> list = clubPostDao.selectClubPostByUserIdAndSearchWord(clubPostParamDto);
 
 			clubPostResultDto.setList(list);
 			clubPostResultDto.setCount(count);

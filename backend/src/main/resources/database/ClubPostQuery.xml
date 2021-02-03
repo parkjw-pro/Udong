@@ -28,6 +28,7 @@
 
 
 	<!-- 글 가져오기 -->
+	<!-- 모든 글 가져오기 -->
 	<select id="selectAllClubPost" parameterType="map"
 		resultType="com.ssafy.udong.dto.ClubPostDto">
 		SELECT p.post_id, p.club_id, p.user_id, u.nickname,	p.post_content, p.created_at,
@@ -38,8 +39,7 @@
 		LIMIT #{limit} OFFSET #{offset}
 	</select>
 
-
-	<!-- 글 가져오기 -->
+	<!-- 검색어를 포함하는 모든 글 가져오기 -->
 	<select id="selectClubPostBySearchWord" parameterType="map"
 		resultType="com.ssafy.udong.dto.ClubPostDto">
 		SELECT p.post_id, p.club_id, p.user_id, u.nickname, p.post_content, p.created_at, 
@@ -49,7 +49,90 @@
 		ORDER BY p.post_id DESC
 		LIMIT #{limit} OFFSET #{offset}
 	</select>
+	
+	<!-- 그룹 별 글 가져오기 -->
+	<select id="selectClubPostByClubId" parameterType="map"
+		resultType="com.ssafy.udong.dto.ClubPostDto">
+		SELECT p.post_id, p.club_id, p.user_id, u.nickname,	p.post_content, p.created_at,
+		p.post_views, p.is_open, p.post_like_count, p.post_tag, p.is_updated, p.updated_at, p.post_comment_count
+		FROM club_post p, user u
+		WHERE p.club_id = #{clubId} AND p.user_id = u.user_id
+		ORDER BY p.post_id DESC
+		LIMIT #{limit} OFFSET #{offset}
+	</select>
+	
+	<!-- 그룹 별 검색어를 포함하는 글 가져오기 -->
+	<select id="selectClubPostByClubIdAndSearchWord" parameterType="map"
+		resultType="com.ssafy.udong.dto.ClubPostDto">
+		SELECT p.post_id, p.club_id, p.user_id, u.nickname,	p.post_content, p.created_at,
+		p.post_views, p.is_open, p.post_like_count, p.post_tag, p.is_updated, p.updated_at, p.post_comment_count
+		FROM club_post p, user u
+		WHERE p.club_id = #{clubId} AND p.user_id = u.user_id AND p.post_content LIKE CONCAT('%', #{searchWord} ,'%')
+		ORDER BY p.post_id DESC
+		LIMIT #{limit} OFFSET #{offset}
+	</select>
+	
+	<!-- 유저 별 글 가져오기 -->
+	<select id="selectClubPostByUserId" parameterType="map"
+		resultType="com.ssafy.udong.dto.ClubPostDto">
+		SELECT p.post_id, p.club_id, p.user_id, u.nickname,	p.post_content, p.created_at,
+		p.post_views, p.is_open, p.post_like_count, p.post_tag, p.is_updated, p.updated_at, p.post_comment_count
+		FROM club_post p, user u
+		WHERE u.user_id = #{userId} AND p.user_id = u.user_id
+		ORDER BY p.post_id DESC
+		LIMIT #{limit} OFFSET #{offset}
+	</select>
+		
+	<!-- 유저 별 검색어를 포함하는 글 가져오기 -->
+	<select id="selectClubPostByUserIdAndSearchWord" parameterType="map"
+		resultType="com.ssafy.udong.dto.ClubPostDto">
+		SELECT p.post_id, p.club_id, p.user_id, u.nickname,	p.post_content, p.created_at,
+		p.post_views, p.is_open, p.post_like_count, p.post_tag, p.is_updated, p.updated_at, p.post_comment_count
+		FROM club_post p, user u
+		WHERE u.user_id = #{userId} AND p.user_id = u.user_id AND p.post_content LIKE CONCAT('%', #{searchWord} ,'%')
+		ORDER BY p.post_id DESC
+		LIMIT #{limit} OFFSET #{offset}
+	</select>
+	
+	<!-- 글 총개수 -->
+	<select id="clubPostCount" resultType="int">
+		SELECT COUNT(*) FROM club_post
+	</select>
 
+	<!-- 글 총개수(검색어) -->
+	<select id="clubPostBySearchWordCount" parameterType="string"
+		resultType="int">
+		SELECT COUNT(*) FROM club_post
+		WHERE post_content LIKE CONCAT('%', #{searchWord} ,'%')
+	</select>
+
+	<!-- 글 총개수(그룹) -->
+	<select id="clubPostByClubIdCount" resultType="int">
+		SELECT COUNT(*) FROM club_post
+		WHERE club_id = #{clubId}
+	</select>
+	
+	<!-- 글 총개수(그룹, 검색어) -->
+	<select id="clubPostByClubIdAndSearchWordCount" parameterType="string"
+		resultType="int">
+		SELECT COUNT(*) FROM club_post
+		WHERE club_id = #{clubId} AND post_content LIKE CONCAT('%', #{searchWord} ,'%')
+	</select>
+	
+	<!-- 글 총개수(유저) -->
+	<select id="clubPostByUserIdCount" resultType="int">
+		SELECT COUNT(*) FROM club_post
+		WHERE user_id = #{userId}
+	</select>
+		
+	<!-- 글 총개수(유저, 검색어) -->
+	<select id="clubPostByUserIdAndSearchWordCount" parameterType="string"
+		resultType="int">
+		SELECT COUNT(*) FROM club_post
+		WHERE user_id = #{userId} AND post_content LIKE CONCAT('%', #{searchWord} ,'%')
+	</select>
+
+		
 	<!-- 글 상세 가져오기 -->
 	<select id="selectClubPost"
 		parameterType="com.ssafy.udong.dto.ClubPostDto"
@@ -64,20 +147,6 @@
 	<select id="SelectFileUrl" parameterType="String" resultType="String">
 		select file_url from image
 		where file_id = ANY(select file_id from club_post_file where post_id = #{postId});
-	</select>
-
-	<!-- 글 총개수 -->
-	<select id="clubPostTotalCount" resultType="int">
-		SELECT COUNT(*) FROM
-		club_post
-	</select>
-
-	<!-- 글 총개수(검색어) -->
-	<select id="clubPostBySearchWordTotalCount" parameterType="string"
-		resultType="int">
-		SELECT COUNT()
-		FROM club_post
-		WHERE post_content LIKE CONCAT('%', #{searchWord} ,'%')
 	</select>
 
 	<!-- 글수정 -->
