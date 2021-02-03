@@ -3,7 +3,7 @@
     <!-- 1. Navbar --> <!-- variant="faded" -->
     <b-navbar class="pl-5 mt-3" toggleable="sm" type="light" variant="faded">
       <!-- 1.1 Navbar Logo -->
-      <b-navbar-brand href="#">
+      <b-navbar-brand href="#" @click="toHome">
         <img src="@/assets/logo.png" alt="우동" style="width: 60px; height: 60px;"> 은
       </b-navbar-brand>
       <!-- 1.2 Navbar dropdowns -->
@@ -58,6 +58,7 @@
         <b-col v-if="toggle" class="small" id="option_v3" @click="toAccountDetail">개인정보</b-col>
         <b-col v-if="toggle" class="small" id="option_v3" @click="logout">로그아웃</b-col>
         <b-col v-if="toggle" class="small" id="option_v3" @click="toDevelopers">개발진</b-col>
+        <b-col v-if="toggle && isManager" class="small" id="option_v3" @click="toAdmin">관리자페이지</b-col>
     </component>
   </div>
 </template>
@@ -81,6 +82,7 @@ export default {
       side: 'right',
       currentMenu: 'slide',
       isToggled: false,
+      isManager: false,
     }
   },
   computed: {
@@ -89,11 +91,17 @@ export default {
     }
   },
   methods: {
+    toAdmin: function () {
+      this.$router.push({ name: 'Admin' })
+    },
+    toHome: function () {
+      this.$router.push({name: 'Home'})
+    },
     toReview: function () {
       this.$router.push({name: 'ReviewHome'})
     },
     toNews: function () {
-      // this.$router.push({name: 'News'})
+      this.$router.push({name: 'NewsHome'})
     },
     toStory: function () {
       this.$router.push({name: 'NewsFeed'})
@@ -105,15 +113,24 @@ export default {
       this.$router.push({name: 'AccountDetail'})
     },
     logout: function () {
-
+      this.$store
+        .dispatch("LOGOUT")
+        .then(() => {
+          // this.$router.push({ name: 'Home' })
+          this.$router.push({ name: 'Login'})
+        })
+        .catch(({ message }) => (this.msg = message));
     },
     toDevelopers: function () {
-
+      this.$router.push({name: 'Developers'})
     },
     arrowToggle() {
       this.isToggled = !this.isToggled;
     }
   },
+  created() {
+    this.isManager = JSON.parse(localStorage.getItem('Info-token'))["userId"]
+  }
 }
 </script>
 

@@ -14,28 +14,38 @@ import com.ssafy.udong.dto.ReportDto;
 
 public interface ClubPostService {
 
-	int createPost(ClubPostDto clubPostDto, List<MultipartFile> files);
+	int createClubPost(ClubPostDto clubPostDto, List<MultipartFile> files);
 
-	ClubPostResultDto listPost(ClubPostParamDto clubPostParamDto);
+	//조건에 맞는 게시글 조회
+	ClubPostResultDto selectAllClubPost(int limit, int offset);
 
-	ClubPostResultDto searchWordListPost(ClubPostParamDto clubPostParamDto);
+	ClubPostResultDto selectClubPostBySearchWord(String searchWord, int limit, int offset);
 
-	ClubPostResultDto detailPost(String postId);
+	ClubPostResultDto selectClubPostByClubId(String clubId, int limit, int offset);
 
-	int updatePost(ClubPostDto clubPostDto);
+	ClubPostResultDto selectClubPostByClubIdAndSearchWord(String clubId, String searchWord, int limit, int offset);
 
-	int deletePost(String postId);
+	ClubPostResultDto selectClubPostByUserId(String userId, int limit, int offset);
 
-	int createPostCom(CommentDto commentDto);
+	ClubPostResultDto selectClubPostByUserIdAndSearchWord(String userId, String searchWord, int limit, int offset);
 
-	CommentResultDto selectPostCom(String postId);
+	//게시글 한 개 조회
+	ClubPostResultDto selectClubPost(String postId);
 
-	int createPostLike(LikeDto likeDto);
+	int updateClubPost(ClubPostDto clubPostDto);
 
-	int createPostCommLike(LikeDto likeDto);
+	int deleteClubPost(String postId);
 
-	int createPostReport(ReportDto reportDto);
+	int createClubPostComment(CommentDto commentDto);
 
-	int createPostCommReport(ReportDto reportDto);
+	CommentResultDto selectClubPostComment(String postId);
+
+	int createClubPostLike(LikeDto likeDto);
+
+	int createClubPostCommentLike(LikeDto likeDto);
+
+	int createClubPostReport(ReportDto reportDto);
+
+	int createClubPostCommentReport(ReportDto reportDto);
 
 }

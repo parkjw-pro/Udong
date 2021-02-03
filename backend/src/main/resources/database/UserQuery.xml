@@ -11,10 +11,6 @@
 		where user_id = #{userId} and password = #{password}
 	</select>
 
-	<!-- <delete id="deleteUser" parameterType="string" >
-		DELETE FROM user WHERE user_id = #{userId}
-	</delete> -->
-
 	<update id="deleteUser"
 		parameterType="com.ssafy.udong.dto.UserDto">
 		UPDATE user set user_state = #{userState}
@@ -29,7 +25,7 @@
 
 	<update id="updateUser"
 		parameterType="com.ssafy.udong.dto.UserDto">
-		UPDATE user set password = #{password}, email = #{email}, nickname = #{email}
+		UPDATE user set email = #{email}, nickname = #{nickname}
 		WHERE user_id = #{userId}
 	</update>
 
@@ -61,7 +57,6 @@
 		WHERE user_id = #{userId}
 	</select>
 	
-	
 	<select id="selectDuplicateNickname"
 		parameterType="String" resultType="String">
 		SELECT  nickname
@@ -69,11 +64,29 @@
 		WHERE nickname = #{nickname}
 	</select>
 	
-	
 	<select id="selectDuplicateEmail"
 		parameterType="String" resultType="String">
 		SELECT  email
 		FROM user
 		WHERE email = #{email}
+	</select>
+	
+		<update id="updateUserAddress"
+		parameterType="com.ssafy.udong.dto.UserParamDto">
+		UPDATE user_address set user_address_code = #{addressCode}
+		WHERE user_id = #{userId}
+	</update>
+	
+	<insert id="createUserAddress"
+		parameterType="com.ssafy.udong.dto.UserParamDto">
+		insert INTO user_address (user_id, user_address_code)
+		VALUES (#{userId}, #{addressCode})
+	</insert>
+	
+	<select id="selectUserAddress"
+		parameterType="com.ssafy.udong.dto.UserParamDto" resultType="com.ssafy.udong.dto.UserParamDto">
+		SELECT  user_address_code as addressCode
+		FROM user_address
+		WHERE user_id = #{userId}
 	</select>
 </mapper>

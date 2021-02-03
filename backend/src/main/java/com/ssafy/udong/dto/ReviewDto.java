@@ -10,13 +10,9 @@ public class ReviewDto {
 	private int rate;
 	private String createdAt;
 	private int reviewLikeCount;
-	private String nickName;
+	private String nickname;
 	
-	
-	public ReviewDto() {
-		
-	}
-
+	public ReviewDto() {}
 
 	public String getReviewId() {
 		return reviewId;
@@ -98,25 +94,13 @@ public class ReviewDto {
 	}
 
 
-	public String getNickName() {
-		return nickName;
+	public String getNickname() {
+		return nickname;
 	}
 
 
-	public void setNickName(String nickName) {
-		this.nickName = nickName;
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
-
-
-	
-
-	
-
-	
-	
-	
-	
-	
-	
 
 }

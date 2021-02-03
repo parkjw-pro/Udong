@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import com.ssafy.udong.dto.UserDto;
+import com.ssafy.udong.dto.UserParamDto;
 
 public interface UserService {
 
@@ -12,7 +13,7 @@ public interface UserService {
 
 
 	// 회원 탈퇴 가입 수정 
-	public int deleteUser(String userId) throws Exception;
+	public int deleteUser(UserDto userDto) throws Exception;
 	public int insertUser(UserDto userDto) throws Exception;
 	public int updateUser(UserDto userDto) throws Exception;
 
@@ -27,7 +28,6 @@ public interface UserService {
 
 	//닉네임 중복체크
 	public String selectDuplicateNickname(String nickname) throws Exception;
-
 	
 
 	//이메일 인증
@@ -35,7 +35,6 @@ public interface UserService {
 	public void gmailSend(String email) throws Exception;
 	//이메일 인증 확인
 	public int gmailCheck(String checkCode) throws Exception;
-
-
-	public int createUserAddress(String dongcode);
+	
+	public int createUserAddress(UserParamDto dto);
 }

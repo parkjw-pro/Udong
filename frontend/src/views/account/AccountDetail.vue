@@ -1,27 +1,36 @@
 <template>
   <div id="box">
-     <b-form class="mt-5 pt-5" @submit="onSubmit">
+    <div id="border" class="my-5 py-5">
+      <div class="mb-5">
+        <span><img alt="Vue logo" src="@/assets/udonge.png" style="width: 10%"></span>
+        <span class="font-weight-bold" style="color: #695549;">우리동네 주민등록증</span>
+      </div>
+      <!-- 0. 동네 설정 -->
+      <b-row id="accountBox" align-h="center">
+        <b-col cols="2"><span id="title">우리동네</span></b-col>
+        <b-col cols="5" class="font-weight-bold">
+          {{ dong }}
+        </b-col>
+      </b-row>
       <!-- 1. 아이디 -->
-      <b-row id="accountBox" align-h="left">
-        <b-col cols="2"><span>아이디</span></b-col>
+      <b-row id="accountBox" align-h="center">
+        <b-col cols="2"><span id="title">아이디</span></b-col>
         <b-col cols="5">
           <b-form-input
-            id="input-1"
             type="email"
-            :placeholder="credentials.userId"
+            :placeholder="user.userId"
             style="text-align: center;"
             disabled
           ></b-form-input>
         </b-col>
       </b-row>
       <!-- 2. 닉네임 -->
-      <b-row id="accountBox" align-h="left">
-        <b-col cols="2"><span>닉네임</span></b-col>
+      <b-row id="accountBox" align-h="center">
+        <b-col cols="2"><span id="title">닉네임</span></b-col>
         <b-col cols="5">
           <b-form-input
-            id="input-1"
             type="email"
-            :placeholder="credentials.nickname"
+            :placeholder="user.nickname"
             style="text-align: center;"
             disabled
           ></b-form-input>
@@ -31,67 +40,52 @@
             }}</small> -->
       </b-row>
       <!-- 3. 이메일 -->
-      <b-row id="accountBox" align-h="left">
-        <b-col cols="2"><span>이메일</span></b-col>
+      <b-row id="accountBox" align-h="center">
+        <b-col cols="2"><span id="title">이메일</span></b-col>
         <b-col cols="5">
           <b-form-input
-            id="input-1"
             type="email"
-            :placeholder="credentials.email"
+            :placeholder="user.email"
             style="text-align: center;"
             disabled
           ></b-form-input>
         </b-col>
       </b-row>
-      <!-- 4. 동네 설정 -->
-      <b-row id="accountBox" align-h="left">
-        <b-col cols="2"><span>우리동네</span></b-col>
-        <b-col cols="5" class="font-weight-bold">
-          {{ dong }}
-        </b-col>
-        <b-col cols="4" align-self="left">
-          <!-- <b-button class="mx-3" variant="info" @click="createGroup">수정</b-button> -->
-          <!-- <b-button class="mx-3" variant="danger" @click="createGroup">삭제</b-button> -->
-        </b-col>
-      </b-row>
+      
       <!-- <b-col class="mb-5" cols="10"><b-button class="mx-3" variant="info" @click="createGroup">추가</b-button></b-col> -->
-      <br>
-      <br>
-      <div>
-        <b-button class="mx-3" variant="info" >비밀번호 변경</b-button>
-        <b-button class="mx-3" variant="info" >회원정보 수정</b-button>
-      </div>
-    </b-form>
+      <img class="my-3" alt="Vue logo" src="@/assets/account/stamp.png" style="width: 15%">
+    </div>
+    <b-button class="my-3" style="background-color: #695549;" @click="toUpdate">회원정보 수정</b-button>
   </div>
 </template>
 
 <script>
+// import axios from 'axios'
+
+// const SERVER_URL = process.env.VUE_APP_SERVER_URL
+
 export default {
   name: 'AccountDetail',
   data: function () {
     return {
       dong: '역삼동',
-      credentials: {
-        userId: "ssafy10",
-        nickname: "송송",
-        email: "bulgen@naver.com",
+      user: {
+        userId: "",
+        nickname: "",
+        email: "",
       },
     }
   },
   methods: {
-    getToken: function () {
-      const token = localStorage.getItem('jwt')
-      const config = {
-        headers: {
-          Authorization: `JWT ${token}`
-        }
-      }
-      return config
-    },
-    onSubmit(evt) {
-      evt.preventDefault()
-      alert(JSON.stringify(this.article))
-    },
+    toUpdate: function () {
+      this.$router.push({name: 'AccountUpdate'})
+    }
+  },
+  mounted() {
+    const userInfo = JSON.parse(localStorage.getItem('Info-token'))
+    this.user.userId = userInfo["userId"]
+    this.user.nickname = userInfo["nickname"]
+    this.user.email = userInfo["email"]
   }
 }
 </script>
@@ -102,6 +96,13 @@ export default {
   /* margin-right: 30px; */
   margin-bottom: 30px;
 }
-#box {
+
+#border {
+  border: 3px dotted #695549;
+  /* opacity: 0.8; */
+}
+
+#title {
+  /* font-weight: bold; */
 }
 </style>

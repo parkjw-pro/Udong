@@ -9,9 +9,8 @@ public class ReviewResultDto {
 	ReviewDto dto;
 	List<String> fileUrl;
 	
-	public ReviewResultDto() {
-		super();
-	}
+	public ReviewResultDto() {}
+	
 	public ReviewDto getDto() {
 		return dto;
 	}

@@ -17,6 +17,10 @@ import Developers from '@/views/app/Developers.vue'
 import FindLocation from '@/views/app/FindLocation.vue'
 import GetLocation from '@/views/app/GetLocation.vue'
 import Home from '@/views/app/Home'
+
+//소식
+import NewsHome from '@/views/news/NewsHome'
+
 //리뷰
 import ReviewHome from '@/views/review/ReviewHome.vue'
 import FindStore from '@/views/review/FindStore.vue'
@@ -40,8 +44,6 @@ import GroupUpdate from '@/views/story/GroupUpdate.vue'
 
 import MyFeed from '@/views/story/MyFeed.vue'
 import NewsFeed from '@/views/story/NewsFeed.vue'
-
-
 
 
 
@@ -124,6 +126,12 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home,
+  },
+  //소식
+  {
+    path: '/news',
+    name: 'NewsHome',
+    component: NewsHome,
   },
   //리뷰
   {
