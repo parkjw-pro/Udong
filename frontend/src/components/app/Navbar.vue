@@ -58,6 +58,7 @@
         <b-col v-if="toggle" class="small" id="option_v3" @click="toAccountDetail">개인정보</b-col>
         <b-col v-if="toggle" class="small" id="option_v3" @click="logout">로그아웃</b-col>
         <b-col v-if="toggle" class="small" id="option_v3" @click="toDevelopers">개발진</b-col>
+        <b-col v-if="toggle && isManager" class="small" id="option_v3" @click="toAdmin">관리자페이지</b-col>
     </component>
   </div>
 </template>
@@ -81,6 +82,7 @@ export default {
       side: 'right',
       currentMenu: 'slide',
       isToggled: false,
+      isManager: false,
     }
   },
   computed: {
@@ -89,6 +91,9 @@ export default {
     }
   },
   methods: {
+    toAdmin: function () {
+      this.$router.push({ name: 'Admin' })
+    },
     toHome: function () {
       this.$router.push({name: 'Home'})
     },
@@ -123,6 +128,9 @@ export default {
       this.isToggled = !this.isToggled;
     }
   },
+  created() {
+    this.isManager = JSON.parse(localStorage.getItem('Info-token'))["userId"]
+  }
 }
 </script>
 

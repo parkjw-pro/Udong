@@ -9,8 +9,7 @@
 </template>
 
 <script>
-
- import Navbar from '@/components/app/Navbar'
+import Navbar from '@/components/app/Navbar'
 import 'vue-select/dist/vue-select.css';
 
 
