@@ -25,6 +25,7 @@ b-form-group확인해주는거에서 안넘어가는듯
               v-model="credentials.userId"
               placeholder="아이디 입력"
               required
+              autofocus
             ></b-form-input>
             <b-button
               style="margin-top:3px"

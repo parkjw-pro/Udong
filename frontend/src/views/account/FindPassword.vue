@@ -22,6 +22,7 @@
               v-model="credentials.userId"
               placeholder="아이디 입력"
               required
+              autofocus
             ></b-form-input>
             <small class="text-danger" style="float:left; margin-top:5px">{{
               errors[0]

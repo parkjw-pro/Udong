@@ -63,7 +63,10 @@
 </template>
 
 <script>
-//const SERVER_URL = "http://localhost:8000";
+import axios from 'axios'
+
+const SERVER_URL = process.env.VUE_APP_SERVER_URL
+
 export default {
   name: 'AccountDetail',
   data: function () {
@@ -77,26 +80,23 @@ export default {
     }
   },
   methods: {
-    getToken: function () {
-      const token = localStorage.getItem('jwt')
-      const config = {
-        headers: {
-          Authorization: `JWT ${token}`
-        }
-      }
-      return config
-    },
-    onSubmit(evt) {
-      evt.preventDefault()
-      alert(JSON.stringify(this.article))
+    getUser: function () {
+      axios.get(`${SERVER_URL}/user`)
+        .then((res) => {
+          this.user = res
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     },
     toUpdate: function () {
       this.$router.push({name: 'AccountUpdate'})
     }
   },
-  mounted() {
-    this.user.userId = JSON.parse(localStorage.getItem('Login-token'))["user-id"]
-    this.user.nickname = JSON.parse(localStorage.getItem('Login-token'))["user-name"]
+  async mounted() {
+    // this.user.userId = JSON.parse(localStorage.getItem('Login-token'))["user-id"]
+    // this.user.nickname = JSON.parse(localStorage.getItem('Login-token'))["user-name"]
+    await this.getUser()
   }
 }
 </script>

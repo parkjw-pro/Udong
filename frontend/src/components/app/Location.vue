@@ -1,6 +1,9 @@
 <template>
   <div>
-    <button type="button" v-on:click="getLocation">클릭하여 우리 동네를 찾아보세요!</button>
+    <div id="title" class="my-3">
+      <h3>우리동네를 찾아주세요!</h3>
+    </div>
+    <b-button style="background-color: #695549;" v-on:click="getLocation">클릭하여 우리 동네를 찾아보세요!</b-button>
     <br />
     <br />
 
@@ -13,8 +16,10 @@
         <span id="dong"></span>
       </div>
     </div>
-    <button type="button" v-on:click="createUserAddress()">우리동네로 저장</button>
-    <button type="button" v-on:click="createUserAddress()">그냥 둘러볼게요</button>
+    <div id="buttons" class="my-5">
+      <b-button style="background-color: #695549;" v-on:click="createUserAddress">우리동네로 저장</b-button>
+      <b-button style="background-color: #695549;" v-on:click="toHome">그냥 둘러볼게요</b-button>
+    </div>
   </div>
 </template>
 
@@ -160,6 +165,9 @@ export default {
         .then(() => this.$router.replace(`/${this.nextRoute}`))
         .catch(({ message }) => (this.msg = message));
     },
+    toHome: function () {
+      this.$router.push({ name: 'Home' })
+    }
 
     // addScript() {
     //   const script = document.createElement("script");

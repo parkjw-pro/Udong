@@ -26,20 +26,11 @@ export default {
     }
   },
   methods: {
-    logout: function () {
-      localStorage.removeItem('jwt')  // localStorage에서 JWT 지우기
-      this.login = false
-      // this.$router.push({ name: 'Login' })
-    }
   },
-  
   created(){
-    console.log(localStorage.getItem('auth-token'));  // localStorage에서 JWT 받아오기
-    console.log(this.login)
     if (localStorage.getItem('auth-token') != undefined) {
         this.login = true
     }
-     console.log(this.login)
   }
 }
 </script>

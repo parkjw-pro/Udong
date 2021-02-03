@@ -3,7 +3,7 @@
     <!-- 1. Navbar --> <!-- variant="faded" -->
     <b-navbar class="pl-5 mt-3" toggleable="sm" type="light" variant="faded">
       <!-- 1.1 Navbar Logo -->
-      <b-navbar-brand href="#">
+      <b-navbar-brand href="#" @click="toHome">
         <img src="@/assets/logo.png" alt="우동" style="width: 60px; height: 60px;"> 은
       </b-navbar-brand>
       <!-- 1.2 Navbar dropdowns -->
@@ -89,6 +89,9 @@ export default {
     }
   },
   methods: {
+    toHome: function () {
+      this.$router.push({name: 'Home'})
+    },
     toReview: function () {
       this.$router.push({name: 'ReviewHome'})
     },
@@ -105,7 +108,13 @@ export default {
       this.$router.push({name: 'AccountDetail'})
     },
     logout: function () {
-
+      this.$store
+        .dispatch("LOGOUT")
+        .then(() => {
+          // this.$router.push({ name: 'Home' })
+          this.$router.push({ name: 'Login'})
+        })
+        .catch(({ message }) => (this.msg = message));
     },
     toDevelopers: function () {
       this.$router.push({name: 'Developers'})

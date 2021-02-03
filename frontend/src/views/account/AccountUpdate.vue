@@ -1,88 +1,80 @@
 <template>
   <div id="box">
     <div id="border" class="my-5 py-5">
-      <div class="mb-5">
+      <!-- 1. 제목 -->
+      <div id="title" class="mb-5">
         <span><img alt="Vue logo" src="@/assets/udonge.png" style="width: 10%"></span>
         <span class="font-weight-bold " style="color: #695549;">회원정보</span>
       </div>
-      <b-row>
-        <b-col cols="8" class="pr-0 mr-0">
-          <!-- 1. 아이디 -->
-          <b-row id="accountBox" align-h="center">
-            <b-col cols="2"><span>아이디</span></b-col>
-            <b-col cols="5">
-              <b-form-input
-                id="input-1"
-                type="email"
-                :placeholder="user.userId"
-                style="text-align: center;"
-                disabled
-              ></b-form-input>
-            </b-col>
-          </b-row>
-        </b-col>
-        <b-col>
-          <!-- 2. 닉네임 -->
-          <b-row id="accountBox" align-h="center">
-            <b-col cols="2"><span>닉네임</span></b-col>
-            <b-col cols="5">
-              <b-form-input
-                id="input-1"
-                type="email"
-                :placeholder="user.nickname"
-                style="text-align: center;"
-              ></b-form-input>
-            </b-col>
-            <!-- <small id = "error2" class="text-danger" style="float:left; margin-top:5px">{{
-                  errors[0]
-                }}</small> -->
-          </b-row>
-        </b-col>
-          <!-- 3. 이메일 -->
-          <b-row id="accountBox" align-h="center">
-            <b-col cols="2"><span>이메일</span></b-col>
-            <b-col cols="5">
-              <b-form-input
-                id="input-1"
-                type="email"
-                :placeholder="user.email"
-                style="text-align: center;"
-                disabled
-              ></b-form-input>
-            </b-col>
-          </b-row>
-          <!-- 4. 동네 설정 -->
-          <b-row id="accountBox" align-h="center">
-            <b-col cols="2"><span>우리동네</span></b-col>
-            <b-col cols="5" class="font-weight-bold">
-              {{ dong }}
-            </b-col>
-            
-          </b-row>
-
-      <b-col cols="3" class="pl-0 ml-0">
-        <b-row class="my-4"></b-row>
-        <b-row class="mt-5">
-          <b-button
-                style="margin-top:3px; background-color: #695549;"
-                size="sm"
-                @click="verifyNickname"
-          >중복확인</b-button>
+    
+      <!-- 2. 내용 -->
+      <!-- 2.1 input창 -->
+      <b-col class="mx-3">
+          <!-- 2.1.1 아이디 -->
+        <b-row id="accountBox">
+          <b-col id="label" cols="3"><span>아이디</span></b-col>
+          <b-col id="label_content" cols="5">
+            <b-form-input
+              id="input-1"
+              type="email"
+              :placeholder="user.userId"
+              style="text-align: center;"
+              disabled
+            ></b-form-input>
+          </b-col>
         </b-row>
-        <b-row class="my-4"></b-row>
-        <b-row class="my-4" align-h="left">
-          <b-button variant="danger" size="sm" @click="createGroup">삭제</b-button>
+        <!-- 2.1.2 닉네임 -->
+        <b-row id="accountBox">
+          <b-col id="label" cols="3"><span>닉네임</span></b-col>
+          <b-col id="label_content" cols="5">
+            <b-form-input
+              id="input-1"
+              type="email"
+              :placeholder="user.nickname"
+              style="text-align: center;"
+            ></b-form-input>
+            <small id = "error2" class="text-danger"> 닉네임을 확인해주세요.</small>
+          </b-col>
+          <b-col cols="2">
+            <b-button
+              style="margin-top:3px; background-color: #695549;"
+              size="sm"
+              @click="verifyNickname"
+            >중복확인</b-button>
+          </b-col>
+        </b-row>
+        <!-- 2.1.3 이메일 -->
+        <b-row id="accountBox">
+          <b-col id="label" cols="3"><span>이메일</span></b-col>
+          <b-col id="label_content" cols="5">
+            <b-form-input
+              id="input-1"
+              type="email"
+              :placeholder="user.email"
+              style="text-align: center;"
+              disabled
+            ></b-form-input>
+          </b-col>
+          
+        </b-row>
+        <!-- 2.1.4 동네 설정 -->
+        <b-row id="accountBox">
+          <b-col id="label" cols="3"><span>우리동네</span></b-col>
+          <b-col id="label_content" cols="5" class="font-weight-bold">
+            {{ dong }}
+          </b-col>
+          <b-col cols="2">
+            <b-button style="background-color: #695549;" size="sm" @click="addLocation">추가</b-button>
+            <b-button variant="danger" size="sm" @click="deleteLocation">삭제</b-button>
+          </b-col>
         </b-row>
       </b-col>
-      </b-row>
-      <b-button class="mx-3 mb-5" style="background-color: #695549;" @click="createGroup">추가</b-button>
-
-      <div>
+    </div>
+    <div>
         <b-button class="mx-3" variant="danger" @click="deleteAccount">회원탈퇴</b-button>
         <!-- 혹은 router-link 넣어주기!!! -->
         <b-button class="mx-3" style="background-color: #695549;" @click="toDetail">확인</b-button>
       </div>
-    </div>
   </div>
 </template>
 
@@ -95,25 +87,15 @@ export default {
     return {
       dong: '역삼동',
       user: {
-        userId: "ssafy10",
-        nickname: "송송",
+        userId: "",
+        nickname: "",
         email: "bulgen@naver.com",
       },
     }
   },
   methods: {
-    getToken: function () {
-      const token = localStorage.getItem('jwt')
-      const config = {
-        headers: {
-          Authorization: `JWT ${token}`
-        }
-      }
-      return config
-    },
-    onSubmit(evt) {
-      evt.preventDefault()
-      alert(JSON.stringify(this.article))
+    addLocation: function () {
+      alert("동네를 2개까지 추가할 수 있다!!?? \n서비스 준비 중입니다!")
     },
     verifyNickname: function() {
        if(this.user.nickname == ""|| document.getElementById("error2").innerHTML != ""){
@@ -138,8 +120,11 @@ export default {
     deleteAccount: function () {
 
     },
+    deleteLocation: function () {
+      alert('한 개 이상의 동네를 설정하셔야 합니다!')
+    },
     toDetail: function () {
-
+      this.$router.push({ name: 'AccountDetail' })
     },
   },
   mounted() {
@@ -159,5 +144,15 @@ export default {
 #border {
   border: 3px dotted #695549;
   /* opacity: 0.8; */
+}
+
+#label {
+  padding-right: 0px;
+  margin-right: 0px;
+}
+
+#label_content {
+  padding-left: 0px;
+  margin-left: 0px;
 }
 </style>
