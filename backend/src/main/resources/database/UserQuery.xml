@@ -11,10 +11,6 @@
 		where user_id = #{userId} and password = #{password}
 	</select>
 
-	<!-- <delete id="deleteUser" parameterType="string" >
-		DELETE FROM user WHERE user_id = #{userId}
-	</delete> -->
-
 	<update id="deleteUser"
 		parameterType="com.ssafy.udong.dto.UserDto">
 		UPDATE user set user_state = #{userState}
@@ -61,14 +57,12 @@
 		WHERE user_id = #{userId}
 	</select>
 	
-	
 	<select id="selectDuplicateNickname"
 		parameterType="String" resultType="String">
 		SELECT  nickname
 		FROM user
 		WHERE nickname = #{nickname}
 	</select>
-	
 	
 	<select id="selectDuplicateEmail"
 		parameterType="String" resultType="String">

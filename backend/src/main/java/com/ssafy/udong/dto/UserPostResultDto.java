@@ -2,17 +2,14 @@ package com.ssafy.udong.dto;
 
 import java.util.List;
 
-public class UserBoardResultDto {
+public class UserPostResultDto {
 	private int result;
-	private UserBoardDto dto;
-	private List<UserBoardDto> list;
+	private UserPostDto dto;
+	private List<UserPostDto> list;
 	private int count;
 	List<String> fileUrl;
-	
 
-	public UserBoardResultDto() {
-		super();
-	}
+	public UserPostResultDto() {}
 
 	public List<String> getFileUrl() {
 		return fileUrl;
@@ -22,33 +19,35 @@ public class UserBoardResultDto {
 		this.fileUrl = fileUrl;
 	}
 
-	
 	public int getResult() {
 		return result;
 	}
+
 	public void setResult(int result) {
 		this.result = result;
 	}
-	public UserBoardDto getDto() {
+
+	public UserPostDto getDto() {
 		return dto;
 	}
-	public void setDto(UserBoardDto dto) {
+
+	public void setDto(UserPostDto dto) {
 		this.dto = dto;
 	}
 
-	public List<UserBoardDto> getList() {
+	public List<UserPostDto> getList() {
 		return list;
 	}
-	public void setList(List<UserBoardDto> list) {
+
+	public void setList(List<UserPostDto> list) {
 		this.list = list;
 	}
+
 	public int getCount() {
 		return count;
 	}
+
 	public void setCount(int count) {
 		this.count = count;
 	}
 }
-
-
-
