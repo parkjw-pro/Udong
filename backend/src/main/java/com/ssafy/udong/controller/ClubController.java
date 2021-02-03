@@ -71,6 +71,7 @@ public class ClubController {
 	@ApiOperation(value = "아이디 중복 확인", notes = "회원가입 시 입력한 아이디가 기존회원의 아이디와 중복인지 확인합니다.")
 	@GetMapping("/{clubname}")
 	public ResponseEntity<String> selectDuplicateClubName(@PathVariable String clubname) throws Exception {
+		System.out.println(clubname);
 		String result = clubService.selectDuplicateClubName(clubname);
 		if (result != null) {
 			return new ResponseEntity<String>("현재 사용중인 그룹명입니다.", HttpStatus.INTERNAL_SERVER_ERROR);

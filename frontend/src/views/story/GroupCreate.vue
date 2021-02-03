@@ -92,6 +92,8 @@
 import Profile from '@/components/app/Profile'
 import axios from 'axios'
 
+const SERVER_URL = "http://localhost:8000";
+
 export default {
   name: 'GroupCreate',
   components: {
@@ -148,7 +150,7 @@ export default {
     },
     verifyName: function () {
       // 요청한다
-      axios.get("", this.club.clubName)
+      axios.get(`${SERVER_URL}/club/${this.club.clubName}`)
       .then(() => {
         this.isVerified = true
       })
