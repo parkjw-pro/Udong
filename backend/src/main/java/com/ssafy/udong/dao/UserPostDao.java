@@ -20,11 +20,15 @@ public interface UserPostDao {
 
 	//게시물 리스트 가져오기
 	public List<UserPostDto> selectAllUserPost(UserPostParamDto userBoardParamDto);
+	public List<UserPostDto> selectUserPostByUserId(UserPostParamDto userPostParamDto);
 	public List<UserPostDto> selectUserPostBySearchWord(UserPostParamDto userBoardParamDto);
-	
+	public List<UserPostDto> selectUserPostByUserIdAndWord(UserPostParamDto userPostParamDto);
+
 	//게시글 총개수 
 	public int userPostTotalCount();
+	public int userPostByUserIdTotalCount(UserPostParamDto userPostParamDto);
 	public int userPostBySearchWordTotalCount(UserPostParamDto boardParamDto);
+	public int userPostByUserIdAndWordTotalCount(UserPostParamDto userPostParamDto);
 	
 	//게시물 상세가져오기 
 	public UserPostDto selectUserPost(String postId);

@@ -6,7 +6,7 @@ public class UserPostParamDto {
 	private int offset;
 	private String searchWord;
 	private int postId;
-	private int userId;
+	private String userId;
 	
 	public UserPostParamDto() {}
 	
@@ -34,10 +34,10 @@ public class UserPostParamDto {
 	public void setPostId(int postId) {
 		this.postId = postId;
 	}
-	public int getUserId() {
+	public String getUserId() {
 		return userId;
 	}
-	public void setUserId(int userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 

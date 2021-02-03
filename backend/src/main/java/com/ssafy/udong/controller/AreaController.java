@@ -15,7 +15,6 @@ import com.ssafy.udong.service.AreaService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-
 @CrossOrigin
 @RestController
 @RequestMapping("/area")

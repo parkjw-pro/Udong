@@ -25,6 +25,22 @@ public interface ClubPostDao {
 	public List<ClubPostDto> selectAllClubPost(ClubPostParamDto clubPostParamDto);
 	public List<ClubPostDto> selectClubPostBySearchWord(ClubPostParamDto clubPostParamDto);
 	
+	public List<ClubPostDto> selectClubPostByClubId(ClubPostParamDto clubPostParamDto);
+	public List<ClubPostDto> selectClubPostByClubIdAndSearchWord(ClubPostParamDto clubPostParamDto);
+	
+	public List<ClubPostDto> selectClubPostByUserId(ClubPostParamDto clubPostParamDto);
+	public List<ClubPostDto> selectClubPostByUserIdAndSearchWord(ClubPostParamDto clubPostParamDto);
+	
+	//게시글 총개수 
+	public int clubPostCount();
+	public int clubPostBySearchWordCount(ClubPostParamDto clubPostParamDto);
+	
+	public int clubPostByClubIdCount(ClubPostParamDto clubPostParamDto);
+	public int clubPostByClubIdAndSearchWordCount(ClubPostParamDto clubPostParamDto);
+	
+	public int clubPostByUserIdCount(ClubPostParamDto clubPostParamDto);
+	public int clubPostByUserIdAndSearchWordCount(ClubPostParamDto clubPostParamDto);
+	
 	//게시물 상세가져오기 
 	public ClubPostDto selectClubPost(String postId);
 	public List<String> selectFileUrl(String postId);
@@ -32,10 +48,6 @@ public interface ClubPostDao {
 	//조회수 가져오고 증가시키기
 	public int selectClubPostViews(String postId); 
 	public int updateClubPostViews(String postId);
-		
-	//게시글 총개수 
-	public int clubPostTotalCount();
-	public int clubPostBySearchWordTotalCount(ClubPostParamDto clubPostParamDto);
 
 	//게시물 수정
 	public int updateClubPost(ClubPostDto clubPostDto);

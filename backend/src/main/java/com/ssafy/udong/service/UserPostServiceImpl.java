@@ -100,8 +100,11 @@ public class UserPostServiceImpl implements UserPostService {
 
 	// 글전체조회
 	@Override
-	public UserPostResultDto selectAllUserPost(UserPostParamDto userPostParamDto) {
-
+	public UserPostResultDto selectAllUserPost(int limit, int offset) {
+		UserPostParamDto userPostParamDto = new UserPostParamDto();
+		userPostParamDto.setLimit(limit);
+		userPostParamDto.setOffset(offset);
+		
 		UserPostResultDto userPostResultDto = new UserPostResultDto();
 		try {
 
@@ -121,7 +124,11 @@ public class UserPostServiceImpl implements UserPostService {
 
 	// 글 검색어조회
 	@Override
-	public UserPostResultDto selectUserPostBySearchWord(UserPostParamDto userPostParamDto) {
+	public UserPostResultDto selectUserPostBySearchWord(String searchWord, int limit, int offset) {
+		UserPostParamDto userPostParamDto = new UserPostParamDto();
+		userPostParamDto.setSearchWord(searchWord);
+		userPostParamDto.setLimit(limit);
+		userPostParamDto.setOffset(offset);
 
 		UserPostResultDto userPostResultDto = new UserPostResultDto();
 		try {
@@ -271,6 +278,57 @@ public class UserPostServiceImpl implements UserPostService {
 			e.printStackTrace();
 			return 0;
 		}
+	}
+
+	@Override
+	public UserPostResultDto selectAllUserPostByUserId(String userId, int limit, int offset) {
+		UserPostParamDto userPostParamDto = new UserPostParamDto();
+		userPostParamDto.setUserId(userId);
+		userPostParamDto.setLimit(limit);
+		userPostParamDto.setOffset(offset);
+
+		UserPostResultDto userPostResultDto = new UserPostResultDto();
+		try {
+			// 게시물 총개수
+			int count = userPostDao.userPostByUserIdTotalCount(userPostParamDto);
+			List<UserPostDto> list = userPostDao.selectUserPostByUserId(userPostParamDto);
+
+			userPostResultDto.setList(list);
+			userPostResultDto.setCount(count);
+			userPostResultDto.setResult(SUCCESS);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			userPostResultDto.setResult(FAIL);
+		}
+
+		return userPostResultDto;
+	}
+
+	@Override
+	public UserPostResultDto selectUserPostByUserIdAndWord(String userId, String searchWord, int limit, int offset) {
+		UserPostParamDto userPostParamDto = new UserPostParamDto();
+		userPostParamDto.setUserId(userId);
+		userPostParamDto.setSearchWord(searchWord);
+		userPostParamDto.setLimit(limit);
+		userPostParamDto.setOffset(offset);
+
+		UserPostResultDto userPostResultDto = new UserPostResultDto();
+		try {
+			// 게시물 총개수
+			int count = userPostDao.userPostByUserIdAndWordTotalCount(userPostParamDto);
+			List<UserPostDto> list = userPostDao.selectUserPostByUserIdAndWord(userPostParamDto);
+
+			userPostResultDto.setList(list);
+			userPostResultDto.setCount(count);
+			userPostResultDto.setResult(SUCCESS);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			userPostResultDto.setResult(FAIL);
+		}
+
+		return userPostResultDto;
 	}
 
 }

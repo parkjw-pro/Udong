@@ -16,10 +16,20 @@ public interface ClubPostService {
 
 	int createClubPost(ClubPostDto clubPostDto, List<MultipartFile> files);
 
-	ClubPostResultDto selectAllClubPost(ClubPostParamDto clubPostParamDto);
+	//조건에 맞는 게시글 조회
+	ClubPostResultDto selectAllClubPost(int limit, int offset);
 
-	ClubPostResultDto selectClubPostBySearchWord(ClubPostParamDto clubPostParamDto);
+	ClubPostResultDto selectClubPostBySearchWord(String searchWord, int limit, int offset);
 
+	ClubPostResultDto selectClubPostByClubId(String clubId, int limit, int offset);
+
+	ClubPostResultDto selectClubPostByClubIdAndSearchWord(String clubId, String searchWord, int limit, int offset);
+
+	ClubPostResultDto selectClubPostByUserId(String userId, int limit, int offset);
+
+	ClubPostResultDto selectClubPostByUserIdAndSearchWord(String userId, String searchWord, int limit, int offset);
+
+	//게시글 한 개 조회
 	ClubPostResultDto selectClubPost(String postId);
 
 	int updateClubPost(ClubPostDto clubPostDto);
