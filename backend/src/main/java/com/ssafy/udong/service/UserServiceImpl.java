@@ -227,5 +227,18 @@ public class UserServiceImpl implements UserService {
 	}
 
 
+	@Override
+	public int createUserAddress(String dongcode) {
+		try {
+
+			dao.createUserAddress(dongcode);
+			return 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+
 
 }

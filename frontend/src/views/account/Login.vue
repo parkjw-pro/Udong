@@ -5,7 +5,7 @@
       <h5>우리 동네 이야기</h5>
     </div>
     <div class="form-group">
-      <input type="text" class="form-control" style="width:50%; text-align:center; display:block; margin: 0 auto;" placeholder="ID" id="userId" v-model="credentials.userId" @keypress.enter="login" autofocus>
+      <input type="text" class="form-control" style="width:50%; text-align:center; display:block; margin: 0 auto;" placeholder="ID" id="userId" v-model="credentials.userId" @keypress.enter="login">
     </div>
     <div class="form-group">
       <input type="password" class="form-control" style="width:50%; text-align:center; display:block; margin: 0 auto;" placeholder="Password" id="password" v-model="credentials.password" @keypress.enter="login">
@@ -17,12 +17,9 @@
       <button @click="login" type="submit" class="btn btn-secondary mb-2" style="width:50%;">Login</button>
     </div>
     <div class="small">
-      <!-- <router-link :to="{ name: 'Signup' }">회원가입</router-link>
+      <router-link :to="{ name: 'Signup' }">회원가입</router-link>
       |
-      <router-link :to="{ name: 'FindPassword' }">비밀번호찾기</router-link> -->
-      <a href="" @click="toSignup">회원가입</a>
-      |
-      <a href="" @click="toFind">비밀번호찾기</a>
+      <router-link :to="{ name: 'FindPassword' }">비밀번호찾기</router-link>
     </div>
   </div>
     
@@ -37,8 +34,8 @@ export default {
   data: function () {
     return {
       credentials: {
-        userId: '',
-        password: '',
+      userId: '',
+      password: '',
       },
       error_check_login: true,
     }
@@ -55,22 +52,13 @@ export default {
     //       this.error_check_login = false
     //     })
     // }
-    login: function() {
+      login: function() {
       // LOGIN 액션 실행
       // 서버와 통신(axios)을 해 토큰값을 얻어야 하므로 Actions를 호출.
       this.$store
         .dispatch("LOGIN", this.credentials)
-        .then(() => {
-          // this.$router.push({ name: 'Home' })
-          this.$router.replace('/location')
-        })
+        .then(() => this.$router.replace(`/location`))
         .catch(({ message }) => (this.msg = message));
-    },
-    toSignup: function () {
-      this.$router.push({ name: 'Signup'})
-    },
-    toFind: function () {
-      this.$router.push({ name: 'FindPassword'})
     },
   }
 }

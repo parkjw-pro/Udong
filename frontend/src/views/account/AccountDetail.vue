@@ -1,38 +1,27 @@
 <template>
   <div id="box">
-    <div id="border" class="my-5 py-5">
-      <div class="mb-5">
-        <span><img alt="Vue logo" src="@/assets/udonge.png" style="width: 10%"></span>
-        <span class="font-weight-bold" style="color: #695549;">우리동네 주민등록증</span>
-      </div>
-      <!-- 0. 동네 설정 -->
-      <b-row id="accountBox" align-h="center">
-        <b-col cols="2"><span id="title">우리동네</span></b-col>
-        <b-col cols="5" class="font-weight-bold">
-          {{ dong }}
-        </b-col>
-      </b-row>
+     <b-form class="mt-5 pt-5" @submit="onSubmit">
       <!-- 1. 아이디 -->
-      <b-row id="accountBox" align-h="center">
-        <b-col cols="2"><span id="title">아이디</span></b-col>
+      <b-row id="accountBox" align-h="left">
+        <b-col cols="2"><span>아이디</span></b-col>
         <b-col cols="5">
           <b-form-input
             id="input-1"
             type="email"
-            :placeholder="user.userId"
+            :placeholder="credentials.userId"
             style="text-align: center;"
             disabled
           ></b-form-input>
         </b-col>
       </b-row>
       <!-- 2. 닉네임 -->
-      <b-row id="accountBox" align-h="center">
-        <b-col cols="2"><span id="title">닉네임</span></b-col>
+      <b-row id="accountBox" align-h="left">
+        <b-col cols="2"><span>닉네임</span></b-col>
         <b-col cols="5">
           <b-form-input
             id="input-1"
             type="email"
-            :placeholder="user.nickname"
+            :placeholder="credentials.nickname"
             style="text-align: center;"
             disabled
           ></b-form-input>
@@ -42,56 +31,54 @@
             }}</small> -->
       </b-row>
       <!-- 3. 이메일 -->
-      <b-row id="accountBox" align-h="center">
-        <b-col cols="2"><span id="title">이메일</span></b-col>
+      <b-row id="accountBox" align-h="left">
+        <b-col cols="2"><span>이메일</span></b-col>
         <b-col cols="5">
           <b-form-input
             id="input-1"
             type="email"
-            :placeholder="user.email"
+            :placeholder="credentials.email"
             style="text-align: center;"
             disabled
           ></b-form-input>
         </b-col>
       </b-row>
-      
+      <!-- 4. 동네 설정 -->
+      <b-row id="accountBox" align-h="left">
+        <b-col cols="2"><span>우리동네</span></b-col>
+        <b-col cols="5" class="font-weight-bold">
+          {{ dong }}
+        </b-col>
+        <b-col cols="4" align-self="left">
+          <!-- <b-button class="mx-3" variant="info" @click="createGroup">수정</b-button> -->
+          <!-- <b-button class="mx-3" variant="danger" @click="createGroup">삭제</b-button> -->
+        </b-col>
+      </b-row>
       <!-- <b-col class="mb-5" cols="10"><b-button class="mx-3" variant="info" @click="createGroup">추가</b-button></b-col> -->
-      <img class="my-3" alt="Vue logo" src="@/assets/account/stamp.png" style="width: 15%">
-    </div>
-    <b-button class="my-3" style="background-color: #695549;" @click="toUpdate">회원정보 수정</b-button>
+      <br>
+      <br>
+      <div>
+        <b-button class="mx-3" variant="info" >비밀번호 변경</b-button>
+        <b-button class="mx-3" variant="info" >회원정보 수정</b-button>
+      </div>
+    </b-form>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
-
-const SERVER_URL = process.env.VUE_APP_SERVER_URL
-//const SERVER_URL = "http://localhost:8000";
 export default {
   name: 'AccountDetail',
   data: function () {
     return {
       dong: '역삼동',
-      user: {
-        userId: "",
-        nickname: "",
+      credentials: {
+        userId: "ssafy10",
+        nickname: "송송",
         email: "bulgen@naver.com",
       },
     }
   },
   methods: {
-    // 회원정보 가져오기 (GET요청)
-    getUser: function () {
-      axios.get(`${SERVER_URL}/user`)
-        .then((res) => {
-          this.user = res
-          console.log(res)
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-    },
-
     getToken: function () {
       const token = localStorage.getItem('jwt')
       const config = {
@@ -105,15 +92,6 @@ export default {
       evt.preventDefault()
       alert(JSON.stringify(this.article))
     },
-    toUpdate: function () {
-      this.$router.push({name: 'AccountUpdate'})
-    }
-  },
-  mounted() {
-    this.getUser()
-    console.log('hello')
-    // this.user.userId = JSON.parse(localStorage.getItem('Login-token'))["user-id"]
-    // this.user.nickname = JSON.parse(localStorage.getItem('Login-token'))["user-name"]
   }
 }
 </script>
@@ -124,13 +102,6 @@ export default {
   /* margin-right: 30px; */
   margin-bottom: 30px;
 }
-
-#border {
-  border: 3px dotted #695549;
-  /* opacity: 0.8; */
-}
-
-#title {
-  /* font-weight: bold; */
+#box {
 }
 </style>

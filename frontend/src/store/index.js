@@ -2,16 +2,15 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios';
 Vue.use(Vuex)
-const SERVER_URL =  process.env.VUE_APP_SERVER_URL
+const SERVER_URL = "http://localhost:8000";
 
 export default new Vuex.Store({
   state: {
     accessToken: null,
     userId: "",
     nickname: "",
-    // user: {
-
-    // },
+    changeState: "",
+    dongcode : ""
   },
   getters: {
     getAccessToken(state) {
@@ -33,28 +32,18 @@ export default new Vuex.Store({
         return JSON.parse(localStorage.getItem('Login-token'))['user-name'];
       }
       return state.nickname;
-    },
-    // getUser(state) {
-    //   if (localStorage.getItem('Login-token') != undefined) {
-    //     return JSON.parse(localStorage.getItem('Login-token'));
-    //   }
-    //   return state.user;
-    // },
+    }
   },
   mutations: {
     LOGIN(state, payload) {
       state.accessToken = payload["auth-token"];
       state.userId = payload["user-id"];
       state.nickname = payload["user-name"];
-      // state.user = payload
     },
     LOGOUT(state) {
       state.accessToken = null;
       state.userId = "";
       state.nickname = "";
-      state.user = {
-
-      };
     }
   },
 
@@ -80,7 +69,7 @@ export default new Vuex.Store({
         .then((response) => {
           console.log("axios login info");
           localStorage.setItem('Info-token', JSON.stringify(response.data.user));
-          // window.location.href = "/location/first";
+      
         })
         .catch(() => {
           localStorage.clear();

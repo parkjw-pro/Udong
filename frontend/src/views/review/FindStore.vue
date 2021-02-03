@@ -1,17 +1,17 @@
 <template>
   <div id="box">
     <h2 class="mb-5">어디를 리뷰할까요?</h2>
-    <SearchStore />
+    <SearchReview />
   </div>
 </template>
 
 <script>
-import SearchStore from '@/components/review/SearchStore'
+import SearchReview from '@/components/review/SearchReview'
 
 export default {
   name: 'FindStore',
   components: {
-    SearchStore,
+    SearchReview,
   },
 }
 </script>

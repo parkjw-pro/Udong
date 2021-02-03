@@ -1,32 +1,24 @@
 <template>
-  <div id="app" class="pb-5">
-    <!-- 1. 로그인 되어 있으면 -->
-    <div >
-      <Navbar/>
-      <router-view></router-view>   
+  <div id="app" class="pb-5">  
+    <div v-if="login">
+        <Navbar/>
     </div>
-    <!-- 2. 로그인이 안 되어 있으면 -->
-    <!-- <div class="mt-5">
-      <Login />
-    </div> -->
+     <hr>
+     <router-view></router-view>   
   </div>
 </template>
 
 <script>
-// import Login from '@/views/account/Login'
-import Navbar from '@/components/app/Navbar'
-// 임시
-// import Location from '@/components/app/Location'
+
+ import Navbar from '@/components/app/Navbar'
 import 'vue-select/dist/vue-select.css';
 
 
 export default {
   name: 'App',
   components: {
-    // Login,
-     Navbar,
 
-    // Location,
+     Navbar,
   },
   data: function () {
     return {
@@ -34,15 +26,20 @@ export default {
     }
   },
   methods: {
-
+    logout: function () {
+      localStorage.removeItem('jwt')  // localStorage에서 JWT 지우기
+      this.login = false
+      // this.$router.push({ name: 'Login' })
+    }
   },
   
   created(){
-    // console.log(localStorage.getItem('auth-token'));  // localStorage에서 JWT 받아오기
+    console.log(localStorage.getItem('auth-token'));  // localStorage에서 JWT 받아오기
+    console.log(this.login)
     if (localStorage.getItem('auth-token') != undefined) {
-      // this.$store.state.isLogin=true
-      // this.login = true
+        this.login = true
     }
+     console.log(this.login)
   }
 }
 </script>

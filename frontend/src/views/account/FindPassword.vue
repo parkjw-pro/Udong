@@ -158,7 +158,6 @@
 import axios from "axios";
 import { ValidationProvider } from "vee-validate";
 //const SERVER_URL = process.env.VUE_APP_SERVER_URL;
-const SERVER_URL = "http://localhost:8000";
 export default {
   components: {
     ValidationProvider,
@@ -185,7 +184,7 @@ export default {
     onSubmit() {
       axios
         .get(
-          `${SERVER_URL}/user/password?userId=${this.credentials.userId}&email=${this.credentials.email}`
+          `/user/password?userId=${this.credentials.userId}&email=${this.credentials.email}`
         )
         .then(() => {
           alert("인증번호  발송 되었습니다.");
@@ -201,7 +200,7 @@ export default {
     // onSubmit2 이메일 인증코드 인풋에 넣고 post하기
     async onSubmit2() {
       axios
-        .post(`${SERVER_URL}/user/email/${this.emailcode}`)
+        .post(`/user/email/${this.emailcode}`)
         .then(() => {
           alert("인증번호  확인 ");
           this.makepassword = true;
@@ -218,10 +217,10 @@ export default {
         this.credentials2.password_confirmation = "";
       } else {
         axios
-          .put(`${SERVER_URL}/user/password`, { password : this.credentials2.password, userId : this.credentials.userId})
+          .put(`/user/password`, { password : this.credentials2.password, userId : this.credentials.userId})
           .then(() => {
             alert("비밀번호 재수정 완료 ");
-            window.location.href = "/account";
+            window.location.href = "/";
             
           })
           .catch(() => {
