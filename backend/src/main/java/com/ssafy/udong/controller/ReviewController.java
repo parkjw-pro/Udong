@@ -61,14 +61,6 @@ public class ReviewController {
 			"## 필수값\n" + " - storeId : 리뷰를 조회할 상점 아이디\n")
 	@GetMapping(value = "/store/{storeId}")
 	private ResponseEntity<List<ReviewDto>> selectAllReview(@PathVariable String storeId) {
-<<<<<<< HEAD
-		System.out.println("상점에 대한 리뷰 조회");
-
-		List<ReviewDto> list = service.SelectAllReview(storeId);
-	//	System.out.println(list.get(0).getReviewContent());
-
-=======
->>>>>>> backend
 		try {
 			List<ReviewDto> list = service.selectAllReview(storeId);
 			if (list != null)

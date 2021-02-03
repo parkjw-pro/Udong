@@ -255,22 +255,4 @@ public class UserServiceImpl implements UserService {
 		return 0;
 	}
 
-<<<<<<< HEAD
-
-	@Override
-	public int createUserAddress(String dongcode) {
-		try {
-
-			dao.createUserAddress(dongcode);
-			return 1;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return 0;
-	}
-
-
-
-=======
->>>>>>> backend
 }

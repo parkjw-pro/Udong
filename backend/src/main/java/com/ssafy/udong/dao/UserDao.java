@@ -36,7 +36,5 @@ public interface UserDao {
 	
 	//이메일 인증
 	public String selectDuplicateEmail(String email) throws SQLException;
-
-	public void createUserAddress(String dongcode);
 }
 
