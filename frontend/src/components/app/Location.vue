@@ -1,63 +1,158 @@
 <template>
   <div>
-    <p>hihi</p>
-    <button type="button" v-on:click="getLocation">Get Location</button>
-      <ul>
-        <li>Latitude: {{ latitude }}</li>
-        <li>Longitude: {{ longitude }}</li>
-        <li>Altitude: {{ altitude }}</li>
-      </ul>
-    <div id="map">
+    <button type="button" v-on:click="getLocation">클릭하여 우리 동네를 찾아보세요!</button>
+    <br />
+    <br />
+
+    <div class="map_wrap">
+      <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
+      <div class="hAddr">
+        <span class="title">지금 계신 위치가 이곳이 맞나요?</span>
+        <span></span>
+        <span id="centerAddr"></span>
+        <span id="asd"></span>
+      </div>
     </div>
+    <button type="button" @click="createUserAddress">우리동네로 저장</button>
+    <button type="button" @click="createUserAddress">그냥 둘러볼게요</button>
   </div>
 </template>
 
 <script>
-// const MAP_API_KEY = process.env.MAP_API_KEY
+//const MAP_API_KEY = process.env.MAP_API_KEY
 
 export default {
   name: 'Location',
   data() {
     return {
-      lat : 0,
-      lng : 0
-    }
+      location: {
+        lat: '37.50126268403',
+        lng: '127.03955376031',
+        dongcode: '11',
+      },
+      
+    };
   },
+    
   // 지도 API 가져오기
-  mounted() {
+  mounted: async function() {
     window.kakao && window.kakao.maps ? this.initMap() : this.addScript();
+
+    navigator.geolocation.getCurrentPosition(this.success, this.fail);
+    
+    
+   
     // this.initMap()
     // this.addScript()
 
     //navigator 객체를 이용해 현재 위치를 받아온다.
-    navigator.geolocation.getCurrentPosition(this.success, this.fail);
+    // navigator.geolocation.getCurrentPosition(this.success, this.fail);
+
+    // await this.searchAddrFromCoords(this.location, this.displayCenterInfo);
   },
   methods: {
     success(location) {
       // 성공 시 Position 객체가 콜백함수에 전달된다.
-      this.lat = location.coords.latitude;  //위도
-      this.lng = location.coords.longitude;  //경도
-      console.log(this.lat, this.lng);
+      this.lat = location.coords.latitude; //위도
+      this.lng = location.coords.longitude; //경도
+      this.location.lat = this.lat;
+      this.location.lng = this.lng;
+      
+   
     },
     fail(msg) {
       // 실패 시 PositionError 객체가 콜백함수에 전달된다.
       msg.code;
     },
-    initMap() {
-       var container = document.getElementById('map');
-       var options = { center: new kakao.maps.LatLng(33.450701, 126.570667), level: 3 }
-       var map = new kakao.maps.Map(container, options);
-       //마커추가하려면 객체를 아래와 같이 하나 만든다. 
-       var marker = new kakao.maps.Marker({ position: map.getCenter() });
-       marker.setMap(map); 
-       }, 
-    addScript() { 
-      const script = document.createElement('script'); /* global kakao */
-      script.onload = () => kakao.maps.load(this.initMap); 
-      script.src = `http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${process.env.VUE_APP_KAKAO_REST_API_KEY}`;
-      document.head.appendChild(script);
-      }
+    // searchAddrFromCoords(location, callback){
+    //     this.geocoder.coord2RegionCode(location.lat, location.lng, callback);
+    //   },
+    // displayCenterInfo(result, status) {
+    //         if (status === kakao.maps.services.Status.OK) {
+    //     var infoDiv = document.getElementById('centerAddr');
 
+    //     for(var i = 0; i < result.length; i++) {
+    //         // 행정동의 region_type 값은 'H' 이므로
+    //         if (result[i].region_type === 'H') {
+    //             infoDiv.innerHTML = result[i].address_name;
+    //             break;
+    //         }
+    //     }
+    // }
+    //  },
+    initMap() {
+      var container = document.getElementById('map');
+      var options = {
+        center: new kakao.maps.LatLng(this.location.lat, this.location.lng),
+        level: 5,
+      };
+      var map = new kakao.maps.Map(container, options);
+      var marker = new kakao.maps.Marker({ position: map.getCenter() });
+
+      marker.setMap(map);
+     
+      this.addgeocode(map);
+
+      // geocoder.coord2RegionCode(this.location.lat, this.location.lng, callback);
+      //console.log(geocoder);
+      //마커추가하려면 객체를 아래와 같이 하나 만든다.
+
+      // console.log(map.getCenter());
+    },
+
+    addgeocode(map){
+      var geocoder = new kakao.maps.services.Geocoder();
+      var callback = function(result, status){
+      if (status === kakao.maps.services.Status.OK) {
+          var infoDiv = document.getElementById('centerAddr');
+          var dong = document.getElementById('asd');
+          for (var i = 0; i < result.length; i++) {
+            // 행정동의 region_type 값은 'H' 이므로
+            // if(i == result.length-1){
+            //   this.dong =  this.dong + result[i].address_name;
+            // }
+            if (result[i].region_type === 'H') {
+              infoDiv.innerHTML = result[i].address_name;
+              dong.innerHTML = result[i].code;
+         //   this.location.dongcode = result[i].code;
+              
+             // console.log(result[i].code);
+             // this.$store.state.dongcode ="1111";
+              // this.$store.state.dongcode = result[i].code;
+              // this.location.dongcode = result[i].code;
+              //this.location.dongcode = dong;
+              break;
+            }
+          }       
+        }    
+      
+    }
+   
+      var searchAddrFromCoords = function(coords, callback) {
+        // 좌표로 행정동 주소 정보를 요청합니다
+        geocoder.coord2RegionCode(coords.getLng(), coords.getLat(), callback);
+      };
+
+     
+      searchAddrFromCoords(map.getCenter(), callback);
+ 
+    },
+    
+    addScript() {
+      const script = document.createElement('script'); /* global kakao */
+      script.onload = () => kakao.maps.load(this.initMap);
+      script.src = `http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=40a71b1269cb975799557ecd007ad1fd&libraries=services`;
+      document.head.appendChild(script);
+    },
+    createUserAddress: function() {
+      console.log(document.getElementById('asd').innerHTML)
+      this.location.dongcode = document.getElementById('asd').innerHTML
+      console.log(this.location.dongcode);
+      this.$store
+        .dispatch('createUserAddress', this.location.dongcode)
+        .then(() => this.$router.replace(`/${this.nextRoute}`))
+        .catch(({ message }) => (this.msg = message));
+    },
 
     // addScript() {
     //   const script = document.createElement("script");
@@ -77,9 +172,6 @@ export default {
     //   var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
     // }
 
-
-
-
     // 지도 표시하기
     // initMap: function () {
     //   var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
@@ -92,8 +184,8 @@ export default {
     //   //////////////////////////////////////////////////////////////////////////////////////////////////
 
     //   }
-    }
-//     map.setMapTypeId(kakao.maps.MapTypeId.ROADMAP); //ROADMAP HYBRID // 지도표시
+  },
+  //     map.setMapTypeId(kakao.maps.MapTypeId.ROADMAP); //ROADMAP HYBRID // 지도표시
 
   //     // 지도 타입 변경 컨트롤을 생성한다
   //     var mapTypeControl = new kakao.maps.MapTypeControl();
@@ -303,13 +395,39 @@ export default {
   //   },
   // },
   // }
-}
+};
 </script>
 
-
 <style>
-#map {
-  width: 500px;
-  height: 400px;
+.map_wrap {
+  position: relative;
+  width: 70%;
+  height: 700px;
+  left: 15%;
+}
+.title {
+  font-weight: bold;
+  display: block;
+}
+.hAddr {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  border-radius: 2px;
+  background: #fff;
+  background: rgba(255, 255, 255, 0.8);
+  z-index: 1;
+  padding: 5px;
+}
+#centerAddr {
+  display: block;
+  margin-top: 2px;
+  font-weight: normal;
+}
+.bAddr {
+  padding: 5px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 </style>
