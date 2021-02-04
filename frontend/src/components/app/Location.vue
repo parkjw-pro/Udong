@@ -33,6 +33,7 @@ export default {
       },
       userLocation:{
         addressCode: '11',
+        addressName: '',
         userId: ''
 
       }
@@ -129,10 +130,13 @@ export default {
     
     createUserAddress: function() {
       this.userLocation.addressCode = document.getElementById('dong').innerHTML;
+      var arealist= document.getElementById('centerAddr').innerHTML.split(" ",4);
+      this.userLocation.addressName = arealist[arealist.length-1];
       console.log(this.userLocation.addressCode);
       console.log(this.userLocation.userId);
       const userInfo = JSON.parse(localStorage.getItem('Login-token'))
       userInfo.user_address = this.userLocation.addressCode;
+      userInfo.user_address_name = this.userLocation.addressName;
       localStorage.setItem("Login-token", JSON.stringify(userInfo));
       
       // localStorage.setItem("auth-token",response.data["auth-token"]);

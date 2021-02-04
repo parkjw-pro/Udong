@@ -62,37 +62,76 @@
     </p>
     <!-- 2. store 정보 -->
     <div style="text-align: left;">
-      <div ><h3>스토어명</h3></div>
+      <div ><h3>{{store.storeName}}</h3></div>
       <hr>
-      <p>주소: 강남구</p>
-      <p>카테고리: 패스트푸드</p>
+      <p>주소:  {{ store.storeAddr }}</p>
+      <p>카테고리: {{ store.storeCtg2 }}</p>
       <p></p>
       <p></p>
     </div>
     <!-- 여기서 for문 -->
-    <div>
-      <ReviewBlock />
+    <div v-for="(item, index) in getStoreReviewList"
+          :key="index">
+      <ReviewBlock :review="item"/>
     </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
 import ReviewBlock from '@/components/review/ReviewBlock'
-
+const SERVER_URL = process.env.VUE_APP_SERVER_URL
 export default {
   name: 'ReviewDetail',
   components: {
     ReviewBlock
   },
-  data() {
-      return {
-        slide: 0,
-        sliding: null
-      }
-    },
-    methods: {
+ data: function() {
+    return {
+      key : Object,
+      store : Object,
+      slide : "0",
+      sliding : null,
+      getStoreReviewList: {},
 
+    };
+  },
+  computed: {
+    before3(){ 
+      return this.store;
     }
+  },
+  watch : {
+      before3(){ 
+    this.search();
+    }
+  },
+  created()  {
+
+    this.store = this.$route.query.datas;
+    console.log(this.store);
+   // this.store = this.key;
+   // console.log(this.store)
+  },
+  methods: {
+    search: function() {
+      console.log('reviewDetail');
+      console.log( this.store);
+      axios
+      .get(`${SERVER_URL}/review/store/` + "1234")
+      .then((response) => {
+        console.log(response.data);
+        this.getStoreReviewList = response.data;
+      })
+      .catch((response) => {
+        console.log(response);
+      });
+    },
+    ReviewDetail: function(reviewId) {
+      // 리뷰 작성 페이지로 넘어가준다!!
+      this.$router.push({ name: 'ReviewDetail', query: {datas:reviewId}});
+    },
+  },
 }
 </script>
 

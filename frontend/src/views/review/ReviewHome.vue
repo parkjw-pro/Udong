@@ -97,14 +97,15 @@
 
 
 <script>
-const userInfo = JSON.parse(localStorage.getItem('Login-token'))
+// const userInfo = JSON.parse(localStorage.getItem('Login-token'))
 export default {
  name: 'ReviewHome',
   data: function() {
     return {
       storeParamDto:{
         searchWord: "",
-        dongcode: userInfo["user_address"],
+       // dongcode: userInfo["user_address"],
+         dongcode: "1168064000",
 
       },
       
