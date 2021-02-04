@@ -5,8 +5,8 @@ public class StoreDto {
 	private String storeId;
 	private String locLat;
 	private String locLng;
-	private String storeCtg_1;
-	private String storeCtg_2;
+	private String storeCtg1;
+	private String storeCtg2;
 	private String storeDongName;
 	private String storeDong2Name;
 	private String storeSidoName;
@@ -14,7 +14,7 @@ public class StoreDto {
 	private String storeDongCode;
 	private String storeDong2Code;
 	private String storeSidoCode;
-	private String storeSugunCode;
+	private String storegugunCode;
 	private String storeName;
 	private String storeAddr;
 	private String storeNameDetail;
@@ -66,26 +66,26 @@ public class StoreDto {
 
 
 
-	public String getStoreCtg_1() {
-		return storeCtg_1;
+	public String getstoreCtg1() {
+		return storeCtg1;
 	}
 
 
 
-	public void setStoreCtg_1(String storeCtg_1) {
-		this.storeCtg_1 = storeCtg_1;
+	public void setstoreCtg1(String storeCtg1) {
+		this.storeCtg1 = storeCtg1;
 	}
 
 
 
-	public String getStoreCtg_2() {
-		return storeCtg_2;
+	public String getStoreCtg2() {
+		return storeCtg2;
 	}
 
 
+	public void setStoreCtg2(String storeCtg2) {
+		this.storeCtg2 = storeCtg2;
 
-	public void setStoreCtg_2(String storeCtg_2) {
-		this.storeCtg_2 = storeCtg_2;
 	}
 
 
@@ -174,14 +174,14 @@ public class StoreDto {
 
 
 
-	public String getStoreSugunCode() {
-		return storeSugunCode;
+	public String getstoregugunCode() {
+		return storegugunCode;
 	}
 
 
 
-	public void setStoreSugunCode(String storeSugunCode) {
-		this.storeSugunCode = storeSugunCode;
+	public void setstoregugunCode(String storegugunCode) {
+		this.storegugunCode = storegugunCode;
 	}
 
 

@@ -97,9 +97,9 @@ export default {
         console.log(response);
       });
     },
-    ReviewDetailList: function(storeId) {
+    ReviewDetail: function(reviewId) {
       // 리뷰 작성 페이지로 넘어가준다!!
-      this.$router.push({ name: 'ReviewCreate', query: {datas:storeId}});
+      this.$router.push({ name: 'ReviewDetail', query: {datas:reviewId}});
     },
   },
 };
