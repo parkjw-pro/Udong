@@ -46,6 +46,9 @@ export default {
 
 
     this.userLocation.userId = JSON.parse(localStorage.getItem('Login-token'))["user-id"]
+
+
+
     //navigator 객체를 이용해 현재 위치를 받아온다.
     // navigator.geolocation.getCurrentPosition(this.success, this.fail);
 
@@ -128,6 +131,10 @@ export default {
       this.userLocation.addressCode = document.getElementById('dong').innerHTML;
       console.log(this.userLocation.addressCode);
       console.log(this.userLocation.userId);
+      const userInfo = JSON.parse(localStorage.getItem('Login-token'))
+      userInfo.user_address = this.userLocation.addressCode;
+      localStorage.setItem("Login-token", JSON.stringify(userInfo));
+      
       // localStorage.setItem("auth-token",response.data["auth-token"]);
       axios
         .post(`${SERVER_URL}/user/address`, this.userLocation )
