@@ -3,16 +3,18 @@
     <!-- 1. 검색창 -->
     <b-row>
       <b-col class="input-group mb-5" style="width: 50%;">
-        <input class="form-control my-0 py-1 amber-border" type="text" placeholder="Search" aria-label="Search" >
+        <input class="form-control my-0 py-1 amber-border" type="text" placeholder="Search" aria-label="Search" 
+        v-model="storeParamDto.searchWord">
         <div class="input-group-append">
           <span class="input-group-text amber lighten-3" id="basic-text1" style="background-color: white; cursor:pointer;">
-            <b-icon icon="search" variant="black" />
+            <b-icon icon="search" variant="black" 
+            @click="FindStore"/>
           </span>
         </div>
       </b-col>
       <b-col>
         <!-- 게시글 작성을 위한 버튼 -->
-        <b-button pill variant="primary" @click="toFindStore">+</b-button>
+        <b-button pill variant="primary" @click="CreateReview">+</b-button>
       </b-col>
     </b-row>
 
@@ -98,9 +100,24 @@
 
 export default {
  name: 'ReviewHome',
+  data: function() {
+    return {
+      storeParamDto:{
+        searchWord: "",
+        dongcode: "1168064000",
+
+      },
+      
+
+
+    };
+  },
  methods: {
-   toFindStore: function () {
-     this.$router.push({ name: 'toFindStore' })
+   FindStore: function () {
+     this.$router.push({ name: 'GetStore', query: {datas:this.storeParamDto}})
+   },
+    CreateReview: function () {
+     this.$router.push({ name: 'FindStore', query: {datas:this.storeParamDto}})
    }
  }
 }

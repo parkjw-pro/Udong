@@ -26,10 +26,15 @@
 	
 	<!--특정 상점에 대한 리뷰 전체조회 -->
 	<select id="selectAllReview" parameterType="map" resultType="com.ssafy.udong.dto.ReviewDto">
-		select u.nickname, r.review_id,	r.user_id as userId, r.store_id as storeId,	r.review_content as	reviewContent, 
-		r.views as views, r.rate as rate, r.created_at as createdAt, r.review_like_count as reviewLikeCount
+		select u.nickname as nickName,
+		r.review_id as reviewId,
+		r.user_id as userId, r.store_id as storeId,
+		r.review_content as reviewContent,
+		r.views as views, r.rate as rate, r.created_at as createdAt,
+		r.review_like_count as reviewLikeCount
 		FROM review r, user u
-		WHERE r.store_id = #{store_id} and u.user_id = r.user_id
+		WHERE r.store_id = #{store_id}
+		and u.user_id = r.user_id
 	</select>
 
 	<!--내가 쓴 리뷰 보기 -->

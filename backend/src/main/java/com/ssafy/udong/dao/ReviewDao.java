@@ -34,7 +34,7 @@ public interface ReviewDao {
 
 	// 리뷰에 대한 조회수 업데이트
 	public int updateReviewReadCount(String reviewId);
-	
+
 	// 리뷰수정 1
 	public int updateReview(ReviewDto reviewDto);
 	

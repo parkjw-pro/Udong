@@ -35,7 +35,7 @@ public class ClubController {
 	ClubService clubService;
 	
 	private static final int SUCCESS = 1;
-//	private static final int FAIL = -1;
+	//private static final int FAIL = -1;
 	
 	/* CLUB */
 	@ApiOperation(value = "그룹 생성", notes = "새로운 그룹을 생성하고, 그룹장을 등록합니다.\n" + 
@@ -47,33 +47,32 @@ public class ClubController {
 			"## 가능값\n" + " - file : 그룹 대표 이미지(MultipartFile 형식)")
 	//MultipartFile
 	@PostMapping
-	public ResponseEntity<String> createClub(@RequestBody ClubDto clubs,
-			@RequestParam(value = "files", required = false) String files){
+	public ResponseEntity<String> createClub(ClubDto club,
+			@RequestParam(value = "files", required = false) MultipartFile file){
 		System.out.println("club create");
-		System.out.println(clubs.getClubName());
-		System.out.println(clubs.getClubContent());
-		clubs.setAreaCode("12341234");
-		clubs.setFileId("fileid");
-		clubs.setUserId("useriddd");
-		System.out.println(files);
-//		try {
-//			String createdClubId = clubService.createClub(club, files);
-//
-//			if(!createdClubId.equals("-1")) {
-//				String result = "SUCCESS: club creation";
-//				MemberDto member = new MemberDto(createdClubId, club.getUserId(), "1");
-//				member.setClubId(createdClubId);
-//				if(clubService.createClubMember(member) == SUCCESS) {
-//					result += " | club leader addition";
-//				}
-//				else {
-//					result += "FAILURE: club leader addition";
-//				}
-//				return new ResponseEntity<String>(result, HttpStatus.OK);
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
+		System.out.println(club.getClubName());
+		System.out.println(file.getOriginalFilename());
+        club.setAreaCode("12341234");
+        club.setUserId("ssafy13");
+		
+		try {
+			String createdClubId = clubService.createClub(club, file);
+
+			if(!createdClubId.equals("-1")) {
+				String result = "SUCCESS: club creation";
+				MemberDto member = new MemberDto(createdClubId, club.getUserId(), "1");
+				member.setClubId(createdClubId);
+				if(clubService.createClubMember(member) == SUCCESS) {
+					result += " | club leader addition";
+				}
+				else {
+					result += "FAILURE: club leader addition";
+				}
+				return new ResponseEntity<String>(result, HttpStatus.OK);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return new ResponseEntity<String>("FAILURE: club creation", HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
@@ -173,7 +172,6 @@ public class ClubController {
 		}
 		return new ResponseEntity<List<MemberDto>>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-	
 	@ApiOperation(value = "그룹 멤버 조회", notes = "한 그룹에 등록된 모든 멤버의 정보를 조회합니다.\n" + "## 필수값\n" + " - clubId : 그룹 아이디\n")
 	@GetMapping("/{clubId}/waiting")
 	public ResponseEntity<List<MemberDto>> selectAllClubMemberWaiting(@PathVariable String clubId){  //read every member's info

@@ -41,7 +41,22 @@ export default {
       storeDongName: '역삼동',
       storeName: '코코코코코코로'
     },
-  ]
+  ],
+   data: function() {
+    return {
+      storeParamDto:{
+        searchWord: "",
+        dongcode: "1168064000",
+
+      },
+      key : Object,
+      temp : Object,
+
+      
+      getSearchStoreList: {},
+      getSearchareaList: [],
+    };
+  },
 }
 </script>
 

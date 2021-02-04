@@ -9,18 +9,15 @@
 </template>
 
 <script>
-
- import Navbar from '@/components/app/Navbar'
+import Navbar from '@/components/app/Navbar'
 import 'vue-select/dist/vue-select.css';
 
 
 export default {
   name: 'App',
   components: {
-    // Login,
-     Navbar,
 
-     
+     Navbar,
   },
   data: function () {
     return {
@@ -28,14 +25,10 @@ export default {
     }
   },
   methods: {
-
   },
-  
   created(){
-    // console.log(localStorage.getItem('auth-token'));  // localStorage에서 JWT 받아오기
     if (localStorage.getItem('auth-token') != undefined) {
-      // this.$store.state.isLogin=true
-      // this.login = true
+        this.login = true
     }
   }
 }

@@ -136,7 +136,7 @@ export default {
         isOpen: "1",
        
       },
-       fileId: " ",
+      fileId: null,
       isVerified: null,
       previewImageData: null,
     };
@@ -178,11 +178,19 @@ export default {
       console.log(this.previewImageData[0]);
       console.log(this.fileId);
       console.log(this.fileId.name);
-       var fd = new FormData();
-      fd.append('files', "this.fileId")
+      var formData = new FormData();
+      formData.append('clubName', this.club.clubName)
+      formData.append('clubContent', this.club.clubContent)
+      formData.append('isOpen', this.club.isOpen)
+      formData.append('file', this.fileId)
+      // formData.append('club', this.club)
+      console.log(formData);
      // if (this.verification) {
-        axios.post(`${SERVER_URL}/club`, {clubs:this.club,  fils:this.fileId.name})
-        .then(() => {
+        axios.post(`${SERVER_URL}/club`, formData, 
+        { headers: { "Content-Type": `application/json; charset=UTF-8`}
+        }
+        
+      ).then(() => {
           this.$router.push({name: 'GroupPage', query: {club: this.club}})
          })
          .catch((err) => {

@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.udong.dto.UserDto;
+import com.ssafy.udong.dto.UserParamDto;
 import com.ssafy.udong.service.JwtService;
 import com.ssafy.udong.service.UserService;
 
@@ -112,10 +113,8 @@ public class UserController {
 	@ApiOperation(value = "회원 탈퇴", notes = "사용자 정보를 이용해 해당 사용자를 탈퇴처리합니다.\n" +
 			"## 필수값\n" + " - userId : 사용자 아이디\n")
 	@DeleteMapping
-
 	public ResponseEntity<String> deleteUser(@RequestBody UserDto userDto) throws Exception {
 		int result = userService.deleteUser(userDto);
-
 		if (result == SUCCESS) {
 			return new ResponseEntity<String>("회원탈퇴 성공", HttpStatus.OK);
 		} else {
@@ -145,9 +144,7 @@ public class UserController {
 						+ " - email : 변경할 이메일 주소\n")
 	@PutMapping
 	public ResponseEntity<String> updateUser(@RequestBody UserDto userDto) throws Exception {
-		System.out.println(userDto.getNickname());
 		int result = userService.updateUser(userDto);
-		System.out.println(result);
 		if (result == SUCCESS) {
 			return new ResponseEntity<String>("회원수정 성공", HttpStatus.OK);
 		} else {
@@ -244,6 +241,20 @@ public class UserController {
 			return new ResponseEntity<String>("인증 완료.\n", HttpStatus.OK);
 		} else { // 코드가 불일치하면
 			return new ResponseEntity<String>("일치하지 않는 인증코드 입니다.\n", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@ApiOperation(value = "주소등록", notes = "사용자 주소를 등록합니다.")
+	@PostMapping("/address")
+	public ResponseEntity<String> createUserAddress(@RequestBody UserParamDto Dto) throws Exception {
+		System.out.println("주소등록");
+		System.out.println(Dto.getAddressCode());
+		System.out.println(Dto.getUserId());
+		int result = userService.createUserAddress(Dto);
+		if (result == SUCCESS) {
+			return new ResponseEntity<String>("주소 등록 성공", HttpStatus.OK);
+		} else {
+			return new ResponseEntity<String>("주소 등록 실패", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 

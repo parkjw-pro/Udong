@@ -126,8 +126,7 @@ export default {
     
     createUserAddress: function() {
       this.userLocation.addressCode = document.getElementById('dong').innerHTML;
-      console.log(this.userLocation.addressCode);
-      console.log(this.userLocation.userId);
+
       axios
         .post(`${SERVER_URL}/user/address`, this.userLocation )
         .then((response) => {
@@ -138,6 +137,7 @@ export default {
           console.log(response);
         });
     },
+
   },
 
 };
