@@ -33,11 +33,14 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserDto login(UserDto userDto) throws Exception {
 		try {
-			// return sqlSession.getMapper(UserDao.class).login(userDto);
+		//return sqlSession.getMapper(UserDao.class).login(userDto);
+
 			UserDto dto = new UserDto();
-			SecurityUtil securityUtil = new SecurityUtil();
-			userDto.setPassword(securityUtil.encryptSHA256(userDto.getPassword()));
-			System.out.println(userDto.getPassword());
+
+//			SecurityUtil securityUtil = new SecurityUtil();
+//			userDto.setPassword(securityUtil.encryptSHA256(userDto.getPassword()));
+//			System.out.println(userDto.getPassword());
+			
 			dto = userDao.login(userDto);
 			if (dto.getUserState() == null) { // 정지상태
 				return dto;
@@ -66,6 +69,7 @@ public class UserServiceImpl implements UserService {
 		try {
 
 			return userDao.selectUser(userDto);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -102,6 +106,9 @@ public class UserServiceImpl implements UserService {
 		try {
 			SecurityUtil securityUtil = new SecurityUtil();
 			userDto.setPassword(securityUtil.encryptSHA256(userDto.getPassword()));
+
+//			SecurityUtil securityUtil = new SecurityUtil();
+//			userDto.setPassword(securityUtil.encryptSHA256(userDto.getPassword()));
 
 			return userDao.updateUser(userDto);
 		} catch (Exception e) {
@@ -206,10 +213,27 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int updatePassword(UserDto userDto) throws Exception {
 		try {
-			SecurityUtil securityUtil = new SecurityUtil();
-			userDto.setPassword(securityUtil.encryptSHA256(userDto.getPassword()));
 
+//			SecurityUtil securityUtil = new SecurityUtil();
+//			userDto.setPassword(securityUtil.encryptSHA256(userDto.getPassword()));
+			
 			return userDao.updatePassword(userDto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	
+	@Override
+	public int createUserAddress(UserParamDto dto) {
+		try {
+			if(userDao.selectUserAddress(dto)!=null) {
+				userDao.updateUserAddress(dto);
+			}else {
+				userDao.createUserAddress(dto);
+			}
+			return 1;
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

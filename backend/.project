@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
+<<<<<<< HEAD
 	<name>Seoul_A404_Udong_BackEnd</name>
+=======
+	<name>backend</name>
+>>>>>>> 4a858cd7bf25b5ed6878d781d3296a21f37b459a
 	<comment></comment>
 	<projects>
 	</projects>
@@ -16,12 +20,20 @@
 			</arguments>
 		</buildCommand>
 		<buildCommand>
+<<<<<<< HEAD
 			<name>org.springframework.ide.eclipse.core.springbuilder</name>
+=======
+			<name>org.springframework.ide.eclipse.boot.validation.springbootbuilder</name>
+>>>>>>> 4a858cd7bf25b5ed6878d781d3296a21f37b459a
 			<arguments>
 			</arguments>
 		</buildCommand>
 		<buildCommand>
+<<<<<<< HEAD
 			<name>org.springframework.ide.eclipse.boot.validation.springbootbuilder</name>
+=======
+			<name>org.springframework.ide.eclipse.core.springbuilder</name>
+>>>>>>> 4a858cd7bf25b5ed6878d781d3296a21f37b459a
 			<arguments>
 			</arguments>
 		</buildCommand>

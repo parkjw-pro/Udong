@@ -36,5 +36,13 @@ public interface UserDao {
 	
 	//이메일 인증
 	public String selectDuplicateEmail(String email) throws SQLException;
+	
+	public void createUserAddress(UserParamDto dto);
+
+	public UserParamDto selectUserAddress(UserParamDto dto);
+
+	public void updateUserAddress(UserParamDto dto);
+
+>>>>>>> 4a858cd7bf25b5ed6878d781d3296a21f37b459a
 }
 

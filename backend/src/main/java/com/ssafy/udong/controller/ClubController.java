@@ -69,7 +69,7 @@ public class ClubController {
 		}
 		return new ResponseEntity<String>("FAILURE: club creation", HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-	
+
 	/*areaCode 넣은 버전으로 수정 필요함*/
 	@ApiOperation(value = "그룹명 중복 확인", notes = "그룹명이 기존에 등록된 것과 중복인지 확인합니다.")
 	@GetMapping("/{clubName}/{areaCode}")

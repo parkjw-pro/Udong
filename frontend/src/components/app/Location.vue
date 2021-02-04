@@ -1,6 +1,8 @@
 <template>
   <div>
-    <!-- <button type="button" v-on:click="getLocation">클릭하여 우리 동네를 찾아보세요!</button> -->
+    <div id="title" class="my-3">
+    </div>
+    <b-button style="background-color: #695549;" v-on:click="getLocation">클릭하여 우리 동네를 찾아보세요!</b-button>
     <br />
     <br />
 
@@ -13,8 +15,10 @@
         <span id="dong"></span>
       </div>
     </div>
-    <button type="button" v-on:click="createUserAddress()">우리동네로 저장</button>
-    <button type="button" v-on:click="createUserAddress()">그냥 둘러볼게요</button>
+    <div id="buttons" class="my-5">
+      <b-button style="background-color: #695549;" v-on:click="createUserAddress">우리동네로 저장</b-button>
+      <b-button style="background-color: #695549;" v-on:click="toHome">그냥 둘러볼게요</b-button>
+    </div>
   </div>
 </template>
 
@@ -62,6 +66,9 @@ export default {
     },
   },
   methods: {
+    toHome: function () {
+      this.$router.push({ name: 'Home' })
+    },
     success(location) {
       // 성공 시 Position 객체가 콜백함수에 전달된다.
       this.lat = location.coords.latitude; //위도
@@ -126,7 +133,6 @@ export default {
     
     createUserAddress: function() {
       this.userLocation.addressCode = document.getElementById('dong').innerHTML;
-
       axios
         .post(`${SERVER_URL}/user/address`, this.userLocation )
         .then((response) => {

@@ -1,9 +1,8 @@
 <template>
   <div id="app" class="pb-5">  
     <div v-if="login">
-        <Navbar/>
+      <Navbar/>
     </div>
-    <hr>
     <router-view></router-view>   
   </div>
 </template>
@@ -30,9 +29,7 @@ export default {
       // this.$router.push({ name: 'Login' })
     }
   },
-  created(){
-    console.log(localStorage.getItem('auth-token'));  // localStorage에서 JWT 받아오기
-    console.log(this.login)
+  created() {
     if (localStorage.getItem('auth-token') != undefined) {
         this.login = true
     }

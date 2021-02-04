@@ -57,6 +57,8 @@ public class UserController {
 			System.out.println(userDto.getUserId());
 			System.out.println(userDto.getPassword());
 			UserDto loginUser = userService.login(userDto);
+			System.out.println(loginUser.getUserId());
+			System.out.println(loginUser.getPassword());
 			if (loginUser != null) {
 				// jwt.io에서 확인
 				// 로그인 성공했다면 토큰을 생성한다.
@@ -92,10 +94,11 @@ public class UserController {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = HttpStatus.ACCEPTED;
 //		System.out.println(">>>>>> " + jwtService.get(req.getHeader("auth-token")));
+		
 		try {
 			// 사용자에게 전달할 정보이다.
 			// String info = memberService.getServerInfo();
-
+//			System.out.println("2/3 500 ERROR again!!!");
 			resultMap.putAll(jwtService.get(req.getHeader("auth-token")));
 			// resultMap.put("status", true);
 			// resultMap.put("info", info);
@@ -246,14 +249,14 @@ public class UserController {
 	@ApiOperation(value = "주소등록", notes = "사용자 주소를 등록합니다.")
 	@PostMapping("/address")
 	public ResponseEntity<String> createUserAddress(@RequestBody UserParamDto Dto) throws Exception {
-	    System.out.println("주소등록");
-	    System.out.println(Dto.getAddressCode());
-	    System.out.println(Dto.getUserId());
-	    int result = userService.createUserAddress(Dto);
-	    if (result == SUCCESS) {
-	        return new ResponseEntity<String>("주소 등록 성공", HttpStatus.OK);
-	    } else {
-	        return new ResponseEntity<String>("주소 등록 실패", HttpStatus.INTERNAL_SERVER_ERROR);
-	    }
+		System.out.println("주소등록");
+		System.out.println(Dto.getAddressCode());
+		System.out.println(Dto.getUserId());
+		int result = userService.createUserAddress(Dto);
+		if (result == SUCCESS) {
+			return new ResponseEntity<String>("주소 등록 성공", HttpStatus.OK);
+		} else {
+			return new ResponseEntity<String>("주소 등록 실패", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 }

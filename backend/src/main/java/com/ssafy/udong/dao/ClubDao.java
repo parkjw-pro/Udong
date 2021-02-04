@@ -55,5 +55,11 @@ public interface ClubDao {
 	List<ClubDto> selectAllClubByUserId(String userId);
 
 	List<ClubDto> selectAllClubWaitingByUserId(String userId);
+	
+	List<String> SelectFileUrl(String id);
+
+	String selectDuplicateClubName(String clubname);
+
+>>>>>>> 4a858cd7bf25b5ed6878d781d3296a21f37b459a
 
 }

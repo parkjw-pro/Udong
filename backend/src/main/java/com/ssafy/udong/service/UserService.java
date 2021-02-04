@@ -34,4 +34,7 @@ public interface UserService {
 	public void gmailSend(String email) throws Exception;
 	//이메일 인증 확인
 	public int gmailCheck(String checkCode) throws Exception;
+
+	public int createUserAddress(UserParamDto dto);
+
 }

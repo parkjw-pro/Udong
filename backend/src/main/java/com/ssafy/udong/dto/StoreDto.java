@@ -83,7 +83,6 @@ public class StoreDto {
 	}
 
 
-
 	public void setStoreCtg_2(String storeCtg_2) {
 		this.storeCtg_2 = storeCtg_2;
 	}
