@@ -19,7 +19,7 @@ import GetLocation from '@/views/app/GetLocation.vue'
 import Home from '@/views/app/Home'
 
 //소식
-import NewsHome from '@/views/news/NewsHome'
+import NewsHome from '@/views//News/NewsHome'
 
 //리뷰
 import ReviewHome from '@/views/review/ReviewHome.vue'

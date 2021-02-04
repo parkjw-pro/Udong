@@ -136,11 +136,7 @@ export default {
         isOpen: "1",
        
       },
-<<<<<<< HEAD
-       fileId: " ",
-=======
        fileId: null,
->>>>>>> 8959c25c7abe4f8e48ee0050827f07f89a960d81
       isVerified: null,
       previewImageData: null,
     };
@@ -182,13 +178,6 @@ export default {
       console.log(this.previewImageData[0]);
       console.log(this.fileId);
       console.log(this.fileId.name);
-<<<<<<< HEAD
-       var fd = new FormData();
-      fd.append('files', "this.fileId")
-     // if (this.verification) {
-        axios.post(`${SERVER_URL}/club`, {clubs:this.club,  fils:this.fileId.name})
-        .then(() => {
-=======
       var formData = new FormData();
       formData.append('clubName', this.club.clubName)
       formData.append('clubContent', this.club.clubContent)
@@ -202,7 +191,6 @@ export default {
         }
         
       ).then(() => {
->>>>>>> 8959c25c7abe4f8e48ee0050827f07f89a960d81
           this.$router.push({name: 'GroupPage', query: {club: this.club}})
          })
          .catch((err) => {

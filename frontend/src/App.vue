@@ -9,24 +9,15 @@
 </template>
 
 <script>
-<<<<<<< HEAD
 
- import Navbar from '@/components/app/Navbar'
-=======
 import Navbar from '@/components/app/Navbar'
->>>>>>> 8959c25c7abe4f8e48ee0050827f07f89a960d81
 import 'vue-select/dist/vue-select.css';
-
 
 export default {
   name: 'App',
   components: {
 
-<<<<<<< HEAD
-     
-=======
      Navbar,
->>>>>>> 8959c25c7abe4f8e48ee0050827f07f89a960d81
   },
   data: function () {
     return {
@@ -34,11 +25,19 @@ export default {
     }
   },
   methods: {
+    logout: function () {
+      localStorage.removeItem('jwt')  // localStorage에서 JWT 지우기
+      this.login = false
+      // this.$router.push({ name: 'Login' })
+    }
   },
   created(){
+    console.log(localStorage.getItem('auth-token'));  // localStorage에서 JWT 받아오기
+    console.log(this.login)
     if (localStorage.getItem('auth-token') != undefined) {
         this.login = true
     }
+     console.log(this.login)
   }
 }
 </script>
