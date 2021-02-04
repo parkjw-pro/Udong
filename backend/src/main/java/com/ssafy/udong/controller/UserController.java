@@ -58,6 +58,8 @@ public class UserController {
 			System.out.println(userDto.getUserId());
 			System.out.println(userDto.getPassword());
 			UserDto loginUser = userService.login(userDto);
+			System.out.println(loginUser.getUserId());
+			System.out.println(loginUser.getPassword());
 			if (loginUser != null) {
 				// jwt.io에서 확인
 				// 로그인 성공했다면 토큰을 생성한다.
@@ -93,10 +95,11 @@ public class UserController {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = HttpStatus.ACCEPTED;
 //		System.out.println(">>>>>> " + jwtService.get(req.getHeader("auth-token")));
+		
 		try {
 			// 사용자에게 전달할 정보이다.
 			// String info = memberService.getServerInfo();
-
+//			System.out.println("2/3 500 ERROR again!!!");
 			resultMap.putAll(jwtService.get(req.getHeader("auth-token")));
 			// resultMap.put("status", true);
 			// resultMap.put("info", info);

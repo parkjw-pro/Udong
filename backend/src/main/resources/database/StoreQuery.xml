@@ -7,13 +7,12 @@
 	<select id="SelectDetailStore" parameterType="map"
 		resultType="com.ssafy.udong.dto.StoreDto">
 
-		select *
-		from store
+		select *from store
 		where (store_name like CONCAT('%',
 		#{param1} ,'%')
 		or store_gugun_name like CONCAT('%', #{param1} ,'%') or
-		store_ctg_2 like CONCAT('%', #{param1} ,'%') or store_dong2_name like CONCAT('%', #{param1} ,'%'))
-		and store_dong_code like
+		store_ctg_2 like CONCAT('%', #{param1} ,'%'))
+		and store_dong_name like
 		CONCAT('%', #{param2} ,'%')
 
 	</select>

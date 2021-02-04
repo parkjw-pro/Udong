@@ -11,8 +11,8 @@
         <b-navbar-nav>
           <b-nav-item-dropdown text="역삼동" class="px-0 mt-1 d-inline">
             <b-dropdown-item href="#" disabled>역삼동</b-dropdown-item>
-            <b-dropdown-item href="#">신림동</b-dropdown-item>
-            <b-dropdown-item href="#">다른 동네 구경하기</b-dropdown-item>
+            <!-- <b-dropdown-item href="#">신림동</b-dropdown-item> -->
+            <b-dropdown-item href="#" @click="toGetLocation">다른 동네 구경하기</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-navbar-brand>
@@ -22,10 +22,12 @@
     <!-- 2. 햄버거메뉴 -->
     <component :is="currentMenu" :right="side === 'right' ? true: false" >
         <b-row class="pl-0" id="option_v2">
-          <b-col><a href=""><Profile2 style="width: 60%;" /></a></b-col>
+          <b-col @click="toBadge">
+            <a href=""><Profile2 style="width: 60%;" /></a>
+          </b-col>
           <b-col>
-            <b-row>이송영님</b-row>
-            <b-row>안녕하세요!</b-row>
+            <b-row>{{ nickname }}님</b-row>
+            <b-row><small>안녕하세요!</small></b-row>
           </b-col>
         </b-row>
         <hr>
@@ -79,10 +81,13 @@ export default {
   },
   data: function () {
     return {
-      side: 'right',
+      // user 관련 정보
+      isManager: false,
+      nickname: '',
+
       currentMenu: 'slide',
       isToggled: false,
-      isManager: false,
+      side: 'right',
     }
   },
   computed: {
@@ -94,6 +99,12 @@ export default {
     toAdmin: function () {
       this.$router.push({ name: 'Admin' })
     },
+    toBadge: function () {
+      this.$router.push({ name: 'Badge' })
+    },
+    toGetLocation: function () {
+      this.$router.push({ name: 'GetLocation'})
+    }, 
     toHome: function () {
       this.$router.push({name: 'Home'})
     },
@@ -129,7 +140,9 @@ export default {
     }
   },
   created() {
-    this.isManager = JSON.parse(localStorage.getItem('Info-token'))["userId"]
+    const user = JSON.parse(localStorage.getItem('Info-token'))
+    this.isManager = user["isManager"]
+    this.nickname = user["nickname"]
   }
 }
 </script>

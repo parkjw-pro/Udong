@@ -1,12 +1,17 @@
 <template>
   <div class="add_btn">
-    <b-button pill variant="info" class="mb-3 font-weight-bold">+</b-button>
+    <b-button @click="toCreate" pill variant="info" class="mb-3 font-weight-bold">+</b-button>
   </div>
 </template>
 
 <script>
 export default {
-  name: "Button"
+  name: "Button",
+  methods: {
+    toCreate: function () {
+      this.$router.push({ name: 'ArticleCreate'})
+    },
+  }
 }
 </script>
 

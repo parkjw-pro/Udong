@@ -2,7 +2,6 @@ package com.ssafy.udong.controller;
 
 import java.util.List;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,52 +27,61 @@ import io.swagger.annotations.ApiOperation;
 @Api(value = "/store")
 public class StoreController {
 
-	@Autowired
-	StoreService service;
+@Autowired
+StoreService service;
 
-	private static final int SUCCESS = 1;
-	private static final int FAIL = -1;
+private static final int SUCCESS = 1;
+private static final int FAIL = -1;
+//    // 상점리스트(검색어만)
+//    @GetMapping(value = "/store/{searchWord}")
+//    private ResponseEntity<List<StoreDto>> selectReview(@PathVariable String searchWord, HttpSession session) {
+//
+//
+//
+//        List<StoreDto> list = service.SelectStore(searchWord);
+//
+//        System.out.println("hhh");
+//    //    System.out.println(list.get(0).getReviewContent());
+//
+//        try {
+//            if (list != null)
+//                return new ResponseEntity<List<StoreDto>>(list, HttpStatus.OK);
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return new ResponseEntity<List<StoreDto>>(HttpStatus.INTERNAL_SERVER_ERROR);
+//    }
 
-//	// 상점리스트(검색어만)
-//	@GetMapping(value = "/store/{searchWord}")
-//	private ResponseEntity<List<StoreDto>> selectReview(@PathVariable String searchWord, HttpSession session) {
-//
-//
-//		
-//		List<StoreDto> list = service.SelectStore(searchWord);
-//		
-//		System.out.println("hhh");
-//	//	System.out.println(list.get(0).getReviewContent());
-//
-//		try {
-//			if (list != null)
-//				return new ResponseEntity<List<StoreDto>>(list, HttpStatus.OK);
-//
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		return new ResponseEntity<List<StoreDto>>(HttpStatus.INTERNAL_SERVER_ERROR);
-//	}
-
+<<<<<<< HEAD
 	@ApiOperation(value = "상점 조회(검색어+위치코드)", notes = "검색어와 위치 코드를 이용하여 상점을 조회합니다.")
 	@PostMapping(value = "/stores")
 	private ResponseEntity<List<StoreDto>> selectStore(@RequestBody StoreParamDto storeParamDto) {
 		System.out.println("storeSearch");
 		System.out.println(storeParamDto.getSearchWord());
 		System.out.println(storeParamDto.getDongcode());
+=======
+@ApiOperation(value = "상점 조회(검색어+위치코드)", notes = "검색어와 위치 코드를 이용하여 상점을 조회합니다.")
+@PostMapping(value = "/stores")
+private ResponseEntity<List<StoreDto>> selectStore(@RequestBody StoreParamDto storeParamDto) {
+    System.out.println("storeSearch");
+    System.out.println(storeParamDto.getSearchWord());
+    System.out.println(storeParamDto.getDongcode());
+>>>>>>> community
 
-		List<StoreDto> list = service.SelectDetailStore(storeParamDto.getSearchWord(), storeParamDto.getDongcode());
+    List<StoreDto> list = service.SelectDetailStore(storeParamDto.getSearchWord(), storeParamDto.getDongcode());
 
-		try {
-			if (list != null)
-				return new ResponseEntity<List<StoreDto>>(list, HttpStatus.OK);
+    try {
+        if (list != null)
+            return new ResponseEntity<List<StoreDto>>(list, HttpStatus.OK);
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return new ResponseEntity<List<StoreDto>>(HttpStatus.INTERNAL_SERVER_ERROR);
-	}
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return new ResponseEntity<List<StoreDto>>(HttpStatus.INTERNAL_SERVER_ERROR);
+}
 
+<<<<<<< HEAD
 	@ApiOperation(value = "상점 조회(검색어)", notes = "검색어를 이용하여 상점을 조회합니다.")
 	@GetMapping(value = "/store/{searchWord}")
 	private ResponseEntity<List<StoreDto>> selectArea(@PathVariable String searchWord) {
@@ -83,11 +91,21 @@ public class StoreController {
 		try {
 			if (list != null)
 				return new ResponseEntity<List<StoreDto>>(list, HttpStatus.OK);
+=======
+@ApiOperation(value = "상점 조회(검색어)", notes = "검색어를 이용하여 상점을 조회합니다.")
+@GetMapping(value = "/store/{searchWord}")
+private ResponseEntity<List<StoreDto>> selectArea(@PathVariable String searchWord) {
+    System.out.println("storeSearchword");
+    List<StoreDto> list = service.SelectArea(searchWord);
+    
+    try {
+        if (list != null)
+            return new ResponseEntity<List<StoreDto>>(list, HttpStatus.OK);
+>>>>>>> community
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return new ResponseEntity<List<StoreDto>>(HttpStatus.INTERNAL_SERVER_ERROR);
-	}
-	
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return new ResponseEntity<List<StoreDto>>(HttpStatus.INTERNAL_SERVER_ERROR);
+}
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="mx-5">
+  <div id="box" class="mx-5">
     <!-- 검색창 -->
     <b-nav-form>
       <b-form-input class="mr-sm-2 ml-auto" placeholder="Search"></b-form-input>  <!-- 가운데 정렬이 잘 안된다!!!! ㅠㅠㅠ -->
@@ -16,7 +16,7 @@
         </b-button-group>
       </b-col>
       <b-col md="5">
-        <b-button pill end>+</b-button> <!-- variant="outline-secondary" 속성 -->
+        <b-button style="background-color: #695549;" @click="toList" end>+</b-button> <!-- variant="outline-secondary" 속성 -->
       </b-col>
     </b-row>
 
@@ -52,6 +52,11 @@ export default {
     Button,
     EndBlock,
     PostBlock,
+  },
+  methods: {
+    toList: function () {
+      this.$router.push({ name: 'GroupList'})
+    }
   }
 }
 </script>
