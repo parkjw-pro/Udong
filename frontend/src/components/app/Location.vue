@@ -67,6 +67,9 @@ export default {
     },
   },
   methods: {
+    toHome: function () {
+      this.$router.push({ name: 'Home' })
+    },
     success(location) {
       // 성공 시 Position 객체가 콜백함수에 전달된다.
       this.lat = location.coords.latitude; //위도
@@ -131,19 +134,6 @@ export default {
     
     createUserAddress: function() {
       this.userLocation.addressCode = document.getElementById('dong').innerHTML;
-      console.log(this.userLocation.addressCode);
-      console.log(this.userLocation.userId);
-      axios
-        .post(`${SERVER_URL}/user/address`, this.userLocation )
-        .then((response) => {
-          console.log(response.data);
-          this.$router.push({ name: 'Home'});
-        })
-        .catch((response) => {
-          console.log(response);
-        });
-    },
-    createUserAddress: function() {
       axios
         .post(`${SERVER_URL}/user/address`, this.userLocation )
         .then((response) => {

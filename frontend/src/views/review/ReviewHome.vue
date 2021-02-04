@@ -4,7 +4,7 @@
     <b-row>
       <b-col class="input-group mb-5" style="width: 50%;">
         <input class="form-control my-0 py-1 amber-border" type="text" placeholder="Search" aria-label="Search" 
-        v-model="storeParamDto.searchWord">
+        v-model="storeParamDto.searchWord" @keypress.enter="FindStore">
         <div class="input-group-append">
           <span class="input-group-text amber lighten-3" id="basic-text1" style="background-color: white; cursor:pointer;">
             <b-icon icon="search" variant="black" 
