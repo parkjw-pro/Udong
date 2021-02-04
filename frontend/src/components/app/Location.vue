@@ -138,6 +138,20 @@ export default {
           console.log(response);
         });
     },
+<<<<<<< HEAD
+=======
+    createUserAddress: function() {
+      axios
+        .post(`${SERVER_URL}/user/address`, this.userLocation )
+        .then((response) => {
+          console.log(response.data);
+          this.$router.push({ name: 'Home'});
+        })
+        .catch((response) => {
+          console.log(response);
+        });
+    },
+>>>>>>> 8959c25c7abe4f8e48ee0050827f07f89a960d81
   },
 
 };

@@ -257,10 +257,5 @@ public class UserPostController {
 			return new ResponseEntity<String>("게시글 댓글 신고 실패", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
-	
-	
-	
-	
 
 }

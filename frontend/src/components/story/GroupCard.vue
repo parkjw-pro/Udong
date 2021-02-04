@@ -17,8 +17,15 @@ export default {
     return {
       // props한 이미지 가져오기
       background_image: {
+<<<<<<< HEAD
        backgroundImage: `url(${require('@/assets/story/group_sample_diet.jpg')})`
        
+=======
+      //  backgroundImage: `url(${require('@/assets/story/group_sample_diet.jpg')})`
+        // backgroundImage: `url('@/C:/SSAFY/temp/s04p13a404/backend/uploads/club/ssafy13/udong_20210204_022827abc123')`,
+        backgroundImage: `url('/C:/SSAFY/temp/s04p13a404/backend/uploads/club/ssafy13/udong_20210204_022827abc123.png')`
+
+>>>>>>> 8959c25c7abe4f8e48ee0050827f07f89a960d81
       }
     }
   }

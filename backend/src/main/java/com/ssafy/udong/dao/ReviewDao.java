@@ -35,6 +35,15 @@ public interface ReviewDao {
 	// 리뷰에 대한 조회수 업데이트
 	public int updateReviewReadCount(String reviewId);
 	
+	// 닉네임찾기
+	public String findNickname(String userId);
+
+	// 특정 상점에 달린 리뷰 갯수 조회 1
+	public int reviewListTotalCount(String storeId);
+
+	// 리뷰에 대한 조회수 업데이트
+	public int updateReviewReadCount(String reviewId);
+	
 	// 리뷰수정 1
 	public int updateReview(ReviewDto reviewDto);
 	

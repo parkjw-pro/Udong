@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import com.ssafy.udong.dto.UserDto;
+import com.ssafy.udong.dto.UserParamDto;
 
 public interface UserService {
 
@@ -34,4 +35,6 @@ public interface UserService {
 	public void gmailSend(String email) throws Exception;
 	//이메일 인증 확인
 	public int gmailCheck(String checkCode) throws Exception;
+	
+	public int createUserAddress(UserParamDto dto);
 }

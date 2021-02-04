@@ -58,19 +58,17 @@
         <b-col v-if="toggle" class="small" id="option_v3" @click="toAccountDetail">개인정보</b-col>
         <b-col v-if="toggle" class="small" id="option_v3" @click="logout">로그아웃</b-col>
         <b-col v-if="toggle" class="small" id="option_v3" @click="toDevelopers">개발진</b-col>
-        <b-col v-if="toggle && is_manager" class="small" id="option_v3" @click="toDevelopers">관리자페이지</b-col>
+        <b-col v-if="toggle && isManager" class="small" id="option_v3" @click="toAdmin">관리자페이지</b-col>
     </component>
   </div>
 </template>
 
 <script>
-// import axios from 'axios'
 import slide from './slide';
 import Menu from '@/views/app/Menu';
 
 import Profile2 from '@/components/app/Profile2'
 
-// const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
 export default {
   name: 'Navbar',
@@ -84,21 +82,17 @@ export default {
       side: 'right',
       currentMenu: 'slide',
       isToggled: false,
-      is_manager: false,
+      isManager: false,
     }
   },
   computed: {
     toggle: function () {
       return this.isToggled
-    },
+    }
   },
   methods: {
-    getUser: function () {
-      var check = JSON.parse(localStorage.getItem('Login-token'))["is-manager"]
-      console.log(check)
-      if (check == 1) {
-        this.is_manager = true
-      }
+    toAdmin: function () {
+      this.$router.push({ name: 'Admin' })
     },
     toHome: function () {
       this.$router.push({name: 'Home'})
@@ -107,7 +101,7 @@ export default {
       this.$router.push({name: 'ReviewHome'})
     },
     toNews: function () {
-      // this.$router.push({name: 'News'})
+      this.$router.push({name: 'NewsHome'})
     },
     toStory: function () {
       this.$router.push({name: 'NewsFeed'})
@@ -119,13 +113,13 @@ export default {
       this.$router.push({name: 'AccountDetail'})
     },
     logout: function () {
-       this.$store
+      this.$store
         .dispatch("LOGOUT")
-        .then(
-          this.$router.push({name: 'Login'})
-        )
-      // localStorage.removeItem('jwt')  // localStorage에서 JWT 지우기
-      // this.$router.push({name: 'Login'})
+        .then(() => {
+          // this.$router.push({ name: 'Home' })
+          this.$router.push({ name: 'Login'})
+        })
+        .catch(({ message }) => (this.msg = message));
     },
     toDevelopers: function () {
       this.$router.push({name: 'Developers'})
@@ -134,8 +128,8 @@ export default {
       this.isToggled = !this.isToggled;
     }
   },
-  created: async function () {
-    await this.getUser()
+  created() {
+    this.isManager = JSON.parse(localStorage.getItem('Info-token'))["userId"]
   }
 }
 </script>
