@@ -17,7 +17,6 @@
         <b-col cols="2"><span id="title">아이디</span></b-col>
         <b-col cols="5">
           <b-form-input
-            id="input-1"
             type="email"
             :placeholder="user.userId"
             style="text-align: center;"
@@ -30,7 +29,6 @@
         <b-col cols="2"><span id="title">닉네임</span></b-col>
         <b-col cols="5">
           <b-form-input
-            id="input-1"
             type="email"
             :placeholder="user.nickname"
             style="text-align: center;"
@@ -46,7 +44,6 @@
         <b-col cols="2"><span id="title">이메일</span></b-col>
         <b-col cols="5">
           <b-form-input
-            id="input-1"
             type="email"
             :placeholder="user.email"
             style="text-align: center;"
@@ -63,7 +60,10 @@
 </template>
 
 <script>
-//const SERVER_URL = "http://localhost:8000";
+// import axios from 'axios'
+
+// const SERVER_URL = process.env.VUE_APP_SERVER_URL
+
 export default {
   name: 'AccountDetail',
   data: function () {
@@ -72,31 +72,20 @@ export default {
       user: {
         userId: "",
         nickname: "",
-        email: "bulgen@naver.com",
+        email: "",
       },
     }
   },
   methods: {
-    getToken: function () {
-      const token = localStorage.getItem('jwt')
-      const config = {
-        headers: {
-          Authorization: `JWT ${token}`
-        }
-      }
-      return config
-    },
-    onSubmit(evt) {
-      evt.preventDefault()
-      alert(JSON.stringify(this.article))
-    },
     toUpdate: function () {
       this.$router.push({name: 'AccountUpdate'})
     }
   },
   mounted() {
-    this.user.userId = JSON.parse(localStorage.getItem('Login-token'))["user-id"]
-    this.user.nickname = JSON.parse(localStorage.getItem('Login-token'))["user-name"]
+    const userInfo = JSON.parse(localStorage.getItem('Info-token'))
+    this.user.userId = userInfo["userId"]
+    this.user.nickname = userInfo["nickname"]
+    this.user.email = userInfo["email"]
   }
 }
 </script>

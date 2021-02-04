@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios';
 Vue.use(Vuex)
-const SERVER_URL = "http://localhost:8000";
+const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
 export default new Vuex.Store({
   state: {
@@ -10,7 +10,7 @@ export default new Vuex.Store({
     userId: "",
     nickname: "",
     changeState: "",
-    dongcode : ""
+    address : ""
   },
   getters: {
     getAccessToken(state) {
@@ -60,29 +60,29 @@ export default new Vuex.Store({
           //localStorage.setItem("auth-token",${response.data["auth-token"]});
           axios.defaults.headers.common["auth-token"] = localStorage.getItem('auth-token');
 
-      if (localStorage.getItem('Login-token') == undefined) {
-        localStorage.setItem('Login-token', JSON.stringify(response.data));
-      }
+  if (localStorage.getItem('Login-token') == undefined) {
+    localStorage.setItem('Login-token', JSON.stringify(response.data));
+  }
 
-      axios
-        .get(`${SERVER_URL}/user`)
-        .then((response) => {
-          console.log("axios login info");
-          localStorage.setItem('Info-token', JSON.stringify(response.data.user));
-      
-        })
-        .catch(() => {
-          localStorage.clear();
-          window.location.href = "/account";
-          alert("로그인 실패 아이디및 비밀번호 확인 부탁드립니다.");
-        });
-
+  axios
+    .get(`${SERVER_URL}/user`)
+    .then((response) => {
+      console.log("axios login info");
+      localStorage.setItem('Info-token', JSON.stringify(response.data.user));
+  
     })
     .catch(() => {
       localStorage.clear();
       window.location.href = "/account";
       alert("로그인 실패 아이디및 비밀번호 확인 부탁드립니다.");
     });
+
+})
+.catch(() => {
+  localStorage.clear();
+  window.location.href = "/account";
+  alert("로그인 실패 아이디및 비밀번호 확인 부탁드립니다.");
+});
 },
 LOGOUT(context) {
   context.commit("LOGOUT");

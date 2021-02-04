@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.udong.dto.UserDto;
+import com.ssafy.udong.dto.UserParamDto;
 import com.ssafy.udong.service.JwtService;
 import com.ssafy.udong.service.UserService;
 
@@ -69,6 +70,7 @@ public class UserController {
 				resultMap.put("user-id", loginUser.getUserId());
 				resultMap.put("user-name", loginUser.getNickname());
 				resultMap.put("is-manager", loginUser.getIsManager());
+				resultMap.put("user_address", "1111");
 				// resultMap.put("status", true);
 				// resultMap.put("data", loginUser);
 				status = HttpStatus.ACCEPTED;
@@ -242,6 +244,20 @@ public class UserController {
 			return new ResponseEntity<String>("인증 완료.\n", HttpStatus.OK);
 		} else { // 코드가 불일치하면
 			return new ResponseEntity<String>("일치하지 않는 인증코드 입니다.\n", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@ApiOperation(value = "주소등록", notes = "사용자 주소를 등록합니다.")
+	@PostMapping("/address")
+	public ResponseEntity<String> createUserAddress(@RequestBody UserParamDto Dto) throws Exception {
+		System.out.println("주소등록");
+		System.out.println(Dto.getAddressCode());
+		System.out.println(Dto.getUserId());
+		int result = userService.createUserAddress(Dto);
+		if (result == SUCCESS) {
+			return new ResponseEntity<String>("주소 등록 성공", HttpStatus.OK);
+		} else {
+			return new ResponseEntity<String>("주소 등록 실패", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 

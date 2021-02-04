@@ -122,11 +122,11 @@ const routes = [
     component: GetLocation,
   },
   {
-    path: '/',
+    path: '/home',
     name: 'Home',
     component: Home,
   },
-  //소식
+  // //소식
   {
     path: '/news',
     name: 'NewsHome',

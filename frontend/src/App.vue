@@ -1,18 +1,15 @@
 <template>
   <div id="app" class="pb-5">  
     <div v-if="login">
-        <Navbar/>
+      <Navbar/>
     </div>
-    <hr>
     <router-view></router-view>   
   </div>
 </template>
 
 <script>
-
- import Navbar from '@/components/app/Navbar'
+import Navbar from '@/components/app/Navbar'
 import 'vue-select/dist/vue-select.css';
-
 
 export default {
   name: 'App',
@@ -26,20 +23,11 @@ export default {
     }
   },
   methods: {
-    logout: function () {
-      localStorage.removeItem('jwt')  // localStorage에서 JWT 지우기
-      this.login = false
-      // this.$router.push({ name: 'Login' })
-    }
   },
-  
-  created(){
-    console.log(localStorage.getItem('auth-token'));  // localStorage에서 JWT 받아오기
-    console.log(this.login)
+  created() {
     if (localStorage.getItem('auth-token') != undefined) {
         this.login = true
     }
-     console.log(this.login)
   }
 }
 </script>

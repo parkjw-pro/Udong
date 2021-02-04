@@ -53,7 +53,6 @@
     },
     created(){
       this.user = this.$route.query.users.data
-     
     }
   }
 </script>

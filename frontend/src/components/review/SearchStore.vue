@@ -75,17 +75,19 @@ export default {
     return {
       storeParamDto:{
         searchWord: "",
-        dongcode: "1168064000",
+        dongcode: "",
 
       },
       key : Object,
       temp : Object,
+      userId : "",
 
-       storeParamDto2:{
-        searchWord: "",
-        dongcode: "1168064000",
+      // storeParamDto2:{
+      //   searchWord: "",
+      //   dongcode:  "",
 
-      },
+      // },
+      
       
 
       
@@ -108,6 +110,16 @@ export default {
 
 
   },
+  mounted() {
+
+    
+    // this.storeParamDto.dongcode = userInfo["user_address"]
+    // console.log(this.storeParamDto.dongcode);
+    // this.user.nickname = userInfo["nickname"]
+    // this.user.email = userInfo["email"]
+
+
+  },
   created()  {
 
     this.key = this.$route.query.datas;
@@ -126,8 +138,8 @@ export default {
   methods: {
     search: function() {
       console.log('search');
-      console.log(this.storeParamDto2.searchWord);
-      console.log(this.storeParamDto2.dongcode);
+      console.log(this.storeParamDto.searchWord);
+      console.log(this.storeParamDto.dongcode);
 
       axios
       .post(`${SERVER_URL}/store/stores`, this.storeParamDto)

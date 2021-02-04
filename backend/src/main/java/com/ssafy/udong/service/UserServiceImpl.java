@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import com.ssafy.udong.dao.UserDao;
 import com.ssafy.udong.dto.UserDto;
+import com.ssafy.udong.dto.UserParamDto;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -107,8 +108,6 @@ public class UserServiceImpl implements UserService {
 
 
 		try {
-			SecurityUtil securityUtil = new SecurityUtil();
-			userDto.setPassword(securityUtil.encryptSHA256(userDto.getPassword()));
 
 			return userDao.updateUser(userDto);
 
@@ -222,6 +221,21 @@ public class UserServiceImpl implements UserService {
 			userDto.setPassword(securityUtil.encryptSHA256(userDto.getPassword()));
 
 			return userDao.updatePassword(userDto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	
+	@Override
+	public int createUserAddress(UserParamDto dto) {
+		try {
+			if(userDao.selectUserAddress(dto)!=null) {
+				userDao.updateUserAddress(dto);
+			}else {
+				userDao.createUserAddress(dto);
+			}
+			return 1;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
