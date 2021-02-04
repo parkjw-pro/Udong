@@ -136,6 +136,7 @@ export default {
         isOpen: "1",
        
       },
+      dongcode: "",
       fileId: null,
       isVerified: null,
       previewImageData: null,
@@ -202,9 +203,10 @@ export default {
      //  }
     },
     verifyName: function() {
-      // 요청한다
+      console.log(JSON.parse(localStorage.getItem('Login-token'))['user_address']);
+      this.dongcode = JSON.parse(localStorage.getItem('Login-token'))['user_address'];
       axios
-        .get(`${SERVER_URL}/club/${this.club.clubName}/${this.club.clubName}`)
+        .get(`${SERVER_URL}/club/${this.club.clubName}/${this.dongcode}`)
         .then(() => {
           this.isVerified = true;
         })

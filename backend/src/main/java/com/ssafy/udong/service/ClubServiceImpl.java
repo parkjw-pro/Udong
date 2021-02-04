@@ -104,9 +104,8 @@ public class ClubServiceImpl implements ClubService {
 			ClubDto club = clubDao.selectClub(clubId);
 			String clubLeaderNickname = clubDao.selectNickname(club.getUserId());
 			club.setNickname(clubLeaderNickname);
-			
 			List<String> list = clubDao.selectFileUrl(club.getFileId());
-			
+		
 			rdto.setDto(club);
 			rdto.setFileUrl(list);
 			

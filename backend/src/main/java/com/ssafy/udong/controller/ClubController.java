@@ -1,8 +1,16 @@
 package com.ssafy.udong.controller;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -19,7 +27,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.udong.dto.ClubDto;
 import com.ssafy.udong.dto.ClubResultDto;
-import com.ssafy.udong.dto.FileResultDto;
 import com.ssafy.udong.dto.MemberDto;
 import com.ssafy.udong.service.ClubService;
 
@@ -111,8 +118,11 @@ public class ClubController {
 	@ApiOperation(value = "그룹명 중복 확인", notes = "그룹명이 기존에 등록된 것과 중복인지 확인합니다.")
 	@GetMapping("/{clubName}/{areaCode}")
 	public ResponseEntity<String> selectDuplicateClubName(@PathVariable String clubName, @PathVariable String areaCode) throws Exception {
+		System.out.println(clubName);
+		System.out.println(areaCode);
 		String result = clubService.selectDuplicateClubName(clubName, areaCode);
 
+		
 		if (result != null) {
 			return new ResponseEntity<String>("현재 사용중인 그룹명입니다.", HttpStatus.INTERNAL_SERVER_ERROR);
 		} else {
@@ -125,8 +135,10 @@ public class ClubController {
 	@GetMapping("/{clubId}")
 	public ResponseEntity<ClubResultDto> selectClub(@PathVariable String clubId){
 		try {
-			ClubResultDto dto = clubService.selectClub(clubId);
-			return new ResponseEntity<ClubResultDto>(dto, HttpStatus.OK);
+			System.out.println(clubId);
+			ClubResultDto clubdto = clubService.selectClub(clubId);
+			System.out.println(clubdto);
+			return new ResponseEntity<ClubResultDto>(clubdto, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<ClubResultDto>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -311,4 +323,24 @@ public class ClubController {
 		return new ResponseEntity<List<ClubDto>>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
+	@GetMapping("/download/{test}")
+	public ResponseEntity<Resource> download(@PathVariable String msg ) throws IOException {
+		System.out.println("."+msg);
+		StringBuilder b = new StringBuilder();
+		b.append(".");
+		b.append(msg);
+	//	String a = ;
+		System.out.println("//");
+		System.out.println(b.toString());
+		System.out.println("//");
+		Path path = Paths.get("./uploads/club/ssafy13/udong_20210204_145406다운로드.jpg");
+			
+		String contentType = Files.probeContentType(path);
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.add(HttpHeaders.CONTENT_TYPE, contentType);
+
+		Resource resource = new InputStreamResource(Files.newInputStream(path));
+		return new ResponseEntity<>(resource, headers, HttpStatus.OK);
+	}
 }
