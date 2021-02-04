@@ -165,8 +165,8 @@ export default {
       alert("동네를 2개까지 추가할 수 있다!!?? \n서비스 준비 중입니다!")
     },
     checkNickname: function() {
-      if(this.user.nickname.length < 5){
-        alert("닉네임 너무 짧습니다.")
+      if(this.user.nickname.length < 2){
+        alert("2글자 이상으로 아름다운 닉네임을 지어주세요~!")
         this.user.nickname = "";
         this.isCheck = false
       }
@@ -214,6 +214,7 @@ export default {
           console.log('닉네임 변경 성공!!!!')
           alert("닉네임이 성공적으로 저장되었습니다!");
           this.isCheck = -1
+          location.replace('/accuont/detail')
 
           // !!!!!!!!!!!!!!!!! 데이터 최신화해주기!!!
 

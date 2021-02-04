@@ -33,9 +33,10 @@ export default {
       },
       userLocation:{
         addressCode: '11',
+        addressName: '',
         userId: ''
 
-      }
+      },
     };
   },
   // 지도 API 가져오기
@@ -96,8 +97,13 @@ export default {
 
           for (var i = 0; i < result.length; i++) {
             if (result[i].region_type === 'H') {
-              infoDiv.innerHTML = result[i].address_name;
+              const address = result[i].address_name
+              infoDiv.innerHTML = address;
               dong.innerHTML = result[i].code;
+
+              // if (address) {
+              //   this.dongName = address.split(" ",3)[2]
+              // }
               break;
             }
           }
@@ -129,10 +135,13 @@ export default {
     
     createUserAddress: function() {
       this.userLocation.addressCode = document.getElementById('dong').innerHTML;
+      var arealist= document.getElementById('centerAddr').innerHTML.split(" ",4);
+      this.userLocation.addressName = arealist[arealist.length-1];
       console.log(this.userLocation.addressCode);
       console.log(this.userLocation.userId);
       const userInfo = JSON.parse(localStorage.getItem('Login-token'))
       userInfo.user_address = this.userLocation.addressCode;
+      userInfo.user_address_name = this.userLocation.addressName;
       localStorage.setItem("Login-token", JSON.stringify(userInfo));
       
       // localStorage.setItem("auth-token",response.data["auth-token"]);
@@ -141,6 +150,8 @@ export default {
         .then((response) => {
           console.log(response.data);
           this.$router.push({ name: 'Home'});
+          location.reload(true);
+
         })
         .catch((response) => {
           console.log(response);

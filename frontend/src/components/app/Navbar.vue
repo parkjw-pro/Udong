@@ -9,10 +9,10 @@
       <!-- 1.2 Navbar dropdowns -->
       <b-navbar-brand href="#">
         <b-navbar-nav>
-          <b-nav-item-dropdown text="역삼동" class="px-0 mt-1 d-inline">
-            <b-dropdown-item href="#" disabled>역삼동</b-dropdown-item>
+          <b-nav-item-dropdown :text="dongName" class="px-0 mt-1 d-inline">
+            <b-dropdown-item href="#" disabled>{{ dongName }}</b-dropdown-item>
             <!-- <b-dropdown-item href="#">신림동</b-dropdown-item> -->
-            <b-dropdown-item href="#" @click="toGetLocation">다른 동네 구경하기</b-dropdown-item>
+            <b-dropdown-item href="#" @click="toFindLocation">다른 동네 구경하기</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-navbar-brand>
@@ -60,17 +60,19 @@
         <b-col v-if="toggle" class="small" id="option_v3" @click="toAccountDetail">개인정보</b-col>
         <b-col v-if="toggle" class="small" id="option_v3" @click="logout">로그아웃</b-col>
         <b-col v-if="toggle" class="small" id="option_v3" @click="toDevelopers">개발진</b-col>
-        <b-col v-if="toggle && isManager" class="small" id="option_v3" @click="toAdmin">관리자페이지</b-col>
+        <b-col v-if="toggle && !isManager" class="small" id="option_v3" @click="toAdmin">관리자페이지</b-col>
     </component>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
 import slide from './slide';
 import Menu from '@/views/app/Menu';
 
 import Profile2 from '@/components/app/Profile2'
 
+const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
 export default {
   name: 'Navbar',
@@ -84,6 +86,7 @@ export default {
       // user 관련 정보
       isManager: false,
       nickname: '',
+      dongName: '역삼동',
 
       currentMenu: 'slide',
       isToggled: false,
@@ -93,7 +96,7 @@ export default {
   computed: {
     toggle: function () {
       return this.isToggled
-    }
+    },
   },
   methods: {
     toAdmin: function () {
@@ -102,8 +105,8 @@ export default {
     toBadge: function () {
       this.$router.push({ name: 'Badge' })
     },
-    toGetLocation: function () {
-      this.$router.push({ name: 'GetLocation'})
+    toFindLocation: function () {
+      this.$router.push({ name: 'FindLocation'})
     }, 
     toHome: function () {
       this.$router.push({name: 'Home'})
@@ -137,12 +140,26 @@ export default {
     },
     arrowToggle() {
       this.isToggled = !this.isToggled;
+    },
+    searchAddr: function (dongCode) {
+      axios.get(`${SERVER_URL}/area/code/${dongCode}`)
+        .then((res) => {
+          console.log(res)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     }
   },
-  created() {
+  mounted() {
     const user = JSON.parse(localStorage.getItem('Info-token'))
     this.isManager = user["isManager"]
     this.nickname = user["nickname"]
+    console.log(this.isManager)
+    const user_address_name = JSON.parse(localStorage.getItem('Login-token'))["user_address_name"]
+    if (user_address_name) {
+      this.dongName = user_address_name
+    }
   }
 }
 </script>

@@ -172,11 +172,11 @@ public class UserPostController {
 			"## 필수값\n" + " - postId : 댓글이 달릴 게시글 아이디\n"
 						+ " - limit : 한 페이지에 노출될 댓글 수\n" + " - offset : 오프셋\n")
 	@GetMapping(value="/comment")
-	private ResponseEntity<CommentResultDto> selectPostCom(@RequestParam(value="postId") String postId){
+	private ResponseEntity<CommentResultDto> selectPostCom(@RequestParam(value="postId") String postId, @RequestParam(value="limit") int limit, @RequestParam(value="offset") int offset){
 		// 각 글id에 맞는 댓글 전체조회
 		CommentResultDto commentResultDto;
 
-		commentResultDto = service.selectUserPostComment(postId);
+		commentResultDto = service.selectUserPostComment(postId, limit, offset);
 
 		if( commentResultDto.getResult() == SUCCESS ) {
 			return new ResponseEntity<CommentResultDto>(commentResultDto, HttpStatus.OK);

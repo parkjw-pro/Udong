@@ -45,7 +45,7 @@ public interface UserPostService {
 	public int createUserPostComment(CommentDto commentDto);
 
 	// 댓글 선택
-	public CommentResultDto selectUserPostComment(String postId);
+	public CommentResultDto selectUserPostComment(String postId, int limit, int offset);
 
 	// 댓글 좋아요
 	public int createUserPostCommentLike(LikeDto likeDto);
