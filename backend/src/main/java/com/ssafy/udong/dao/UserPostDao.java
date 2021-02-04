@@ -53,7 +53,7 @@ public interface UserPostDao {
 	public int createUserPostComment(CommentDto commentDto);
 
 	//댓글 조회
-	public List<CommentDto> selectUserPostComment(String postId);
+	public List<CommentDto> selectUserPostComment(String postId, int limit, int offset);
 	public int userPostCommentTotalCount();
 	
 	//댓글 좋아요

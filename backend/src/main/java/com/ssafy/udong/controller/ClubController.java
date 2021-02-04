@@ -45,45 +45,36 @@ public class ClubController {
 					" - areaCode : 그룹이 속한 지역 코드\n" + 
 					" - userId : 그룹장 id" + 
 			"## 가능값\n" + " - file : 그룹 대표 이미지(MultipartFile 형식)")
-	//MultipartFile
 	@PostMapping
-	public ResponseEntity<String> createClub(@RequestBody ClubDto clubs,
-			@RequestParam(value = "files", required = false) String files){
+	public ResponseEntity<String> createClub(ClubDto club,
+			@RequestParam(value = "file", required = false) MultipartFile file){
 		System.out.println("club create");
-		System.out.println(clubs.getClubName());
-		System.out.println(clubs.getClubContent());
-		clubs.setAreaCode("12341234");
-		clubs.setFileId("fileid");
-		clubs.setUserId("useriddd");
-		System.out.println(files);
-//		try {
-//			String createdClubId = clubService.createClub(club, files);
-//
-//			if(!createdClubId.equals("-1")) {
-//				String result = "SUCCESS: club creation";
-//				MemberDto member = new MemberDto(createdClubId, club.getUserId(), "1");
-//				member.setClubId(createdClubId);
-//				if(clubService.createClubMember(member) == SUCCESS) {
-//					result += " | club leader addition";
-//				}
-//				else {
-//					result += "FAILURE: club leader addition";
-//				}
-//				return new ResponseEntity<String>(result, HttpStatus.OK);
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
+		try {
+			String createdClubId = clubService.createClub(club, file);
+
+			if(!createdClubId.equals("-1")) {
+				String result = "SUCCESS: club creation";
+				MemberDto member = new MemberDto(createdClubId, club.getUserId(), "1");
+				member.setClubId(createdClubId);
+				if(clubService.createClubMember(member) == SUCCESS) {
+					result += " | club leader addition";
+				}
+				else {
+					result += "FAILURE: club leader addition";
+				}
+				return new ResponseEntity<String>(result, HttpStatus.OK);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return new ResponseEntity<String>("FAILURE: club creation", HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
-
 	/*areaCode 넣은 버전으로 수정 필요함*/
 	@ApiOperation(value = "그룹명 중복 확인", notes = "그룹명이 기존에 등록된 것과 중복인지 확인합니다.")
 	@GetMapping("/{clubName}/{areaCode}")
 	public ResponseEntity<String> selectDuplicateClubName(@PathVariable String clubName, @PathVariable String areaCode) throws Exception {
 		String result = clubService.selectDuplicateClubName(clubName, areaCode);
-
 		if (result != null) {
 			return new ResponseEntity<String>("현재 사용중인 그룹명입니다.", HttpStatus.INTERNAL_SERVER_ERROR);
 		} else {
@@ -173,7 +164,7 @@ public class ClubController {
 		}
 		return new ResponseEntity<List<MemberDto>>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-	
+
 	@ApiOperation(value = "그룹 멤버 조회", notes = "한 그룹에 등록된 모든 멤버의 정보를 조회합니다.\n" + "## 필수값\n" + " - clubId : 그룹 아이디\n")
 	@GetMapping("/{clubId}/waiting")
 	public ResponseEntity<List<MemberDto>> selectAllClubMemberWaiting(@PathVariable String clubId){  //read every member's info

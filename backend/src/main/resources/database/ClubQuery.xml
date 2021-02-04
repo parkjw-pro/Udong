@@ -32,7 +32,7 @@
 		SELECT  club_name
 		FROM club
 		WHERE club_name = #{clubName} and area_code = #{areaCode}
-	</select>	
+	</select>
 	
 	<!-- 방금만든 클럽id가져오기 -->
 	<select id="selectClubId" resultType="String">
