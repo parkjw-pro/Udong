@@ -9,14 +9,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.udong.dto.StoreDto;
-import com.ssafy.udong.dto.StoreParamDto;
 import com.ssafy.udong.service.StoreService;
 
 import io.swagger.annotations.Api;
@@ -59,8 +56,9 @@ public class StoreController {
 			"## 필수값\n" + " - searchWord : 검색어\n"
 						+ " - areaCode : 지역 코드\n")
 	@GetMapping(value = "/{searchWord}/{areaCode}")
-	private ResponseEntity<List<StoreDto>> selectStore(@RequestBody StoreParamDto storeParamDto) {
-		List<StoreDto> list = service.SelectDetailStore(storeParamDto.getSearchWord(), storeParamDto.getDongcode());
+	private ResponseEntity<List<StoreDto>> selectStore(@PathVariable String searchWord, @PathVariable String areaCode) {
+
+		List<StoreDto> list = service.SelectDetailStore(searchWord, areaCode);
 
 		try {
 			if (list != null)
@@ -76,7 +74,7 @@ public class StoreController {
 			"## 필수값\n" + " - searchWord : 검색어\n")
 	@GetMapping(value = "/{searchWord}")
 	private ResponseEntity<List<StoreDto>> selectArea(@PathVariable String searchWord) {
-		System.out.println("storeSearchword");
+
 		List<StoreDto> list = service.SelectArea(searchWord);
 		
 		try {

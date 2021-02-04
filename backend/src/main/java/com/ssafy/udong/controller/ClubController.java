@@ -19,7 +19,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.udong.dto.ClubDto;
 import com.ssafy.udong.dto.ClubResultDto;
-import com.ssafy.udong.dto.FileResultDto;
 import com.ssafy.udong.dto.MemberDto;
 import com.ssafy.udong.service.ClubService;
 
@@ -50,12 +49,6 @@ public class ClubController {
 	public ResponseEntity<String> createClub(ClubDto club,
 			@RequestParam(value = "file", required = false) MultipartFile file){
 		System.out.println("club create");
-		System.out.println(club.getClubName());
-		System.out.println(file.getOriginalFilename());
-        club.setAreaCode("12341234");
-        club.setUserId("ssafy13");
-
-		
 		try {
 			String createdClubId = clubService.createClub(club, file);
 
@@ -76,37 +69,7 @@ public class ClubController {
 		}
 		return new ResponseEntity<String>("FAILURE: club creation", HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-
-//	@PostMapping
-//	public ResponseEntity<String> createClub(@RequestBody FileResultDto FileResultDto){
-//		System.out.println("club create");
-//		System.out.println(FileResultDto.getFiles().getOriginalFilename());
-//		System.out.println(FileResultDto.getClubDto().getClubName());
-//		
-//		FileResultDto.getClubDto().setAreaCode("1168064000");
-//		FileResultDto.getClubDto().setClubId("ssafy13");
-//		
-//		try {
-//			String createdClubId = clubService.createClub(FileResultDto.getClubDto(), FileResultDto.getFiles());
-//
-//			if(!createdClubId.equals("-1")) {
-//				String result = "SUCCESS: club creation";
-//				MemberDto member = new MemberDto(createdClubId, FileResultDto.getClubDto().getUserId(), "1");
-//				member.setClubId(createdClubId);
-//				if(clubService.createClubMember(member) == SUCCESS) {
-//					result += " | club leader addition";
-//				}
-//				else {
-//					result += "FAILURE: club leader addition";
-//				}
-//				return new ResponseEntity<String>(result, HttpStatus.OK);
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		return new ResponseEntity<String>("FAILURE: club creation", HttpStatus.INTERNAL_SERVER_ERROR);
-//	}
-
+	
 	/*areaCode 넣은 버전으로 수정 필요함*/
 	@ApiOperation(value = "그룹명 중복 확인", notes = "그룹명이 기존에 등록된 것과 중복인지 확인합니다.")
 	@GetMapping("/{clubName}/{areaCode}")

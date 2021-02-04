@@ -1,0 +1,264 @@
+package com.ssafy.udong.dto;
+
+public class StoreDto {
+
+	private String storeId;
+	private String locLat;
+	private String locLng;
+	private String storeCtg_1;
+	private String storeCtg_2;
+	private String storeDongName;
+	private String storeDong2Name;
+	private String storeSidoName;
+	private String storeGugunName;
+	private String storeDongCode;
+	private String storeDong2Code;
+	private String storeSidoCode;
+	private String storeSugunCode;
+	private String storeName;
+	private String storeAddr;
+	private String storeNameDetail;
+	private String storeState;
+	private String createdAt;
+	private String updatedAt;
+	
+	
+	
+	public StoreDto() {
+		
+	}
+
+
+
+	public String getStoreId() {
+		return storeId;
+	}
+
+
+
+	public void setStoreId(String storeId) {
+		this.storeId = storeId;
+	}
+
+
+
+	public String getLocLat() {
+		return locLat;
+	}
+
+
+
+	public void setLocLat(String locLat) {
+		this.locLat = locLat;
+	}
+
+
+
+	public String getLocLng() {
+		return locLng;
+	}
+
+
+
+	public void setLocLng(String locLng) {
+		this.locLng = locLng;
+	}
+
+
+
+	public String getStoreCtg_1() {
+		return storeCtg_1;
+	}
+
+
+
+	public void setStoreCtg_1(String storeCtg_1) {
+		this.storeCtg_1 = storeCtg_1;
+	}
+
+
+
+	public String getStoreCtg_2() {
+		return storeCtg_2;
+	}
+
+
+
+	public void setStoreCtg_2(String storeCtg_2) {
+		this.storeCtg_2 = storeCtg_2;
+	}
+
+
+
+	public String getStoreDongName() {
+		return storeDongName;
+	}
+
+
+
+	public void setStoreDongName(String storeDongName) {
+		this.storeDongName = storeDongName;
+	}
+
+
+
+	public String getStoreDong2Name() {
+		return storeDong2Name;
+	}
+
+
+
+	public void setStoreDong2Name(String storeDong2Name) {
+		this.storeDong2Name = storeDong2Name;
+	}
+
+
+
+	public String getStoreSidoName() {
+		return storeSidoName;
+	}
+
+
+
+	public void setStoreSidoName(String storeSidoName) {
+		this.storeSidoName = storeSidoName;
+	}
+
+
+
+	public String getStoreGugunName() {
+		return storeGugunName;
+	}
+
+
+
+	public void setStoreGugunName(String storeGugunName) {
+		this.storeGugunName = storeGugunName;
+	}
+
+
+
+	public String getStoreDongCode() {
+		return storeDongCode;
+	}
+
+
+
+	public void setStoreDongCode(String storeDongCode) {
+		this.storeDongCode = storeDongCode;
+	}
+
+
+
+	public String getStoreDong2Code() {
+		return storeDong2Code;
+	}
+
+
+
+	public void setStoreDong2Code(String storeDong2Code) {
+		this.storeDong2Code = storeDong2Code;
+	}
+
+
+
+	public String getStoreSidoCode() {
+		return storeSidoCode;
+	}
+
+
+
+	public void setStoreSidoCode(String storeSidoCode) {
+		this.storeSidoCode = storeSidoCode;
+	}
+
+
+
+	public String getStoreSugunCode() {
+		return storeSugunCode;
+	}
+
+
+
+	public void setStoreSugunCode(String storeSugunCode) {
+		this.storeSugunCode = storeSugunCode;
+	}
+
+
+
+	public String getStoreName() {
+		return storeName;
+	}
+
+
+
+	public void setStoreName(String storeName) {
+		this.storeName = storeName;
+	}
+
+
+
+	public String getStoreAddr() {
+		return storeAddr;
+	}
+
+
+
+	public void setStoreAddr(String storeAddr) {
+		this.storeAddr = storeAddr;
+	}
+
+
+
+	public String getStoreNameDetail() {
+		return storeNameDetail;
+	}
+
+
+
+	public void setStoreNameDetail(String storeNameDetail) {
+		this.storeNameDetail = storeNameDetail;
+	}
+
+
+
+	public String getStoreState() {
+		return storeState;
+	}
+
+
+
+	public void setStoreState(String storeState) {
+		this.storeState = storeState;
+	}
+
+
+
+	public String getCreatedAt() {
+		return createdAt;
+	}
+
+
+
+	public void setCreatedAt(String createdAt) {
+		this.createdAt = createdAt;
+	}
+
+
+
+	public String getUpdatedAt() {
+		return updatedAt;
+	}
+
+
+
+	public void setUpdatedAt(String updatedAt) {
+		this.updatedAt = updatedAt;
+	}
+	
+	
+	
+	
+	
+
+}
