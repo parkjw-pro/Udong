@@ -17,7 +17,8 @@ export default {
     return {
       // props한 이미지 가져오기
       background_image: {
-        backgroundImage: `url(${require('@/assets/story/group_sample_diet.jpg')})`
+       backgroundImage: `url(${require('@/assets/story/group_sample_diet.jpg')})`
+       
       }
     }
   }

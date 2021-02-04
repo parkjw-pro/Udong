@@ -1,36 +1,16 @@
 <template>
-<<<<<<< HEAD
-  <div id="app" class="pb-5">
-    <!-- 1. 로그인 되어 있으면 -->
-    <div >
-      <Navbar/>
-      <router-view></router-view>   
-    </div>
-    <!-- 2. 로그인이 안 되어 있으면 -->
-    <!-- <div class="mt-5">
-      <Login />
-    </div> -->
-=======
   <div id="app" class="pb-5">  
     <div v-if="login">
         <Navbar/>
     </div>
     <hr>
     <router-view></router-view>   
->>>>>>> backend
   </div>
 </template>
 
 <script>
-<<<<<<< HEAD
-// import Login from '@/views/account/Login'
-import Navbar from '@/components/app/Navbar'
-// 임시
-// import Location from '@/components/app/Location'
-=======
 
  import Navbar from '@/components/app/Navbar'
->>>>>>> backend
 import 'vue-select/dist/vue-select.css';
 
 
@@ -40,11 +20,7 @@ export default {
     // Login,
      Navbar,
 
-<<<<<<< HEAD
-    // Location,
-=======
-     Navbar,
->>>>>>> backend
+     
   },
   data: function () {
     return {
