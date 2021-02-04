@@ -1,31 +1,30 @@
 <template>
-  <div>
+  <div id="box">
     <div class="mb-5">
-      <img alt="Vue logo" src="@/assets/logo.png" style="width:20%; margin-bottom: 20px;">
-      <h5>우리 동네 이야기</h5>
+      <img alt="Vue logo" src="@/assets/logo.png" style="width:40%; margin-bottom: 20px;">
+      <h2 class="font-weight-bold" style="color: #695549; font-family: 'Nanum Pen Script', cursive;">우리 동네 이야기</h2>
     </div>
     <div class="form-group">
-      <input type="text" class="form-control" style="width:50%; text-align:center; display:block; margin: 0 auto;" placeholder="ID" id="userId" v-model="credentials.userId" @keypress.enter="login" autofocus>
+      <input type="text" class="form-control" style="color: #695549; width:50%; text-align:center; display:block; margin: 0 auto;" placeholder="ID" id="userId" v-model="credentials.userId" @keypress.enter="login" autofocus>
     </div>
     <div class="form-group">
-      <input type="password" class="form-control" style="width:50%; text-align:center; display:block; margin: 0 auto;" placeholder="Password" id="password" v-model="credentials.password" @keypress.enter="login">
+      <input type="password" class="form-control" style="color: #695549; width:50%; text-align:center; display:block; margin: 0 auto;" placeholder="Password" id="password" v-model="credentials.password" @keypress.enter="login">
     </div>
     <div v-if="!error_check_login">
       <p>ID 또는 비밀번호를 다시 확인해주세요.</p>
     </div>
     <div>
-      <button @click="login" type="submit" class="btn btn-secondary mb-2" style="width:50%;">Login</button>
+      <b-button @click="login" type="submit" class="mb-2" style="width:50%; background-color: #695549;">Login</b-button>
     </div>
     <div class="small">
       <!-- <router-link :to="{ name: 'Signup' }">회원가입</router-link>
       |
       <router-link :to="{ name: 'FindPassword' }">비밀번호찾기</router-link> -->
-      <a href="" @click="toSignup">회원가입</a>
+      <span style="color: #695549; cursor: pointer;" @click="toSignup">회원가입</span>
       |
-      <a href="" @click="toFind">비밀번호찾기</a>
+      <span style="color: #695549; cursor: pointer;" @click="toFind">비밀번호찾기</span>
     </div>
   </div>
-    
 </template>
 
 <script>
@@ -72,6 +71,11 @@ export default {
     toFind: function () {
       this.$router.push({ name: 'FindPassword'})
     },
+  },
+  mounted() {
+    if (localStorage.getItem('auth-token') != undefined) {
+        this.$router.push({ name: 'Home'})
+    }
   }
 }
 </script>
@@ -80,6 +84,7 @@ export default {
 input[type="password"] {  
   font:small-caption;font-size:16px;
 }
+
 ::placeholder {
   font-family: 'Jeju Gothic', sans-serif;
 }

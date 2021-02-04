@@ -1,211 +1,246 @@
-// 중복확인 하는 법 모르겠음 // 저렇게 중복확인 함수로 두면 submit 됐을때
-b-form-group확인해주는거에서 안넘어가는듯
 <template>
   <div id="box"  style="padding:10px;">
-    <!-- class="container" -->
-    <br>
-    <h2>회원가입</h2>
-    <hr />
-    <b-form @submit.prevent="onSubmit">
-      <div class="container" style="padding:10px">
-        <ValidationProvider
-          name="아이디"
-          rules="required|min:5"
-          v-slot="{ errors }"
-        >
-          <b-form-group>
-            <label
-              style="float:left; padding-right:10px; padding-top:5px"
-              for="userId"
-              >아이디:
-            </label>
-            <b-form-input
-              type="text"
-              style="width:60%; float:left;"
-              v-model="credentials.userId"
-              placeholder="아이디 입력"
-              required
-              autofocus
-            ></b-form-input>
-            <b-button
-              style="margin-top:3px"
-              size="sm"
-              @click="check_user_id"
-              type="submit"
-              >확인</b-button
-            >
-            <small id = "error1" class="text-danger" style="float:left; margin-top:5px">{{
-              errors[0]
-            }}</small>
-          </b-form-group>
-        </ValidationProvider>
+    <div id="border" class="my-5 py-5">
+      <!-- 1. 제목 -->
+      <div id="title" class="mb-5">
+        <span><img alt="Vue logo" src="@/assets/udonge.png" style="width: 10%"></span>
+        <span class="font-weight-bold " style="color: #695549;">주민등록</span>
       </div>
-
-      <div class="container" style="padding:10px">
-        <ValidationProvider
-          name="닉네임"
-          rules="required|min:2"
-          v-slot="{ errors }"
-        >
-          <b-form-group>
-            <label
-              style="float:left; padding-right:10px; padding-top:5px"
-              for="nickname"
-              >닉네임:
-            </label>
-            <b-form-input
-              type="text"
-              style="width:60%; float:left;"
-              v-model="credentials.nickname"
-              placeholder="닉네임 입력"
-              required
-            ></b-form-input>
-            <b-button
-              style="margin-top:3px"
-              size="sm"
-              @click="check_user_nickname"
-              type="submit"
-              >확인</b-button
+      <!-- 2. 내용 -->
+      <!-- 2.1 input창 -->
+      <b-col class="mx-3">
+          <!-- 2.1.1 아이디 -->
+        <b-row id="accountBox">
+          <b-col align-self="left">
+            <ValidationProvider
+              name="아이디"
+              rules="required|min:5"
+              v-slot="{ errors }"
             >
-            <small id = "error2" class="text-danger" style="float:left; margin-top:5px">{{
-              errors[0]
-            }}</small>
-          </b-form-group>
-        </ValidationProvider>
-      </div>
-
-      <div class="container" style="padding:10px">
-        <ValidationProvider
-          name="이메일"
-          rules="required|email"
-          v-slot="{ errors }"
-        >
-          <b-form-group>
-            <label
-              style="float:left; padding-right:10px; padding-top:5px"
-              for="email"
-              >이메일:
-            </label>
-            <b-form-input
-              type="email"
-              style="width:60%; float:left;"
-              v-model="credentials.email"
-              placeholder="이메일 입력"
-              required
-            ></b-form-input>
-            <b-button
-              style="margin-top:3px"
-              size="sm"
-              @click="check_user_email"
-              type="submit"
-              >메일 인증</b-button
-            >
-            <small id = "error3"  class="text-danger" style="float:left; margin-top:5px">{{
-              errors[0]
-            }}</small>
-          </b-form-group>
-        </ValidationProvider>
-      </div>
-
-      <!-- 인증 코드  -->
-      <div v-if="this.possible_email && this.credentials.email">
-        <div class="container" style="padding:10px">
-          <ValidationProvider
-            name="인증코드"
-            rules="required|min:4"
-            v-slot="{ errors }"
-          >
-            <b-form-group>
-              <label
-                style="float:left; padding-right:10px; padding-top:5px"
-                for="emailCode"
-                >인증코드:
-              </label>
-              <b-form-input
-                type="text"
-                style="width:60%; float:left;"
-                v-model="emailCode"
-                placeholder="인증코드 입력"
-                required
-              ></b-form-input>
-              <b-button
-                style="margin-top:3px"
-                size="sm"
-                @click="check_user_emailCode"
-                type="submit"
-                >인증 확인</b-button
+              <b-form-group>
+                <label
+                  style="float:left; padding-right:10px; padding-top:5px"
+                  for="userId"
+                  >아이디:
+                </label>
+                <b-form-input
+                  type="text"
+                  class="ml-5"
+                  style="width:50%; float:left;"
+                  v-model="credentials.userId"
+                  placeholder="아이디를 입력하세요"
+                  required
+                  autofocus
+                  @keypress.enter="check_user_id"
+                ></b-form-input>
+                <b-button id="btn_signup"
+                  style="margin-top:3px"
+                  size="sm"
+                  @click="check_user_id"
+                  >확인</b-button
+                >
+                <br>
+                <br>
+                <small id = "error1" class="text-danger" style="float:center; margin-top:5px">{{
+                  errors[0]
+                }}</small>
+              </b-form-group>
+            </ValidationProvider>
+          </b-col>
+        </b-row>
+        <!-- 2.1.2 닉네임 -->
+        <b-row id="accountBox">
+          <b-col align-self="left">
+              <ValidationProvider
+                name="닉네임"
+                rules="required|min:2"
+                v-slot="{ errors }"
               >
-              <small id = "error4" class="text-danger" style="float:left; margin-top:5px">{{
-                errors[0]
-              }}</small>
-            </b-form-group>
-          </ValidationProvider>
-        </div>
-      </div>
+                <b-form-group>
+                  <label
+                    style="float:left; padding-right:10px; padding-top:5px"
+                    for="nickname"
+                    >닉네임:
+                  </label>
+                  <b-form-input
+                    type="text"
+                    class="ml-5"
+                    style="width:50%; float:left;"
+                    v-model="credentials.nickname"
+                    placeholder="개성있는 닉네임을 입력하세요"
+                    required
+                    @keypress.enter="check_user_nickname"
+                  ></b-form-input>
+                  <b-button id="btn_signup"
+                    style="margin-top:3px"
+                    size="sm"
+                    @click="check_user_nickname"
+                    >확인</b-button
+                  >
+                  <br>
+                  <br>
+                  <small id = "error2" class="text-danger" style=" margin-top:5px">{{
+                    errors[0]
+                  }}</small>
+                </b-form-group>
+              </ValidationProvider>
+          </b-col>
+        </b-row>
+        <!-- 2.1.3 이메일 -->
+        <b-row id="accountBox">
+          <b-col align-self="left">
+            <ValidationProvider
+              name="이메일"
+              rules="required|email"
+              v-slot="{ errors }"
+            >
+              <b-form-group>
+                <label
+                  style="float:left; padding-right:10px; padding-top:5px"
+                  for="email"
+                  >이메일:
+                </label>
+                <b-form-input
+                  type="email"
+                  class="ml-5"
+                  style="width:50%; float:left;"
+                  v-model="credentials.email"
+                  placeholder="이메일을 입력하세요"
+                  required
+                  @keypress.enter="check_user_email"
+                ></b-form-input>
+                <b-button id="btn_signup"
+                  style="margin-top:3px"
+                  size="sm"
+                  @click="check_user_email"
+                  >메일 인증</b-button
+                >
+                <br>
+                <br>
+                <small id = "error3"  class="text-danger" style=" margin-top:5px">{{
+                  errors[0]
+                }}</small>
+              </b-form-group>
+            </ValidationProvider>
+          </b-col>
+        </b-row>
+        <!-- 2.1.4 이메일 인증코드 -->
+        <b-row v-if="this.possible_email && this.credentials.email" id="accountBox">
+          <b-col align-self="left">
+            <ValidationProvider
+              name="인증코드"
+              rules="required|min:4"
+              v-slot="{ errors }"
+            >
+              <b-form-group>
+                <label
+                  style="float:left; padding-right:10px; padding-top:5px"
+                  for="emailCode"
+                  >인증코드:
+                </label>
+                <b-form-input
+                  type="text"
+                  class="ml-4"
+                  style="width:50%; float:left;"
+                  v-model="emailCode"
+                  placeholder="인증코드를 입력하세요"
+                  required
+                  @keypress.enter="check_user_emailCode"
+                ></b-form-input>
+                <b-button id="btn_signup"
+                  style="margin-top:3px"
+                  size="sm"
+                  @click="check_user_emailCode"
+                  >인증 확인</b-button
+                >
+                <br>
+                <br>
+                <small id = "error4" class="text-danger" style=" margin-top:5px">{{
+                  errors[0]
+                }}</small>
+              </b-form-group>
+            </ValidationProvider>
+          </b-col>
+        </b-row>
+        <!-- 2.1.5 비밀번호 재설정 -->
+        <b-row id="accountBox">
+          <b-col align-self="left">
+            <ValidationProvider
+              name="비밀번호"
+              rules="required|min:6"
+              v-slot="{ errors }"
+            >
+              <b-form-group>
+                <label
+                  style="float:left; padding-right:10px; padding-top:5px"
+                  for="password"
+                  >비밀번호:
+                </label>
+                <b-form-input
+                  type="password"
+                  class="mx-4"
+                  style="width:50%; float:left; font-color : black;"
+                  v-model="credentials.password"
+                  placeholder="비밀번호를 입력하세요"
+                  required
+                   @keypress.enter="onSubmit()"
+                ></b-form-input>
+                <br>
+                <br>
+                <small  id = "error5"  class="text-danger" style=" margin-top:5px">{{
+                  errors[0]
+                }}</small>
+              </b-form-group>
+            </ValidationProvider>
+          </b-col>
+        </b-row>
+        <b-row id="accountBox">
+          <b-col align-self="left">
+            <ValidationProvider
+              name="비밀번호 확인"
+              rules="required|confirmed:비밀번호"
+              v-slot="{ errors }"
+            >
+              <b-form-group>
+                <label
+                  style="float:left; padding-right:10px; padding-top:5px"
+                  for="password_confirmation"
+                  >비밀번호확인:
+                </label>
+                <b-form-input
+                  type="password"
+                  style="width:50%; float:left;"
+                  v-model="password_confirmation"
+                  placeholder="비밀번호를 한 번 더 입력하세요"
+                  required
+                  @keypress.enter="onSubmit()"
+                ></b-form-input>
+                <br>
+                <br>
+                <small id = "error6"  class="text-danger" style=" margin-top:5px">{{
+                  errors[0]
+                }}</small>
+              </b-form-group>
+            </ValidationProvider>
+          </b-col>
+        </b-row>
+      </b-col>
+    </div>
+    <!-- 버튼 -->
+    <div>
+      <b-button id="btn_signup" class="mx-3" @click="$router.push({ name: 'Login' })">
+        로그인 페이지
+      </b-button>
+      <b-button id="btn_signup" class="mx-3" @click="onSubmit()">
+        가입완료
+      </b-button>
+    </div>
+    
 
-      <div class="container" style="padding:10px">
-        <ValidationProvider
-          name="비밀번호"
-          rules="required|min:6"
-          v-slot="{ errors }"
-        >
-          <b-form-group>
-            <label
-              style="float:left; padding-right:10px; padding-top:5px"
-              for="password"
-              >비밀번호:
-            </label>
-            <b-form-input
-              type="password"
-              style="width:60%; float:left; font-color : black;"
-              v-model="credentials.password"
-              placeholder="비밀번호 입력"
-              required
-            ></b-form-input>
-            <small  id = "error5"  class="text-danger" style="float:left; margin-top:5px">{{
-              errors[0]
-            }}</small>
-          </b-form-group>
-        </ValidationProvider>
-      </div>
-
-      <div class="container" style="padding:10px">
-        <ValidationProvider
-          name="비밀번호 확인"
-          rules="required|confirmed:비밀번호"
-          v-slot="{ errors }"
-        >
-          <b-form-group>
-            <label
-              style="float:left; padding-right:10px; padding-top:5px"
-              for="password_confirmation"
-              >비밀번호 확인:
-            </label>
-            <b-form-input
-              type="password"
-              style="width:60%; float:left;"
-              v-model="password_confirmation"
-              placeholder="비밀번호 확인"
-              required
-            ></b-form-input>
-            <small id = "error6"  class="text-danger" style="float:left; margin-top:5px">{{
-              errors[0]
-            }}</small>
-          </b-form-group>
-        </ValidationProvider>
-      </div>
-
-      <b-button type="submit" class="btn btn-secondary" style="float:right;"  @click="onSubmit1()"
-        >가입완료</b-button
-      >
-    </b-form>
-    <button
-      class="btn btn-secondary"
-      style="float:left;"
-      @click="$router.push('/account')"
-    >
-      뒤로가기
-    </button>
+      <!-- modal -->
+      <!-- <b-button  variant="danger" v-b-modal="'deleteModal'">회원탈퇴</b-button>
+      <b-modal id="deleteModal" @ok="deleteAccount"><img alt="Vue logo" src="@/assets/udonge.png" style="width: 10%">정말 탈퇴하시겠습니까?</b-modal>
+      <b-button  style="background-color: #695549;" @click="toDetail">확인</b-button> -->
   </div>
 </template>
 
@@ -240,7 +275,7 @@ export default {
     };
   },
   methods: {
-    onSubmit1() {
+    onSubmit() {
         if( 
           this.checkId == false || this.checkNickname == false || this.checkEmail == false || this.checkEmailCode == false ||
           document.getElementById("error5").innerHTML != "" || document.getElementById("error6").innerHTML != "" 
@@ -347,6 +382,10 @@ export default {
 };
 </script>
 <style>
+#btn_signup {
+  background-color: #695549;
+}
+
 input[type="password"] {
   font: small-caption;
   font-size: 16px;

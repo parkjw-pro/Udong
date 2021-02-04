@@ -86,6 +86,12 @@ export default {
     },
   },
   created: async function() {
+    const isManager = JSON.parse(localStorage.getItem('Info-token'))["isManager"]
+    
+    if ( isManager ) {
+      alert("접근 권한이 없습니다.")
+      this.$router.push({name : 'Home'})
+    }
       // 그룹 정보 가져오기!!
       // await this.getUser()
       // if (this.is_manager) {

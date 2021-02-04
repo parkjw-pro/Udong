@@ -31,7 +31,7 @@
 		parameterType="String" resultType="String">
 		SELECT  club_name
 		FROM club
-		WHERE club_name = #{clubName} and area_code = #{areaCode}
+		WHERE club_name = #{param1} and area_code = #{param2}
 	</select>
 	
 	<!-- 방금만든 클럽id가져오기 -->
@@ -46,7 +46,7 @@
 	</select>
 	
 	<!--club 대표 이미지의 파일 url찾기 -->
-	<select id="SelectFileUrl" parameterType="String" resultType="String">
+	<select id="selectFileUrl" parameterType="String" resultType="String">
 		select file_url from image
 		where file_id = #{id};
 	</select>

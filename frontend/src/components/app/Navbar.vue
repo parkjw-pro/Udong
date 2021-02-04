@@ -12,7 +12,7 @@
           <b-nav-item-dropdown :text="dongName" class="px-0 mt-1 d-inline">
             <b-dropdown-item href="#" disabled>{{ dongName }}</b-dropdown-item>
             <!-- <b-dropdown-item href="#">신림동</b-dropdown-item> -->
-            <b-dropdown-item href="#" @click="toGetLocation">다른 동네 구경하기</b-dropdown-item>
+            <b-dropdown-item href="#" @click="toFindLocation">다른 동네 구경하기</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-navbar-brand>
@@ -33,24 +33,24 @@
         <hr>
         <b-row id="option_v1" class="pl-0" @click="toReview">
             <!-- <i class="fas fa-book-open"></i> -->
-            <b-col id="option_v2">우리동네 리뷰</b-col>
+            <b-col id="option_v2"><h2>우리동네 리뷰</h2></b-col>
         </b-row>
         <b-row id="option_v1" class="pl-0" @click="toNews">
             <!-- <i class="far fa-newspaper"></i> -->
-            <b-col id="option_v2" style="">우리동네 소식</b-col>
+            <b-col id="option_v2" style=""><h2>우리동네 소식</h2></b-col>
         </b-row>
         <!-- <router-link :to="{ name: 'NewsFeed' }" class="text-white"><p class="h5 mt-4" id="option_v2">뉴스피드</p></router-link> -->
         <b-row id="option_v1" class="pl-0" @click="toStory">
             <!-- <i class="fas fa-globe-americas"></i> -->
-            <b-col id="option_v2">우리동네 이야기</b-col>
+            <b-col id="option_v2"><h2>우리동네 이야기</h2></b-col>
         </b-row>
         <b-row id="option_v1" class="pl-0" @click="toMyfeed">
             <!-- <i class="fas fa-star"></i> -->
-            <b-col id="option_v2">내 피드</b-col>
+            <b-col id="option_v2"><h3>내 피드</h3></b-col>
         </b-row>
         <b-row id="option_v1" class="pl-0" @click="arrowToggle()" align-h="justify">
             <!-- <i class="fas fa-cog"></i> -->
-            <b-col id="option_v2">설정</b-col>
+            <b-col id="option_v2"><b-icon icon="gear"></b-icon></b-col>
             <b-col>
               <b-icon v-if="!toggle" icon="chevron-down" variant="dark"></b-icon>
               <b-icon v-else icon="chevron-up" variant="dark"></b-icon>
@@ -60,7 +60,7 @@
         <b-col v-if="toggle" class="small" id="option_v3" @click="toAccountDetail">개인정보</b-col>
         <b-col v-if="toggle" class="small" id="option_v3" @click="logout">로그아웃</b-col>
         <b-col v-if="toggle" class="small" id="option_v3" @click="toDevelopers">개발진</b-col>
-        <b-col v-if="toggle && isManager" class="small" id="option_v3" @click="toAdmin">관리자페이지</b-col>
+        <b-col v-if="toggle && !isManager" class="small" id="option_v3" @click="toAdmin">관리자페이지</b-col>
     </component>
   </div>
 </template>
@@ -96,7 +96,7 @@ export default {
   computed: {
     toggle: function () {
       return this.isToggled
-    }
+    },
   },
   methods: {
     toAdmin: function () {
@@ -105,11 +105,12 @@ export default {
     toBadge: function () {
       this.$router.push({ name: 'Badge' })
     },
-    toGetLocation: function () {
-      this.$router.push({ name: 'GetLocation'})
+    toFindLocation: function () {
+      this.$router.push({ name: 'FindLocation'})
     }, 
     toHome: function () {
-      this.$router.push({name: 'Home'})
+      // this.$router.push({name: 'Home'})
+      location.replace('/home')
     },
     toReview: function () {
       this.$router.push({name: 'ReviewHome'})
@@ -155,9 +156,11 @@ export default {
     const user = JSON.parse(localStorage.getItem('Info-token'))
     this.isManager = user["isManager"]
     this.nickname = user["nickname"]
-    // this.location = this.$route.query.datas.dongcode;
-    // console.log(this.location)
-    // console.log('hello')
+    console.log(this.isManager)
+    const user_address_name = JSON.parse(localStorage.getItem('Login-token'))["user_address_name"]
+    if (user_address_name) {
+      this.dongName = user_address_name
+    }
   }
 }
 </script>
@@ -169,6 +172,7 @@ export default {
 
     #option_v1 {
       cursor: pointer;
+      font-family: 'Nanum Pen Script', cursive;
     }
 
     // 햄버거 메뉴 글자

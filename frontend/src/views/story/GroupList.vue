@@ -4,16 +4,17 @@
     <div id="my_group" class="my-5">
         <b-row>
           <b-col md="4"><h4 id="group_list_category">내 그룹</h4></b-col>
-          <b-col md="4" offset-md="4"><b-button pill variant="primary">+</b-button>(게시글 작성)</b-col>
+          <b-col md="4" offset-md="4"><b-button pill variant="primary">+</b-button>(그룹 만들기)</b-col>
         </b-row>
       <!-- <div>
         <h4 id="group_list_category">내 그룹</h4>
         <b-button pill variant="primary">+</b-button>
       </div> -->
         <b-card-group deck>
-          <GroupCard />
-          <GroupCard />
-          <GroupCard />
+          <div v-for="(title, idx) in club" :key="idx"> 
+              <GroupCard :group = "title"/>
+          </div>
+   
         </b-card-group>
         <!-- <GroupCard /> -->
     </div>
@@ -31,12 +32,38 @@
 </template>
 
 <script>
+
+
+
+const SERVER_URL = "http://localhost:8000";
+ 
 import GroupCard from '@/components/story/GroupCard'
+import axios from 'axios'
 
 export default {
   name: "GroupList",
   components: {
     GroupCard,
+  },
+  data() {
+    return {
+      club : Object
+    }
+  },
+  methods: {
+    
+  },
+  created(){
+    axios.get(`${SERVER_URL}/club/user/${JSON.parse(localStorage.getItem('Login-token'))['user-id']}/member`)
+    .then((res)=>{
+     
+     this.club = res.data
+     console.log("조회성공")
+     console.log(this.club)
+     }) 
+    .catch(()=>{
+       console.log("조회 실패")
+    });
   }
 }
 </script>

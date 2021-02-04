@@ -13,6 +13,7 @@ import AccountUpdate from '@/views/account/AccountUpdate.vue'
 
 //앱
 import Badge from '@/views/app/Badge.vue'
+import Blank from '@/views/app/Blank.vue'
 import Developers from '@/views/app/Developers.vue'
 import FindLocation from '@/views/app/FindLocation.vue'
 import GetLocation from '@/views/app/GetLocation.vue'
@@ -105,6 +106,11 @@ const routes = [
     path: '/badge',
     name: 'Badge',
     component: Badge,
+  },
+  {
+    path: '/',
+    name: 'Blank',
+    component: Blank,
   },
   {
     path: '/developers',

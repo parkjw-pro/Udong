@@ -41,6 +41,7 @@
 import Button from '@/components/story/Button'
 import EndBlock from '@/components/story/EndBlock'
 import PostBlock from '@/components/story/PostBlock'
+//import axios from 'axios'
 
 export default {
   name: "GroupPage",
@@ -48,7 +49,21 @@ export default {
     Button,
     EndBlock,
     PostBlock,
-  }
+  },
+  data() {
+    return {
+      
+      clubName : "",
+    }
+  },
+  methods :{
+    
+  },
+  created() {
+    this.clubName = this.$route.query.club.clubName
+    console(this.clubName);
+
+  },
 }
 </script>
 

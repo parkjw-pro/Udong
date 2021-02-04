@@ -150,6 +150,8 @@ export default {
         .then((response) => {
           console.log(response.data);
           this.$router.push({ name: 'Home'});
+          location.reload(true);
+
         })
         .catch((response) => {
           console.log(response);
