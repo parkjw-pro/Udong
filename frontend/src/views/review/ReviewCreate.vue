@@ -51,7 +51,6 @@
         </b-row>
       </b-container>
 
-    <ImageUploader />
 
 
 
@@ -64,7 +63,6 @@
 </template>
 
 <script>
-import ImageUploader from '@/components/app/ImageUploader'
 
 export default {
   name: 'ReviewCreate',
@@ -72,7 +70,6 @@ export default {
     store: Object,
   },
   components: {
-    ImageUploader
   },
   data: function () {
     return {

@@ -33,24 +33,24 @@
         <hr>
         <b-row id="option_v1" class="pl-0" @click="toReview">
             <!-- <i class="fas fa-book-open"></i> -->
-            <b-col id="option_v2">우리동네 리뷰</b-col>
+            <b-col id="option_v2"><h2>우리동네 리뷰</h2></b-col>
         </b-row>
         <b-row id="option_v1" class="pl-0" @click="toNews">
             <!-- <i class="far fa-newspaper"></i> -->
-            <b-col id="option_v2" style="">우리동네 소식</b-col>
+            <b-col id="option_v2" style=""><h2>우리동네 소식</h2></b-col>
         </b-row>
         <!-- <router-link :to="{ name: 'NewsFeed' }" class="text-white"><p class="h5 mt-4" id="option_v2">뉴스피드</p></router-link> -->
         <b-row id="option_v1" class="pl-0" @click="toStory">
             <!-- <i class="fas fa-globe-americas"></i> -->
-            <b-col id="option_v2">우리동네 이야기</b-col>
+            <b-col id="option_v2"><h2>우리동네 이야기</h2></b-col>
         </b-row>
         <b-row id="option_v1" class="pl-0" @click="toMyfeed">
             <!-- <i class="fas fa-star"></i> -->
-            <b-col id="option_v2">내 피드</b-col>
+            <b-col id="option_v2"><h3>내 피드</h3></b-col>
         </b-row>
         <b-row id="option_v1" class="pl-0" @click="arrowToggle()" align-h="justify">
             <!-- <i class="fas fa-cog"></i> -->
-            <b-col id="option_v2">설정</b-col>
+            <b-col id="option_v2"><b-icon icon="gear"></b-icon></b-col>
             <b-col>
               <b-icon v-if="!toggle" icon="chevron-down" variant="dark"></b-icon>
               <b-icon v-else icon="chevron-up" variant="dark"></b-icon>
@@ -109,7 +109,8 @@ export default {
       this.$router.push({ name: 'FindLocation'})
     }, 
     toHome: function () {
-      this.$router.push({name: 'Home'})
+      // this.$router.push({name: 'Home'})
+      location.replace('/home')
     },
     toReview: function () {
       this.$router.push({name: 'ReviewHome'})
@@ -171,6 +172,7 @@ export default {
 
     #option_v1 {
       cursor: pointer;
+      font-family: 'Nanum Pen Script', cursive;
     }
 
     // 햄버거 메뉴 글자
