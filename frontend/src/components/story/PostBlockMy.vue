@@ -38,10 +38,7 @@
 
 <script>
 import ImageSlick from '@/components/story/ImageSlick'
-<<<<<<< HEAD
 import { mapGetters } from "vuex";
-=======
->>>>>>> 8959c25c7abe4f8e48ee0050827f07f89a960d81
 import axios from 'axios';
 const SERVER_URL = "http://localhost:8000";
 
@@ -50,7 +47,6 @@ export default {
   components: {
     ImageSlick,
   },
-<<<<<<< HEAD
   computed: {
     ...mapGetters(["getUserId"])
   },
@@ -58,12 +54,6 @@ export default {
     return {
       posts:[],
       limit: 5,  //한 페이지에 노출될 게시글의 수
-=======
-  data() {
-    return {
-      posts:[],
-      limit: 3,  //한 페이지에 노출될 게시글의 수
->>>>>>> 8959c25c7abe4f8e48ee0050827f07f89a960d81
       offset: 0,  //게시글 번호 오프셋
     }
   },
@@ -73,30 +63,20 @@ export default {
   methods: {
     getPostInfos(){
       axios
-<<<<<<< HEAD
         .get(`${SERVER_URL}/userpost/user`, {
           params: {
             userId: this.getUserId,
-=======
-        .get(`${SERVER_URL}/userpost`, {
-          params: {
->>>>>>> 8959c25c7abe4f8e48ee0050827f07f89a960d81
             limit: this.limit,
             offset: this.offset
           }
       })
         .then((response) => {
-<<<<<<< HEAD
           this.posts = response.data.list;
           console.log(this.posts);
         });
     },
     detail(post){
       this.$router.push({ name: "ArticleDetail", params: { postInfo: post} });
-=======
-          console.log(response);
-        });
->>>>>>> 8959c25c7abe4f8e48ee0050827f07f89a960d81
     }
   },
 }
