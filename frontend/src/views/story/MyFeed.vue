@@ -10,7 +10,7 @@
       </b-col>
       <b-col cols="2"></b-col>
       <b-col cols="5">
-        <b-row cols="1"><h2>{{nickname}}</h2></b-row>
+        <b-row cols="1"><h2>{{ nickname }}<small>의 피드</small></h2></b-row>
       </b-col>
     </b-row>
     <!-- 2. 탭 -->
