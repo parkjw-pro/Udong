@@ -8,20 +8,26 @@
     <div class="map_wrap">
       <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
       <div class="hAddr">
-        <span class="title">지금 계신 위치가 이곳이 맞나요?</span>
+        <!-- <span class="title">지금 계신 위치가 이곳이 맞나요?</span> -->
         <span></span>
         <span id="centerAddr"></span>
-        <span id="dong"></span>
+        <span id="dong" style="display: none;"></span>
       </div>
     </div>
-    <button type="button" v-on:click="createUserAddress()">여기로 갈래요!</button>
-    <button type="button" v-on:click="createUserAddress()">역삼동으로 갈께요</button>
+    <div class="mt-1">
+      현재위치가 아닌가요? <a href="" @click="relocation">다시찾기</a>
+    </div>
+    <div class="mt-5">
+      <b-button class="mr-3" style="background-color: #695549;" v-on:click="createUserAddress()">여기로 갈께요!</b-button>
+      <b-button class="ml-3" style="background-color: #695549;" v-on:click="addUserAddress()">역삼동으로 갈께요!</b-button>
+    </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
-const SERVER_URL = "http://localhost:8000";
+const SERVER_URL = process.env.VUE_APP_SERVER_URL
+
 export default {
   name: 'FindLocation',
   data() {
@@ -132,29 +138,53 @@ export default {
       script.src = `http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=40a71b1269cb975799557ecd007ad1fd&libraries=services`;
       document.head.appendChild(script);
     },
-    
-    createUserAddress: function() {
-      this.userLocation.addressCode = document.getElementById('dong').innerHTML;
-      var arealist= document.getElementById('centerAddr').innerHTML.split(" ",4);
-      this.userLocation.addressName = arealist[arealist.length-1];
-      console.log(this.userLocation.addressCode);
-      console.log(this.userLocation.userId);
+    addUserAddress: function () {
       const userInfo = JSON.parse(localStorage.getItem('Login-token'))
-      userInfo.user_address = this.userLocation.addressCode;
-      userInfo.user_address_name = this.userLocation.addressName;
+      userInfo.user_address =  "1168065000"
+      userInfo.user_address_name = "역삼동"
       localStorage.setItem("Login-token", JSON.stringify(userInfo));
-      
-      // localStorage.setItem("auth-token",response.data["auth-token"]);
+
+      this.userLocation.addressCode = "1168065000"
+      this.userLocation.addressName = "역삼동"
       axios
         .post(`${SERVER_URL}/user/address`, this.userLocation )
         .then((response) => {
           console.log(response.data);
-          this.$router.push({ name: 'Home'});
+          location.replace('/home')
+          // window.location.reload(true);
+          // this.$router.push({ name: 'Home'});
 
         })
         .catch((response) => {
           console.log(response);
         });
+    }, 
+    createUserAddress: function() {
+      this.userLocation.addressCode = document.getElementById('dong').innerHTML;
+      var arealist= document.getElementById('centerAddr').innerHTML.split(" ",4);
+      this.userLocation.addressName = arealist[arealist.length-1];
+      // console.log(this.userLocation.addressCode);
+      // console.log(this.userLocation.userId);
+      const userInfo = JSON.parse(localStorage.getItem('Login-token'))
+      userInfo.user_address = this.userLocation.addressCode;
+      userInfo.user_address_name = this.userLocation.addressName;
+      localStorage.setItem("Login-token", JSON.stringify(userInfo));
+      // localStorage.setItem("auth-token",response.data["auth-token"]);
+      axios
+        .post(`${SERVER_URL}/user/address`, this.userLocation )
+        .then((response) => {
+          console.log(response.data);
+          location.replace('/home')
+          // window.location.reload(true);
+          // this.$router.push({ name: 'Home'});
+
+        })
+        .catch((response) => {
+          console.log(response);
+        });
+    },
+    relocation: function () {
+      location.reload(true);
     },
 
   },
@@ -175,7 +205,7 @@ export default {
 }
 .hAddr {
   position: absolute;
-  left: 10px;
+  right: 20px;
   top: 10px;
   border-radius: 2px;
   background: #fff;

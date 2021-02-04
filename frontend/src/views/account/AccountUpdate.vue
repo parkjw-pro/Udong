@@ -214,6 +214,7 @@ export default {
           console.log('닉네임 변경 성공!!!!')
           alert("닉네임이 성공적으로 저장되었습니다!");
           this.isCheck = -1
+          location.replace('/accuont/detail')
 
           // !!!!!!!!!!!!!!!!! 데이터 최신화해주기!!!
 

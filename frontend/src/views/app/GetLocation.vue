@@ -19,14 +19,15 @@
     </div>
     <div class="mt-5">
       <b-button class="mr-3" style="background-color: #695549;" v-on:click="createUserAddress()">우리동네예요!</b-button>
-      <b-button class="ml-3" style="background-color: #695549;" v-on:click="createUserAddress()">그냥 둘러볼래요</b-button>
+      <b-button class="ml-3" style="background-color: #695549;" v-on:click="addUserAddress()">역삼동으로 갈께요!</b-button>
     </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
-const SERVER_URL = "http://localhost:8000";
+const SERVER_URL = process.env.VUE_APP_SERVER_URL
+
 export default {
   name: 'GetLocation',
   data() {
@@ -137,18 +138,37 @@ export default {
       script.src = `http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=40a71b1269cb975799557ecd007ad1fd&libraries=services`;
       document.head.appendChild(script);
     },
-    
+    addUserAddress: function () {
+      const userInfo = JSON.parse(localStorage.getItem('Login-token'))
+      userInfo.user_address =  "1168065000"
+      userInfo.user_address_name = "역삼동"
+      localStorage.setItem("Login-token", JSON.stringify(userInfo));
+
+      this.userLocation.addressCode = "1168065000"
+      this.userLocation.addressName = "역삼동"
+      axios
+        .post(`${SERVER_URL}/user/address`, this.userLocation )
+        .then((response) => {
+          console.log(response.data);
+          location.replace('/home')
+          // window.location.reload(true);
+          // this.$router.push({ name: 'Home'});
+
+        })
+        .catch((response) => {
+          console.log(response);
+        });
+    }, 
     createUserAddress: function() {
       this.userLocation.addressCode = document.getElementById('dong').innerHTML;
       var arealist= document.getElementById('centerAddr').innerHTML.split(" ",4);
       this.userLocation.addressName = arealist[arealist.length-1];
-      console.log(this.userLocation.addressCode);
-      console.log(this.userLocation.userId);
+      // console.log(this.userLocation.addressCode);
+      // console.log(this.userLocation.userId);
       const userInfo = JSON.parse(localStorage.getItem('Login-token'))
       userInfo.user_address = this.userLocation.addressCode;
       userInfo.user_address_name = this.userLocation.addressName;
       localStorage.setItem("Login-token", JSON.stringify(userInfo));
-      
       // localStorage.setItem("auth-token",response.data["auth-token"]);
       axios
         .post(`${SERVER_URL}/user/address`, this.userLocation )

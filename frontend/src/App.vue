@@ -1,6 +1,6 @@
 <template>
   <div id="app" class="pb-5">  
-    <div v-show="login"><Navbar /></div>
+    <div v-if="login"><Navbar /></div>
     <router-view></router-view>   
   </div>
 </template>

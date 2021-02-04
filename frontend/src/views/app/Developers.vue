@@ -1,5 +1,5 @@
 <template>
-  <div id="box">
+  <div>
     <h2>개발진 소개</h2>
     <div class="pt-5 mt-5">
       <b-card-group>
@@ -24,7 +24,8 @@
             하지만 그만큼 설명을 잘해줌.
           </b-card-text>
 
-          <b-button href="#" variant="primary">자세히 탐구하기</b-button>
+          <b-button href="#" variant="primary" v-b-modal="'yong-modal'">자세히 탐구하기</b-button>
+          <b-modal id="yong-modal">4팀의 멋있는 에이스 <br>캉!룡용용!욱!!</b-modal>
         </b-card>
         <!-- 박종원 -->
         <b-card
@@ -49,11 +50,10 @@
             은둔 고수
           </b-card-text>
 
-          <b-button href="#" variant="primary">자세히 탐구하기</b-button>
+          <b-button href="#" variant="primary" v-b-modal="'jong-modal'">자세히 탐구하기</b-button>
+          <b-modal id="jong-modal">4팀 므째이 두째이 세째이 <br> 파크!종!워이~~</b-modal>
         </b-card>
-      </b-card-group>
-      <b-card-group>
-        <!-- 이규용 -->
+
         <b-card
           title="이규용"
           img-src="https://i.pinimg.com/736x/95/6c/1d/956c1d1df35320eb4ee1ff967a489474.jpg"
@@ -78,8 +78,13 @@
             (그래서 홍설 사진으로)
           </b-card-text>
 
-          <b-button href="#" variant="primary">자세히 탐구하기</b-button>
+          <b-button href="#" variant="primary" v-b-modal="'yongyong-modal'">자세히 탐구하기</b-button>
+          <b-modal id="yongyong-modal">4팀의 든든한 막내 <br> 리!규!용용용용용용용 용용용용용용용용ㅇ!</b-modal>
         </b-card>
+      </b-card-group>
+      <b-card-group>
+        <!-- 이규용 -->
+        
         <!-- 이송영 -->
         <b-card
           title="이송영"
@@ -105,10 +110,9 @@
             부담감을 가지고 있음
           </b-card-text>
 
-          <b-button href="#" variant="primary">자세히 탐구하기</b-button>
+          <b-button href="#" variant="primary" v-b-modal="'song-modal'">자세히 탐구하기</b-button>
+          <b-modal id="song-modal">그냥 4팀의 송!제!로!</b-modal>
         </b-card>
-      </b-card-group>
-      <b-card-group>
         <!-- 우진하 -->
         <b-card
           title="우진하"
@@ -131,14 +135,16 @@
             <br>
             연락하는 사이가 됨.
             <br>
-            그러다가 갑자기 나가버림.
+            그러다가 갑자기 탈싸피함.
             <br>
             (?????)
           </b-card-text>
 
-          <b-button href="#" variant="primary">자세히 탐구하기</b-button>
+          <b-button href="#" variant="primary" v-b-modal="'woo-modal'">자세히 탐구하기</b-button>
+          <b-modal id="woo-modal">4팀의 변!절!자! 우~~~~~~~~~~~ <br> 진!하!</b-modal>
         </b-card>
       </b-card-group>
+     
     </div>
   </div>
 </template>

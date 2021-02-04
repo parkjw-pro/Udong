@@ -60,7 +60,7 @@
         <b-col v-if="toggle" class="small" id="option_v3" @click="toAccountDetail">개인정보</b-col>
         <b-col v-if="toggle" class="small" id="option_v3" @click="logout">로그아웃</b-col>
         <b-col v-if="toggle" class="small" id="option_v3" @click="toDevelopers">개발진</b-col>
-        <b-col v-if="toggle && isManager" class="small" id="option_v3" @click="toAdmin">관리자페이지</b-col>
+        <b-col v-if="toggle && !isManager" class="small" id="option_v3" @click="toAdmin">관리자페이지</b-col>
     </component>
   </div>
 </template>
@@ -96,7 +96,7 @@ export default {
   computed: {
     toggle: function () {
       return this.isToggled
-    }
+    },
   },
   methods: {
     toAdmin: function () {
@@ -155,7 +155,7 @@ export default {
     const user = JSON.parse(localStorage.getItem('Info-token'))
     this.isManager = user["isManager"]
     this.nickname = user["nickname"]
-    
+    console.log(this.isManager)
     const user_address_name = JSON.parse(localStorage.getItem('Login-token'))["user_address_name"]
     if (user_address_name) {
       this.dongName = user_address_name
