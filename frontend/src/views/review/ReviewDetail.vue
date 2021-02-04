@@ -74,6 +74,7 @@
           :key="index">
       <ReviewBlock :review="item"/>
     </div>
+    <b-button @click="createReview">리뷰쓰기</b-button>
   </div>
 </template>
 
@@ -103,7 +104,7 @@ export default {
   },
   watch : {
       before3(){ 
-    this.search();
+    this.ReviewDetail();
     }
   },
   created()  {
@@ -114,7 +115,7 @@ export default {
    // console.log(this.store)
   },
   methods: {
-    search: function() {
+    ReviewDetail: function() {
       console.log('reviewDetail');
       console.log( this.store);
       axios
@@ -127,9 +128,10 @@ export default {
         console.log(response);
       });
     },
-    ReviewDetail: function(reviewId) {
+    createReview: function() {
       // 리뷰 작성 페이지로 넘어가준다!!
-      this.$router.push({ name: 'ReviewDetail', query: {datas:reviewId}});
+      console.log("보냅니다", this.store);
+      this.$router.push({ name: 'ReviewCreate', query: {datas:this.store}});
     },
   },
 }

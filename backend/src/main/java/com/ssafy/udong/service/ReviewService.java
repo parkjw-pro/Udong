@@ -11,7 +11,7 @@ import com.ssafy.udong.dto.ReviewResultDto;
 public interface ReviewService {
 
 	//리뷰작성
-	public int createReview(ReviewDto reviewDto,List<MultipartFile> files);
+	public int createReview(ReviewDto reviewDto,MultipartFile[] files);
 	
 	//특정 상호에 달린 리뷰 불러오기
 	public List<ReviewDto> selectAllReview(String storeId);

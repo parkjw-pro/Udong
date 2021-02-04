@@ -34,13 +34,13 @@ public class ReviewServiceImpl implements ReviewService {
 	ReviewDao dao;
 
 	@Override
-	public int createReview(ReviewDto reviewDto, List<MultipartFile> files) {
+	public int createReview(ReviewDto reviewDto, MultipartFile[] files) {
 		try {
 			dao.createReview(reviewDto);
 
 //			System.out.println(reviewDto.getReviewContent());
 
-			if (files != null && !files.isEmpty()) {
+			if (files != null && !(files.length == 0)) {
 				File uploadDir = new File(root + File.separator + "review" + File.separator + reviewDto.getUserId());
 				if (!uploadDir.exists())
 					uploadDir.mkdirs();
