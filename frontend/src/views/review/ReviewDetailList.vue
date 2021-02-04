@@ -32,7 +32,7 @@
           :key="index"
           @click="ReviewDetail(item.reviewId)"
         >
-          <td>{{ item.nickName }}</td>
+          <td>{{ item.nickname }}</td>
           <td>{{ item.reviewContent }}</td>
           <td>{{ item.rate }}</td>
           <td>{{ item.reviewLikeCount }}</td>

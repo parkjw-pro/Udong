@@ -55,16 +55,16 @@ export default {
 
     // await this.searchAddrFromCoords(this.location, this.displayCenterInfo);
   },
-  computed: {
-    before() {
-      return this.$store.state.addressCode;
-    },
-  },
-  watch: {
-    before() {
-      this.userLocation.addressCode = this.$store.state.addressCode;
-    },
-  },
+  // computed: {
+  //   before() {
+  //     return this.$store.state.addressCode;
+  //   },
+  // },
+  // watch: {
+  //   before() {
+  //     this.userLocation.addressCode = this.$store.state.addressCode;
+  //   },
+  // },
   methods: {
     toHome: function () {
       this.$router.push({ name: 'Home' })
@@ -121,9 +121,9 @@ export default {
 
       // console.log(map.getCenter());
     },
-    asd(data) {
-      this.userLocation.addressCode = data;
-    },
+    // asd(data) {
+    //   this.userLocation.addressCode = data;
+    // },
     addScript() {
       const script = document.createElement('script'); /* global kakao */
       script.onload = () => kakao.maps.load(this.initMap);
@@ -133,6 +133,9 @@ export default {
     
     createUserAddress: function() {
       this.userLocation.addressCode = document.getElementById('dong').innerHTML;
+      console.log(this.userLocation.addressCode);
+      console.log(this.userLocation.userId);
+      // localStorage.setItem("auth-token",response.data["auth-token"]);
       axios
         .post(`${SERVER_URL}/user/address`, this.userLocation )
         .then((response) => {

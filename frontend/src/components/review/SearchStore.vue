@@ -80,12 +80,14 @@ export default {
       },
       key : Object,
       temp : Object,
+      userId : "",
 
-       storeParamDto2:{
+      storeParamDto2:{
         searchWord: "",
         dongcode: "1168064000",
 
       },
+      
       
 
       
@@ -106,6 +108,14 @@ export default {
     },
 
 
+
+  },
+  mounted() {
+    const userInfo = JSON.parse(localStorage.getItem('Login-token'))
+    userInfo.user_address = this.key.dongcode;
+    localStorage.setItem("Login-token", JSON.stringify(userInfo));
+    this.userAddress = userInfo["user_address"]
+    console.log(this.userAddress);
 
   },
   created()  {
