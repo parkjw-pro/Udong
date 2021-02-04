@@ -136,7 +136,7 @@ export default {
         isOpen: "1",
        
       },
-       fileId: null,
+      fileId: null,
       isVerified: null,
       previewImageData: null,
     };
