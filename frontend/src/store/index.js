@@ -10,7 +10,7 @@ export default new Vuex.Store({
     userId: "",
     nickname: "",
     changeState: "",
-    address : ""
+    address : "",
   },
   getters: {
     getAccessToken(state) {
@@ -44,7 +44,7 @@ export default new Vuex.Store({
       state.accessToken = null;
       state.userId = "";
       state.nickname = "";
-    }
+    },
   },
 
   actions: {

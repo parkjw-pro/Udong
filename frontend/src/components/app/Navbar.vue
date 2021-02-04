@@ -9,8 +9,8 @@
       <!-- 1.2 Navbar dropdowns -->
       <b-navbar-brand href="#">
         <b-navbar-nav>
-          <b-nav-item-dropdown text="역삼동" class="px-0 mt-1 d-inline">
-            <b-dropdown-item href="#" disabled>역삼동</b-dropdown-item>
+          <b-nav-item-dropdown :text="dongName" class="px-0 mt-1 d-inline">
+            <b-dropdown-item href="#" disabled>{{ dongName }}</b-dropdown-item>
             <!-- <b-dropdown-item href="#">신림동</b-dropdown-item> -->
             <b-dropdown-item href="#" @click="toGetLocation">다른 동네 구경하기</b-dropdown-item>
           </b-nav-item-dropdown>
@@ -66,11 +66,13 @@
 </template>
 
 <script>
+import axios from 'axios'
 import slide from './slide';
 import Menu from '@/views/app/Menu';
 
 import Profile2 from '@/components/app/Profile2'
 
+const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
 export default {
   name: 'Navbar',
@@ -84,6 +86,7 @@ export default {
       // user 관련 정보
       isManager: false,
       nickname: '',
+      dongName: '역삼동',
 
       currentMenu: 'slide',
       isToggled: false,
@@ -137,12 +140,24 @@ export default {
     },
     arrowToggle() {
       this.isToggled = !this.isToggled;
+    },
+    searchAddr: function (dongCode) {
+      axios.get(`${SERVER_URL}/area/code/${dongCode}`)
+        .then((res) => {
+          console.log(res)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     }
   },
-  created() {
+  mounted() {
     const user = JSON.parse(localStorage.getItem('Info-token'))
     this.isManager = user["isManager"]
     this.nickname = user["nickname"]
+    // this.location = this.$route.query.datas.dongcode;
+    // console.log(this.location)
+    // console.log('hello')
   }
 }
 </script>

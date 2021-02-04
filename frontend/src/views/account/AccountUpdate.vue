@@ -165,8 +165,8 @@ export default {
       alert("동네를 2개까지 추가할 수 있다!!?? \n서비스 준비 중입니다!")
     },
     checkNickname: function() {
-      if(this.user.nickname.length < 5){
-        alert("닉네임 너무 짧습니다.")
+      if(this.user.nickname.length < 2){
+        alert("2글자 이상으로 아름다운 닉네임을 지어주세요~!")
         this.user.nickname = "";
         this.isCheck = false
       }
