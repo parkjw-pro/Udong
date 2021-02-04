@@ -36,7 +36,7 @@ export default {
         addressName: '',
         userId: ''
 
-      }
+      },
     };
   },
   // 지도 API 가져오기
@@ -97,8 +97,13 @@ export default {
 
           for (var i = 0; i < result.length; i++) {
             if (result[i].region_type === 'H') {
-              infoDiv.innerHTML = result[i].address_name;
+              const address = result[i].address_name
+              infoDiv.innerHTML = address;
               dong.innerHTML = result[i].code;
+
+              // if (address) {
+              //   this.dongName = address.split(" ",3)[2]
+              // }
               break;
             }
           }
