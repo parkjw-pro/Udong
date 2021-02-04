@@ -51,16 +51,16 @@ export default {
 
     // await this.searchAddrFromCoords(this.location, this.displayCenterInfo);
   },
-  computed: {
-    before() {
-      return this.$store.state.addressCode;
-    },
-  },
-  watch: {
-    before() {
-      this.userLocation.addressCode = this.$store.state.addressCode;
-    },
-  },
+  // computed: {
+  //   before() {
+  //     return this.$store.state.addressCode;
+  //   },
+  // },
+  // watch: {
+  //   before() {
+  //     this.userLocation.addressCode = this.$store.state.addressCode;
+  //   },
+  // },
   methods: {
     success(location) {
       // 성공 시 Position 객체가 콜백함수에 전달된다.
@@ -114,9 +114,9 @@ export default {
 
       // console.log(map.getCenter());
     },
-    asd(data) {
-      this.userLocation.addressCode = data;
-    },
+    // asd(data) {
+    //   this.userLocation.addressCode = data;
+    // },
     addScript() {
       const script = document.createElement('script'); /* global kakao */
       script.onload = () => kakao.maps.load(this.initMap);
@@ -128,6 +128,7 @@ export default {
       this.userLocation.addressCode = document.getElementById('dong').innerHTML;
       console.log(this.userLocation.addressCode);
       console.log(this.userLocation.userId);
+      // localStorage.setItem("auth-token",response.data["auth-token"]);
       axios
         .post(`${SERVER_URL}/user/address`, this.userLocation )
         .then((response) => {
@@ -138,17 +139,7 @@ export default {
           console.log(response);
         });
     },
-    createUserAddress: function() {
-      axios
-        .post(`${SERVER_URL}/user/address`, this.userLocation )
-        .then((response) => {
-          console.log(response.data);
-          this.$router.push({ name: 'Home'});
-        })
-        .catch((response) => {
-          console.log(response);
-        });
-    },
+
   },
 
 };
