@@ -59,8 +59,7 @@ public class StoreController {
 			"## 필수값\n" + " - searchWord : 검색어\n"
 						+ " - areaCode : 지역 코드\n")
 	@GetMapping(value = "/{searchWord}/{areaCode}")
-	private ResponseEntity<List<StoreDto>> selectStore(@PathVariable String searchWord, @PathVariable String areaCode) {
-
+	private ResponseEntity<List<StoreDto>> selectStore(@RequestBody StoreParamDto storeParamDto) {
 		List<StoreDto> list = service.SelectDetailStore(storeParamDto.getSearchWord(), storeParamDto.getDongcode());
 
 		try {
