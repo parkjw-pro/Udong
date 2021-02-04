@@ -140,7 +140,7 @@ export default {
       this.$router.push({name: 'Developers'})
     },
     toNews: function () {
-      this.$router.push({name: 'News'})
+      this.$router.push({name: 'NewsHome'})
     },
     toReview: function () {
       this.$router.push({name: 'ReviewHome'})

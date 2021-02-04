@@ -12,7 +12,7 @@
           <b-nav-item-dropdown :text="dongName" class="px-0 mt-1 d-inline">
             <b-dropdown-item href="#" disabled>{{ dongName }}</b-dropdown-item>
             <!-- <b-dropdown-item href="#">신림동</b-dropdown-item> -->
-            <b-dropdown-item href="#" @click="toGetLocation">다른 동네 구경하기</b-dropdown-item>
+            <b-dropdown-item href="#" @click="toFindLocation">다른 동네 구경하기</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-navbar-brand>
@@ -105,8 +105,8 @@ export default {
     toBadge: function () {
       this.$router.push({ name: 'Badge' })
     },
-    toGetLocation: function () {
-      this.$router.push({ name: 'GetLocation'})
+    toFindLocation: function () {
+      this.$router.push({ name: 'FindLocation'})
     }, 
     toHome: function () {
       this.$router.push({name: 'Home'})
@@ -155,9 +155,11 @@ export default {
     const user = JSON.parse(localStorage.getItem('Info-token'))
     this.isManager = user["isManager"]
     this.nickname = user["nickname"]
-    // this.location = this.$route.query.datas.dongcode;
-    // console.log(this.location)
-    // console.log('hello')
+    
+    const user_address_name = JSON.parse(localStorage.getItem('Login-token'))["user_address_name"]
+    if (user_address_name) {
+      this.dongName = user_address_name
+    }
   }
 }
 </script>

@@ -1,20 +1,17 @@
 <template>
   <div id="app" class="pb-5">  
-    <div v-if="login">
-      <Navbar/>
-    </div>
+    <div v-show="login"><Navbar /></div>
     <router-view></router-view>   
   </div>
 </template>
 
-<script>
+<script>  
 import Navbar from '@/components/app/Navbar'
 import 'vue-select/dist/vue-select.css';
 
 export default {
   name: 'App',
   components: {
-
      Navbar,
   },
   data: function () {
@@ -24,7 +21,7 @@ export default {
   },
   methods: {
   },
-  created() {
+  mounted() {
     if (localStorage.getItem('auth-token') != undefined) {
         this.login = true
     }
@@ -33,17 +30,18 @@ export default {
 </script>
 
 <style>
-/* 1번 폰트 - KoPub Batang */
-@import url(//fonts.googleapis.com/earlyaccess/kopubbatang.css);
-/* 2번 폰트 - Hanna */
-@import url(//fonts.googleapis.com/earlyaccess/hanna.css);
-/* 3번 폰트 - Jeju Gothic */
+/* 1번 폰트 - Jeju Gothic */
 @import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
+/* 2번 폰트 - 나눔펜 스크립트 */
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap');
+/* 3번 폰트 - Hanna */
+@import url(//fonts.googleapis.com/earlyaccess/hanna.css);
+
 
 #app {
-  /* font-family: 'KoPub Batang', serif; */
-  /* font-family: 'Hanna', sans-serif; */
   font-family: 'Jeju Gothic', sans-serif;
+  /* font-family: 'Nanum Pen Script', cursive; */
+  /* font-family: 'Hanna', sans-serif; */
   /* 기본설정 */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -75,7 +73,7 @@ export default {
   position: absolute;
   left: 25%;
   margin-top: 5%;
-  padding-bottom: 15%;
+  padding-bottom: 7%;
 }
 
 
