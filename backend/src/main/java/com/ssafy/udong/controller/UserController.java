@@ -70,6 +70,7 @@ public class UserController {
 				resultMap.put("user-id", loginUser.getUserId());
 				resultMap.put("user-name", loginUser.getNickname());
 				resultMap.put("is-manager", loginUser.getIsManager());
+				resultMap.put("user_address", "1111");
 				// resultMap.put("status", true);
 				// resultMap.put("data", loginUser);
 				status = HttpStatus.ACCEPTED;

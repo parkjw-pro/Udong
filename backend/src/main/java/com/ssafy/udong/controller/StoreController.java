@@ -54,7 +54,6 @@ public class StoreController {
 //		}
 //		return new ResponseEntity<List<StoreDto>>(HttpStatus.INTERNAL_SERVER_ERROR);
 //	}
-
 	@ApiOperation(value = "상점 조회(검색어+위치코드)", notes = "검색어와 위치 코드를 이용하여 상점을 조회합니다.")
 	@PostMapping(value = "/stores")
 	private ResponseEntity<List<StoreDto>> selectStore(@RequestBody StoreParamDto storeParamDto) {
