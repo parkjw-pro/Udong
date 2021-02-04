@@ -158,6 +158,10 @@ export default {
     // },
   },
   created: async function () {
+    const userInfo = JSON.parse(localStorage.getItem('Info-token'))
+    if (!userInfo) {
+      this.$router.push({ name: 'Login' })
+    }
     // await this.getReview()
     // await this.getStory()
   }
