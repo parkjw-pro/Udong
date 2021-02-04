@@ -13,6 +13,7 @@ import AccountUpdate from '@/views/account/AccountUpdate.vue'
 
 //앱
 import Badge from '@/views/app/Badge.vue'
+import Developers from '@/views/app/Developers.vue'
 import FindLocation from '@/views/app/FindLocation.vue'
 import GetLocation from '@/views/app/GetLocation.vue'
 import Home from '@/views/app/Home'
@@ -42,14 +43,9 @@ import NewsFeed from '@/views/story/NewsFeed.vue'
 
 
 
-
-
-
-
-
 Vue.use(VueRouter)
 
-// //https://router.vuejs.org/kr/guide/advanced/navigation-guards.html
+//https://router.vuejs.org/kr/guide/advanced/navigation-guards.html
 // const requireAuth = () => (to, from, next) => {
 //   const nextRoute = to.path;
 
@@ -66,7 +62,7 @@ const routes = [
     component: Admin,
   },
   {
-    path: '/admin/detail/a',
+    path: '/admin/detail',
     name: 'AdminDetail',
     component: AdminDetail,
   },
@@ -102,6 +98,16 @@ const routes = [
   },
   //앱
   {
+    path: '/badge',
+    name: 'Badge',
+    component: Badge,
+  },
+  {
+    path: '/developers',
+    name: 'Developers',
+    component: Developers,
+  },
+  {
     path: '/location/first',
     name: 'FindLocation',
     component: FindLocation,
@@ -115,11 +121,6 @@ const routes = [
     path: '/home',
     name: 'Home',
     component: Home,
-  },
-  {
-    path: '/badge',
-    name: 'Badge',
-    component: Badge,
   },
   //리뷰
   {

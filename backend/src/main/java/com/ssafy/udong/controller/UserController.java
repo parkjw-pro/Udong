@@ -112,8 +112,10 @@ public class UserController {
 	@ApiOperation(value = "회원 탈퇴", notes = "사용자 정보를 이용해 해당 사용자를 탈퇴처리합니다.\n" +
 			"## 필수값\n" + " - userId : 사용자 아이디\n")
 	@DeleteMapping
+
 	public ResponseEntity<String> deleteUser(@RequestBody UserDto userDto) throws Exception {
 		int result = userService.deleteUser(userDto);
+
 		if (result == SUCCESS) {
 			return new ResponseEntity<String>("회원탈퇴 성공", HttpStatus.OK);
 		} else {
@@ -143,7 +145,9 @@ public class UserController {
 						+ " - email : 변경할 이메일 주소\n")
 	@PutMapping
 	public ResponseEntity<String> updateUser(@RequestBody UserDto userDto) throws Exception {
+		System.out.println(userDto.getNickname());
 		int result = userService.updateUser(userDto);
+		System.out.println(result);
 		if (result == SUCCESS) {
 			return new ResponseEntity<String>("회원수정 성공", HttpStatus.OK);
 		} else {

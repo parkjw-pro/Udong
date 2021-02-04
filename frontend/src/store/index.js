@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios';
 Vue.use(Vuex)
-const SERVER_URL = "http://localhost:8000";
+const SERVER_URL =  process.env.VUE_APP_SERVER_URL
 
 export default new Vuex.Store({
   state: {
@@ -67,7 +67,7 @@ export default new Vuex.Store({
         .then((response) => {
           console.log("axios login info");
           localStorage.setItem('Info-token', JSON.stringify(response.data.user));
-      
+          // window.location.href = "/location/first";
         })
         .catch(() => {
           localStorage.clear();

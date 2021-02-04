@@ -1,30 +1,15 @@
 <template>
   <div>
-    <div class="profile_box" style="background: #BDBDBD;">
-      <img class="profile_image" src="@/assets/story/group_sample_diet.jpg">
-    </div>
+    <b-img thumbnail rounded="circle" fluid src="https://picsum.photos/200/200/?image=54" alt="Image 1"></b-img>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Profile'
+ name: 'Profile2'
 }
 </script>
 
 <style>
-/* 프로필을 담는 박스 */
- .profile_box {
-   width: 150px;
-   height: 150px; 
-   border-radius: 70%;
-   overflow: hidden;
- }
 
-/* 프로필 이미지 */
- .profile_image {
-   width: 100%;
-   height: 100%;
-   object-fit: cover;
- }
 </style>

@@ -1,17 +1,20 @@
 <template>
-  <div class="container" style="text-align: left;">
-    <div>
+  <div id="box" class="container" style="text-align: left;">
+    <div id="overview" class="review_overview">
       <h3>우리 동네 리뷰</h3>
-      아아 테스트
-      v-for 리뷰 리스트 몇가지 최신순 받아오기
-      <!-- <a v-if="data.reviewList.length == 0">
-        없어요
-      </a> -->
+      <p id="overview_content" @click="toReview"><img alt="Vue logo" src="@/assets/udonge.png" style="width: 10%">동네 리뷰 보러가기!</p>
+    </div>
+    <hr>
+    <div id="overview" class="news_overview">
+      <h3>우리 동네 소식</h3>
+      <p id="overview_content" @click="toNews"><img alt="Vue logo" src="@/assets/udonge.png" style="width: 10%">동네 소식 보러가기!</p>
     </div>    
     <hr>
-    <div class="story_overview">
+    <div id="overview" class="story_overview">
       <h3>우리 동네 이야기</h3>
+      <p id="overview_content" @click="toStory"><img alt="Vue logo" src="@/assets/udonge.png" style="width: 10%">동네 이야기 보러가기!</p>
     </div>
+    <hr>
   </div>
 </template>
 
@@ -24,23 +27,55 @@ export default {
   data: function () {
     return {
       reviewList: [],
-      storieList: [],
+      storyList: [],
     }
   },
   methods: {
-    // readreviewList: function () {
-    //   // review, stories 데이터 axios 요청 보내기
-    //   axios.get(`${SERVER_URL}/review/`)
-    //     .then(response => this.reviewList = response.data)
-    //     .catch(error => console.log(error))
+    toReview: function () {
+      this.$router.push({name: 'ReviewHome'})
+    },
+    toNews: function () {
+
+    },
+    toStory: function () {
+      this.$router.push({name: 'NewsFeed'})
+    },
+    // getReview: function () {
+    //   axios.get(`${SERVER_URL}/review`)
+    //     .then((res) => {
+    //       console.log(res)
+    //       this.reviewList = res
+    //     })
+    //     .catch((err) => {
+    //       console.log(err)
+    //     })
+    // },
+    // getStory: function () {
+    //   axios.get(`${SERVER_URL}/story`)
+    //     .then((res) => {
+    //       console.log(res)
+    //       this.storyList = res
+    //     })
+    //     .catch((err) => {
+    //       console.log(err)
+    //     })
     // },
   },
-  created: function () {
-    // this.readreviewList()
+  created: async function () {
+    // await this.getReview()
+    // await this.getStory()
   }
 }
 </script>
 
 <style>
+#overview {
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
 
+#overview_content {
+  text-align: center;
+  cursor: pointer;
+}
 </style>
