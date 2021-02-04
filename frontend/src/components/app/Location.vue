@@ -1,8 +1,6 @@
 <template>
   <div>
-    <div id="title" class="my-3">
-    </div>
-    <b-button style="background-color: #695549;" v-on:click="getLocation">클릭하여 우리 동네를 찾아보세요!</b-button>
+    <!-- <button type="button" v-on:click="getLocation">클릭하여 우리 동네를 찾아보세요!</button> -->
     <br />
     <br />
 
@@ -15,10 +13,8 @@
         <span id="dong"></span>
       </div>
     </div>
-    <div id="buttons" class="my-5">
-      <b-button style="background-color: #695549;" v-on:click="createUserAddress">우리동네로 저장</b-button>
-      <b-button style="background-color: #695549;" v-on:click="toHome">그냥 둘러볼게요</b-button>
-    </div>
+    <button type="button" v-on:click="createUserAddress()">우리동네로 저장</button>
+    <button type="button" v-on:click="createUserAddress()">그냥 둘러볼게요</button>
   </div>
 </template>
 
@@ -50,25 +46,25 @@ export default {
 
 
     this.userLocation.userId = JSON.parse(localStorage.getItem('Login-token'))["user-id"]
+
+
+
     //navigator 객체를 이용해 현재 위치를 받아온다.
     // navigator.geolocation.getCurrentPosition(this.success, this.fail);
 
     // await this.searchAddrFromCoords(this.location, this.displayCenterInfo);
   },
-  computed: {
-    before() {
-      return this.$store.state.addressCode;
-    },
-  },
-  watch: {
-    before() {
-      this.userLocation.addressCode = this.$store.state.addressCode;
-    },
-  },
+  // computed: {
+  //   before() {
+  //     return this.$store.state.addressCode;
+  //   },
+  // },
+  // watch: {
+  //   before() {
+  //     this.userLocation.addressCode = this.$store.state.addressCode;
+  //   },
+  // },
   methods: {
-    toHome: function () {
-      this.$router.push({ name: 'Home' })
-    },
     success(location) {
       // 성공 시 Position 객체가 콜백함수에 전달된다.
       this.lat = location.coords.latitude; //위도
@@ -121,9 +117,9 @@ export default {
 
       // console.log(map.getCenter());
     },
-    asd(data) {
-      this.userLocation.addressCode = data;
-    },
+    // asd(data) {
+    //   this.userLocation.addressCode = data;
+    // },
     addScript() {
       const script = document.createElement('script'); /* global kakao */
       script.onload = () => kakao.maps.load(this.initMap);
@@ -133,6 +129,13 @@ export default {
     
     createUserAddress: function() {
       this.userLocation.addressCode = document.getElementById('dong').innerHTML;
+      console.log(this.userLocation.addressCode);
+      console.log(this.userLocation.userId);
+      const userInfo = JSON.parse(localStorage.getItem('Login-token'))
+      userInfo.user_address = this.userLocation.addressCode;
+      localStorage.setItem("Login-token", JSON.stringify(userInfo));
+      
+      // localStorage.setItem("auth-token",response.data["auth-token"]);
       axios
         .post(`${SERVER_URL}/user/address`, this.userLocation )
         .then((response) => {
