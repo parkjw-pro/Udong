@@ -46,8 +46,9 @@ public class ReviewController {
 						" - rate : 별점\n" + 
 			"## 가능값\n" + " - files : 리뷰 사진 (List<MultipartFile> 형식)")
 	@PostMapping
-	private ResponseEntity<String> createReview(@RequestBody ReviewDto reviewDto,
-			@RequestParam(value = "file", required = false) List<MultipartFile> files) {
+	private ResponseEntity<String> createReview(ReviewDto reviewDto,
+			@RequestParam(value = "file", required = false) MultipartFile[] files) {
+		System.out.println(files[0].getOriginalFilename());
 		try {
 			if (service.createReview(reviewDto, files) == SUCCESS)
 				return new ResponseEntity<String>("SUCCESS: review creation", HttpStatus.OK);

@@ -20,9 +20,9 @@
       <!-- <router-link :to="{ name: 'Signup' }">회원가입</router-link>
       |
       <router-link :to="{ name: 'FindPassword' }">비밀번호찾기</router-link> -->
-      <a style="cursor:grab ; color: #695549;" @click="toSignup">회원가입</a>
+      <span style="color: #695549; cursor: pointer;" @click="toSignup">회원가입</span>
       |
-      <a style="cursor:grab  ; color: #695549;" @click="toFind">비밀번호찾기</a>
+      <span style="color: #695549; cursor: pointer;" @click="toFind">비밀번호찾기</span>
     </div>
   </div>
 </template>

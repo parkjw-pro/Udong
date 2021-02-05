@@ -115,8 +115,8 @@
     <div>
       <!-- modal -->
       <b-button class="mx-3" variant="danger" v-b-modal="'deleteModal'">회원탈퇴</b-button>
-      <b-modal id="deleteModal" @ok="deleteAccount"><img alt="Vue logo" src="@/assets/udonge.png" style="width: 10%">정말 탈퇴하시겠습니까?</b-modal>
-      <b-button class="mx-3" style="background-color: #695549;" @click="toDetail">확인</b-button>
+      <b-modal id="deleteModal" @ok="deleteAccount"><img alt="Vue logo" src="@/assets/udonge.png" style="width: 10%">정말 떠나시나요...?</b-modal>
+      <b-button class="mx-3"  style="background-color: #695549;" @click="toDetail">확인</b-button>
       </div>
   </div>
 </template>
@@ -214,32 +214,14 @@ export default {
           console.log('닉네임 변경 성공!!!!')
           alert("닉네임이 성공적으로 저장되었습니다!");
           this.isCheck = -1
-          location.replace('/accuont/detail')
 
-          // !!!!!!!!!!!!!!!!! 데이터 최신화해주기!!!
-
-          // localStorage.setItem('Info-token')["userId"]
-
-          // localStorage.clear()
-          // this.$store
-          //   .dispatch("LOGIN", this.user)
-          //   .then(() => {
-          //     // this.$router.push({ name: 'Home' })
-          //     this.$router.replace('/location')
-          //   })
-          //   .catch(({ message }) => (this.msg = message));
-          // axios
-          //   .get(`${SERVER_URL}/user`)
-          //   .then((response) => {
-          //     console.log("axios login info");
-          //     localStorage.setItem('Info-token', JSON.stringify(response.data.user));
+          // 데이터 교체
+          const userInfo = JSON.parse(localStorage.getItem('Login-token'))
+          userInfo.nickname = this.user.nickname
           
-          //   })
-          //   .catch(() => {
-          //     localStorage.clear();
-          //     window.location.href = "/account";
-          //     alert("로그인 실패 아이디및 비밀번호 확인 부탁드립니다.");
-          //   });
+          // this.$router.push({ name: 'AccountDetail' })
+          // location.replace('/accuont/detail')
+
 
         })
         .catch((err) => {

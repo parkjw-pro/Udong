@@ -10,15 +10,17 @@
       />
     </mdb-container> -->
 
-      <container style="width: 100%;">
-      <input
-        type="text"
-        class="active-cyan-2 active-purple-2 mt-0 mb-3"
-        placeholder="상점의 종류 및 상점명을 입력하세요"
-        v-model="storeParamDto.searchWord"
-        @keypress.enter="search"
-      />
-    </container>
+    <b-row>
+      <b-col offset="3">
+        <b-form-input
+          class="active-cyan-2 active-purple-2 mt-0 mb-3"
+          placeholder="상점의 종류 혹은 상점명을 입력하세요"
+          v-model="storeParamDto.searchWord"
+          @keypress.enter="search"
+          style="text-align: center; width: 65%;"
+        ></b-form-input>
+      </b-col>
+    </b-row>
     <!-- 
     <div class="mt-5">
       <div v-if="stores">
@@ -75,7 +77,7 @@ export default {
     return {
       storeParamDto:{
         searchWord: "",
-        dongcode: "1168064000",
+        dongcode: "",
 
       },
       key : Object,
@@ -96,8 +98,9 @@ export default {
   },
   watch : {
       before(){ 
+        this.storeParamDto = this.temp;
     this.search();
-    }
+    },
 
 
   },

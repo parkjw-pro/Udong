@@ -155,7 +155,7 @@ export default {
 
     ReviewList: function(store) {
       // 리뷰 작성 페이지로 넘어가준다!!
-      this.$router.push({ name: 'ReviewDetailList', query: {datas:store}});
+      this.$router.push({ name: 'ReviewDetail', query: {datas:store}});
     },
   },
 };

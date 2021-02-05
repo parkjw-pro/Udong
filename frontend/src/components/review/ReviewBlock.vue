@@ -5,7 +5,7 @@
         <template #header>
           <b-card-text class="font-weight-bold">
             <span class="mr-5">뱃지 img</span>
-            <span >작성자</span>
+            <span >{{review.nickname}}</span>
           </b-card-text>
         </template>
         <div> <!-- for 문 -->
@@ -13,12 +13,12 @@
           <b-card-img class="col-4 mb-5" src="https://placekitten.com/480/210" alt="Image" bottom></b-card-img>
           <b-card-img class="col-4 mb-5" src="https://placekitten.com/480/210" alt="Image" bottom></b-card-img>
         </div>
-        <p>게시글 내용</p>
+        <p>{{review.reviewContent}}</p>
         <template #footer>
           <div style="text-align: left;">
             <b-icon icon="suit-heart" variant="danger"></b-icon>
             <b-icon icon="suit-heart-fill" variant="danger"></b-icon>
-            <small class="ml-2">n명이 좋아합니다.</small>
+            <small class="ml-2">{{review.reviewLikeCount}}명이 좋아합니다.</small>
           </div>
         </template>
       </b-card>
@@ -29,9 +29,37 @@
 </template>
 
 <script>
+
+// import { mdbInput, mdbContainer } from 'mdbvue';
+
 export default {
-  name: 'ReviewBlock'
-}
+  name: 'ReviewBlock',
+  components: {
+    // mdbInput,
+    // mdbContainer,
+  },
+  props: {
+    review : Array
+
+  },
+  data: function() {
+    return {
+
+      
+
+      
+
+
+    };
+  },
+
+  created()  {
+
+  },
+  methods: {
+
+  },
+};
 </script>
 
 <style>

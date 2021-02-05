@@ -6,7 +6,7 @@
         <!-- 강용욱 -->
         <b-card
           title="강용욱"
-          img-src="https://lh3.googleusercontent.com/proxy/IHWwSa5y-TezUCCdHTiehRarVz1AqHwvVHK0UzdHiKHEmSjBkdm5lcCZLbR6cMooEN4QTa8UAB06Z9jY3j3JzjgWotkBrHP6Em4FG0MbnyRTSuC1CQ"
+          img-src="https://ppss.kr/wp-content/uploads/2015/01/MP9102208971.jpg"
           img-alt="Image"
           img-top
           tag="article"

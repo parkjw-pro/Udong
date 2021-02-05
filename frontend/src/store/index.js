@@ -49,6 +49,7 @@ export default new Vuex.Store({
 
   actions: {
     LOGIN(context, user) {
+      console.log(SERVER_URL);
       localStorage.clear();
       return axios
         .post(`${SERVER_URL}/user/login`, user)

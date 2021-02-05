@@ -38,40 +38,41 @@
           </ValidationProvider>
         </b-col>
       </b-row>
-    <b-row id="accountBox" class="ml-5">
-      <b-col cols="10">
-        <ValidationProvider
-          name="이메일"
-          rules="required|email"
-          v-slot="{ errors }"
-        >
-          <b-form-group>
-            <label
-              style="float:left; padding-right:10px; padding-top:5px"
-              for="email"
-              >이메일:
-            </label>
-            <b-form-input
-              type="email"
-              style="width:50%; float:left;"
-              v-model="credentials.email"
-              placeholder="이메일 입력"
-              required
-              @keypress.enter="onSubmit()"
-            ></b-form-input>
-            <b-button type="submit" size="sm" style="background-color: #695549;">인증번호받기</b-button>
-            <br>
-            <br>
-            <small class="text-danger" style="float:left; margin-top:5px">{{
-              errors[0]
-            }}</small>
-          </b-form-group>
-        </ValidationProvider>
-      </b-col>
-    </b-row>
+      <b-row id="accountBox" class="ml-5">
+        <b-col cols="10">
+          <ValidationProvider
+            name="이메일"
+            rules="required|email"
+            v-slot="{ errors }"
+          >
+            <b-form-group>
+              <label
+                style="float:left; padding-right:10px; padding-top:5px"
+                for="email"
+                >이메일:
+              </label>
+              <b-form-input
+                type="email"
+                style="width:50%; float:left;"
+                v-model="credentials.email"
+                placeholder="이메일 입력"
+                required
+                @keypress.enter="onSubmit()"
+              ></b-form-input>
+              <b-button type="submit" size="sm" style="background-color: #695549;">인증번호받기</b-button>
+              <br>
+              <br>
+              <small class="text-danger" style="float:left; margin-top:5px">{{
+                errors[0]
+              }}</small>
+            </b-form-group>
+          </ValidationProvider>
+        </b-col>
+      </b-row>
     </b-form>
-    <b-row v-if="this.possible_post">
-        <b-form @submit.prevent="onSubmit2">
+    <b-form v-if="this.possible_post" @submit.prevent="onSubmit2">
+      <b-row id="accountBox" class="ml-5">
+        <b-col cols="10">
           <ValidationProvider
             name="인증코드"
             rules="required"
@@ -90,14 +91,15 @@
                 placeholder="인증번호"
                 required
               ></b-form-input>
+              <b-button style="background-color: #695549;" size="sm" type="submit" class="btn btn-secondary">인증완료</b-button>
               <small class="text-danger" style="float:left; margin-top:5px">{{
                 errors[0]
               }}</small>
             </b-form-group>
           </ValidationProvider>
-          <b-button style="background-color: #695549;" type="submit" class="btn btn-secondary">인증완료</b-button>
-        </b-form>
-    </b-row>
+        </b-col>
+      </b-row>
+    </b-form>
     <b-row v-if="this.possible_post && !this.possible_id">
        <small class="text-danger" style="float:left; margin-top:5px"
         >아이디 및 이메일을 확인해주세요</small>
@@ -165,7 +167,7 @@
     </div>
     <br>
     <br>
-    <br>
+    <b-button id="btn_signup" class="mx-3" @click="$router.push({ name: 'Login' })">로그인</b-button>
   </div>
 </template>
 
