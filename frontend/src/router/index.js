@@ -65,14 +65,16 @@ const routes = [
     path: '/admin',
     name: 'Admin',
     component: Admin,
+    props:true,
   },
   {
     path: '/admin/detail',
     name: 'AdminDetail',
     component: AdminDetail,
+    props:true,
   },
   {
-    path: '/admin/update',
+    path: '/admin/detail/update',
     name: 'AdminUpdate',
     component: AdminUpdate,
   },

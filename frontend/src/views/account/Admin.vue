@@ -62,7 +62,7 @@ export default {
          .then((res) => {
           // router query로 넘겨주기
           console.log(res)
-         this.$router.push({name: 'AdminDetail'  , query: {users: res}})
+         this.$router.push({name: 'AdminDetail'  , params: {users: res.data}})
     
          })
          .catch((err) => {
@@ -87,8 +87,8 @@ export default {
   },
   created: async function() {
     const isManager = JSON.parse(localStorage.getItem('Info-token'))["isManager"]
-    
-    if ( isManager ) {
+    console.log(isManager)
+    if ( isManager != 1) {
       alert("접근 권한이 없습니다.")
       this.$router.push({name : 'Home'})
     }

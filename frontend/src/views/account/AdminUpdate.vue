@@ -12,7 +12,7 @@
             <!-- v-model도 입력해주기 -->
             <b-form-input
             class="font-weight-bold"
-            v-model="datas.userId"
+            v-model="this.$route.query.userDetail.userId"
           ></b-form-input>
           </b-col>
         </b-row>
@@ -29,7 +29,7 @@
             <!-- v-model도 입력해주기 -->
             <b-form-input
             class="font-weight-bold"
-            v-model="datas.nickname"
+            v-model="this.$route.query.userDetail.nickname"
           ></b-form-input>
           </b-col>
         </b-row>
@@ -46,7 +46,7 @@
             <!-- v-model도 입력해주기 -->
             <b-form-input
             class="font-weight-bold"
-            v-model="datas.password"
+            v-model="this.$route.query.userDetail.password"
           ></b-form-input>
           </b-col>
         </b-row>
@@ -63,7 +63,7 @@
             <!-- v-model도 입력해주기 -->
             <b-form-input
             class="font-weight-bold"
-            v-model="datas.email"
+            v-model="this.$route.query.userDetail.email"
           ></b-form-input>
           </b-col>
         </b-row>
@@ -117,7 +117,7 @@ export default {
     },
   },
   created(){
-    this.datas = this.$route.query.userDetail
+   // this.datas = this.$route.query.userDetail
     console.log(this.$route.query.userDetail )
   }
 }

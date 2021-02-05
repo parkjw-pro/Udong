@@ -1,7 +1,7 @@
 <template>
   <div id="box">
      <ul>
-        <li v-for="(asd,idx) in user " :key=idx>
+        <li v-for="(asd,idx) in users " :key=idx>
           아이디:{{ asd.userId }}  닉네임 :{{ asd.nickname }} 이메일:{{ asd.email }}
           <b-button block style="background-color: #695549" @click="toUpdate(asd)">수정하기</b-button>
         </li>
@@ -27,7 +27,15 @@
 //const SERVER_URL = "http://localhost:8000";
   export default {
     name: 'AdminDetail',
-
+     props: {
+            users: {
+                type: Array,
+                default() {
+                return {}
+                }
+            },
+           
+        },
     data() {
       return {
         // 예시
@@ -49,10 +57,17 @@
          this.$router.push({name: 'AdminUpdate', query: {userDetail: res}})
         // console.log(this.$route.query.users.data[5].userId)
         // console.log(this.user[0].userId )
+      },
+      getData(){
+        this.user = this.$route.query.users.data
       }
     },
     created(){
-      this.user = this.$route.query.users.data
+      console.log(this.users)
+      this.getData();
+    },
+    watch:{
+      '$route' : 'getData'
     }
   }
 </script>
