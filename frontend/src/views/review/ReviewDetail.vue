@@ -84,7 +84,9 @@
 <script>
 import axios from 'axios';
 import ReviewBlock from '@/components/review/ReviewBlock'
+
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
+
 export default {
   name: 'ReviewDetail',
   components: {

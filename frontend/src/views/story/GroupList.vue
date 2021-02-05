@@ -32,13 +32,10 @@
 </template>
 
 <script>
-
-
-
-const SERVER_URL = "http://localhost:8000";
- 
-import GroupCard from '@/components/story/GroupCard'
 import axios from 'axios'
+import GroupCard from '@/components/story/GroupCard'
+
+const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
 export default {
   name: "GroupList",

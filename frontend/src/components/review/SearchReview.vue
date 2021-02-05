@@ -66,7 +66,8 @@
 <script>
 import axios from 'axios';
 // import { mdbInput, mdbContainer } from 'mdbvue';
-const SERVER_URL = 'http://localhost:8000';
+const SERVER_URL = process.env.VUE_APP_SERVER_URL
+
 export default {
   name: 'SearchReview',
   components: {
