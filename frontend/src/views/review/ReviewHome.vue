@@ -89,14 +89,9 @@ export default {
     return {
       storeParamDto:{
         searchWord: "",
-<<<<<<< HEAD
         dongcode: userInfo["user_address"],
         //  dongcode: "1168064000",
 
-=======
-       // dongcode: userInfo["user_address"],
-         dongcode: "1168064000",
->>>>>>> a88c8a13b50ba8deefe681abd6a545e6a4269d65
       },
     };
   },
