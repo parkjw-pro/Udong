@@ -25,7 +25,9 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from 'axios'
+
+const MAP_API_KEY = process.env.VUE_APP_MAP_API_KEY
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
 export default {
@@ -135,7 +137,7 @@ export default {
     addScript() {
       const script = document.createElement('script'); /* global kakao */
       script.onload = () => kakao.maps.load(this.initMap);
-      script.src = `http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=40a71b1269cb975799557ecd007ad1fd&libraries=services`;
+      script.src = `http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${MAP_API_KEY}&libraries=services`;
       document.head.appendChild(script);
     },
     addUserAddress: function () {

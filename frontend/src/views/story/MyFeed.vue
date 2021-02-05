@@ -39,15 +39,16 @@
   </div>
 </template>
 
+
 <script>
 import GroupBox from '@/components/story/GroupBox'
 import PostBlockMy from '@/components/story/PostBlockMy'
 import Profile2 from '@/components/app/Profile2'
 import TagBox from '@/components/story/TagBox'
 import { mapGetters } from "vuex";
-// import axios from 'axios';
+// import axios from 'axios'
 
-// const SERVER_URL = "http://localhost:8000";
+// const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
 export default {
   name: 'MyFeed',
@@ -57,7 +58,7 @@ export default {
     Profile2,
     TagBox,
   },
-  
+
   computed: {
     ...mapGetters(["getUserId"]),
     ...mapGetters(["getUserName"])
@@ -74,9 +75,10 @@ export default {
   },
   methods: {
   },
-  
+
 }
 </script>
+
 
 <style>
 

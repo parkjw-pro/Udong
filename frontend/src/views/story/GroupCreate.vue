@@ -119,7 +119,7 @@
 //import Profile from '@/components/app/Profile'
 import axios from "axios";
 
-const SERVER_URL = "http://localhost:8000";
+const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
 export default {
   name: "GroupCreate",
