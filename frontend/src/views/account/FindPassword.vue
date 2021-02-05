@@ -165,6 +165,7 @@
       </b-form>
     </div>
     </div>
+    <b-button id="btn_signup" class="mx-3" @click="$router.push({ name: 'Login' })">로그인</b-button>
   </div>
 </template>
 
