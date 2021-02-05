@@ -4,7 +4,7 @@
     <div id="my_group" class="my-5">
         <b-row>
           <b-col md="4"><h4 id="group_list_category">내 그룹</h4></b-col>
-          <b-col md="4" offset-md="4"><b-button pill variant="primary">+</b-button>(그룹 만들기)</b-col>
+          <b-col md="4" offset-md="4"><b-button pill variant="primary" @click="groupMake()">+</b-button>(그룹 만들기)</b-col>
         </b-row>
       <!-- <div>
         <h4 id="group_list_category">내 그룹</h4>
@@ -51,7 +51,9 @@ export default {
     }
   },
   methods: {
-    
+    groupMake(){
+      this.$router.push({name:"GroupCreate"});
+    }
   },
   created(){
     axios.get(`${SERVER_URL}/club/user/${JSON.parse(localStorage.getItem('Login-token'))['user-id']}/member`)

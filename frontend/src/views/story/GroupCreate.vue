@@ -31,6 +31,7 @@
         <!-- bootstrap > Form File 참고하면 나와있음 -->
         <b-row align-h="center">
           <b-form-file
+         
             v-model="fileId"
             :state="Boolean(file1)"
             placeholder="첨부파일 없음"
@@ -184,6 +185,7 @@ export default {
       formData.append('clubContent', this.club.clubContent)
       formData.append('isOpen', this.club.isOpen)
       formData.append('file', this.fileId)
+      //formData.append('file', this.fileId[1])
       // formData.append('club', this.club)
       console.log(formData);
      // if (this.verification) {
