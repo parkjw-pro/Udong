@@ -115,8 +115,8 @@
     <div>
       <!-- modal -->
       <b-button class="mx-3" variant="danger" v-b-modal="'deleteModal'">회원탈퇴</b-button>
-      <b-modal id="deleteModal" @ok="deleteAccount"><img alt="Vue logo" src="@/assets/udonge.png" style="width: 10%">정말 탈퇴하시겠습니까?</b-modal>
-      <b-button class="mx-3" style="background-color: #695549;" @click="toDetail">확인</b-button>
+      <b-modal id="deleteModal" @ok="deleteAccount"><img alt="Vue logo" src="@/assets/udonge.png" style="width: 10%">정말 떠나시나요...?</b-modal>
+      <b-button class="mx-3"  style="background-color: #695549;" @click="toDetail">확인</b-button>
       </div>
   </div>
 </template>

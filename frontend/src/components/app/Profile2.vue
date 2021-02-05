@@ -1,6 +1,6 @@
 <template>
   <div @click="toBadge">
-    <b-img thumbnail rounded="circle" fluid src="https://picsum.photos/200/200/?image=54" alt="Image 1"></b-img>
+    <b-img thumbnail rounded="circle" fluid :src="require('@/assets/app/badge1.jpg')" alt="Image 1"></b-img>
   </div>
 </template>
 

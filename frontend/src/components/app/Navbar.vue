@@ -3,7 +3,7 @@
     <!-- 1. Navbar --> <!-- variant="faded" -->
     <b-navbar class="pl-5 mt-3" toggleable="sm" type="light" variant="faded">
       <!-- 1.1 Navbar Logo -->
-      <b-navbar-brand href="#" @click="toHome">
+      <b-navbar-brand href="#" @click="toHome" style="color: #695549;">
         <img src="@/assets/logo.png" alt="우동" style="width: 60px; height: 60px;"> 은
       </b-navbar-brand>
       <!-- 1.2 Navbar dropdowns -->
@@ -18,15 +18,14 @@
       </b-navbar-brand>
     </b-navbar>
     
-    
     <!-- 2. 햄버거메뉴 -->
     <component :is="currentMenu" :right="side === 'right' ? true: false" >
-        <b-row class="pl-0" id="option_v2">
-          <b-col @click="toBadge">
-            <a href=""><Profile2 style="width: 60%;" /></a>
+        <b-row class="pl-0" id="option_v2" align-h="center">
+          <b-col cols="4" @click="toBadge">
+            <Profile2 style="width: 80%; cursor: pointer;" />
           </b-col>
-          <b-col>
-            <b-row>{{ nickname }}님</b-row>
+          <b-col cols="6">
+            <b-row><span style="color: #695549;">{{ nickname }}</span>님</b-row>
             <b-row><small>안녕하세요!</small></b-row>
           </b-col>
         </b-row>
@@ -37,7 +36,7 @@
         </b-row>
         <b-row id="option_v1" class="pl-0" @click="toNews">
             <!-- <i class="far fa-newspaper"></i> -->
-            <b-col id="option_v2" style=""><h2>우리동네 소식</h2></b-col>
+            <b-col id="option_v2"><h2>우리동네 소식</h2></b-col>
         </b-row>
         <!-- <router-link :to="{ name: 'NewsFeed' }" class="text-white"><p class="h5 mt-4" id="option_v2">뉴스피드</p></router-link> -->
         <b-row id="option_v1" class="pl-0" @click="toStory">
@@ -177,7 +176,7 @@ export default {
 
     // 햄버거 메뉴 글자
     #option_v2 {
-      color: #666666;
+      color: #695549;;
       // overflow-x: hidden;
       white-space: pre;
       font-weight: bold;
