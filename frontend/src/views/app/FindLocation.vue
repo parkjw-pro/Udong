@@ -135,7 +135,7 @@ export default {
     addScript() {
       const script = document.createElement('script'); /* global kakao */
       script.onload = () => kakao.maps.load(this.initMap);
-      script.src = `http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=40a71b1269cb975799557ecd007ad1fd&libraries=services`;
+      script.src = `http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${VUE_MAP_API_KEY}&libraries=services`;
       document.head.appendChild(script);
     },
     addUserAddress: function () {

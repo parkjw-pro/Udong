@@ -1,7 +1,7 @@
-module.exports = {
-    outputDir: "../backend/src/main/resources/static",
+// module.exports = {
+//     outputDir: "../backend/src/main/resources/static",
 
-    devServer:{
-      port : process.env.VUE_APP_PORT || 8080
-    }
-  };
+//     devServer:{
+//       port : process.env.VUE_APP_PORT || 8080
+//     }
+//   };

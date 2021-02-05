@@ -135,16 +135,16 @@ export default {
     addScript() {
       const script = document.createElement('script'); /* global kakao */
       script.onload = () => kakao.maps.load(this.initMap);
-      script.src = `http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=40a71b1269cb975799557ecd007ad1fd&libraries=services`;
+      script.src = `http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${VUE_MAP_API_KEY}&libraries=services`;
       document.head.appendChild(script);
     },
     addUserAddress: function () {
       const userInfo = JSON.parse(localStorage.getItem('Login-token'))
-      userInfo.user_address =  "1168065000"
+      userInfo.user_address =  "1168064000"
       userInfo.user_address_name = "역삼동"
       localStorage.setItem("Login-token", JSON.stringify(userInfo));
 
-      this.userLocation.addressCode = "1168065000"
+      this.userLocation.addressCode = "1168064000"
       this.userLocation.addressName = "역삼동"
       axios
         .post(`${SERVER_URL}/user/address`, this.userLocation )
