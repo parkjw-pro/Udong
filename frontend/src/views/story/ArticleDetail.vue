@@ -19,15 +19,20 @@
       <br>
 
       <b-row class="h2 mb-2" align-h="between">
-        <b-icon icon="suit-heart" variant="danger"></b-icon>
-        <b-icon icon="suit-heart-fill" variant="danger"></b-icon>
-        <!-- <b-icon icon="chat" variant="warning"></b-icon> -->
+        <div id="like"><!--like 개수와 조회하는 사람이 like 눌렀는지-->
+          <b-icon icon="suit-heart-fill" variant="danger" v-if="liked"></b-icon>
+          <b-icon icon="suit-heart" variant="danger" v-else></b-icon><span>{{postInfo.postLikeCount}}</span>
+        </div>
+        <div>
+          <b-icon icon="chat" variant="warning"></b-icon>
+          <span>{{postInfo.postCommentCount}}</span>
+        </div>
         <b-dropdown size="lg" dropup variant="link" toggle-class="text-decoration-none" no-caret>
           <template #button-content>
-            <b-icon icon="list"></b-icon>
+            <b-icon icon="three-dots-vertical"></b-icon>
           </template>
-          <b-dropdown-item href="#" variant="danger">신고</b-dropdown-item>
-          <b-dropdown-item href="#" variant="danger">삭제</b-dropdown-item>
+          <b-dropdown-item href="#" variant="danger" v-if="postInfo.userId == getUserId">삭제</b-dropdown-item>
+          <b-dropdown-item href="#" variant="danger" v-else>신고</b-dropdown-item>
         </b-dropdown>
       </b-row>
       
@@ -36,17 +41,17 @@
       <!-- 댓글 -->
       <b-list-group style="text-align: left;" v-for="comment in comments" :key="comment.commentId">  <!-- for 문 -->
         <b-list-group-item>
-          <span class="font-weight-bold">{{comment.nickname}}</span>  
-          {{comment.commContent}}  
+          <span class="font-weight-bold">{{comment.nickname}}</span>
+          {{comment.commContent}}
           <span class="small">{{comment.createdAt}}</span>
         </b-list-group-item>
 
       </b-list-group>
      
-      <!-- <b-row align-h="between" class="mx-5 mb-5">
+      <b-row align-h="between" class="mx-5 mb-5">
         <b-button variant="info">취소</b-button>
         <b-button type="submit" variant="info">확인</b-button>
-      </b-row> -->
+      </b-row>
 
 
 
@@ -58,8 +63,10 @@
   
 </template>
 
+
 <script>
 import ImageSlick from '@/components/story/ImageSlick'
+import { mapGetters } from "vuex";
 import axios from 'axios';
 
 
@@ -70,21 +77,41 @@ export default {
   components: {
     ImageSlick
   },
+  computed: {
+    ...mapGetters(["getUserId"]),
+    ...mapGetters(["getUserName"])
+  },
   data() {
     return {
       postInfo: this.$route.params.postInfo,
       comments: [],
       limit: 5,
       offset: 0,
-      groupInfo: {}
+      groupInfo: {},
+      liked: false
     }
   },
   created() {
+    this.getLikeInfo();
     this.getArticleComments();
   },
   methods: {
+    getLikeInfo(){
+      axios
+        .get(`${SERVER_URL}/userpost/comment`, {
+          params: {
+            postId: this.postInfo.postId,
+            limit: this.limit,
+            offset: this.offset
+          }
+        })
+        .then(
+          (response) => (
+            this.comments = response.data.list
+          )
+        );
+    },
     getArticleComments(){
-      console.log(this.postInfo.postId);
       axios
         .get(`${SERVER_URL}/userpost/comment`, {
           params: {
@@ -107,6 +134,7 @@ export default {
 
 </script>
 
+
 <style>
 
 
@@ -117,13 +145,13 @@ export default {
   text-rendering: optimizelegibility;
   -moz-osx-font-smoothing: grayscale;
   -moz-text-size-adjust: none;
-} */
+} /
 
 #dropdown_group {
   max-width: 30em;
-  /* margin: 1em auto; */
+  / margin: 1em auto; 
   margin-right: 50px;
-}
+}*/
 
 #article_box {
   width: 50%;
@@ -135,3 +163,4 @@ export default {
 
 
 </style>
+

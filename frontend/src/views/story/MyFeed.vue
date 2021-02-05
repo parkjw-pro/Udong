@@ -39,6 +39,7 @@
   </div>
 </template>
 
+
 <script>
 import GroupBox from '@/components/story/GroupBox'
 import PostBlockMy from '@/components/story/PostBlockMy'
@@ -57,7 +58,7 @@ export default {
     Profile2,
     TagBox,
   },
-  
+
   computed: {
     ...mapGetters(["getUserId"]),
     ...mapGetters(["getUserName"])
@@ -74,9 +75,10 @@ export default {
   },
   methods: {
   },
-  
+
 }
 </script>
+
 
 <style>
 

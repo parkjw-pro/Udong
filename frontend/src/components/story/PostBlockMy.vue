@@ -11,7 +11,6 @@
         <template>
           <b-card-text class="font-weight-bold">
             <!-- 뱃지 추가할 경우 backend에서 sql문 수정해서 뱃지 정보도 가져와야 함-->
-<!-- 좋아요, 댓글 아이콘 추가해둔 상태. 와이어프레임 참고해서 상세 페이지까지 수정할 것!!!-->
             <!-- <span class="mr-5">뱃지 img</span> -->
             <span >{{post.nickname}}</span>
           </b-card-text>
@@ -22,19 +21,30 @@
           <p>{{post.postContent}}</p>
         </div>
         <template #footer>
-          <b-icon icon="suit-heart" variant="danger"></b-icon>
-          <b-icon icon="suit-heart-fill" variant="danger"></b-icon>
-          <b-icon icon="chat"></b-icon>
+          <!--좋아요 가져와야함...-->
+          <b-icon icon="suit-heart-fill" variant="danger" v-if="liked"></b-icon>
+          <b-icon icon="suit-heart" variant="danger" v-else></b-icon><span>{{post.postLikeCount}}</span>
+          
+          <b-icon icon="chat" variant="warning"></b-icon>
+          <span>{{post.postCommentCount}}</span>
+          <b-dropdown dropup variant="link" toggle-class="text-decoration-none" no-caret>
+            <template #button-content>
+              <b-icon icon="three-dots-vertical"></b-icon>
+            </template>
+            <b-dropdown-item href="#" variant="danger" v-if="post.userId == getUserId">삭제</b-dropdown-item>
+            <b-dropdown-item href="#" variant="danger" v-else>신고</b-dropdown-item>
+          </b-dropdown>
           <!-- <b-button class="mr-5" href="#" variant="info">상세보기</b-button> -->
-          <b-button class="ml-5" href="#" variant="info">댓글</b-button>
+          <!-- <b-button class="ml-5" href="#" variant="info">댓글</b-button> -->
         </template>
       </b-card>
     <!-- </b-card-group> -->
       </div>
    <div>
-</div>   
+</div>
   </div>
 </template>
+
 
 <script>
 import ImageSlick from '@/components/story/ImageSlick'
@@ -54,7 +64,8 @@ export default {
     return {
       posts:[],
       limit: 5,  //한 페이지에 노출될 게시글의 수
-      offset: 0,  //게시글 번호 오프셋
+      offset: 0,  //게시글 번호 오프셋,
+      liked: false
     }
   },
   mounted() {
@@ -81,6 +92,7 @@ export default {
   },
 }
 </script>
+
 
 <style>
   
