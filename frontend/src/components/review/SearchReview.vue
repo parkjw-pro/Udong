@@ -77,7 +77,7 @@ export default {
     return {
       storeParamDto:{
         searchWord: "",
-        dongcode: "1168064000",
+        dongcode: "",
 
       },
       key : Object,
@@ -98,8 +98,9 @@ export default {
   },
   watch : {
       before(){ 
+        this.storeParamDto = this.temp;
     this.search();
-    }
+    },
 
 
   },
