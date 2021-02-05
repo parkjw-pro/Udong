@@ -19,7 +19,7 @@
 </template>
 
 <script>
-const MAP_API_KEY = process.env.MAP_API_KEY
+const MAP_API_KEY = process.env.VUE_APP_MAP_API_KEY
 import axios from 'axios';
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
 export default {
