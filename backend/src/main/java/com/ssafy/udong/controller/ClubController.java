@@ -59,13 +59,13 @@ public class ClubController {
 		System.out.println("club create");
 		System.out.println(club.getClubName());
 		System.out.println(file.getOriginalFilename());
+		System.out.println(club.getClubName());
         club.setAreaCode("12341234");
         club.setUserId("ssafy13");
 
 		
 		try {
 			String createdClubId = clubService.createClub(club, file);
-
 			if(!createdClubId.equals("-1")) {
 				String result = "SUCCESS: club creation";
 				MemberDto member = new MemberDto(createdClubId, club.getUserId(), "1");

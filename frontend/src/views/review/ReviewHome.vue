@@ -82,7 +82,7 @@
 
 
 <script>
- const userInfo = JSON.parse(localStorage.getItem('Login-token'))
+const userInfo = JSON.parse(localStorage.getItem('Login-token'))
 export default {
  name: 'ReviewHome',
   data: function() {
