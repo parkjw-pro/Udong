@@ -29,7 +29,13 @@
 
 
 
+	<select id="selectStoreDetail" parameterType="String"
+		resultType="com.ssafy.udong.dto.StoreDto">
 
+		select *from store
+		where store_id = #{storeId}
+
+	</select>
 
 
 

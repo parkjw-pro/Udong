@@ -218,6 +218,9 @@ export default {
           // 데이터 교체
           const userInfo = JSON.parse(localStorage.getItem('Login-token'))
           userInfo.nickname = this.user.nickname
+          console.log(userInfo.nickname);
+          localStorage.setItem("Login-token", JSON.stringify(userInfo));
+          console.log(JSON.parse(localStorage.getItem('Login-token')))
           
           // this.$router.push({ name: 'AccountDetail' })
           // location.replace('/accuont/detail')
