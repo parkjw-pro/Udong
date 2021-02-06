@@ -53,10 +53,21 @@ export default {
     EndBlock,
     PostBlock,
   },
+  data: function () {
+    return {
+      user: {}
+    }
+  },
   methods: {
     toList: function () {
       this.$router.push({ name: 'GroupList'})
     }
+  },
+  created () {
+    this.user = this.$store.state.user
+    console.log('hello')
+    console.log(this.user)
+    console.log('hello')
   }
 }
 </script>

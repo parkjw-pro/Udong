@@ -160,10 +160,7 @@ export default {
     this.user.userId = user["user-id"]
     this.user.nickname = user["nickname"]
     this.user.isManager = user["is-manager"]
-    console.log(user)
-    console.log(user["user-address"])
-    console.log(user["is-manager"])
-    this.user.address = user["userAddress"]
+    this.user.address = user["user_address"]
   },
   mounted() {
     var user_address_name = JSON.parse(localStorage.getItem('Login-token'))["user_address_name"]
