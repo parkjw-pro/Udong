@@ -158,7 +158,7 @@ export default {
   created () {
     const user = JSON.parse(localStorage.getItem('Login-token'))
     this.user.userId = user["user-id"]
-    this.user.nickname = user["nickname"]
+    this.user.nickname = user["user-name"]
     this.user.isManager = user["is-manager"]
     this.user.address = user["user_address"]
   },
