@@ -103,22 +103,8 @@ export default {
     this.search();
     },
 
-
   },
-  created()  {
-
-    this.key = this.$route.query.datas;
-    console.log(this.key.dongcode);
-    this.temp = this.key;
-    console.log(this.temp)
-    
-
-
-
-
-
-
-  },
+  
   methods: {
     search: function() {
       console.log('search');
@@ -138,8 +124,14 @@ export default {
     },
     ReviewCreate: function(storeId) {
       // 리뷰 작성 페이지로 넘어가준다!!
-      this.$router.push({ name: 'ReviewCreate', query: {datas:storeId}});
+      this.$router.push({ name: 'ReviewCreate', params: {pk: storeId}});
     },
+  },
+  mounted()  {
+    this.key = this.$route.params.address;
+    console.log(this.key.dongcode);
+    this.temp = this.key;
+    console.log(this.temp)
   },
 };
 </script>

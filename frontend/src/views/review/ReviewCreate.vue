@@ -129,13 +129,15 @@ export default {
         rate: 1,
         nickName: '',
       },
-      store: Object,
+      store: {},
+      storeId: '',
       modal: false, //true : modal열림, false : modal닫힘
       files: [],
     };
   },
   mounted: async function() {
-    this.store = this.$route.query.datas;
+    this.storeId = this.$route.params.storeId
+    await this.getStore()
     console.log(this.store);
     this.review.userId = JSON.parse(localStorage.getItem('Login-token'))['user-id'];
   },
@@ -145,6 +147,16 @@ export default {
     },
   },
   methods: {
+    getStore: function() {
+      axios
+      .get(`${SERVER_URL}/store/` + `${this.storeId}`)
+      .then((response) => {
+        this.store = response.data;
+      })
+      .catch((response) => {
+        console.log(response);
+      });
+    },
     rate1: function() {
       this.review.rate = 1;
     },
@@ -185,7 +197,9 @@ export default {
           headers: { 'Content-Type': `application/json; charset=UTF-8` },
         })
         .then(() => {
-          this.$router.push({ name: 'ReviewDetail', query: { datas: this.store } });
+          console.log('응으응')
+          console.log(this.store)
+          this.$router.push({ name: 'ReviewDetail', params: { storeId: this.storeId } });
         })
         .catch((err) => {
           console.log(err);
