@@ -60,7 +60,14 @@ export default {
       this.$store
         .dispatch("LOGIN", this.credentials)
         .then(() => {
-          // this.$router.push({ name: 'Home' })
+          // 나중에 getUser() 함수 사용하기!!!
+          // location 정보가 있으면 Home으로 보내기!
+          // const userAddress = JSON.parse(localStorage.getItem('Login-token'))["user_address"]
+          // if (userAddress !== null) {
+          //   location.replace('/home')
+          // } else {
+          //   this.$router.replace('/location')
+          // }
           this.$router.replace('/location')
         })
         .catch(({ message }) => (this.msg = message));

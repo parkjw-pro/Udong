@@ -81,7 +81,7 @@ export default {
       this.location.lat = this.lat;
       this.location.lng = this.lng;
 
-      console.log(this.lat, this.lng);
+      // console.log(this.lat, this.lng);
     },
     fail(msg) {
       // 실패 시 PositionError 객체가 콜백함수에 전달된다.
@@ -150,8 +150,8 @@ export default {
       this.userLocation.addressName = "역삼동"
       axios
         .post(`${SERVER_URL}/user/address`, this.userLocation )
-        .then((response) => {
-          console.log(response.data);
+        .then(() => {
+          // console.log(response.data);
           location.replace('/home')
           // window.location.reload(true);
           // this.$router.push({ name: 'Home'});
@@ -174,8 +174,8 @@ export default {
       // localStorage.setItem("auth-token",response.data["auth-token"]);
       axios
         .post(`${SERVER_URL}/user/address`, this.userLocation )
-        .then((response) => {
-          console.log(response.data);
+        .then(() => {
+          // console.log(response.data);
           location.replace('/home')
           // window.location.reload(true);
           // this.$router.push({ name: 'Home'});

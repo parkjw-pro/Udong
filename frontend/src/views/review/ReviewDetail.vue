@@ -73,7 +73,7 @@
       <p></p>
     </div>
     <!-- 여기서 for문 -->
-    <div v-for="(item, index) in getStoreReviewList"
+    <div v-for="(item, index) in reviews"
           :key="index">
       <ReviewBlock :review="item"/>
     </div>
@@ -94,8 +94,13 @@ export default {
   },
  data: function() {
     return {
+      storeId: '',
+      store: {},
+      reviews: {
+
+      },
       key : Object,
-      store : Object,
+      // store : Object,
       slide : "0",
       sliding : null,
       getStoreReviewList: {},
@@ -109,25 +114,33 @@ export default {
   },
   watch : {
       before3(){ 
-    this.ReviewDetail();
+    this.getReview();
     }
   },
-  created()  {
-
-    this.store = this.$route.query.datas;
-    console.log(this.store);
+  async created()  {
+    this.storeId = this.$route.params.storeId
+    await this.getReview()
+    await this.getStore()
+    // console.log(this.store);
    // this.store = this.key;
    // console.log(this.store)
   },
   methods: {
-    ReviewDetail: function() {
-      console.log('reviewDetail');
-      console.log( this.store);
+    getReview: function() {
       axios
-      .get(`${SERVER_URL}/review/store/` + "1234")
+      .get(`${SERVER_URL}/review/store/` + `${this.storeId}`)
       .then((response) => {
-        console.log(response.data);
-        this.getStoreReviewList = response.data;
+        this.reviews = response.data;
+      })
+      .catch((response) => {
+        console.log(response);
+      });
+    },
+    getStore: function() {
+      axios
+      .get(`${SERVER_URL}/store/` + `${this.storeId}`)
+      .then((response) => {
+        this.store = response.data;
       })
       .catch((response) => {
         console.log(response);
@@ -135,8 +148,8 @@ export default {
     },
     createReview: function() {
       // 리뷰 작성 페이지로 넘어가준다!!
-      console.log("보냅니다", this.store);
-      this.$router.push({ name: 'ReviewCreate', query: {datas:this.store}});
+      // console.log("보냅니다", this.store);
+      this.$router.push({ name: 'ReviewCreate', params: {storeId: this.storeId}});
     },
   },
 }

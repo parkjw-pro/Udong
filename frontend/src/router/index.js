@@ -1,19 +1,23 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-// 추가한 router(기능별 정렬)
+
+// 서비스별 abc순으로 정리되어 있다.
+
 //유저
-import Admin from '@/views/account/Admin.vue'
-import AdminDetail from '@/views/account/AdminDetail.vue'
-import AdminUpdate from '@/views/account/AdminUpdate.vue'
-import Signup from '@/views/account/Signup.vue'
-import Login from '@/views/account/Login.vue'
-import FindPassword from '@/views/account/FindPassword.vue'
 import AccountDetail from '@/views/account/AccountDetail.vue'
 import AccountUpdate from '@/views/account/AccountUpdate.vue'
+import FindPassword from '@/views/account/FindPassword.vue'
+import Login from '@/views/account/Login.vue'
+import Signup from '@/views/account/Signup.vue'
+
+//관리자
+import AdminDetail from '@/views/admin/AdminDetail.vue'
+import AdminHome from '@/views/admin/Admin.vue'
+import AdminUpdate from '@/views/admin/AdminUpdate.vue'
 
 //앱
 import Badge from '@/views/app/Badge.vue'
-import Blank from '@/views/app/Blank.vue'
+import Blank from '@/views/app/Blank.vue' // 처음의 빈 페이지
 import Developers from '@/views/app/Developers.vue'
 import FindLocation from '@/views/app/FindLocation.vue'
 import GetLocation from '@/views/app/GetLocation.vue'
@@ -23,18 +27,19 @@ import Home from '@/views/app/Home'
 import NewsHome from '@/views/news/NewsHome'
 
 //리뷰
-import ReviewHome from '@/views/review/ReviewHome.vue'
 import FindStore from '@/views/review/FindStore.vue'
 import GetStore from '@/views/review/GetStore.vue'
 
 import ReviewCreate from '@/views/review/ReviewCreate.vue'
-import ReviewList from '@/views/review/ReviewList.vue'
 import ReviewDetail from '@/views/review/ReviewDetail.vue'
+import ReviewHome from '@/views/review/ReviewHome.vue'
+import ReviewList from '@/views/review/ReviewList.vue'
 //스토리
 
 import ArticleCreate from '@/views/story/ArticleCreate.vue'
 import ArticleDetail from '@/views/story/ArticleDetail.vue'
 import ArticleUpdate from '@/views/story/ArticleUpdate.vue'
+
 import GroupCreate from '@/views/story/GroupCreate.vue'
 import GroupList from '@/views/story/GroupList.vue'
 import GroupMemberList from '@/views/story/GroupMemberList.vue'
@@ -62,36 +67,6 @@ Vue.use(VueRouter)
 const routes = [
   //유저
   {
-    path: '/admin',
-    name: 'Admin',
-    component: Admin,
-  },
-  {
-    path: '/admin/detail',
-    name: 'AdminDetail',
-    component: AdminDetail,
-  },
-  {
-    path: '/admin/update',
-    name: 'AdminUpdate',
-    component: AdminUpdate,
-  },
-  {
-    path: '/account/signup',
-    name: 'Signup',
-    component: Signup,
-  },
-  {
-    path: '/account',
-    name: 'Login',
-    component: Login,
-  },
-  {
-    path: '/accountFind',
-    name: 'FindPassword',
-    component: FindPassword,
-  },
-  {
     path: '/account/detail',
     name: 'AccountDetail',
     component: AccountDetail,
@@ -101,14 +76,47 @@ const routes = [
     name: 'AccountUpdate',
     component: AccountUpdate,
   },
+  {
+    path: '/account/find',
+    name: 'FindPassword',
+    component: FindPassword,
+  },
+  {
+    path: '/account',
+    name: 'Login',
+    component: Login,
+  },
+  {
+    path: '/account/signup',
+    name: 'Signup',
+    component: Signup,
+  },
+
+  //관리자
+  {
+    path: '/admin/:class',
+    name: 'AdminDetail',
+    component: AdminDetail,
+  },
+  {
+    path: '/admin',
+    name: 'AdminHome',
+    component: AdminHome,
+  },
+  {
+    path: '/admin/:class/:pk',
+    name: 'AdminUpdate',
+    component: AdminUpdate,
+  },
+
   //앱
   {
-    path: '/badge',
+    path: '/badge/:pk',
     name: 'Badge',
     component: Badge,
   },
   {
-    path: '/',
+    path: '',
     name: 'Blank',
     component: Blank,
   },
@@ -132,96 +140,102 @@ const routes = [
     name: 'Home',
     component: Home,
   },
+
   // //소식
   {
     path: '/news',
     name: 'NewsHome',
     component: NewsHome,
   },
+
   //리뷰
+  {
+    path: '/store/find/:address/:keyword',
+    name: 'FindStore',
+    component: FindStore,
+  },
+  {
+    path: '/store/get/:address',
+    name: 'GetStore',
+    component: GetStore,
+  },
+
+  {
+    path: '/review/create/:storeId',
+    name: 'ReviewCreate',
+    component: ReviewCreate,
+  },
+  {
+    path: '/review/detail/:storeId',
+    name: 'ReviewDetail',
+    component: ReviewDetail,
+  },
   {
     path: '/review',
     name: 'ReviewHome',
     component: ReviewHome,
   },
   {
-    path: '/review/findstore',
-    name: 'FindStore',
-    component: FindStore,
-  },
-  {
-    path: '/review/getstore',
-    name: 'GetStore',
-    component: GetStore,
-  },
-  {
-    path: '/review/article/create',
-    name: 'ReviewCreate',
-    component: ReviewCreate,
-  },
-  {
-    path: '/review/article',
+    path: '/review/:category',
     name: 'ReviewList',
     component: ReviewList,
   },
-  {
-    path: '/review/article/detail',
-    name: 'ReviewDetail',
-    component: ReviewDetail,
-  },
+
   //스토리
   {
-    path: '/story/article',
+    path: '/story/:address/article',
     name: 'ArticleCreate',
     component: ArticleCreate,
   },
   {
-    path: '/story/article/detail',
+    path: '/story/:address/article/:userId/:groupId',
     name: 'ArticleDetail',
     component: ArticleDetail,
   },
   {
-    path: '/story/article/update',
+    path: '/story/:address/article/:userId/:groupId/update',
     name: 'ArticleUpdate',
     component: ArticleUpdate,
   },
+
   {
-    path: '/story/group',
+    path: '/story/:address/group/create',
     name: 'GroupCreate',
     component: GroupCreate,
   },
   {
-    path: '/story/group/list',
+    path: '/story/:address/group',
     name: 'GroupList',
     component: GroupList,
   },
   {
-    path: '/story/group/member',
+    path: '/story/:address/group/:groupId/member',
     name: 'GroupMemberList',
     component: GroupMemberList,
   },
   {
-    path: '/story/group/main',
+    path: '/story/:address/group/:groupId',
     name: 'GroupPage',
     component: GroupPage,
   },
   {
-    path: '/story/group/profile',
+    path: '/story/:address/group/:groupId/profile',
     name: 'GroupProfile',
     component: GroupProfile,
   },
   {
-    path: '/story/group/update',
+    path: '/story/:address/group/:groupId/update',
     name: 'GroupUpdate',
     component: GroupUpdate,
   },
+
   {
-    path: '/story/myfeed',
+    path: '/story/:userId',
     name: 'MyFeed',
     component: MyFeed,
   },
   {
-    path: '/story/newsfeed',
+    path: '/story/:address/:userId',
     name: 'NewsFeed',
     component: NewsFeed,
   },
