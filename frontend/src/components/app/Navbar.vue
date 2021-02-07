@@ -9,8 +9,8 @@
       <!-- 1.2 Navbar dropdowns -->
       <b-navbar-brand href="#">
         <b-navbar-nav>
-          <b-nav-item-dropdown :text="dongName" class="px-0 mt-1 d-inline">
-            <b-dropdown-item href="#" disabled>{{ dongName }}</b-dropdown-item>
+          <b-nav-item-dropdown :text="user.dongName" class="px-0 mt-1 d-inline">
+            <b-dropdown-item href="#" disabled>{{ user.dongName }}</b-dropdown-item>
             <!-- <b-dropdown-item href="#">신림동</b-dropdown-item> -->
             <b-dropdown-item href="#" @click="toFindLocation">다른 동네 구경하기</b-dropdown-item>
           </b-nav-item-dropdown>
@@ -25,7 +25,7 @@
             <Profile2 style="width: 80%; cursor: pointer;" />
           </b-col>
           <b-col cols="6">
-            <b-row><span style="color: #695549;">{{ nickname }}</span>님</b-row>
+            <b-row><span style="color: #695549;">{{ user.nickname }}</span>님</b-row>
             <b-row><small>안녕하세요!</small></b-row>
           </b-col>
         </b-row>
@@ -59,7 +59,7 @@
         <b-col v-if="toggle" class="small" id="option_v3" @click="toAccountDetail">개인정보</b-col>
         <b-col v-if="toggle" class="small" id="option_v3" @click="logout">로그아웃</b-col>
         <b-col v-if="toggle" class="small" id="option_v3" @click="toDevelopers">개발진</b-col>
-        <b-col v-if="toggle && !isManager" class="small" id="option_v3" @click="toAdmin">관리자페이지</b-col>
+        <b-col v-if="toggle && user.isManager === 1" class="small" id="option_v3" @click="toAdmin">관리자페이지</b-col>
     </component>
   </div>
 </template>
@@ -83,9 +83,13 @@ export default {
   data: function () {
     return {
       // user 관련 정보
-      isManager: false,
-      nickname: '',
-      dongName: '역삼동',
+      user: {
+        userId: '',
+        nickname: '',
+        address: '',
+        dongName: '역삼동',
+        isManager: false,
+      },
 
       currentMenu: 'slide',
       isToggled: false,
@@ -99,10 +103,10 @@ export default {
   },
   methods: {
     toAdmin: function () {
-      this.$router.push({ name: 'Admin' })
+      this.$router.push({ name: 'AdminHome' })
     },
     toBadge: function () {
-      this.$router.push({ name: 'Badge' })
+      this.$router.push({ name: 'Badge', params: { userId: this.user.userId } })
     },
     toFindLocation: function () {
       this.$router.push({ name: 'FindLocation'})
@@ -118,15 +122,15 @@ export default {
       this.$router.push({name: 'NewsHome'})
     },
     toStory: function () {
-      this.$router.push({name: 'NewsFeed'})
+      this.$router.push({name: 'NewsFeed', params: {address: this.user.address, userId: this.user.userId}})
     },
     toMyfeed: function () {
-      this.$router.push({name: 'MyFeed'})
+      this.$router.push({name: 'MyFeed', params: { userId: this.user.userId}})
     },
     toAccountDetail: function () {
       this.$router.push({name: 'AccountDetail'})
-    },
-    logout: function () {
+    },  
+    logout: function () { 
       this.$store
         .dispatch("LOGOUT")
         .then(() => {
@@ -151,14 +155,19 @@ export default {
         })
     }
   },
+  created () {
+    const user = JSON.parse(localStorage.getItem('Login-token'))
+    this.user.userId = user["user-id"]
+    this.user.nickname = user["user-name"]
+    this.user.isManager = user["is-manager"]
+    this.user.address = user["user_address"]
+  },
   mounted() {
-    const user = JSON.parse(localStorage.getItem('Info-token'))
-    this.isManager = user["isManager"]
-    this.nickname = user["nickname"]
-    console.log(this.isManager)
-    const user_address_name = JSON.parse(localStorage.getItem('Login-token'))["user_address_name"]
+    var user_address_name = JSON.parse(localStorage.getItem('Login-token'))["user_address_name"]
     if (user_address_name) {
-      this.dongName = user_address_name
+      this.user.dongName = user_address_name
+    } else {
+      this.user.dongName = '역삼동'
     }
   }
 }

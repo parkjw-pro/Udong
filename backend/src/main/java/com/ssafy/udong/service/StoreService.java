@@ -12,6 +12,8 @@ public interface StoreService {
 	public List<StoreDto> SelectDetailStore(String searchWord, String areaCode);
 	
 	public List<StoreDto> SelectArea(String searchWord);
+
+	public StoreDto selectStoreDetail(String storeId);
 	
 	
 

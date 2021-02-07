@@ -14,4 +14,6 @@ public interface StoreDao {
 	
 	public List<StoreDto> SelectArea(String searchWord);
 
+	public StoreDto selectStoreDetail(String storeId);
+
 }

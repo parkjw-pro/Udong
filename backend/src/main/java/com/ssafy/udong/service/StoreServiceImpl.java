@@ -67,6 +67,24 @@ public class StoreServiceImpl implements StoreService{
 
 	}
 
+	@Override
+	public StoreDto selectStoreDetail(String storeId) {
+		
+		StoreDto dto = new StoreDto();
+		
+		try {
+			dto = dao.selectStoreDetail(storeId);
+					
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+		return dto;
+
+	}
+
 	
 	
 }

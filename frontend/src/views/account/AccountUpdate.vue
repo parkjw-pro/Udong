@@ -216,12 +216,17 @@ export default {
           this.isCheck = -1
 
           // 데이터 교체
-          const userInfo = JSON.parse(localStorage.getItem('Login-token'))
-          userInfo.nickname = this.user.nickname
-          
+          const userInfo1 = JSON.parse(localStorage.getItem('Login-token'))
+          const userInfo2 = JSON.parse(localStorage.getItem('Info-token'))
+          userInfo1.nickname = this.user.nickname
+          userInfo2.nickname = this.user.nickname
+
+          // 여기가 안된다!!!!!
+          localStorage.setItem("Login-token", JSON.stringify(userInfo1));
+          localStorage.setItem("Info-token", JSON.stringify(userInfo2));
           // this.$router.push({ name: 'AccountDetail' })
           // location.replace('/accuont/detail')
-
+          
 
         })
         .catch((err) => {
@@ -257,7 +262,6 @@ export default {
     this.user.userId = userInfo["userId"]
     this.user.nickname = userInfo["nickname"]
     this.user.email = userInfo["email"]
-    console.log(this.user)
   }
 }
 </script>

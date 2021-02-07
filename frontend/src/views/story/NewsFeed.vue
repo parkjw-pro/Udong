@@ -53,10 +53,27 @@ export default {
     EndBlock,
     PostBlock,
   },
+  data: function () {
+    return {
+      user: {
+        userId: '',
+        nickname: '',
+        address: '',
+        dongName: '',
+      },
+    }
+  },
   methods: {
     toList: function () {
-      this.$router.push({ name: 'GroupList'})
+      this.$router.push({ name: 'GroupList', params: {address: this.user.address}})
     }
+  },
+  created () {
+    const user = JSON.parse(localStorage.getItem('Login-token'))
+    this.user.userId = user["user-id"]
+    this.user.nickname = user["user-name"]
+    this.user.address = user["user_address"]
+    this.user.dongName = user["user_address_name"]
   }
 }
 </script>

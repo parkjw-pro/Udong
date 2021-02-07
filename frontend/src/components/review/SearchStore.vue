@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div id="box">
+    <h2 class="mb-5">우리 동네 장소를 검색해보세요!</h2>
     <!-- <mdb-container style="width: 80%;">
       <mdb-input
         type="text"
@@ -34,7 +35,7 @@
       </div>
     </div> -->
 
-    <table class="table table-hover">
+    <table v-if="getSearchStoreList" class="table table-hover">
       <thead>
         <tr>
           <th>종류</th>
@@ -58,6 +59,7 @@
         </tr>
       </tbody>
     </table>
+    <div v-else>검색결과가 없습니다</div>
   </div>
 </template>
 
@@ -67,7 +69,7 @@ import axios from 'axios';
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
 export default {
-  name: 'SearchStore',
+  name: 'GetStore',
   components: {
     // mdbInput,
     // mdbContainer,
@@ -83,64 +85,41 @@ export default {
       temp : Object,
       userId : "",
 
-      // storeParamDto2:{
-      //   searchWord: "",
-      //   dongcode:  "",
-
-      // },
-      
-      
-
-      
       getSearchStoreList: {},
       getSearchareaList: [],
     };
   },
   computed: {
+    storeList: function () {
+      return this.getSearchStoreList
+    },
     before(){ 
       return this.temp;
     },
 
   },
   watch : {
-      before(){ 
-        this.storeParamDto = this.temp;
+    before(){ 
+      this.storeParamDto = this.temp;
     this.search();
     },
 
 
 
   },
-  mounted() {
-
-    
-    // this.storeParamDto.dongcode = userInfo["user_address"]
-    // console.log(this.storeParamDto.dongcode);
-    // this.user.nickname = userInfo["nickname"]
-    // this.user.email = userInfo["email"]
-
-
-  },
   created()  {
-
-    this.key = this.$route.query.datas;
-    console.log(this.key.dongcode);
-    this.temp = this.key;
-    console.log(this.temp)
-
-    
-
-
-
-
-
+    this.storeParamDto.dongcode = this.$route.params.address
+    if (this.storeParamDto.searchWord === "") {
+      this.storeParamDto.searchWord = this.$route.params.keyword
+    }
+    this.search()
 
   },
   methods: {
     search: function() {
-      console.log('search');
-      console.log(this.storeParamDto.searchWord);
-      console.log(this.storeParamDto.dongcode);
+      // console.log('search');
+      // console.log(this.storeParamDto.searchWord);
+      // console.log(this.storeParamDto.dongcode);
 
       axios
       .post(`${SERVER_URL}/store/stores`, this.storeParamDto)

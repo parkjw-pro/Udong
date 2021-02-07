@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.udong.dto.ReviewDto;
 import com.ssafy.udong.dto.StoreDto;
 import com.ssafy.udong.dto.StoreParamDto;
 import com.ssafy.udong.service.StoreService;
@@ -87,6 +88,22 @@ public class StoreController {
 			e.printStackTrace();
 		}
 		return new ResponseEntity<List<StoreDto>>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
+	@ApiOperation(value = "상점조회", notes = "한 상점에 대한 모든 정보를 조회합니다.\n" +
+			"## 필수값\n" + " - storeId : 정보를 조회할 상점 아이디\n")
+	@GetMapping(value = "/{storeId}")
+	private ResponseEntity<StoreDto> selectStoreDetail(@PathVariable String storeId) {
+		System.out.println(storeId);
+		try {
+			StoreDto dto = service.selectStoreDetail(storeId);
+			if (dto != null)
+				System.out.println(dto.getStoreName());
+				return new ResponseEntity<StoreDto>(dto, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ResponseEntity<StoreDto>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
 }

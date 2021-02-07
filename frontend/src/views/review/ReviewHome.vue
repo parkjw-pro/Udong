@@ -11,6 +11,7 @@
           v-model="storeParamDto.searchWord"
           @keypress.enter="FindStore"
           style="text-align: center;"
+          autofocus
         >
         <div class="input-group-append">
           <span class="input-group-text amber lighten-3" id="basic-text1" style="background-color: white; cursor:pointer;">
@@ -101,11 +102,11 @@ export default {
      if (this.storeParamDto.searchWord === "") {
        alert("검색어를 입력하세요!")
      } else {
-       this.$router.push({ name: 'GetStore', query: {datas:this.storeParamDto}})
+       this.$router.push({ name: 'FindStore', params: {address: this.storeParamDto.dongcode ,keyword : this.storeParamDto.searchWord}})
      }
    },
     CreateReview: function () {
-     this.$router.push({ name: 'FindStore', query: {datas:this.storeParamDto}})
+     this.$router.push({ name: 'GetStore', params: {address : this.storeParamDto.dongcode}})
    }
  }
 }

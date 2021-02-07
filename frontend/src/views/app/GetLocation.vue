@@ -142,11 +142,11 @@ export default {
     },
     addUserAddress: function () {
       const userInfo = JSON.parse(localStorage.getItem('Login-token'))
-      userInfo.user_address =  "1168065000"
+      userInfo.user_address =  "1168064000"
       userInfo.user_address_name = "역삼동"
       localStorage.setItem("Login-token", JSON.stringify(userInfo));
 
-      this.userLocation.addressCode = "1168065000"
+      this.userLocation.addressCode = "1168064000"
       this.userLocation.addressName = "역삼동"
       axios
         .post(`${SERVER_URL}/user/address`, this.userLocation )
