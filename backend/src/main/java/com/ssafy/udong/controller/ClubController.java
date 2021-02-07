@@ -135,9 +135,7 @@ public class ClubController {
 	@GetMapping("/{clubId}")
 	public ResponseEntity<ClubResultDto> selectClub(@PathVariable String clubId){
 		try {
-			System.out.println(clubId);
 			ClubResultDto clubdto = clubService.selectClub(clubId);
-			System.out.println(clubdto);
 			return new ResponseEntity<ClubResultDto>(clubdto, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -323,17 +321,14 @@ public class ClubController {
 		return new ResponseEntity<List<ClubDto>>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
-	@GetMapping("/download/{test}")
-	public ResponseEntity<Resource> download(@PathVariable String msg ) throws IOException {
-		System.out.println("."+msg);
-		StringBuilder b = new StringBuilder();
-		b.append(".");
-		b.append(msg);
-	//	String a = ;
-		System.out.println("//");
-		System.out.println(b.toString());
-		System.out.println("//");
-		Path path = Paths.get("./uploads/club/ssafy13/udong_20210204_145406다운로드.jpg");
+	@GetMapping("/download/{fileId}")
+	public ResponseEntity<Resource> download(@PathVariable String fileId) throws IOException {
+		System.out.println("다운로드" +fileId);
+		List<String> url = clubService.selectFileUrl(fileId);
+		System.out.println("가져온 url:" +url.get(0));
+		System.out.println("./uploads/club/"+url.get(0).substring(13));
+		String madeUrl = "./uploads/club/"+url.get(0).substring(13);
+		Path path = Paths.get(madeUrl);
 			
 		String contentType = Files.probeContentType(path);
 		

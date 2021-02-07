@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.udong.dto.UserDto;
 import com.ssafy.udong.dto.UserParamDto;
+import com.ssafy.udong.service.EmailService;
 import com.ssafy.udong.service.JwtService;
 import com.ssafy.udong.service.UserService;
 
@@ -42,6 +44,9 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private EmailService emailService;
 
 	private static final int SUCCESS = 1;
 	private static final int FAIL = -1;
@@ -166,7 +171,7 @@ public class UserController {
 		UserDto resultDto = userService.selectUser(userDto);
 
 		if (resultDto != null) {// 아이디 비밀번호가있으면 ok
-			userService.gmailSend(userDto.getEmail()); // 인증코드전송
+			emailService.sendMail(userDto); // 인증코드전송
 			return new ResponseEntity<UserDto>(resultDto, HttpStatus.OK);
 		} else { // 아이디비밀번호가없으면 fail
 			return new ResponseEntity<UserDto>(resultDto, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -230,7 +235,7 @@ public class UserController {
 		if (result != null) { // 이메일이 이미 있으면
 			return new ResponseEntity<String>("현재 사용중인 이메일입니다.\n", HttpStatus.INTERNAL_SERVER_ERROR);
 		} else { // 이메일이 없으면
-			userService.gmailSend(userDto.getEmail());
+			emailService.sendMail(userDto);
 			return new ResponseEntity<String>("사용 가능한 이메일입니다.\n", HttpStatus.OK);
 		}
 	}
@@ -240,7 +245,7 @@ public class UserController {
 
 	@PostMapping("/email/{code}")
 	public ResponseEntity<String> checkDuplicateEmail(@PathVariable String code) throws Exception {
-		int result = userService.gmailCheck(code);
+		int result = emailService.gmailCheck(code);
 		if (result == SUCCESS) { // 코드가 일치하면
 			return new ResponseEntity<String>("인증 완료.\n", HttpStatus.OK);
 		} else { // 코드가 불일치하면
@@ -261,5 +266,6 @@ public class UserController {
 			return new ResponseEntity<String>("주소 등록 실패", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
 
 }

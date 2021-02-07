@@ -15,6 +15,8 @@ public interface ClubService {
 	public String selectDuplicateClubName(String clubname, String areaCode);
 
 	public ClubResultDto selectClub(String clubId);
+	
+	public List<String> selectFileUrl(String clubId);
 
 	public List<ClubDto> selectAllClub();
 

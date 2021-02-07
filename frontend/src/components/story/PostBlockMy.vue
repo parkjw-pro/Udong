@@ -15,30 +15,33 @@
             <span >{{post.nickname}}</span>
           </b-card-text>
         </template>
-        <div @click="detail(post)"> <!-- for 문 -->
-          <!-- <b-card-img class="col-3 mb-5" src="https://placekitten.com/480/210" alt="Image" bottom></b-card-img> -->
+        <div class="postImage">
           <ImageSlick />
-          <p>{{post.postContent}}</p>
         </div>
+        <p @click="detail(post)">{{post.postContent}}</p>
         <template #footer>
-          <!--좋아요 가져와야함...-->
-          <b-icon icon="suit-heart-fill" variant="danger" v-if="liked"></b-icon>
-          <b-icon icon="suit-heart" variant="danger" v-else></b-icon><span>{{post.postLikeCount}}</span>
-          
-          <b-icon icon="chat" variant="warning"></b-icon>
-          <span>{{post.postCommentCount}}</span>
-          <b-dropdown dropup variant="link" toggle-class="text-decoration-none" no-caret>
-            <template #button-content>
-              <b-icon icon="three-dots-vertical"></b-icon>
-            </template>
-            <b-dropdown-item href="#" variant="danger" v-if="post.userId == getUserId">삭제</b-dropdown-item>
-            <b-dropdown-item href="#" variant="danger" v-else>신고</b-dropdown-item>
-          </b-dropdown>
-          <!-- <b-button class="mr-5" href="#" variant="info">상세보기</b-button> -->
-          <!-- <b-button class="ml-5" href="#" variant="info">댓글</b-button> -->
+          <b-row class="h2 mb-2" align-h="between">
+            <div class="postLike">
+            <b-icon icon="suit-heart-fill" variant="danger" v-if="liked"></b-icon>
+            <b-icon icon="suit-heart" variant="danger" v-else></b-icon><span>{{post.postLikeCount}}</span>
+            </div>
+            
+            <div class="postComment">
+            <b-icon icon="chat" variant="warning"></b-icon>
+            <span>{{post.postCommentCount}}</span>
+            </div>
+
+            <!--신고/삭제-->
+            <b-dropdown size="lg" dropup variant="link" toggle-class="text-decoration-none" no-caret>
+              <template #button-content>
+                <b-icon icon="three-dots-vertical"></b-icon>
+              </template>
+              <b-dropdown-item href="#" variant="danger" v-if="post.userId == getUserId">삭제</b-dropdown-item>
+              <b-dropdown-item href="#" variant="danger" v-else>신고</b-dropdown-item>
+            </b-dropdown>
+          </b-row>
         </template>
       </b-card>
-    <!-- </b-card-group> -->
       </div>
    <div>
 </div>
@@ -50,7 +53,6 @@
 import ImageSlick from '@/components/story/ImageSlick'
 import { mapGetters } from "vuex";
 import axios from 'axios';
-const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
 export default {
   name: 'PostBlockMy',
@@ -68,13 +70,13 @@ export default {
       liked: false
     }
   },
-  mounted() {
-    this.getPostInfos();
+  created() {
+    this.getUserPosts();
   },
   methods: {
-    getPostInfos(){
+    getUserPosts(){
       axios
-        .get(`${SERVER_URL}/userpost/user`, {
+        .get(`/userpost/user`, {
           params: {
             userId: this.getUserId,
             limit: this.limit,
@@ -87,7 +89,7 @@ export default {
         });
     },
     detail(post){
-      this.$router.push({ name: "ArticleDetail", params: { postInfo: post} });
+      this.$router.push({ name: "ArticleDetail", params: { post: post} });
     }
   },
 }

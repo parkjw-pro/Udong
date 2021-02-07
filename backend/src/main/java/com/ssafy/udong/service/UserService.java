@@ -32,9 +32,9 @@ public interface UserService {
 
 	//이메일 인증
 	public String selectDuplicateEmail(String email) throws Exception;
-	public void gmailSend(String email) throws Exception;
-	//이메일 인증 확인
-	public int gmailCheck(String checkCode) throws Exception;
+//	public void gmailSend(String email) throws Exception;
+//	//이메일 인증 확인
+//	public int gmailCheck(String checkCode) throws Exception;
 	
 	public int createUserAddress(UserParamDto dto);
 }

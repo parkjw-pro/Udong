@@ -307,5 +307,10 @@ public class ClubServiceImpl implements ClubService {
 		return null;
 	}
 
+	@Override
+	public List<String> selectFileUrl(String clubId) {
+		return clubDao.selectFileUrl(clubId);
+	}
+
 
 }

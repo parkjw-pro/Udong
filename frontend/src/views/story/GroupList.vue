@@ -10,7 +10,7 @@
         <h4 id="group_list_category">내 그룹</h4>
         <b-button pill variant="primary">+</b-button>
       </div> -->
-        <b-card-group deck>
+        <b-card-group   >
           <div v-for="(title, idx) in club" :key="idx"> 
               <GroupCard :group = "title"/>
           </div>

@@ -12,7 +12,7 @@
       <b-form-textarea
         class="mb-5"
         id="textarea"
-        :placeholder="this.postInfo.postContent"
+        :placeholder="this.post.postContent"
         rows="8"
         disabled
       ></b-form-textarea>
@@ -21,17 +21,17 @@
       <b-row class="h2 mb-2" align-h="between">
         <div id="like"><!--like 개수와 조회하는 사람이 like 눌렀는지-->
           <b-icon icon="suit-heart-fill" variant="danger" v-if="liked"></b-icon>
-          <b-icon icon="suit-heart" variant="danger" v-else></b-icon><span>{{postInfo.postLikeCount}}</span>
+          <b-icon icon="suit-heart" variant="danger" v-else></b-icon><span>{{post.postLikeCount}}</span>
         </div>
         <div>
           <b-icon icon="chat" variant="warning"></b-icon>
-          <span>{{postInfo.postCommentCount}}</span>
+          <span>{{post.postCommentCount}}</span>
         </div>
         <b-dropdown size="lg" dropup variant="link" toggle-class="text-decoration-none" no-caret>
           <template #button-content>
             <b-icon icon="three-dots-vertical"></b-icon>
           </template>
-          <b-dropdown-item href="#" variant="danger" v-if="postInfo.userId == getUserId">삭제</b-dropdown-item>
+          <b-dropdown-item href="#" variant="danger" v-if="post.userId == getUserId">삭제</b-dropdown-item>
           <b-dropdown-item href="#" variant="danger" v-else>신고</b-dropdown-item>
         </b-dropdown>
       </b-row>
@@ -69,8 +69,6 @@ import ImageSlick from '@/components/story/ImageSlick'
 import { mapGetters } from "vuex";
 import axios from 'axios';
 
-const SERVER_URL = process.env.VUE_APP_SERVER_URL
-
 export default {
   name: 'ArticleDetail',
   components: {
@@ -82,7 +80,7 @@ export default {
   },
   data() {
     return {
-      postInfo: this.$route.params.postInfo,
+      post: this.$route.params.post,
       comments: [],
       limit: 5,
       offset: 0,
@@ -97,9 +95,9 @@ export default {
   methods: {
     getLikeInfo(){
       axios
-        .get(`${SERVER_URL}/userpost/comment`, {
+        .get(`/userpost/comment`, {
           params: {
-            postId: this.postInfo.postId,
+            postId: this.post.postId,
             limit: this.limit,
             offset: this.offset
           }
@@ -112,9 +110,9 @@ export default {
     },
     getArticleComments(){
       axios
-        .get(`${SERVER_URL}/userpost/comment`, {
+        .get(`/userpost/comment`, {
           params: {
-            postId: this.postInfo.postId,
+            postId: this.post.postId,
             limit: this.limit,
             offset: this.offset
           }
