@@ -36,6 +36,34 @@
               <b-dropdown-item href="#" variant="danger" v-else>신고</b-dropdown-item>
             </b-dropdown>
           </b-row>
+
+          <!-- 댓글 -->
+          <b-list-group style="text-align: left;" v-for="comment in comments" :key="comment.commentId">  <!-- for 문 -->
+            <b-list-group-item>
+              <b-row>
+              <span class="font-weight-bold">{{comment.nickname}}</span>
+              <span class="ml-2 mr-1">{{comment.commContent}}</span>
+              <span class="small"><em>{{comment.createdAt.substr(0,10)}}</em></span>  <!--날짜까지만 표시-->
+              <b-dropdown size="xs" dropup variant="link" toggle-class="text-decoration-none" no-caret>
+                  <template #button-content>
+                    <b-icon icon="three-dots-vertical"></b-icon>
+                  </template>
+                  <b-dropdown-item href="#" variant="danger" v-if="post.userId == getUserId">삭제</b-dropdown-item>
+                  <b-dropdown-item href="#" variant="danger" v-else>신고</b-dropdown-item>
+                </b-dropdown>
+              </b-row>
+            </b-list-group-item>
+            
+          </b-list-group>
+
+          <br>
+          <!--댓글 입력창-->
+          <div class="container">
+            <div class="row">
+              <b-form-input class="col-10" placeholder="댓글을 달아보세요!" v-model="comment"></b-form-input>
+              <b-button type="submit" variant="info" class="col" @click="writeComment">확인</b-button>
+            </div>
+          </div>
         </template>
       </b-card>
     </div>
@@ -61,7 +89,11 @@ export default {
   },
   data() {
     return {
-      liked: false
+      liked: false,
+      comments: [],
+      comment: "",
+      limit: 5,
+      offset: 0
     }
   },
   computed: {
@@ -70,6 +102,7 @@ export default {
   },
   created() {
     this.getLikeInfo();
+    this.getArticleComments();
   },
   methods: {
     getLikeInfo(){
@@ -100,7 +133,37 @@ export default {
               this.post['postLikeCount'] = this.post['postLikeCount']*1 + 1;
             } else {
               this.post['postLikeCount'] = this.post['postLikeCount']*1 - 1;
-      }
+            }
+        });
+    },
+    getArticleComments(){
+      console.log(this.post.postId);
+      axios
+        .get(`${SERVER_URL}/clubpost/comment`, {
+          params: {
+            postId: this.post.postId,
+            limit: this.limit,
+            offset: this.offset
+          }
+        })
+        .then(
+          (response) => {
+            console.log(response);
+            this.comments = response.data.list;
+            console.log(this.comments);
+            
+          });
+    },
+    writeComment() {
+      axios
+        .post(`${SERVER_URL}/clubpost/comment`, {
+          postId: this.post['postId'],
+          userId: this.getUserId,
+          clubId: this.post['clubId'],
+          commContent: this.comment
+        })
+        .then((response) => {
+          console.log(response);
         });
     },
     detail(post) {

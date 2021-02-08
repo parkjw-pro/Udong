@@ -59,7 +59,7 @@ public interface ClubPostDao {
 	public int createClubPostComment(CommentDto commentDto);
 	
 	//댓글 조회
-	public List<CommentDto> selectClubPostComment(String postId);
+	public List<CommentDto> selectClubPostComment(String postId, int limit, int offset);
 	public int userPostCommentTotalCount();
 	
 	//좋아요
