@@ -1,8 +1,8 @@
 <template>
   <div>
     <!-- <b-card-group deck> -->
-    <div v-if="posts.length > 0">
-      <b-card v-for="(post, i) in posts" :key="i" header-tag="header" footer-tag="footer"> <!-- title="Title" 속성 사용 가능  -->
+    <div>
+      <b-card header-tag="header" footer-tag="footer"> <!-- title="Title" 속성 사용 가능  -->
         <template #header>
           <b-card-text class="font-weight-bold">
             <!-- <span class="mr-5">뱃지 img</span> -->
@@ -17,12 +17,12 @@
         <p @click="detail(post)">{{post.postContent}}</p>
         <template #footer>
           <b-row class="h2 mb-2" align-h="between">
-            <div class="postLike">
-            <b-icon icon="suit-heart-fill" variant="danger" v-if="liked"></b-icon>
-            <b-icon icon="suit-heart" variant="danger" v-else></b-icon><span>{{post.postLikeCount}}</span>
+            <div class="postLike"> <!--좋아요 여부와 좋아요 수-->
+            <b-icon icon="suit-heart-fill" variant="danger" v-if="liked" @click="likePost()"></b-icon>
+            <b-icon icon="suit-heart" variant="danger" v-else @click="likePost()"></b-icon><span>{{post.postLikeCount}}</span>
             </div>
             
-            <div class="postComment">
+            <div class="postComment"> <!--댓글 수-->
             <b-icon icon="chat" variant="warning"></b-icon>
             <span>{{post.postCommentCount}}</span>
             </div>
@@ -39,9 +39,6 @@
         </template>
       </b-card>
     </div>
-    <div v-else>
-      <h3>게시물이 없어요...</h3>
-    </div>
     <!-- </b-card-group> -->
    <div>
 </div>   
@@ -57,13 +54,13 @@ const SERVER_URL = process.env.VUE_APP_SERVER_URL
 export default {
   name: 'PostBlock',
   props: {
-    group: Object
+    post: Object
+  },
+  watch: {
+    post(){ }
   },
   data() {
     return {
-      posts:[],
-      limit: 5,  //한 페이지에 노출될 게시글의 수
-      offset: 0,  //게시글 번호 오프셋
       liked: false
     }
   },
@@ -71,31 +68,42 @@ export default {
     ...mapGetters(["getUserId"]),
     ...mapGetters(["getUserName"])
   },
-  mounted() {
-  },
-  watch: {
-    group() {
-      this.getGroupPosts(this.group['clubId']);
-    }
+  created() {
+    this.getLikeInfo();
   },
   methods: {
-    getGroupPosts(clubId){  //seleted에 해당하는 group의 게시글 조회
+    getLikeInfo(){
       axios
-        .get(`${SERVER_URL}/clubpost/club`, {
+        .get(`${SERVER_URL}/clubpost/like`, {
           params: {
-            clubId: clubId,
-            limit: this.limit,
-            offset: this.offset
+            userId: this.getUserId,
+            postId: this.post['postId'],
+            clubId: this.post['clubId'],
           }
         })
         .then(
           (response) => (
-            this.posts = response.data.list
+            this.liked = response.data
           )
         );
-
     },
-    detail(post){
+    likePost() {
+      axios
+        .post(`${SERVER_URL}/clubpost/like`, {
+          postId: this.post['postId'],
+          userId: this.getUserId,
+          clubId: this.post['clubId']
+        })
+        .then((response) => {
+            this.liked = !response.data.includes("취소");
+            if(this.liked) {
+              this.post['postLikeCount'] = this.post['postLikeCount']*1 + 1;
+            } else {
+              this.post['postLikeCount'] = this.post['postLikeCount']*1 - 1;
+      }
+        });
+    },
+    detail(post) {
       this.$router.push({ name: "ArticleDetail", params: { post: post, group: this.group} });
     }
   },
