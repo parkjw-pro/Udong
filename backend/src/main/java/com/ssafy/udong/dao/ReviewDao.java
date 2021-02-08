@@ -64,9 +64,9 @@ public interface ReviewDao {
 	// 리뷰 신고 추가
 	public int createReviewReport(ReportDto reportDto);
 	public List<String> selectFileId(String reviewId);
-	public String selectReviewtLike(LikeDto likeDto);
-	public void createReviewtLike(LikeDto likeDto);
-	public void deleteReviewtLike(LikeDto likeDto);
+	public String selectReviewLike(LikeDto likeDto);
+	public void createReviewLike(LikeDto likeDto);
+	public void deleteReviewLike(LikeDto likeDto);
 	public void updateReviewLikeCount(LikeDto likeDto);
 	public void deleteReviewLikeCount(LikeDto likeDto);
 
