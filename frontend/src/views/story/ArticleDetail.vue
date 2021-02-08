@@ -1,9 +1,10 @@
 <template>
   <!-- 이미지 추가하는 부분을 넣어야 한다!!! -->
   <div id="article_box">
-    <b-row class="mb-5" align-h="between" v-if="true">
-      <b-col><h5 class="font-weight-bold">그룹</h5></b-col>
-      <b-col><h5 class="font-weight-bold">다이어트</h5></b-col>
+    <!--그룹 정보-->
+    <b-row class="mb-5" align-h="between" v-if="this.group">
+      <b-col><h5 class="font-weight-bold">{{group['clubName']}}</h5></b-col>
+      <!-- <b-col><h5 class="font-weight-bold">다이어트</h5></b-col> -->
     </b-row>
 
      <!-- 이미지 슬라이드 -->
@@ -20,8 +21,8 @@
 
       <b-row class="h2 mb-2" align-h="between">
         <div id="like"><!--like 개수와 조회하는 사람이 like 눌렀는지-->
-          <b-icon icon="suit-heart-fill" variant="danger" v-if="liked"></b-icon>
-          <b-icon icon="suit-heart" variant="danger" v-else></b-icon><span>{{post.postLikeCount}}</span>
+          <b-icon icon="suit-heart-fill" variant="danger" v-if="liked" @click="likePost"></b-icon>
+          <b-icon icon="suit-heart" variant="danger" @click="likePost" v-else></b-icon><span>{{post.postLikeCount}}</span>
         </div>
         <div>
           <b-icon icon="chat" variant="warning"></b-icon>
@@ -45,9 +46,9 @@
           {{comment.commContent}}
           <span class="small">{{comment.createdAt}}</span>
         </b-list-group-item>
-
       </b-list-group>
-     
+      <!--댓글 입력창 필요-->
+
       <b-row align-h="between" class="mx-5 mb-5">
         <b-button variant="info">취소</b-button>
         <b-button type="submit" variant="info">확인</b-button>
@@ -66,6 +67,8 @@
 import ImageSlick from '@/components/story/ImageSlick'
 import { mapGetters } from "vuex";
 import axios from 'axios';
+
+const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
 export default {
   name: 'ArticleDetail',
@@ -87,13 +90,32 @@ export default {
     }
   },
   created() {
-    this.getLikeInfo();
-    this.getArticleComments();
+    if(this.group != null){
+      console.log(this.group);
+    }
+    else{
+      this.getLikeInfo();
+      this.getArticleComments();
+    }
   },
   methods: {
-    getLikeInfo(){
+    getLikeInfo(){  //사용자가 이 게시글에 대해 좋아요를 눌렀는지
       axios
-        .get(`/userpost/comment`, {
+        .get(`${SERVER_URL}/userpost/like`, {
+          params: {
+            postId: this.post.postId,
+            userId: this.getUserId
+          }
+        })
+        .then(
+          (response) => (
+            this.liked = response.data
+          )
+        );
+    },
+    getArticleComments(){
+      axios
+        .get(`${SERVER_URL}/userpost/comment`, {
           params: {
             postId: this.post.postId,
             limit: this.limit,
@@ -106,21 +128,30 @@ export default {
           )
         );
     },
-    getArticleComments(){
+    likePost(){
+      var type = 'userpost';
+      var clubId = null;
+      if(this.group != null){
+        type = 'clubpost';
+        clubId = this.group['clubId'];
+      }
       axios
-        .get(`/userpost/comment`, {
-          params: {
-            postId: this.post.postId,
-            limit: this.limit,
-            offset: this.offset
-          }
+        .post(`${SERVER_URL}/` + type + '/like', {
+          postId: this.post.postId,
+          userId: this.getUserId,
+          clubId: clubId
         })
         .then(
-          (response) => (
-            this.comments = response.data.list
-          )
-        );
-    }
+          (response) => {
+            this.liked = !response.data.includes("취소");
+            if(this.liked) {
+              this.post['postLikeCount'] = this.post['postLikeCount']*1 + 1;
+            } else {
+              this.post['postLikeCount'] = this.post['postLikeCount']*1 - 1;
+            }
+          });
+    },
+
   },
 }
 

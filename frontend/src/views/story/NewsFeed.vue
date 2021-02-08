@@ -9,9 +9,9 @@
     <!-- 그룹 고르는 공간 -->
     <b-row class="my-5 ">
       <b-col md="7">
-        <b-button-group v-for="(groupName, i) in groupNames" :key="i">
-          <b-button v-if="i != selected" variant="secondary" @click="selectGroup(i)">{{groupName}}</b-button>
-          <b-button v-else variant="primary">{{groupName}}</b-button>
+        <b-button-group v-for="(group, i) in groups" :key="i">
+          <b-button v-if="i != selected" variant="secondary" @click="selectGroup(i)">{{group['clubName']}}</b-button>
+          <b-button v-else variant="primary">{{group['clubName']}}</b-button>
         </b-button-group>
       </b-col>
       <b-col md="5">
@@ -19,8 +19,13 @@
       </b-col>
     </b-row>
 
-    <div class="mb-5"> <!-- for문 넣기 -->
-      <PostBlock :group="groups[selected]" />
+    <div v-if="posts.length > 0">
+      <div class="mb-5" v-for="(post, i) in posts" :key="i"> <!-- for문 넣기 -->
+        <PostBlock :post="post" />
+      </div>
+    </div>
+    <div v-else>
+      <h3>게시물이 없어요...</h3>
     </div>
     <EndBlock />
     <Button />
@@ -52,8 +57,10 @@ export default {
     return {
       colors: ["danger", "warning", "success", "primary"],
       groups: [],
-      groupNames: [],
-      selected: null,  //선택된 그룹
+      selected: 0,  //선택된 그룹
+      posts:[],
+      limit: 5,  //한 페이지에 노출될 게시글의 수
+      offset: 0,  //게시글 번호 오프셋
     }
   },
   created() {
@@ -63,21 +70,28 @@ export default {
         .then(
           (response) => (
             this.groups = response.data,
-            this.getGroupNames()
+            this.getGroupPosts()
           )
         );
   },
   methods: {
-    getGroupNames(){
-      //그룹명만 따로 저장
-      for(var i in this.groups){
-        this.groupNames.push(this.groups[i]['clubName']);
-      }
-
-      //클럽 크기가 0일 때 처리해야 함!
+    getGroupPosts(){
+      this.posts = {};
+      axios
+        .get(`${SERVER_URL}/clubpost/club`, {
+          params: {
+            clubId: this.groups[this.selected]['clubId'],
+            limit: this.limit,
+            offset: this.offset
+          }
+        })
+        .then((response) => {
+            this.posts = response.data.list;
+        });
     },
     selectGroup(idx){
       this.selected = idx;
+      this.getGroupPosts();
     },
     toList: function () {
       this.$router.push({ name: 'GroupList'})
