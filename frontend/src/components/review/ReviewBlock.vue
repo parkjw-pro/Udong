@@ -15,13 +15,13 @@
                 {{review.nickname}}
               </b-col>
               <b-col>
-                <b-dropdown size="lg" dropup variant="link" toggle-class="text-decoration-none" no-caret>
+                <!-- <b-dropdown size="lg" dropup variant="link" toggle-class="text-decoration-none" no-caret>
                   <template #button-content>
                     <b-icon icon="three-dots-vertical"></b-icon>
                   </template>
                   <b-dropdown-item href="#" variant="danger" v-if="post.userId == getUserId">삭제</b-dropdown-item>
                   <b-dropdown-item href="#" variant="danger" v-else>신고</b-dropdown-item>
-                </b-dropdown>
+                </b-dropdown> -->
               </b-col>
             </b-row>
           </b-card-text>
