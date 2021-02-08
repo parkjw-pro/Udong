@@ -60,6 +60,8 @@
 import { mapGetters } from "vuex";
 import axios from 'axios';
 
+const SERVER_URL = process.env.VUE_APP_SERVER_URL
+
 export default {
   name: 'ArticleCreate',
   computed: {
@@ -68,7 +70,7 @@ export default {
   },
   data: function () {
     return {
-      groups: [],
+      clubs: [],
       multipartFile: null,
       files: [],
       previewImageData: null,
@@ -83,10 +85,10 @@ export default {
   created() {
     //가입한 그룹 정보 가져오기
     axios
-        .get(`/club/user/${this.getUserId}/member`)
+        .get(`${SERVER_URL}/club/user/${this.getUserId}/member`)
         .then(
           (response) => (
-            this.groups = response.data,
+            this.clubs = response.data,
             this.setOptions()
           )
         );
@@ -94,8 +96,8 @@ export default {
   methods: {
     setOptions(){
       //그룹명만 따로 저장
-      for(var i in this.groups){
-        this.options.push(this.groups[i]['clubName']);
+      for(var i in this.clubs){
+        this.options.push(this.clubs[i]['clubName']);
       }
     },
     // formatNames(files) {
@@ -125,7 +127,7 @@ export default {
       //userpost / clubpost 구분 -> 적절한 url로 axios 보내기
       if(this.selected == '내 피드'){  //userpost
         //file 넣어야 함
-        axios.post(`/userpost`, {
+        axios.post(`${SERVER_URL}/userpost`, {
           "isOpen": this.isOpen,
           "postContent": this.content,
           "userId": this.getUserId
@@ -138,8 +140,8 @@ export default {
       }
       else {  //clubpost
         var clubId = 0;  //clubId 가져오기
-        for(var i in this.groups){
-          var club =  this.groups[i];
+        for(var i in this.clubs){
+          var club =  this.clubs[i];
           if(this.selected == club['clubName']){
             clubId = club['clubId'];
             break;
@@ -147,7 +149,7 @@ export default {
         }
 
         //file 넣어야 함
-        axios.post(`/clubpost`, {
+        axios.post(`${SERVER_URL}/clubpost`, {
           "clubId": clubId,
           "userId": this.getUserId,
           "postContent": this.content,

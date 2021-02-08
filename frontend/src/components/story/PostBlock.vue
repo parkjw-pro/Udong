@@ -1,6 +1,7 @@
 <template>
   <div>
     <!-- <b-card-group deck> -->
+    <div v-if="posts.length > 0">
       <b-card v-for="(post, i) in posts" :key="i" header-tag="header" footer-tag="footer"> <!-- title="Title" 속성 사용 가능  -->
         <template #header>
           <b-card-text class="font-weight-bold">
@@ -8,9 +9,11 @@
             <span >{{post.nickname}}</span>
           </b-card-text>
         </template>
+        <!--이미지-->
         <div class="postImage">
           <b-card-img class="col-3 mb-5" src="https://placekitten.com/480/210" alt="Image" bottom></b-card-img>
         </div>
+        <!--내용-->
         <p @click="detail(post)">{{post.postContent}}</p>
         <template #footer>
           <b-row class="h2 mb-2" align-h="between">
@@ -35,6 +38,10 @@
           </b-row>
         </template>
       </b-card>
+    </div>
+    <div v-else>
+      <h3>게시물이 없어요...</h3>
+    </div>
     <!-- </b-card-group> -->
    <div>
 </div>   
@@ -45,11 +52,15 @@
 import { mapGetters } from "vuex";
 import axios from 'axios';
 
+const SERVER_URL = process.env.VUE_APP_SERVER_URL
+
 export default {
   name: 'PostBlock',
+  props: {
+    group: Object
+  },
   data() {
     return {
-      groupInfo: null,
       posts:[],
       limit: 5,  //한 페이지에 노출될 게시글의 수
       offset: 0,  //게시글 번호 오프셋
@@ -60,18 +71,17 @@ export default {
     ...mapGetters(["getUserId"]),
     ...mapGetters(["getUserName"])
   },
-  created() {
-    //view로부터 가져온 clubId 인자로 넣기
-    this.getGroupInfo(139);  
-    this.getGroupPosts(139);  
+  mounted() {
+  },
+  watch: {
+    group() {
+      this.getGroupPosts(this.group['clubId']);
+    }
   },
   methods: {
-    getGroupInfo(){
-      
-    },
     getGroupPosts(clubId){  //seleted에 해당하는 group의 게시글 조회
       axios
-        .get(`/clubpost/club`, {
+        .get(`${SERVER_URL}/clubpost/club`, {
           params: {
             clubId: clubId,
             limit: this.limit,
@@ -86,7 +96,7 @@ export default {
 
     },
     detail(post){
-      this.$router.push({ name: "ArticleDetail", params: { post: post} });
+      this.$router.push({ name: "ArticleDetail", params: { post: post, group: this.group} });
     }
   },
 }

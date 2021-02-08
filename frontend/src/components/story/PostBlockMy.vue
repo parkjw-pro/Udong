@@ -53,6 +53,7 @@
 import ImageSlick from '@/components/story/ImageSlick'
 import { mapGetters } from "vuex";
 import axios from 'axios';
+const SERVER_URL = "http://localhost:8000";
 
 export default {
   name: 'PostBlockMy',
@@ -76,7 +77,7 @@ export default {
   methods: {
     getUserPosts(){
       axios
-        .get(`/userpost/user`, {
+        .get(`${SERVER_URL}/userpost/user`, {
           params: {
             userId: this.getUserId,
             limit: this.limit,
