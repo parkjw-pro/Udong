@@ -8,21 +8,18 @@
         footer-bg-variant="white"
       > <!-- title="Title" 속성 사용 가능  -->
         <template #header>
-          <b-card-text class="font-weight-bold" >
+          <b-card-text>
             <b-row align-h="justify">
-              <b-col>
-                <!-- <span class="mr-5">뱃지 img</span> -->
-                {{review.nickname}}
-              </b-col>
-              <b-col>
-                <!-- <b-dropdown size="lg" dropup variant="link" toggle-class="text-decoration-none" no-caret>
-                  <template #button-content>
-                    <b-icon icon="three-dots-vertical"></b-icon>
-                  </template>
-                  <b-dropdown-item href="#" variant="danger" v-if="post.userId == getUserId">삭제</b-dropdown-item>
-                  <b-dropdown-item href="#" variant="danger" v-else>신고</b-dropdown-item>
-                </b-dropdown> -->
-              </b-col>
+              <!-- <span class="mr-5">뱃지 img</span> -->
+              <div class="font-weight-bold mt-2">{{review.nickname}}</div>
+              <b-dropdown size="lg" dropup variant="link" toggle-class="text-decoration-none" no-caret>
+                <template #button-content>
+                  <b-icon icon="three-dots-vertical" variant="dark"></b-icon>
+                </template>
+                <b-dropdown-item href="#" variant="danger">삭제</b-dropdown-item>
+                <!-- <b-dropdown-item href="#" variant="danger" v-if="post.userId == getUserId">삭제</b-dropdown-item> -->
+                <!-- <b-dropdown-item href="#" variant="danger" v-else>신고</b-dropdown-item> -->
+              </b-dropdown>
             </b-row>
           </b-card-text>
         </template>
