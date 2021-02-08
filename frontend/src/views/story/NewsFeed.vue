@@ -9,10 +9,9 @@
     <!-- 그룹 고르는 공간 -->
     <b-row class="my-5 ">
       <b-col md="7">
-        <b-button-group>
-          <b-button variant="success">그룹1</b-button>
-          <b-button variant="info">그룹2</b-button>
-          <b-button variant="warning">그룹2</b-button>
+        <b-button-group v-for="(groupName, i) in groupNames" :key="i">
+          <b-button v-if="i != selected" variant="secondary" @click="selectGroup(i)">{{groupName}}</b-button>
+          <b-button v-else variant="primary">{{groupName}}</b-button>
         </b-button-group>
       </b-col>
       <b-col md="5">
@@ -20,23 +19,10 @@
       </b-col>
     </b-row>
 
-
     <div class="mb-5"> <!-- for문 넣기 -->
-      <PostBlock />
+      <PostBlock :group="groups[selected]" />
     </div>
-    <br class="my-5">
-    <br class="my-5">
-    <br class="my-5">
-    <br class="my-5">
-    <br class="my-5">
-    <br class="my-5">
-    <br class="my-5">
-    <br class="my-5">
-    <br class="my-5">
-    <br class="my-5">
-    <br class="my-5">
     <EndBlock />
-    <h3>게시물이 없어요...</h3>
     <Button />
   </div>
 </template>
@@ -46,8 +32,17 @@ import Button from '@/components/story/Button'
 import EndBlock from '@/components/story/EndBlock'
 import PostBlock from '@/components/story/PostBlock'
 
+import { mapGetters } from "vuex";
+import axios from 'axios';
+
+const SERVER_URL = process.env.VUE_APP_SERVER_URL
+
 export default {
   name: 'NewsFeed',
+  computed: {
+    ...mapGetters(["getUserId"]),
+    ...mapGetters(["getUserName"])
+  },
   components: {
     Button,
     EndBlock,
@@ -55,25 +50,38 @@ export default {
   },
   data: function () {
     return {
-      user: {
-        userId: '',
-        nickname: '',
-        address: '',
-        dongName: '',
-      },
+      colors: ["danger", "warning", "success", "primary"],
+      groups: [],
+      groupNames: [],
+      selected: null,  //선택된 그룹
     }
+  },
+  created() {
+    //가입한 그룹 정보 가져오기
+    axios
+        .get(`${SERVER_URL}/club/user/${this.getUserId}/member`)
+        .then(
+          (response) => (
+            this.groups = response.data,
+            this.getGroupNames()
+          )
+        );
   },
   methods: {
+    getGroupNames(){
+      //그룹명만 따로 저장
+      for(var i in this.groups){
+        this.groupNames.push(this.groups[i]['clubName']);
+      }
+
+      //클럽 크기가 0일 때 처리해야 함!
+    },
+    selectGroup(idx){
+      this.selected = idx;
+    },
     toList: function () {
-      this.$router.push({ name: 'GroupList', params: {address: this.user.address}})
+      this.$router.push({ name: 'GroupList'})
     }
-  },
-  created () {
-    const user = JSON.parse(localStorage.getItem('Login-token'))
-    this.user.userId = user["user-id"]
-    this.user.nickname = user["user-name"]
-    this.user.address = user["user_address"]
-    this.user.dongName = user["user_address_name"]
   }
 }
 </script>

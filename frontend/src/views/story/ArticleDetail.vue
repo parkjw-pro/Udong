@@ -1,7 +1,7 @@
 <template>
   <!-- 이미지 추가하는 부분을 넣어야 한다!!! -->
   <div id="article_box">
-    <b-row class="mb-5" align-h="between" v-if="groupInfo.groupId">
+    <b-row class="mb-5" align-h="between" v-if="true">
       <b-col><h5 class="font-weight-bold">그룹</h5></b-col>
       <b-col><h5 class="font-weight-bold">다이어트</h5></b-col>
     </b-row>
@@ -53,8 +53,6 @@
         <b-button type="submit" variant="info">확인</b-button>
       </b-row>
 
-
-
       <br>
       <br>
       <br>
@@ -84,7 +82,7 @@ export default {
       comments: [],
       limit: 5,
       offset: 0,
-      groupInfo: {},
+      group: this.$route.params.group,
       liked: false
     }
   },
