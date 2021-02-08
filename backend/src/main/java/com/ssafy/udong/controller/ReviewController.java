@@ -37,7 +37,7 @@ import com.ssafy.udong.service.ReviewService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-@CrossOrigin
+@CrossOrigin(origins = { "*" }, maxAge = 6000)
 @RestController
 @RequestMapping("/review")
 @Api(value = "/review")
@@ -209,11 +209,10 @@ public class ReviewController {
 	}
 	
 	// 리뷰에 대한 좋아요기능
-	@ApiOperation(value = "리뷰에 좋아요", notes = "리뷰에 좋아요를 합니다.\n" + "## 필수값\n"
-			+ " - userId : 좋아요를 누른 사용자 아이디\n" + " - postId : 댓글이 달린 게시글 아이디\n" + " - clubId : 게시글이 속한 그룹 아이디\n"
-			+ " - commentId : 좋아요 표시될 댓글 아이디\n")
+	@ApiOperation(value = "리뷰에 좋아요")
 	@PostMapping(value = "/comment/like")
-	private ResponseEntity<String> createReviewtLike(@RequestBody LikeDto likeDto) {
+	private ResponseEntity<String> createReviewtLike(LikeDto likeDto) {
+		System.out.println("11");
 
 		int result = service.createReviewtLike(likeDto);
 

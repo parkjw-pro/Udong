@@ -6,14 +6,32 @@
       <div>개발자님 환영합니다!!!</div>
     </div>     -->
 
-    <div id="roadview" class="mb-5">
-      <!-- 1. 이미지 -->
-dd
-      <!-- <p class="mt-4">
-        Slide #: {{ slide }}<br>
-        Sliding: {{ sliding }}
-      </p> -->
-    </div>
+    <!-- 1. 이미지 -->
+    <b-carousel
+      id="carousel-1"
+      v-model="slide"
+      :interval="2000"
+      controls
+      indicators
+      background="#ababab"
+      img-width="1024"
+      img-height="480"
+      style="text-shadow: 1px 1px 2px #333;"
+    >
+
+      <b-carousel-slide v-for="(item, index) in fileId"
+        :key="index"   
+        :caption="thumbnailContent[index].nickname"
+        :text="thumbnailContent[index].reviewContent"
+        :img-src="url+`/review/download/` + item" 
+      ></b-carousel-slide>
+
+
+  
+      <!-- Text slides with image -->
+
+    </b-carousel>
+    <!-- 2. store 정보 -->
 
     <!-- 2. store 정보 -->
     <div style="text-align: left;">
@@ -42,9 +60,7 @@ dd
     <b-button @click="createReview">리뷰쓰기</b-button>
   </div>
 </template>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=${MAP_API_KEY}"></script>
 <script>
-const MAP_API_KEY = process.env.VUE_APP_MAP_API_KEY;
 import axios from 'axios';
 import ReviewBlock from '@/components/review/ReviewBlock';
 
@@ -58,18 +74,20 @@ export default {
   data: function() {
     return {
       storeId: '',
-      store: {},
-      reviews: {},
+      store: [],
+      reviews: Array,
+      reviews2: [],
       key: Object,
       // store : Object,
-      slide: '0',
+      slide: 0,
       sliding: null,
       getStoreReviewList: {},
       bestReviewlist: {},
-      roadviewContainer: null,
-      roadview: null,
-      roadviewClient: null,
-      position: null,
+      url : SERVER_URL,
+      fileId : [],
+      thumbnailContent : [],
+      temp : "",
+      flag : false,
     };
   },
   computed: {
@@ -79,19 +97,20 @@ export default {
   },
   watch: {
     before3() {
-      this.getReview();
       this.selectBestReview();
+      this.selectAllImage();
+
     },
   },
   async created() {
     this.storeId = this.$route.params.storeId;
+    // this.fileId = [];
+    // this.thumbnailContent = [],
+    // this.temp = "",
     await this.getReview();
     await this.getStore();
-    this.roadviewContainer = document.getElementById('roadview'); //로드뷰를 표시할 div
-    this.roadview = new kakao.maps.Roadview(roadviewContainer); //로드뷰 객체
-    this.roadviewClient = new kakao.maps.RoadviewClient(); //좌표로부터 로드뷰 파노ID를 가져올 로드뷰 helper객체
-    this.position = new kakao.maps.LatLng(33.450701, 126.570667);
-    this.insertRoadView();
+
+
 
     // console.log(this.store);
     // this.store = this.key;
@@ -104,6 +123,9 @@ export default {
         .get(`${SERVER_URL}/review/store/` + `${this.storeId}`)
         .then((response) => {
           this.reviews = response.data;
+          this.reviews2 = response.data;
+          console.log(this.reviews);
+          console.log(this.reviews2);
         })
         .catch((response) => {
           console.log(response);
@@ -120,7 +142,8 @@ export default {
         });
     },
     selectBestReview: function() {
-      this.bestReviewlist = this.reviews.sort(function(a, b) {
+      
+      this.bestReviewlist = this.reviews2.sort(function(a, b) {
         var o1 = b['reviewLikeCount'];
         var o2 = a['reviewLikeCount'];
         var p1 = a['createdAt'];
@@ -134,10 +157,42 @@ export default {
 
       console.log(this.bestReviewlist);
     },
-    insertRoadView: function() {
-      roadview.setPanoId(panoId, position); //panoId와 중심좌표를 통해 로드뷰 실행
+    selectAllImage: function() {
+      for (let index = 0; index < this.bestReviewlist.length; index++) {
+        console.log(this.bestReviewlist[index].reviewId)
+        this.temp = this.bestReviewlist[index].reviewContent;
+        console.log(this.temp);
+        this.GetReviewDetail(this.bestReviewlist[index]);
+       
+        
+        
+        //console.log(this.fileId);
+      }
     },
+    
+    GetReviewDetail: function(review) {
+      axios
+      .get(`${SERVER_URL}/review/` + review.reviewId)
+      .then((response) => {
+        for (let index = 0; index < response.data.fileId.length; index++) {
+          this.thumbnailContent.push(review)
+          console.log(this.temp);
+          this.fileId.push(response.data.fileId[index]);
+          console.log(response.data.fileId[index]);
+          
+        }
+        // for (let index = 0; index < response.data.fileId.length-1; index++) {
+        //   this.thumbnailContent.push(this.thumbnailContent[this.thumbnailContent.length-1])
+          
+        // }
+        console.log( this.fileId);
+        this.flag = true;
 
+      })
+      .catch((response) => {
+        console.log(response);
+      });
+    },
     createReview: function() {
       // 리뷰 작성 페이지로 넘어가준다!!
       // console.log("보냅니다", this.store);
