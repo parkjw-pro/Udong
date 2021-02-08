@@ -1,11 +1,29 @@
 <template>
   <div>
     <!-- <b-card-group deck> -->
-      <b-card header-tag="header" footer-tag="footer"> <!-- title="Title" 속성 사용 가능  -->
+      <b-card
+        header-tag="header"
+        header-bg-variant="white"
+        footer-tag="footer"
+        footer-bg-variant="white"
+      > <!-- title="Title" 속성 사용 가능  -->
         <template #header>
           <b-card-text class="font-weight-bold" >
-            <span class="mr-5">뱃지 img</span>
-            <span >{{review.nickname}}</span>
+            <b-row align-h="justify">
+              <b-col>
+                <!-- <span class="mr-5">뱃지 img</span> -->
+                {{review.nickname}}
+              </b-col>
+              <b-col>
+                <!-- <b-dropdown size="lg" dropup variant="link" toggle-class="text-decoration-none" no-caret>
+                  <template #button-content>
+                    <b-icon icon="three-dots-vertical"></b-icon>
+                  </template>
+                  <b-dropdown-item href="#" variant="danger" v-if="post.userId == getUserId">삭제</b-dropdown-item>
+                  <b-dropdown-item href="#" variant="danger" v-else>신고</b-dropdown-item>
+                </b-dropdown> -->
+              </b-col>
+            </b-row>
           </b-card-text>
         </template>
         <div > <!-- for 문 -->
@@ -28,7 +46,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from 'axios'
 
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
 // import { mdbInput, mdbContainer } from 'mdbvue';
@@ -50,20 +68,12 @@ export default {
       reviewDetail : {},
       url : SERVER_URL,
       fileId : Array
-      
-
-      
-
 
     };
   },
 
-  created()  {
-
-  },
-  mounted(){
-    this.GetReviewDetail();
-    
+  async mounted(){
+    await this.GetReviewDetail();
   },
   methods: {
       GetReviewDetail: function() {

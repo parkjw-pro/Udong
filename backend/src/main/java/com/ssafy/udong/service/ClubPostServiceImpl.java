@@ -37,11 +37,11 @@ public class ClubPostServiceImpl implements ClubPostService {
 	private static final int FAIL = -1;
 
 	@Override
-	public int createClubPost(ClubPostDto clubPostDto, List<MultipartFile> files) {
+	public int createClubPost(ClubPostDto clubPostDto, MultipartFile[] files) {
 		try {
 			clubPostDao.createClubPost(clubPostDto);
 
-			if (files != null && !files.isEmpty()) {
+			if (files != null && !(files.length ==0) ){
 				File uploadDir = new File(
 						root + File.separator + "clubPost" + File.separator + clubPostDto.getUserId());
 				if (!uploadDir.exists())
@@ -331,8 +331,23 @@ public class ClubPostServiceImpl implements ClubPostService {
 	}
 
 	@Override
-	public int createClubPostLike(LikeDto likeDto) {
+	public int selectClubPostLike(String userId, String postId, String clubId) {
+		try {
+			LikeDto likeDto = new LikeDto();
+			likeDto.setUserId(userId);
+			likeDto.setPostId(postId);
+			likeDto.setClubId(clubId);
+			if (clubPostDao.selectClubPostLike(likeDto) != null)
+				return 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
 
+
+	@Override
+	public int createClubPostLike(LikeDto likeDto) {
 		try {
 			if (clubPostDao.selectClubPostLike(likeDto) == null) {
 				clubPostDao.createClubPostLike(likeDto);
@@ -347,6 +362,22 @@ public class ClubPostServiceImpl implements ClubPostService {
 		}
 	}
 
+	@Override
+	public int selectClubPostCommentLike(String userId, String postId, String clubId, String commentId) {
+		try {
+			LikeDto likeDto = new LikeDto();
+			likeDto.setUserId(userId);
+			likeDto.setPostId(postId);
+			likeDto.setClubId(clubId);
+			likeDto.setCommentId(commentId);
+			if (clubPostDao.selectClubPostCommentLike(likeDto) != null)
+				return 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	
 	@Override
 	public int createClubPostCommentLike(LikeDto likeDto) {
 		try {

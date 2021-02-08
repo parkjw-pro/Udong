@@ -47,10 +47,11 @@ public class UserPostController {
 			 			+ " - isOpen : 공개 여부(true/false 또는 1/0으로 구분)\n" + 
 			"## 가능값\n" + " - postTag : 태그\n")
 	@PostMapping
-	private ResponseEntity<String> createUserPost(@RequestBody UserPostDto userPostDto,
-			@RequestParam(value = "file", required = false) List<MultipartFile> files) {
+	private ResponseEntity<String> createUserPost(UserPostDto userPostDto,
+			@RequestParam(value = "file", required = false) MultipartFile[] files)throws NullPointerException {
+		System.out.println(userPostDto.getUserId() + files.length);
 		int result = service.createUserPost(userPostDto, files);
-
+	
 		if( result == SUCCESS ) {
 			return new ResponseEntity<String>("게시물 작성 성공", HttpStatus.OK);
 		}else {
@@ -185,6 +186,22 @@ public class UserPostController {
 		}
 	}
 	
+	@ApiOperation(value = "개인피드 글 좋아요 조회", notes = "개인피드에 노출되는 글에 좋아요를 했는지 조회합니다.\n" + "## 필수값\n"
+			+ " - postId : 좋아요 표시될 게시글 아이디\n" + " - userId : 사용자 아이디\n")
+	@GetMapping(value = "/like")
+	private ResponseEntity<String> selectUserPostLike(@RequestParam(value="userId") String userId, @RequestParam(value="postId") String postId) {
+		try {
+			int result = service.selectUserPostLike(userId, postId);
+			if(result != 0)
+				return new ResponseEntity<String>("true", HttpStatus.OK);
+			else
+				return new ResponseEntity<String>("false", HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>("FAILURE: club post like select", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
 	@ApiOperation(value = "개인피드 글 좋아요", notes = "개인피드에 노출되는 글에 좋아요를 합니다.\n" + 
 			"## 필수값\n" + " - postId : 좋아요 표시될 게시글 아이디\n"
 						+ " - userId : 좋아요를 누른 사용자 아이디\n")
@@ -202,6 +219,22 @@ public class UserPostController {
 		}
 	}
 	
+	@ApiOperation(value = "게시글 댓글 좋아요 조회", notes = "개인피드에 노출되는 글의 댓글에 좋아요를 했는지 조회합니다.\n" + "## 필수값\n"
+			+ " - userId : 사용자 아이디\n" + " - postId : 댓글이 달린 게시글 아이디\n"	+ " - commentId : 좋아요 표시될 댓글 아이디\n")
+	@GetMapping(value = "/comment/like")
+	private ResponseEntity<String> selectClubPostCommentLike(@RequestParam(value="userId") String userId, @RequestParam(value="postId") String postId, @RequestParam(value="commentId") String commentId ) {
+		try {
+			int result = service.selectClubPostCommentLike(userId, postId, commentId);
+			if(result != 0)
+				return new ResponseEntity<String>("true", HttpStatus.OK);
+			else
+				return new ResponseEntity<String>("false", HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>("FAILURE: club post comment like select", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
 	// 댓글에 대한 좋아요기능
 	@ApiOperation(value = "개인피드 댓글 좋아요", notes = "개인피드에 노출되는 글의 댓글에 좋아요를 합니다.\n" + 
 			"## 필수값\n" + " - userId : 좋아요를 누른 사용자 아이디\n"

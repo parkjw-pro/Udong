@@ -196,15 +196,29 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 
 	@Override
-	public int createReviewtLike(LikeDto likeDto) {
+	public int selectReviewLike(String userId, String reviewId) {
 		try {
-			if (dao.selectReviewtLike(likeDto) == null) {
-				dao.createReviewtLike(likeDto);
+			LikeDto likeDto = new LikeDto();
+			likeDto.setUserId(userId);
+			likeDto.setReviewId(reviewId);
+			if (dao.selectReviewLike(likeDto) != null)
+				return 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	@Override
+	public int createReviewLike(LikeDto likeDto) {
+		try {
+			if (dao.selectReviewLike(likeDto) == null) {
+				dao.createReviewLike(likeDto);
 			//	dao.updateReviewLikeCount(likeDto);
 				
 				return 1;
 			} else {
-				dao.deleteReviewtLike(likeDto);
+				dao.deleteReviewLike(likeDto);
 			//	dao.deleteReviewLikeCount(likeDto);
 				return 2;
 			}

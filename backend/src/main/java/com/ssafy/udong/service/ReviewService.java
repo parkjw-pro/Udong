@@ -34,11 +34,15 @@ public interface ReviewService {
 	
 	//리뷰삭제
 	public int deleteReview(String reviewId);
-
+	
 	//리뷰 신고
 	public int createReviewReport(ReportDto reportDto);
 
-	public int createReviewtLike(LikeDto likeDto);
+	//리뷰 좋아요 조회
+	public int selectReviewLike(String userId, String reviewId);
+	
+	//리뷰 좋아요
+	public int createReviewLike(LikeDto likeDto);
 
 
 }

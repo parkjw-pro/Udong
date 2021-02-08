@@ -15,7 +15,7 @@ import com.ssafy.udong.dto.UserPostResultDto;
 public interface UserPostService {
 
 	// 게시물 작성
-	public int createUserPost(UserPostDto userBoardDto, List<MultipartFile> files);
+	public int createUserPost(UserPostDto userBoardDto, MultipartFile[] files);
 
 	// 모든 게시물 조회
 	public UserPostResultDto selectAllUserPost(int limit, int offset);
@@ -38,6 +38,9 @@ public interface UserPostService {
 	// 글삭제
 	public int deleteUserPost(String postId);
 
+	// 글 좋아요 조회
+	public int selectUserPostLike(String userId, String postId);
+	
 	// 글 좋아요
 	public int createUserPostLike(LikeDto likeDto);
 	
@@ -46,6 +49,9 @@ public interface UserPostService {
 
 	// 댓글 선택
 	public CommentResultDto selectUserPostComment(String postId, int limit, int offset);
+	
+	// 댓글 좋아요 조회
+	public int selectClubPostCommentLike(String userId, String postId, String commentId);
 
 	// 댓글 좋아요
 	public int createUserPostCommentLike(LikeDto likeDto);
@@ -55,5 +61,7 @@ public interface UserPostService {
 
 	// 댓글 신고
 	public int createUserPostCommentReport(ReportDto reportDto);
+
+
 
 }

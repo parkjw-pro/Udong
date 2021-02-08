@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ssafy.udong.dto.ClubPostDto;
 import com.ssafy.udong.dto.ClubPostParamDto;
 import com.ssafy.udong.dto.ClubPostResultDto;
+import com.ssafy.udong.dto.ClubResultDto;
 import com.ssafy.udong.dto.CommentDto;
 import com.ssafy.udong.dto.CommentResultDto;
 import com.ssafy.udong.dto.LikeDto;
@@ -45,8 +46,8 @@ public class ClubPostController {
 			+ " - postContent : 글 내용\n" + " - isOpen : 공개 여부(true/false 또는 1/0으로 구분)\n" + "## 가능값\n"
 			+ " - postTag : 태그\n")
 	@PostMapping
-	private ResponseEntity<String> createClubPost(@RequestBody ClubPostDto clubPostDto,
-			@RequestParam(value = "file", required = false) List<MultipartFile> files) {
+	private ResponseEntity<String> createClubPost(ClubPostDto clubPostDto,
+			@RequestParam(value = "file", required = false) MultipartFile[] files) {
 		System.out.println("그룹게시판");
 		int result = service.createClubPost(clubPostDto, files);
 
@@ -235,6 +236,23 @@ public class ClubPostController {
 			return new ResponseEntity<CommentResultDto>(commentResultDto, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
+	// 글에 대한 좋아요 조회
+	@ApiOperation(value = "게시 글 좋아요 조회", notes = "그룹 게시판에 노출되는 글에 좋아요를 했는지 조회합니다.\n" + "## 필수값\n"
+			+ " - postId : 좋아요 표시될 게시글 아이디\n" + " - userId : 사용자 아이디\n" + " - clubId : 게시글이 속한 그룹 아이디\n")
+	@GetMapping(value = "/like")
+	private ResponseEntity<String> selectClubPostLike(@RequestParam(value="userId") String userId, @RequestParam(value="postId") String postId, @RequestParam(value="clubId") String clubId) {
+		try {
+			int result = service.selectClubPostLike(userId, postId, clubId);
+			if(result != 0)
+				return new ResponseEntity<String>("true", HttpStatus.OK);
+			else
+				return new ResponseEntity<String>("false", HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>("FAILURE: club post like select", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 
 	// 글에 대한 좋아요기능
 	@ApiOperation(value = "게시 글 좋아요", notes = "그룹 게시판에 노출되는 글에  좋아요를 합니다.\n" + "## 필수값\n"
@@ -250,6 +268,24 @@ public class ClubPostController {
 			return new ResponseEntity<String>("게시글 좋아요 취소 성공", HttpStatus.OK);
 		} else {
 			return new ResponseEntity<String>("게시글 좋아요 실패", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	// 댓글에 대한 좋아요 조회기능
+	@ApiOperation(value = "게시글 댓글 좋아요 조회", notes = "그룹 게시판에 노출되는 글의 댓글에 좋아요를 했는지 조회합니다.\n" + "## 필수값\n"
+			+ " - userId : 사용자 아이디\n" + " - postId : 댓글이 달린 게시글 아이디\n" + " - clubId : 게시글이 속한 그룹 아이디\n"
+			+ " - commentId : 좋아요 표시될 댓글 아이디\n")
+	@GetMapping(value = "/comment/like")
+	private ResponseEntity<String> selectClubPostCommentLike(@RequestParam(value="userId") String userId, @RequestParam(value="postId") String postId, @RequestParam(value="clubId") String clubId, @RequestParam(value="commentId") String commentId ) {
+		try {
+			int result = service.selectClubPostCommentLike(userId, postId, clubId, commentId);
+			if(result != 0)
+				return new ResponseEntity<String>("true", HttpStatus.OK);
+			else
+				return new ResponseEntity<String>("false", HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>("FAILURE: club post comment like select", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
