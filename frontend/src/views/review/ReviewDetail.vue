@@ -6,19 +6,18 @@
       <img alt="Vue logo" src="@/assets/udonge.png" style="width: 10%">
       <div>개발자님 환영합니다!!!</div>
     </div>     -->
-<<<<<<< HEAD
 
     <!-- 1. 이미지 -->
     <b-carousel
       id="carousel-1"
       v-model="slide"
-      :interval="2000"
       controls
       indicators
       background="#ababab"
       img-width="1024"
       img-height="480"
       style="text-shadow: 1px 1px 2px #333;"
+      fade="true"
     >
 
       <b-carousel-slide v-for="(item, index) in fileId"
@@ -28,23 +27,8 @@
         :img-src="url+`/review/download/` + item" 
       ></b-carousel-slide>
 
-
-  
-      <!-- Text slides with image -->
-
     </b-carousel>
-    <!-- 2. store 정보 -->
-=======
-    carousal  
-    <div id="roadview" class="mb-5">
-      <!-- 1. 이미지 -->
 
-      <!-- <p class="mt-4">
-        Slide #: {{ slide }}<br>
-        Sliding: {{ sliding }}
-      </p> -->
-    </div>
->>>>>>> d52ec7cf9f33a62f94a156b6b73f4c9bd37b6937
 
     <!-- 2. store 정보 -->
     <div class="my-5 py-5">
@@ -95,15 +79,17 @@ export default {
       reviews2: [],
       key: Object,
       // store : Object,
-      slide: 0,
       sliding: null,
       getStoreReviewList: {},
       bestReviewlist: {},
       url : SERVER_URL,
       fileId : [],
-      thumbnailContent : [],
       temp : "",
       flag : false,
+
+      // Carousel에 사용하는 데이터
+      slide: 0,
+      thumbnailContent : [],
     };
   },
   computed: {
@@ -125,8 +111,6 @@ export default {
     // this.temp = "",
     await this.getReview();
     await this.getStore();
-
-
 
     // console.log(this.store);
     // this.store = this.key;

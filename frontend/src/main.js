@@ -1,4 +1,5 @@
 import Vue from 'vue'
+
 import App from './App.vue'
 import store from './store'
 import router from './router'
@@ -15,6 +16,8 @@ import vSelect from 'vue-select'  // vue-select
 import VuePackeryPlugin from 'vue-packery-plugin'
 import VueDraggabillyPlugin from 'vue-packery-draggabilly-plugin'
 import Mint from 'mint-ui';
+import coverflow from 'vue-coverflow'
+
 
 
 localize('ko', ko)
@@ -30,6 +33,7 @@ Vue.use(ToggleButton)
 Vue.use(VuePackeryPlugin)
 Vue.use(VueDraggabillyPlugin) // Packery Draggabilly
 Vue.use(Mint);  // Mint UI
+Vue.use(coverflow)
 Vue.component('v-select', vSelect)  // vue-select
 Vue.config.productionTip = false
 
