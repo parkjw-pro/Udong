@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -57,8 +58,8 @@ public class ReviewController {
 			"## 가능값\n" + " - files : 리뷰 사진 (List<MultipartFile> 형식)")
 	@PostMapping
 	private ResponseEntity<String> createReview(ReviewDto reviewDto,
-			@RequestParam(value = "file", required = false) MultipartFile[] files) {
-		System.out.println(files[0].getOriginalFilename());
+			@RequestParam(value = "file", required = false) MultipartFile[] files)throws NullPointerException{
+//		System.out.println(files[0].getOriginalFilename());
 		try {
 			if (service.createReview(reviewDto, files) == SUCCESS)
 				return new ResponseEntity<String>("SUCCESS: review creation", HttpStatus.OK);

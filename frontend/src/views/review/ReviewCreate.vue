@@ -174,12 +174,12 @@ export default {
     },
     createReview: function() {
       // console.log(this.previewImageData[0]);
-      console.log(this.files);
-      console.log(this.files[0].name);
-      console.log(this.review.reviewContent);
-      console.log(this.review.rate);
-      console.log(this.store.storeId);
-      console.log(this.review.userId);
+      // console.log(this.files);
+      // console.log(this.files[0].name);
+      // console.log(this.review.reviewContent);
+      // console.log(this.review.rate);
+      // console.log(this.store.storeId);
+      // console.log(this.review.userId);
       var formData = new FormData();
       formData.append('reviewContent', this.review.reviewContent);
       formData.append('rate', this.review.rate);
@@ -188,6 +188,10 @@ export default {
       for (let i = 0; i < this.files.length; i++) {
         formData.append('file', this.files[i]);
       }
+      if(this.files == null){
+        formData.append('file', "1");
+      }
+
       console.log(this.files);
       // formData.append('club', this.club)
       console.log(formData);
