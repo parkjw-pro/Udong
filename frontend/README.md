@@ -24,12 +24,13 @@ npm install --save @fortawesome/fontawesome-free
 npm install vue-js-toggle-button --save
 npm install vee-validate --save
 npm install vue-select
-npm i vue-slick-carousel
 npm install packery
 npm install --save vue-packery-draggabilly-plugin
 npm install jquery
 npm install mint-ui -S
 npm i vue-star-rating
+npm install vue-coverflow --save
+npm i vue-slick-carousel
 ```
 
 ### 폴더 구조
