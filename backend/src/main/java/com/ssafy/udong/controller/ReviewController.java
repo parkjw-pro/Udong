@@ -1,10 +1,18 @@
 package com.ssafy.udong.controller;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -22,6 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ssafy.udong.dto.ReportDto;
 import com.ssafy.udong.dto.ReviewDto;
 import com.ssafy.udong.dto.ReviewResultDto;
+import com.ssafy.udong.service.ClubService;
 import com.ssafy.udong.service.ReviewService;
 
 import io.swagger.annotations.Api;
@@ -35,6 +44,8 @@ public class ReviewController {
 
 	@Autowired
 	ReviewService service;
+	@Autowired
+	ClubService clubService;
 
 	private static final int SUCCESS = 1;
 	private static final int FAIL = -1;
@@ -47,8 +58,8 @@ public class ReviewController {
 			"## 가능값\n" + " - files : 리뷰 사진 (List<MultipartFile> 형식)")
 	@PostMapping
 	private ResponseEntity<String> createReview(ReviewDto reviewDto,
-			@RequestParam(value = "file", required = false) MultipartFile[] files) {
-		System.out.println(files[0].getOriginalFilename());
+			@RequestParam(value = "file", required = false) MultipartFile[] files)throws NullPointerException{
+//		System.out.println(files[0].getOriginalFilename());
 		try {
 			if (service.createReview(reviewDto, files) == SUCCESS)
 				return new ResponseEntity<String>("SUCCESS: review creation", HttpStatus.OK);
@@ -90,8 +101,13 @@ public class ReviewController {
 			"## 필수값\n" + " - reviewId : 조회할 리뷰 아이디\n")
 	@GetMapping(value = "/{reviewId}")
 	private ResponseEntity<ReviewResultDto> selectReview(@PathVariable String reviewId) {
+		System.out.println("review");
+		
 		try {
+			System.out.println("review1");
 			ReviewResultDto resultDto = service.selectReview(reviewId);
+			System.out.println("review2");
+			
 			return new ResponseEntity<ReviewResultDto>(resultDto, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -172,6 +188,23 @@ public class ReviewController {
 			e.printStackTrace();
 			return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+	}
+	@GetMapping("/download/{fileId}")
+	public ResponseEntity<Resource> download(@PathVariable String fileId) throws IOException {
+		System.out.println("다운로드" +fileId);
+		List<String> url = clubService.selectFileUrl(fileId);
+		System.out.println("가져온 url:" +url.get(0));
+		System.out.println("./uploads/review/"+url.get(0).substring(15));
+		String madeUrl = "./uploads/review/"+url.get(0).substring(15);
+		Path path = Paths.get(madeUrl);
+			
+		String contentType = Files.probeContentType(path);
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.add(HttpHeaders.CONTENT_TYPE, contentType);
+
+		Resource resource = new InputStreamResource(Files.newInputStream(path));
+		return new ResponseEntity<>(resource, headers, HttpStatus.OK);
 	}
 
 }

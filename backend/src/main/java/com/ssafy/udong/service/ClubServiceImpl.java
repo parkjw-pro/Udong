@@ -309,7 +309,16 @@ public class ClubServiceImpl implements ClubService {
 
 	@Override
 	public List<String> selectFileUrl(String clubId) {
-		return clubDao.selectFileUrl(clubId);
+		
+		try {
+			List<String> list = clubDao.selectFileUrl(clubId);
+			System.out.println(list.get(0));
+			return list;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+
 	}
 
 

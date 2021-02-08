@@ -7,7 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class ReviewResultDto {
 	
 	ReviewDto dto;
-	List<String> fileUrl;
+	List<String> fileId;
 	
 	public ReviewResultDto() {}
 	
@@ -17,14 +17,15 @@ public class ReviewResultDto {
 	public void setDto(ReviewDto dto) {
 		this.dto = dto;
 	}
-	public List<String> getFileUrl() {
-		return fileUrl;
+
+	public List<String> getFileId() {
+		return fileId;
 	}
-	public void setFileUrl(List<String> fileUrl) {
-		this.fileUrl = fileUrl;
+
+	public void setFileId(List<String> fileId) {
+		this.fileId = fileId;
 	}
-	
-	
+
 	
 	
 

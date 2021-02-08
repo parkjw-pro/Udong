@@ -8,10 +8,9 @@
             <span >{{review.nickname}}</span>
           </b-card-text>
         </template>
-        <div> <!-- for 문 -->
-          <b-card-img class="col-4 mb-5" src="https://placekitten.com/480/210" alt="Image" bottom></b-card-img>
-          <b-card-img class="col-4 mb-5" src="https://placekitten.com/480/210" alt="Image" bottom></b-card-img>
-          <b-card-img class="col-4 mb-5" src="https://placekitten.com/480/210" alt="Image" bottom></b-card-img>
+        <div v-for="(item, index) in fileId"
+        :key="index"> <!-- for 문 -->
+          <b-card-img class="col-4 mb-5" :src="url+`/review/download/` + item" alt="Image" bottom></b-card-img>
         </div>
         <p>{{review.reviewContent}}</p>
         <template #footer>
@@ -29,7 +28,9 @@
 </template>
 
 <script>
+import axios from 'axios';
 
+const SERVER_URL = process.env.VUE_APP_SERVER_URL
 // import { mdbInput, mdbContainer } from 'mdbvue';
 
 export default {
@@ -41,10 +42,14 @@ export default {
   props: {
     review : Array
 
+
   },
   data: function() {
     return {
 
+      reviewDetail : {},
+      url : SERVER_URL,
+      fileId : Array
       
 
       
@@ -56,7 +61,24 @@ export default {
   created()  {
 
   },
+  mounted(){
+    this.GetReviewDetail();
+    
+  },
   methods: {
+      GetReviewDetail: function() {
+      axios
+      .get(`${SERVER_URL}/review/` + `${this.review.reviewId}`)
+      .then((response) => {
+        this.fileId = response.data.fileId;
+
+        console.log( this.fileId);
+
+      })
+      .catch((response) => {
+        console.log(response);
+      });
+    },
 
   },
 };
