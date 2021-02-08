@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.ssafy.udong.dto.ImageDto;
+import com.ssafy.udong.dto.LikeDto;
 import com.ssafy.udong.dto.ReportDto;
 import com.ssafy.udong.dto.ReviewDto;
 
@@ -63,5 +64,10 @@ public interface ReviewDao {
 	// 리뷰 신고 추가
 	public int createReviewReport(ReportDto reportDto);
 	public List<String> selectFileId(String reviewId);
+	public String selectReviewLike(LikeDto likeDto);
+	public void createReviewLike(LikeDto likeDto);
+	public void deleteReviewLike(LikeDto likeDto);
+	public void updateReviewLikeCount(LikeDto likeDto);
+	public void deleteReviewLikeCount(LikeDto likeDto);
 
 }

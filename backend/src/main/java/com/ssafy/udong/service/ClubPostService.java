@@ -39,8 +39,12 @@ public interface ClubPostService {
 	int createClubPostComment(CommentDto commentDto);
 
 	CommentResultDto selectClubPostComment(String postId);
+	
+	int selectClubPostLike(String userId, String postId, String clubId);
 
 	int createClubPostLike(LikeDto likeDto);
+	
+	int selectClubPostCommentLike(String userId, String postId, String clubId, String commentId);
 
 	int createClubPostCommentLike(LikeDto likeDto);
 

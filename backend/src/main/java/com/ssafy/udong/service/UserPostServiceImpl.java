@@ -223,6 +223,20 @@ public class UserPostServiceImpl implements UserPostService {
 	}
 
 	@Override
+	public int selectUserPostLike(String userId, String postId) {
+		try {
+			LikeDto likeDto = new LikeDto();
+			likeDto.setUserId(userId);
+			likeDto.setPostId(postId);
+			if (userPostDao.selectUserPostLike(likeDto) != null)
+				return 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	@Override
 	public int createUserPostLike(LikeDto likeDto) {
 		try {
 			if (userPostDao.selectUserPostLike(likeDto) == null) {
@@ -238,6 +252,21 @@ public class UserPostServiceImpl implements UserPostService {
 		}
 	}
 
+	@Override
+	public int selectClubPostCommentLike(String userId, String postId, String commentId) {
+		try {
+			LikeDto likeDto = new LikeDto();
+			likeDto.setUserId(userId);
+			likeDto.setPostId(postId);
+			likeDto.setCommentId(commentId);
+			if (userPostDao.selectUserPostLike(likeDto) != null)
+				return 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	
 	@Override
 	public int createUserPostCommentLike(LikeDto likeDto) {
 		try {
@@ -328,5 +357,6 @@ public class UserPostServiceImpl implements UserPostService {
 
 		return userPostResultDto;
 	}
+
 
 }

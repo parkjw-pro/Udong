@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.udong.dao.ReviewDao;
 import com.ssafy.udong.dto.ImageDto;
+import com.ssafy.udong.dto.LikeDto;
 import com.ssafy.udong.dto.ReportDto;
 import com.ssafy.udong.dto.ReviewDto;
 import com.ssafy.udong.dto.ReviewResultDto;
@@ -188,6 +189,39 @@ public class ReviewServiceImpl implements ReviewService {
 	public int createReviewReport(ReportDto reportDto) {
 		try {
 			return dao.createReviewReport(reportDto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+
+	@Override
+	public int selectReviewLike(String userId, String reviewId) {
+		try {
+			LikeDto likeDto = new LikeDto();
+			likeDto.setUserId(userId);
+			likeDto.setReviewId(reviewId);
+			if (dao.selectReviewLike(likeDto) != null)
+				return 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	@Override
+	public int createReviewLike(LikeDto likeDto) {
+		try {
+			if (dao.selectReviewLike(likeDto) == null) {
+				dao.createReviewLike(likeDto);
+			//	dao.updateReviewLikeCount(likeDto);
+				
+				return 1;
+			} else {
+				dao.deleteReviewLike(likeDto);
+			//	dao.deleteReviewLikeCount(likeDto);
+				return 2;
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			return 0;
