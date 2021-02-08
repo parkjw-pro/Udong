@@ -37,7 +37,7 @@ public interface ReviewDao {
 	
 	//1개의 리뷰 상세보기
 	public  ReviewDto SelectReview(String review_id);
-	public List<String> SelectFileUrl(String id); 
+//	public List<String> SelectFileUrl(String id); 
 	
 	//리뷰삭제
 	public int DeleteReview(String review_id);
@@ -62,5 +62,6 @@ public interface ReviewDao {
 
 	// 리뷰 신고 추가
 	public int createReviewReport(ReportDto reportDto);
+	public List<String> selectFileId(String reviewId);
 
 }

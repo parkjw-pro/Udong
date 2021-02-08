@@ -129,12 +129,12 @@ public class ReviewServiceImpl implements ReviewService {
 			dto.setNickname(dao.findNickname(dto.getUserId()));
 
 			//리뷰 사진 조회
-			List<String> list = dao.selectFileUrl(reviewId);
+			List<String> list = dao.selectFileId(reviewId);
 
 			//리뷰 결과 dto 생성
 			ReviewResultDto rdto = new ReviewResultDto();
 			rdto.setDto(dto);
-			rdto.setFileUrl(list);
+			rdto.setFileId(list);
 
 			return rdto;
 		} catch (Exception e) {
