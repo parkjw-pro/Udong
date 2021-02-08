@@ -58,7 +58,7 @@ export default {
     // mdbContainer,
   },
   props: {
-    review : Array
+    review : {},
 
 
   },
@@ -94,8 +94,13 @@ export default {
       formData.append('reviewId', this.review.reviewId);
       formData.append('storeId', this.review.storeId);
       formData.append('userId', this.review.userId);
+      // var likeDto = [
+      //   reviewId = this.review.reviewId,
+      //   storeId =  this.review.storeId,
+      //   userId = this.review.userId
+      // ]
       axios
-      .get(`${SERVER_URL}/review/comment/like` + formData, {
+      .post(`${SERVER_URL}/review/comment/like` + formData,{
           headers: { 'Content-Type': `application/json; charset=UTF-8` },
         })
       .then((response) => {
