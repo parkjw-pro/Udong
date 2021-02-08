@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ssafy.udong.dto.LikeDto;
 import com.ssafy.udong.dto.ReportDto;
 import com.ssafy.udong.dto.ReviewDto;
 import com.ssafy.udong.dto.ReviewResultDto;
@@ -36,6 +37,8 @@ public interface ReviewService {
 
 	//리뷰 신고
 	public int createReviewReport(ReportDto reportDto);
+
+	public int createReviewtLike(LikeDto likeDto);
 
 
 }

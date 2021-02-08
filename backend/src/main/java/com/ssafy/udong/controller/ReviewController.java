@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ssafy.udong.dto.LikeDto;
 import com.ssafy.udong.dto.ReportDto;
 import com.ssafy.udong.dto.ReviewDto;
 import com.ssafy.udong.dto.ReviewResultDto;
@@ -205,6 +206,24 @@ public class ReviewController {
 
 		Resource resource = new InputStreamResource(Files.newInputStream(path));
 		return new ResponseEntity<>(resource, headers, HttpStatus.OK);
+	}
+	
+	// 리뷰에 대한 좋아요기능
+	@ApiOperation(value = "리뷰에 좋아요", notes = "리뷰에 좋아요를 합니다.\n" + "## 필수값\n"
+			+ " - userId : 좋아요를 누른 사용자 아이디\n" + " - postId : 댓글이 달린 게시글 아이디\n" + " - clubId : 게시글이 속한 그룹 아이디\n"
+			+ " - commentId : 좋아요 표시될 댓글 아이디\n")
+	@PostMapping(value = "/comment/like")
+	private ResponseEntity<String> createReviewtLike(@RequestBody LikeDto likeDto) {
+
+		int result = service.createReviewtLike(likeDto);
+
+		if (result == 1) {
+			return new ResponseEntity<String>("리뷰 좋아요 성공", HttpStatus.OK);
+		} else if (result == 2) {
+			return new ResponseEntity<String>("리뷰 좋아요 취소 성공", HttpStatus.OK);
+		} else {
+			return new ResponseEntity<String>("댓글 좋아요 실패", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 }

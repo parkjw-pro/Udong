@@ -3,20 +3,20 @@
     <!-- <b-card-group deck> -->
       <b-card header-tag="header" footer-tag="footer"> <!-- title="Title" 속성 사용 가능  -->
         <template #header>
-          <b-card-text class="font-weight-bold">
+          <b-card-text class="font-weight-bold" >
             <span class="mr-5">뱃지 img</span>
             <span >{{review.nickname}}</span>
           </b-card-text>
         </template>
-        <div v-for="(item, index) in fileId"
-        :key="index"> <!-- for 문 -->
-          <b-card-img class="col-4 mb-5" :src="url+`/review/download/` + item" alt="Image" bottom></b-card-img>
+        <div > <!-- for 문 -->
+          <b-card-img v-for="(item, index) in fileId"
+        :key="index" class="col-4 mb-5" :src="url+`/review/download/` + item" alt="Image" bottom></b-card-img>
         </div>
         <p>{{review.reviewContent}}</p>
         <template #footer>
           <div style="text-align: left;">
             <b-icon icon="suit-heart" variant="danger"></b-icon>
-            <b-icon icon="suit-heart-fill" variant="danger"></b-icon>
+            <b-icon icon="suit-heart-fill" variant="danger" @click="UpdateReviewLike"></b-icon>
             <small class="ml-2">{{review.reviewLikeCount}}명이 좋아합니다.</small>
           </div>
         </template>
@@ -79,13 +79,34 @@ export default {
         console.log(response);
       });
     },
+    UpdateReviewLike: function() {
+      var formData = new FormData();
+      formData.append('reviewId', this.review.reviewId);
+      formData.append('storeId', this.review.storeId);
+      formData.append('userId', this.review.userId);
+      axios
+      .get(`${SERVER_URL}/review/comment/like` + formData, {
+          headers: { 'Content-Type': `application/json; charset=UTF-8` },
+        })
+      .then((response) => {
+        this.fileId = response.data.fileId;
+
+        console.log( this.fileId);
+
+      })
+      .catch((response) => {
+        console.log(response);
+      });
+    },
 
   },
 };
 </script>
 
 <style>
-  
+  /* b-card-text{
+   background-color: blue;
+  } */
   /* 적용안됨 */
   b-card-img {
     height: 5px;

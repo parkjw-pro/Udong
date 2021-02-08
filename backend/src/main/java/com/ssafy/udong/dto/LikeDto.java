@@ -7,6 +7,7 @@ public class LikeDto {
 	private String clubId;
 	private String userId;
 	private String storeId;
+	private String reviewId;
 	
 	
 	public LikeDto() {
@@ -40,6 +41,12 @@ public class LikeDto {
 	}
 	public void setStoreId(String storeId) {
 		this.storeId = storeId;
+	}
+	public String getReviewId() {
+		return reviewId;
+	}
+	public void setReviewId(String reviewId) {
+		this.reviewId = reviewId;
 	}
 
 	
