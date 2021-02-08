@@ -1,14 +1,15 @@
 <template>
   <div id="box">
+    <!-- 1. Carousal -->
     <!-- <div id="dummy">
       <h5>페이지가 정상적으로 작동중입니다!!!!</h5>
       <img alt="Vue logo" src="@/assets/udonge.png" style="width: 10%">
       <div>개발자님 환영합니다!!!</div>
     </div>     -->
-
+    carousal  
     <div id="roadview" class="mb-5">
       <!-- 1. 이미지 -->
-dd
+
       <!-- <p class="mt-4">
         Slide #: {{ slide }}<br>
         Sliding: {{ sliding }}
@@ -16,30 +17,33 @@ dd
     </div>
 
     <!-- 2. store 정보 -->
-    <div style="text-align: left;">
-      <div>
-        <h3>{{ store.storeName }}</h3>
-      </div>
+    <div class="my-5 py-5">
+      <b-row style="text-align: justify;">
+        <b-col>
+          <h2 style="font-family: 'Hanna', sans-serif;">{{ store.storeName }}</h2>
+        </b-col>
+        <b-button style="background-color: #695549;" @click="createReview">리뷰쓰기</b-button>
+      </b-row>
       <hr />
-      <p>주소: {{ store.storeAddr }}</p>
-      <p>카테고리: {{ store.storeCtg2 }}</p>
-      <p></p>
-      <p></p>
+      <div style="text-align: left;">
+        <p>주소: {{ store.storeAddr }}</p>
+        <p>카테고리: {{ store.storeCtg2 }}</p>
+      </div>
     </div>
+
     <!-- 여기서 for문 -->
     <div v-for="(item, index) in bestReviewlist" :key="index">
       <ReviewBlock :review="item" />
     </div>
     <div v-if="!reviews.length">
       <div id="box">
-        <img class="mt-5" alt="Vue logo" src="@/assets/udonge.png" style="width: 25%" />
-        <div style="font-family: 'Nanum Pen Script', cursive;">
-          <h3>리뷰가 없어요 ㅠㅠ</h3>
-          <h4 style="font-family: 'Hachi Maru Pop', cursive;">レビューがありません!</h4>
-        </div>
+        <img class="my-5" alt="Vue logo" src="@/assets/udonge.png" style="width: 25%" />
+        <h5>아직 작성된 리뷰가 없어요...</h5>
+        <h5>첫 리뷰 작성자가 되어주세요 <b-icon icon="heart-fill" variant="danger"></b-icon></h5>
+        <a href="" @click="createReview">리뷰 작성하러 가기!</a>
       </div>
     </div>
-    <b-button @click="createReview">리뷰쓰기</b-button>
+    
   </div>
 </template>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=${MAP_API_KEY}"></script>

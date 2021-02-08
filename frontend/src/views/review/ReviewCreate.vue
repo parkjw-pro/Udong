@@ -1,118 +1,91 @@
 <template>
   <div id="box">
     <!-- 리뷰가게명 -->
-    <!-- <h3>{{ store.name }}</h3> -->
+    <div>
+      <h1>
+        <span style="font-family: 'Hanna', sans-serif;">{{ store.storeName }} </span>
+        <span class="small">리뷰하기</span>
+      </h1>
+      <h4 class="small">{{ store.storeAddr}}</h4>
+    </div>
 
     <!-- 1. 평점 -->
-    <b-row class="mx-5 mb-5" align-h="justify">
-      <b-col
-        ><b-icon id="emoji_rate" icon="emoji-smile" font-scale="4" @click="rate3"></b-icon
-      ></b-col>
-      <b-col
-        ><b-icon id="emoji_rate" icon="emoji-neutral" font-scale="4" @click="rate2"></b-icon
-      ></b-col>
-      <b-col
-        ><b-icon id="emoji_rate" icon="emoji-frown" font-scale="4" @click="rate1"></b-icon
-      ></b-col>
+    <b-row class="my-3" align-h="center">
+      <star-rating v-model="review.rate" star-size="40" show-rating="true" active-on-click="true"></star-rating>
     </b-row>
-
+    
     <!-- 2. 리뷰 내용 -->
-    <div class="mx-5 px-5">
+    <div class="mx-5 px-5 mt-2">
       <b-form-textarea
         id="textarea-rows"
         v-model="review.reviewContent"
         placeholder="소중한 리뷰를 남겨주세요!"
-        rows="14"
+        rows="12"
         class="text-align-center my-3"
+        maxlength="500"
       ></b-form-textarea>
-      <p style="text-align: right;">글자 수: {{ contentLength }} / 500</p>
+      <p style="text-align: right;">{{ contentLength }} / 500</p>
     </div>
 
     <!-- 3. 이미지 -->
-    <b-container fluid class="p-4 mb-5">
+    <b-container fluid class="p-4 mb-3" style="width: 70%;">
       <b-row>
-        <b-col>
-          <b-img
-            left
-            thumbnail
-            fluid
-            src="https://picsum.photos/250/250/?image=54"
-            alt="Image 1"
-          ></b-img>
+        <!-- 여기서 for문을 돌리면 된다! -->
+        <b-col class="mr-0 pr-0" style="width:80%;">
+          <b-img thumbnail fluid src="https://picsum.photos/250/250/?image=54" alt="Image 1"></b-img>
         </b-col>
-        <b-col>
-          <b-img
-            left
-            thumbnail
-            fluid
-            src="https://picsum.photos/250/250/?image=58"
-            alt="Image 2"
-          ></b-img>
+        <b-col class="mr-0 pr-0" style="width:80%;">
+          <b-img thumbnail fluid src="https://picsum.photos/250/250/?image=54" alt="Image 1"></b-img>
+        </b-col>
+        <b-col class="ml-0 pl-0" align-self="center">
+          <b-icon icon="plus" v-b-modal.image-modal font-scale="4" variant="dark" style="cursor: pointer;" >
+            &nbsp;
+          </b-icon>
         </b-col>
       </b-row>
     </b-container>
 
-    <b-container fluid class="pa-0">
-      <b-row align="center">
-        <b-col cols="12" sm="12" md="12">
-          <div class="text-center">
-            <div class="my-2">
-              <b-btn @click="$bvModal.show('bv-modal-example')" large color="blue" dark>
-                <!-- openDialog 클릭 이벤트 -->
-                파일 업로드&nbsp;
-              </b-btn>
-            </div>
-          </div>
-        </b-col>
-      </b-row>
-    </b-container>
-    <b-modal id="bv-modal-example" persistent max-width="900px">
-      <b-card>
-        <b-card-title>
-          <template>
-            <b-icon style="margin-right:10px;" large color="#41B883">cloud_upload</b-icon>
-            <span class="headline" large>파일 업로드  </span>
-          </template>
-          <b-spacer></b-spacer>
-          <b-btn icon @click="$bvModal.hide('bv-modal-example')">
-            <!-- closeDialog 클릭 이벤트 -->
-            <b-icon>clear</b-icon>
-          </b-btn>
-        </b-card-title>
-        <b-card-text>
-          <b-row>
-            <b-col
-              cols="12"
-              sm="12"
-              md="12"
-              style="position: relative; border:1px solid #41B883; border-style:dashed; "
-            >
-              <!-- 업로드 컴포넌트 -->
-              <b-form-file
-                multiple="multiple"
-                v-model="files"
-                :state="Boolean(file1)"
-                placeholder="첨부파일 없음"
-                drop-placeholder="Drop file here..."
-                required
-                accept=".jpg, .png, .gif"
-                @change="previewImage"
-                style="width: 70%;"
-              ></b-form-file>
-            </b-col>
-          </b-row>
-        </b-card-text>
-      </b-card>
+    <!-- 이미지 업로더 modal -->
+    <b-modal 
+      id="image-modal"
+      title="소중한 사진을 올려주세요!"
+      style="font-family: 'Jeju Gothic', sans-serif;"
+    >
+      <b-form-file
+        multiple="multiple"
+        v-model="files"
+        :state="Boolean(file1)"
+        placeholder="첨부파일 없음"
+        drop-placeholder="Drop file here..."
+        required
+        accept=".jpg, .png, .gif"
+        @change="previewImage()"
+        style="width: 70%;"
+      ></b-form-file>
     </b-modal>
-    <b-row align-h="between" class="mx-5 mb-5">
-      <b-button variant="info">취소</b-button>
-      <b-button @click="createReview">확인</b-button>
+
+
+
+    <b-row align-h="center">
+      <b-col cols="3">
+        <b-button size="lg" variant="danger" v-b-modal.review-cancel-modal>돌아가기</b-button>
+      </b-col>
+      <b-col cols="3">
+        <b-button size="lg" style="background-color: #695549;" @click="createReview">리뷰작성</b-button>
+      </b-col>
     </b-row>
+
+    <!-- 돌아가기 버튼 클릭 후 나타나는 modal -->
+    <b-modal id="review-cancel-modal" @ok="toBack">
+      리뷰 작성을 취소하시겠습니까?
+    </b-modal>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import StarRating from 'vue-star-rating'
+
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
 export default {
@@ -120,114 +93,115 @@ export default {
   // props: {
   //   store: Object,
   // },
-  components: {},
+  components: {
+    StarRating,
+  },
   data: function() {
     return {
+      storeId: '',
+      store: {},
       review: {
         userId: '',
         reviewContent: '',
-        rate: 1,
+        rate: 0,
         nickName: '',
       },
-      store: {},
-      storeId: '',
+      
       modal: false, //true : modal열림, false : modal닫힘
       files: [],
-    };
-  },
-  mounted: async function() {
-    this.storeId = this.$route.params.storeId
-    await this.getStore()
-    console.log(this.store);
-    this.review.userId = JSON.parse(localStorage.getItem('Login-token'))['user-id'];
+      
+      isValid: 0,
+    }
   },
   computed: {
     contentLength: function() {
       return this.review.reviewContent.length;
     },
+    stars: function () {
+      console.log(this.review.rate)
+      return this.review.rate
+    },
   },
   methods: {
+    // store 정보 가져오기
     getStore: function() {
       axios
       .get(`${SERVER_URL}/store/` + `${this.storeId}`)
-      .then((response) => {
-        this.store = response.data;
+      .then((res) => {
+        // console.log(res)
+        this.store = res.data;
       })
-      .catch((response) => {
-        console.log(response);
+      .catch((err) => {
+        console.log(err);
       });
     },
-    rate1: function() {
-      this.review.rate = 1;
-    },
-    rate2: function() {
-      this.review.rate = 2;
-    },
-    rate3: function() {
-      this.review.rate = 3;
-    },
-    checkReview: function() {
-      // 유효성 검사!!!
-      // if (review.rate === -1) {
-      // modal창 띄우기: "평점을 선택해주세요!"
-      console.log('checkreview');
+    // 작성한 리뷰 유효성 검사!!!
+    checkValidity: function() {
+      if (this.review.rate == 0) {
+        this.isValid = 0
+        alert("평점을 선택해주세요!")
+      } else if (this.review.reviewContent.length < 10) {
+        this.isValid = 0
+        alert("리뷰를 10자 이상 작성해주세요!")
+      } else {
+        this.isValid = 1
+      }
     },
     createReview: function() {
-      // console.log(this.previewImageData[0]);
-      // console.log(this.files);
-      // console.log(this.files[0].name);
-      // console.log(this.review.reviewContent);
-      // console.log(this.review.rate);
-      // console.log(this.store.storeId);
-      // console.log(this.review.userId);
-      var formData = new FormData();
-      formData.append('reviewContent', this.review.reviewContent);
-      formData.append('rate', this.review.rate);
-      formData.append('storeId', this.store.storeId);
-      formData.append('userId', this.review.userId);
-      for (let i = 0; i < this.files.length; i++) {
-        formData.append('file', this.files[i]);
-      }
-      if(this.files == null){
-        formData.append('file', "1");
+      this.checkValidity()
+      if (this.isValid) {
+        var formData = new FormData();
+        formData.append('reviewContent', this.review.reviewContent);
+        formData.append('rate', this.review.rate);
+        formData.append('storeId', this.store.storeId);
+        formData.append('userId', this.review.userId);
+        for (let i = 0; i < this.files.length; i++) {
+          formData.append('file', this.files[i]);
+        }
+        if(this.files == null){
+          formData.append('file', "1");
+        }
+
+        // review 내용 줄바꾸기
+        var text = document.getElementById("textarea-rows").value;
+        text = text.replace(/(?:\r\n|\r|\n)/g, '<br/>')
+        document.getElementById("textarea-rows").value = text
+        this.review.reviewContent = text
+
+        console.log(this.files);
+        // formData.append('club', this.club)
+        console.log(formData);
+        // if (this.verification) {
+          axios
+          .post(`${SERVER_URL}/review`, formData, {
+            headers: { 'Content-Type': `application/json; charset=UTF-8` },
+          })
+          .then(() => {
+            console.log('응으응')
+            console.log(this.store)
+            this.$router.push({ name: 'ReviewDetail', params: { storeId: this.storeId } });
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       }
 
-      console.log(this.files);
-      // formData.append('club', this.club)
-      console.log(formData);
-      // if (this.verification) {
-      axios
-        .post(`${SERVER_URL}/review`, formData, {
-          headers: { 'Content-Type': `application/json; charset=UTF-8` },
-        })
-        .then(() => {
-          console.log('응으응')
-          console.log(this.store)
-          this.$router.push({ name: 'ReviewDetail', params: { storeId: this.storeId } });
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-      // }
-      //  else {
-      //    this.isVerified = false
-      //  }
     },
-
-    openmodal() {
-      //Dialog 열리는 동작
-      this.modal = true;
+    toBack: function () {
+      window.history.back()
     },
-    closemodal() {
-      //Dialog 닫히는 동작
-      this.modal = false;
+    // 이미지 preview 보여주는 함수
+    previewImage: function () {
+      
     },
+  },
+  async mounted () {
+    this.storeId = this.$route.params.storeId
+    await this.getStore()
+    this.review.userId = JSON.parse(localStorage.getItem('Login-token'))['user-id'];
   },
 };
 </script>
 
 <style>
-#emoji_rate {
-  cursor: pointer;
-}
 </style>

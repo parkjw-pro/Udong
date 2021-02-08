@@ -256,15 +256,25 @@ export default {
       background-color: rgb(63, 63, 65); /* Black*/
       overflow-x: hidden; /* Disable horizontal scroll */
       padding-top: 60px; /* Place content 60px from the top */
-      transition: 0.5s; /*0.5 second transition effect to slide in the sidenav*/
+      transition: 0.8s; /*0.5 second transition effect to slide in the sidenav*/
     }
 
     /* 메뉴가 펼쳐졌을 때의 배경 색상 */
     .bm-overlay {
       /* 펼쳤을 때 어두워지는 효과를 표현하고 싶다! */
-      /* background: cover; */
-      /* background: red; */
+      /* content: '';
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 400;
+      background-color: rgba(0,0,0,0.75); */
+
+      /* background-position: cover; */
     }
+
     .bm-item-list {
       color: #b8b7ad;
       margin-left: 10%;

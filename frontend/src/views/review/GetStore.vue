@@ -1,6 +1,6 @@
 <template>
   <div id="box">
-    <h2 class="mb-5">어디를 리뷰할가요?</h2>
+    <h2 class="mb-5">어디를 리뷰할까요?</h2>
     <b-row>
       <b-col offset="3">
         <b-form-input
