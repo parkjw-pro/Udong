@@ -45,8 +45,8 @@ public class ClubPostController {
 			+ " - postContent : 글 내용\n" + " - isOpen : 공개 여부(true/false 또는 1/0으로 구분)\n" + "## 가능값\n"
 			+ " - postTag : 태그\n")
 	@PostMapping
-	private ResponseEntity<String> createClubPost(@RequestBody ClubPostDto clubPostDto,
-			@RequestParam(value = "file", required = false) List<MultipartFile> files) {
+	private ResponseEntity<String> createClubPost(ClubPostDto clubPostDto,
+			@RequestParam(value = "file", required = false) MultipartFile[] files) {
 		System.out.println("그룹게시판");
 		int result = service.createClubPost(clubPostDto, files);
 

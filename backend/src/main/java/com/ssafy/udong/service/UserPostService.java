@@ -15,7 +15,7 @@ import com.ssafy.udong.dto.UserPostResultDto;
 public interface UserPostService {
 
 	// 게시물 작성
-	public int createUserPost(UserPostDto userBoardDto, List<MultipartFile> files);
+	public int createUserPost(UserPostDto userBoardDto, MultipartFile[] files);
 
 	// 모든 게시물 조회
 	public UserPostResultDto selectAllUserPost(int limit, int offset);

@@ -37,11 +37,11 @@ public class UserPostServiceImpl implements UserPostService {
 
 	// 글 작성
 	@Override
-	public int createUserPost(UserPostDto userPostDto, List<MultipartFile> files) {
+	public int createUserPost(UserPostDto userPostDto, MultipartFile[] files) {
 		try {
 			userPostDao.createUserPost(userPostDto);
-
-			if (files != null && !files.isEmpty()) {
+			System.out.println(files.length);
+			if (files != null && !(files.length == 0)) {
 				File uploadDir = new File(
 						root + File.separator + "userPost" + File.separator + userPostDto.getUserId());
 				if (!uploadDir.exists())
@@ -59,8 +59,6 @@ public class UserPostServiceImpl implements UserPostService {
 					int rank = 1;
 					try {
 
-						System.out.println("file service");
-						System.out.println(file.getOriginalFilename());
 						Files.copy(file.getInputStream(),
 								path2.resolve("udong_" + tempDate + file.getOriginalFilename()));
 

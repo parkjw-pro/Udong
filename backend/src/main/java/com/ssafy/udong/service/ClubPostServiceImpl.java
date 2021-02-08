@@ -37,11 +37,11 @@ public class ClubPostServiceImpl implements ClubPostService {
 	private static final int FAIL = -1;
 
 	@Override
-	public int createClubPost(ClubPostDto clubPostDto, List<MultipartFile> files) {
+	public int createClubPost(ClubPostDto clubPostDto, MultipartFile[] files) {
 		try {
 			clubPostDao.createClubPost(clubPostDto);
 
-			if (files != null && !files.isEmpty()) {
+			if (files != null && !(files.length ==0) ){
 				File uploadDir = new File(
 						root + File.separator + "clubPost" + File.separator + clubPostDto.getUserId());
 				if (!uploadDir.exists())

@@ -47,10 +47,11 @@ public class UserPostController {
 			 			+ " - isOpen : 공개 여부(true/false 또는 1/0으로 구분)\n" + 
 			"## 가능값\n" + " - postTag : 태그\n")
 	@PostMapping
-	private ResponseEntity<String> createUserPost(@RequestBody UserPostDto userPostDto,
-			@RequestParam(value = "file", required = false) List<MultipartFile> files) {
+	private ResponseEntity<String> createUserPost(UserPostDto userPostDto,
+			@RequestParam(value = "file", required = false) MultipartFile[] files)throws NullPointerException {
+		System.out.println(userPostDto.getUserId() + files.length);
 		int result = service.createUserPost(userPostDto, files);
-
+	
 		if( result == SUCCESS ) {
 			return new ResponseEntity<String>("게시물 작성 성공", HttpStatus.OK);
 		}else {
