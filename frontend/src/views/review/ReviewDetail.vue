@@ -6,7 +6,6 @@
       <img alt="Vue logo" src="@/assets/udonge.png" style="width: 10%">
       <div>개발자님 환영합니다!!!</div>
     </div>     -->
-<<<<<<< HEAD
 
     <!-- 1. 이미지 -->
     <b-carousel
@@ -34,17 +33,6 @@
 
     </b-carousel>
     <!-- 2. store 정보 -->
-=======
-    carousal  
-    <div id="roadview" class="mb-5">
-      <!-- 1. 이미지 -->
-
-      <!-- <p class="mt-4">
-        Slide #: {{ slide }}<br>
-        Sliding: {{ sliding }}
-      </p> -->
-    </div>
->>>>>>> d52ec7cf9f33a62f94a156b6b73f4c9bd37b6937
 
     <!-- 2. store 정보 -->
     <div class="my-5 py-5">
@@ -109,22 +97,24 @@ export default {
   computed: {
     before3() {
       return this.store;
+      
     },
   },
   watch: {
     before3() {
+      
       this.selectBestReview();
       this.selectAllImage();
-
     },
   },
-  async created() {
+  async mounted() {
     this.storeId = this.$route.params.storeId;
     // this.fileId = [];
     // this.thumbnailContent = [],
     // this.temp = "",
     await this.getReview();
     await this.getStore();
+    
 
 
 
@@ -138,8 +128,8 @@ export default {
       axios
         .get(`${SERVER_URL}/review/store/` + `${this.storeId}`)
         .then((response) => {
-          this.reviews = response.data;
           this.reviews2 = response.data;
+          this.reviews = response.data;
           console.log(this.reviews);
           console.log(this.reviews2);
         })
@@ -162,13 +152,10 @@ export default {
       this.bestReviewlist = this.reviews2.sort(function(a, b) {
         var o1 = b['reviewLikeCount'];
         var o2 = a['reviewLikeCount'];
-        var p1 = a['createdAt'];
-        var p2 = b['createdAt'];
 
         if (o1 < o2) return -1;
         if (o1 > o2) return 1;
-        if (p1 < p2) return -1;
-        if (p1 > p2) return 1;
+
       });
 
       console.log(this.bestReviewlist);

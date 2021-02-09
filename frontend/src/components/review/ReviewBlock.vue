@@ -15,13 +15,16 @@
                 {{review.nickname}}
               </b-col>
               <b-col>
-                <!-- <b-dropdown size="lg" dropup variant="link" toggle-class="text-decoration-none" no-caret>
+                <span class="mr-5" >
+                  {{rate}}
+                </span>
+                <b-dropdown size="lg" dropup variant="link" toggle-class="text-decoration-none" no-caret>
                   <template #button-content>
                     <b-icon icon="three-dots-vertical"></b-icon>
                   </template>
-                  <b-dropdown-item href="#" variant="danger" v-if="post.userId == getUserId">삭제</b-dropdown-item>
+                  <b-dropdown-item href="#" variant="danger" v-if="review.userId == getUserId">삭제</b-dropdown-item>
                   <b-dropdown-item href="#" variant="danger" v-else>신고</b-dropdown-item>
-                </b-dropdown> -->
+                </b-dropdown>
               </b-col>
             </b-row>
           </b-card-text>
@@ -47,7 +50,7 @@
 
 <script>
 import axios from 'axios'
-
+import { mapGetters } from "vuex";
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
 // import { mdbInput, mdbContainer } from 'mdbvue';
 
@@ -62,9 +65,14 @@ export default {
 
 
   },
+  computed: {
+    ...mapGetters(["getUserId"]),
+    ...mapGetters(["getUserName"])
+  },
   data: function() {
     return {
 
+      rate : "",
       reviewDetail : {},
       url : SERVER_URL,
       fileId : Array
@@ -81,6 +89,11 @@ export default {
       .get(`${SERVER_URL}/review/` + `${this.review.reviewId}`)
       .then((response) => {
         this.fileId = response.data.fileId;
+        for (let index = 0; index < response.data.dto.rate; index++) {
+          this.rate = this.rate + "★";
+          console.log(this.rate);
+          
+        }
 
         console.log( this.fileId);
 

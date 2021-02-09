@@ -7,14 +7,25 @@
 	<select id="SelectDetailStore" parameterType="map"
 		resultType="com.ssafy.udong.dto.StoreDto">
 
-		select *
-		from store
-		where (store_name like CONCAT('%',
-		#{param1} ,'%')
-		or store_gugun_name like CONCAT('%', #{param1} ,'%') or
-		store_ctg_2 like CONCAT('%', #{param1} ,'%') or store_dong2_name like CONCAT('%', #{param1} ,'%'))
-		and store_dong_code like
-		CONCAT('%', #{param2} ,'%')
+		select s.store_id, s.loc_lat, s.loc_lng, s.store_ctg_1,
+		s.store_ctg_2, s.store_dong_name,
+		s.store_dong2_name, s.store_sido_name, s.store_gugun_name, s.store_dong_code,
+		s.store_dong2_code,
+		s.store_sido_code, s.store_gugun_code, s.store_name, s.store_addr, s.store_name_detail,
+		s.store_state, s.created_at, COUNT(r.store_id) as reviewCount from
+		store s LEFT OUTER JOIN review r on s.store_id
+		= r.store_id
+		where
+		(s.store_name like CONCAT('%', #{param1} ,'%')
+		or s.store_gugun_name
+		like CONCAT('%', #{param1} ,'%') or
+		s.store_ctg_2 like CONCAT('%',
+		#{param1} ,'%') or s.store_dong2_name like
+		CONCAT('%', #{param1} ,'%'))
+		and s.store_dong_code like CONCAT('%', #{param2} ,'%')
+		GROUP BY
+		s.store_id
+		ORDER BY COUNT(r.store_id) DESC;
 
 	</select>
 
@@ -22,8 +33,10 @@
 		resultType="com.ssafy.udong.dto.StoreDto">
 
 		select *from store
-		where store_dong_name like CONCAT('%', #{searchWord} ,'%') or store_dong2_name
-		like CONCAT('%', #{searchWord} ,'%')
+		where store_dong_name like CONCAT('%',
+		#{searchWord} ,'%') or store_dong2_name
+		like CONCAT('%', #{searchWord}
+		,'%')
 
 	</select>
 

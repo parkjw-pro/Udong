@@ -134,7 +134,7 @@ public class ReviewController {
 	@ApiOperation(value = "리뷰 삭제", notes = "리뷰를 삭제합니다.\n" +
 			"## 필수값\n" + " - reviewId : 삭제할 리뷰 아이디\n")
 	@DeleteMapping
-	private ResponseEntity<String> deleteReview(@RequestBody ReviewDto reviewDto) {
+	private ResponseEntity<String> deleteReview(ReviewDto reviewDto) {
 		try {
 			if (service.deleteReview(reviewDto.getReviewId()) == SUCCESS) {
 				return new ResponseEntity<String>("SUCCESS: review deleted", HttpStatus.OK);
