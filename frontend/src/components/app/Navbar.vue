@@ -20,15 +20,10 @@
     
     <!-- 2. 햄버거메뉴 -->
     <component :is="currentMenu" :right="side === 'right' ? true: false" >
-        <b-row class="pl-0" id="option_v2" align-h="center">
-          <b-col cols="4" @click="toBadge">
-            <Profile2 style="width: 80%; cursor: pointer;" />
-          </b-col>
-          <b-col cols="6">
-            <b-row><span style="color: #695549;">{{ user.nickname }}</span>님</b-row>
-            <b-row><small>안녕하세요!</small></b-row>
-          </b-col>
+        <b-row id="option_v2" align-h="left">
+          <b-col><b-avatar variant="info" :src="require('@/assets/app/badge1.jpg')"></b-avatar>{{ user.nickname }}님</b-col>
         </b-row>
+        <b-row id="option_v2">안녕하세요!</b-row>
         <hr>
         <b-row id="option_v1" class="pl-0" @click="toReview">
             <!-- <i class="fas fa-book-open"></i> -->

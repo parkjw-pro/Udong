@@ -46,8 +46,8 @@ public class ClubPostController {
 			+ " - postContent : 글 내용\n" + " - isOpen : 공개 여부(true/false 또는 1/0으로 구분)\n" + "## 가능값\n"
 			+ " - postTag : 태그\n")
 	@PostMapping
-	private ResponseEntity<String> createClubPost(ClubPostDto clubPostDto,
-			@RequestParam(value = "file", required = false) MultipartFile[] files) {
+	private ResponseEntity<String> createClubPost(@RequestBody ClubPostDto clubPostDto,
+			@RequestParam(value = "file", required = false) List<MultipartFile> files) {
 		System.out.println("그룹게시판");
 		int result = service.createClubPost(clubPostDto, files);
 
@@ -223,12 +223,12 @@ public class ClubPostController {
 	// 각 글id에 맞는 댓글 전체조회
 	@ApiOperation(value = "게시 글 댓글 조회", notes = "그룹 게시판에 노출되는 글에 댓글을 조회합니다.\n" + "## 필수값\n"
 			+ " - postId : 댓글이 달릴 게시글 아이디\n" + " - limit : 한 페이지에 노출될 댓글 수\n" + " - offset : 오프셋\n")
-	@GetMapping(value = "/comment/{postId}")
-	private ResponseEntity<CommentResultDto> selectClubPostComment(@PathVariable String postId) {
+	@GetMapping(value = "/comment")
+	private ResponseEntity<CommentResultDto> selectClubPostComment(@RequestParam(value="postId") String postId, @RequestParam(value="limit") int limit, @RequestParam(value="offset") int offset) {
 
 		CommentResultDto commentResultDto;
 
-		commentResultDto = service.selectClubPostComment(postId);
+		commentResultDto = service.selectClubPostComment(postId, limit, offset);
 
 		if (commentResultDto.getResult() == SUCCESS) {
 			return new ResponseEntity<CommentResultDto>(commentResultDto, HttpStatus.OK);

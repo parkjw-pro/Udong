@@ -24,12 +24,13 @@ npm install --save @fortawesome/fontawesome-free
 npm install vue-js-toggle-button --save
 npm install vee-validate --save
 npm install vue-select
-npm i vue-slick-carousel
 npm install packery
 npm install --save vue-packery-draggabilly-plugin
 npm install jquery
 npm install mint-ui -S
-npm install mdbvue
+npm i vue-star-rating
+npm install vue-coverflow --save
+npm i vue-slick-carousel
 ```
 
 ### 폴더 구조
@@ -79,7 +80,7 @@ npm install
   ## .env.local
   
   VUE_APP_SERVER_URL=<서버 URL>
-  MAP_API_KEY=<카카오 지도 API Javascript 키>
+  VUE_APP_MAP_API_KEY=<카카오 지도 API Javascript 키>
   ```
 
 - :ballot_box_with_check: 환경변수를 입력할 때는, 띄워쓰기를 하지 않도록 주의한다!

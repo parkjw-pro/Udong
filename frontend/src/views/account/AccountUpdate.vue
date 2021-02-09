@@ -188,7 +188,7 @@ export default {
     },
     deleteAccount: function () {
       axios
-          .delete(`${SERVER_URL}/user`, this.user.userId)
+          .delete(`${SERVER_URL}/user`, this.user)
           .then(() => {
             alert("작별의 인사 드립니다. \n또 함께 할 시간을 기다리고 있겠습니다.")
             this.$router.push({ name: 'Login' })
