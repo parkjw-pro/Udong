@@ -144,7 +144,8 @@
           <b-modal id="woo-modal">4팀의 변!절!자! 우~~~~~~~~~~~ <br> 진!하!</b-modal>
         </b-card>
       </b-card-group>
-     
+
+      <coverflow :coverList="coverList" :coverWidth="260" :index="2"></coverflow>
     </div>
   </div>
 </template>
@@ -154,7 +155,21 @@ export default {
   name: 'Developers',
   data: function () {
     return {
-      
+      coverList: [
+        {
+          cover: 'http://ogu51f989.bkt.clouddn.com/react.png',
+          title: 'Vue'
+        }, {
+          cover: 'http://ogu51f989.bkt.clouddn.com/angular.png',
+          title: 'Node'
+        }, {
+          cover: 'http://ogu51f989.bkt.clouddn.com/vue.png',
+          title: 'Spirng Boot'
+        }, {
+          cover: 'http://ogu51f989.bkt.clouddn.com/webpack.png',
+          title: 'MySQL'
+        },
+      ]
     }
   },
 }

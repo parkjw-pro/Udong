@@ -11,13 +11,13 @@
     <b-carousel
       id="carousel-1"
       v-model="slide"
-      :interval="2000"
       controls
       indicators
       background="#ababab"
       img-width="1024"
       img-height="480"
       style="text-shadow: 1px 1px 2px #333;"
+      fade="true"
     >
 
       <b-carousel-slide v-for="(item, index) in fileId"
@@ -27,12 +27,12 @@
         :img-src="url+`/review/download/` + item" 
       ></b-carousel-slide>
 
-
-  
-      <!-- Text slides with image -->
-
     </b-carousel>
+<<<<<<< HEAD
     <!-- 2. store 정보 -->
+=======
+
+>>>>>>> c9487ed091c92f24f5ce22c60a34018572accfa1
 
     <!-- 2. store 정보 -->
     <div class="my-5 py-5">
@@ -83,15 +83,17 @@ export default {
       reviews2: [],
       key: Object,
       // store : Object,
-      slide: 0,
       sliding: null,
       getStoreReviewList: {},
       bestReviewlist: {},
       url : SERVER_URL,
       fileId : [],
-      thumbnailContent : [],
       temp : "",
       flag : false,
+
+      // Carousel에 사용하는 데이터
+      slide: 0,
+      thumbnailContent : [],
     };
   },
   computed: {
@@ -115,8 +117,6 @@ export default {
     await this.getReview();
     await this.getStore();
     
-
-
 
     // console.log(this.store);
     // this.store = this.key;

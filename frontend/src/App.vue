@@ -5,7 +5,7 @@
   </div>
 </template>
 
-<script>  
+<script>
 import Navbar from '@/components/app/Navbar'
 import 'vue-select/dist/vue-select.css';
 //import router from "./router";

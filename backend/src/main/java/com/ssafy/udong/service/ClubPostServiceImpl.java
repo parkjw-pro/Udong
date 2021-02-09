@@ -37,11 +37,11 @@ public class ClubPostServiceImpl implements ClubPostService {
 	private static final int FAIL = -1;
 
 	@Override
-	public int createClubPost(ClubPostDto clubPostDto, MultipartFile[] files) {
+	public int createClubPost(ClubPostDto clubPostDto, List<MultipartFile> files) {
 		try {
 			clubPostDao.createClubPost(clubPostDto);
 
-			if (files != null && !(files.length ==0) ){
+			if (files != null && !files.isEmpty()) {
 				File uploadDir = new File(
 						root + File.separator + "clubPost" + File.separator + clubPostDto.getUserId());
 				if (!uploadDir.exists())
@@ -309,15 +309,15 @@ public class ClubPostServiceImpl implements ClubPostService {
 	}
 
 	@Override
-	public CommentResultDto selectClubPostComment(String postId) {
+	public CommentResultDto selectClubPostComment(String postId, int limit, int offset) {
 
 		CommentResultDto commentResultDto = new CommentResultDto();
 
 		try {
 
 			int count = clubPostDao.userPostCommentTotalCount();
-			List<CommentDto> list = clubPostDao.selectClubPostComment(postId);
-
+			List<CommentDto> list = clubPostDao.selectClubPostComment(postId, limit, offset);
+			
 			commentResultDto.setList(list);
 			commentResultDto.setCount(count);
 			commentResultDto.setResult(SUCCESS);

@@ -10,6 +10,7 @@ public class CommentDto {
 	private String commContent;
 	private String createdAt;
 	private int commLikeCount;
+	private String nickname;
 	
 	public CommentDto() {
 	}
@@ -61,10 +62,11 @@ public class CommentDto {
 	public void setCommLikeCount(int commLikeCount) {
 		this.commLikeCount = commLikeCount;
 	}
+	public String getNickname() {
+		return nickname;
+	}
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
 	
-	
-	
-	
-	
-
 }

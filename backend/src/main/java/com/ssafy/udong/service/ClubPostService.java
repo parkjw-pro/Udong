@@ -14,7 +14,7 @@ import com.ssafy.udong.dto.ReportDto;
 
 public interface ClubPostService {
 
-	int createClubPost(ClubPostDto clubPostDto, MultipartFile[] files);
+	int createClubPost(ClubPostDto clubPostDto, List<MultipartFile> files);
 
 	//조건에 맞는 게시글 조회
 	ClubPostResultDto selectAllClubPost(int limit, int offset);
@@ -38,7 +38,7 @@ public interface ClubPostService {
 
 	int createClubPostComment(CommentDto commentDto);
 
-	CommentResultDto selectClubPostComment(String postId);
+	CommentResultDto selectClubPostComment(String postId, int limit, int offset);
 	
 	int selectClubPostLike(String userId, String postId, String clubId);
 
