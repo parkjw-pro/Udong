@@ -31,18 +31,15 @@
           <tr>
             <th>종류</th>
             <th>이름</th>
-            <th>시</th>
-            <th>구</th>
-            <th>동</th>
+            <th>주소</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="(item, index) in getSearchStoreList" :key="index" @click="toDetail(item)">
             <td>{{ item.storeCtg2 }}</td>
-            <td>{{ item.storeName }}</td>
-            <td>{{ item.storeSidoName }}</td>
-            <td>{{ item.storeGugunName }}</td>
-            <td>{{ item.storeDong2Name }}</td>
+            <td>{{ item.storeName }} {{ item.storeNameDetail }}</td>
+            <td>{{ item.storeAddr }}</td>
+
           </tr>
         </tbody>
       </table>
@@ -188,7 +185,7 @@ export default {
               //  console.log(temp);
               console.log(list[index]);
                var infowindow = new kakao.maps.InfoWindow({
-                 content: '<div @click="toDetail('+list[index]+')" style="width:100px;text-align:center;padding:4px 0; cursor: pointer;">'+list[index].storeName+'</div>',
+                 content: '<div @click="toDetail('+list[index]+')" style="width:100px;text-align:center;padding:4px 0; cursor: pointer;"><div>'+list[index].storeName+'</div><div>'+list[index].storeNameDetail+'</div></div>',
                });
               infowindow.open(map, marker); // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
               console.log(marker);
