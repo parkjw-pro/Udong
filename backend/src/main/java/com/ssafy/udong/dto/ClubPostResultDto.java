@@ -8,7 +8,7 @@ public class ClubPostResultDto {
 	private ClubPostDto dto;
 	private List<ClubPostDto> list;
 	private int count;
-	List<String> fileUrl;
+	List<String> fileId;
 	
 	public ClubPostResultDto() {
 	}
@@ -36,12 +36,13 @@ public class ClubPostResultDto {
 	public void setCount(int count) {
 		this.count = count;
 	}
-	public List<String> getFileUrl() {
-		return fileUrl;
+	public List<String> getFileId() {
+		return fileId;
 	}
-	public void setFileUrl(List<String> fileUrl) {
-		this.fileUrl = fileUrl;
+	public void setFileId(List<String> fileId) {
+		this.fileId = fileId;
 	}
+
 	
 	
 

@@ -63,7 +63,7 @@ public class UserPostController {
 		System.out.println(userPostDto.getUserId() + files.length);
 		int result = service.createUserPost(userPostDto, files);
 	
-		if( result == SUCCESS ) {
+		if( result == SUCCESS ) {	
 			return new ResponseEntity<String>("게시물 작성 성공", HttpStatus.OK);
 		}else {
 			return new ResponseEntity<String>("게시물 작성 실패", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -126,7 +126,7 @@ public class UserPostController {
 	@GetMapping(value="/{postId}")
 	private ResponseEntity<UserPostResultDto> selectUserPost(@PathVariable String postId){
 		UserPostResultDto userPostResultDto = service.selectUserPost(postId);
-		if( userPostResultDto != null ) {
+		if( userPostResultDto != null ) {	
 			return new ResponseEntity<UserPostResultDto>(userPostResultDto, HttpStatus.OK);
 		}else {
 			return new ResponseEntity<UserPostResultDto>(userPostResultDto, HttpStatus.INTERNAL_SERVER_ERROR);

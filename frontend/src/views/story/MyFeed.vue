@@ -31,7 +31,9 @@
         
       </b-tab>
       <b-tab title="리뷰">
-        <!-- <PostBlockMy /> -->
+           <div v-for="(item, index) in reviews" :key="index">
+         <ReivewBlock :review="item"  />
+           </div>
       </b-tab>
       <b-tab title="태그">
         <TagBox />
@@ -65,6 +67,7 @@ export default {
     GroupBox,
     PostBlockMy,
     TagBox,
+    ReivewBlock,
   },
   data() {
     return {
@@ -73,13 +76,15 @@ export default {
       posts:[],
       limit: 5,  //한 페이지에 노출될 게시글의 수
       offset: 0,  //게시글 번호 오프셋,
-      liked: false
+      liked: false,
+       reviews: Array,
     };
   },
   created() {
     this.nickname = JSON.parse(localStorage.getItem('Login-token'))['user-name']
     this.userId = JSON.parse(localStorage.getItem('Login-token'))['user-id']
     this.getUserPosts();
+    this.getReview();
     
   },
   methods: {
@@ -99,6 +104,19 @@ export default {
     },
     toAccountDetail: function () {
       this.$router.push({name: 'AccountDetail'})
+    },
+    getReview: function() {
+    axios
+      .get(`${SERVER_URL}/review/user/` + `${this.userId}`)
+      .then((response) => {
+      
+        this.reviews = response.data;
+        console.log(this.reviews);
+  
+      })
+      .catch((response) => {
+        console.log(response);
+      });
     },
   },
 

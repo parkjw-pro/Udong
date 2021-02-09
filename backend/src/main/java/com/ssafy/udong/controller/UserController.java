@@ -231,6 +231,7 @@ public class UserController {
 			"## 필수값\n" + " - email : 사용자 이메일 주소\n")
 	@PostMapping("/email")
 	public ResponseEntity<String> selectDuplicateEmail(@RequestBody UserDto userDto) throws Exception {
+		System.out.println(userDto.getEmail());
 		String result = userService.selectDuplicateEmail(userDto.getEmail());
 		if (result != null) { // 이메일이 이미 있으면
 			return new ResponseEntity<String>("현재 사용중인 이메일입니다.\n", HttpStatus.INTERNAL_SERVER_ERROR);

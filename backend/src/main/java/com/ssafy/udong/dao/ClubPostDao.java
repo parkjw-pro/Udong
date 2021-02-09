@@ -44,6 +44,7 @@ public interface ClubPostDao {
 	//게시물 상세가져오기 
 	public ClubPostDto selectClubPost(String postId);
 	public List<String> selectFileUrl(String postId);
+	public List<String> selectFileId(String postId);
 	
 	//조회수 가져오고 증가시키기
 	public int selectClubPostViews(String postId); 

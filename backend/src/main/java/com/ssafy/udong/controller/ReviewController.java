@@ -88,8 +88,10 @@ public class ReviewController {
 			"## 필수값\n" + " - userId : 리뷰를 조회할 사용자 아이디\n")
 	@GetMapping(value = "/user/{userId}")
 	private ResponseEntity<List<ReviewDto>> selectMyReview(@PathVariable String userId) {
+		System.out.println(userId);
 		try {
-			List<ReviewDto> list = service.selectAllReview(userId);
+			List<ReviewDto> list = service.selectMyReview(userId);
+			System.out.println(list.get(0));
 			if (list != null)
 				return new ResponseEntity<List<ReviewDto>>(list, HttpStatus.OK);
 		} catch (Exception e) {
