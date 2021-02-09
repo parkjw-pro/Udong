@@ -43,7 +43,7 @@
           img-width="1024"
           img-height="480"
           style="text-shadow: 1px 1px 2px #333;"
-          fade="true"
+          :fade="true"
         >
           <b-carousel-slide v-for="(item, index) in fileId"
             :key="index"   
