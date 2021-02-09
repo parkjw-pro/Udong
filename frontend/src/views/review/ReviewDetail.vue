@@ -8,26 +8,31 @@
     </div>     -->
 
     <!-- 1. 이미지 -->
-    <b-carousel
-      id="carousel-1"
-      v-model="slide"
-      controls
-      indicators
-      background="#ababab"
-      img-width="1024"
-      img-height="480"
-      style="text-shadow: 1px 1px 2px #333;"
-      fade="true"
-    >
+    <b-row align-h="center">
+      <b-carousel
+        id="carousel-1"
+        v-model="slide"
+        controls
+        indicators
+        background="#ababab"
+        img-width="1024"
+        img-height="480"
+        style="text-shadow: 1px 1px 2px #333; width: 50em; height: 25em;"
+        fade="true"
+      >
 
-      <b-carousel-slide v-for="(item, index) in fileId"
-        :key="index"   
-        :caption="thumbnailContent[index].nickname"
-        :text="thumbnailContent[index].reviewContent"
-        :img-src="url+`/review/download/` + item" 
-      ></b-carousel-slide>
+        <b-carousel-slide
+          id="review_img_aggregated"
+          v-for="(item, index) in fileId"
+          :key="index"   
+          
+          :img-src="url+`/review/download/` + item" 
+        ></b-carousel-slide>
+        <!-- :caption="thumbnailContent[index].nickname" -->
+          <!-- :text="thumbnailContent[index].reviewContent" -->
 
-    </b-carousel>
+      </b-carousel>
+    </b-row>
     <!-- 2. store 정보 -->
     <div class="my-5 py-5">
       <b-row style="text-align: justify;">
@@ -199,4 +204,13 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+#review_img_aggregated {
+  top: 0;
+  left: 0;
+  min-width: 50em;
+  min-height: 25em;
+  max-width: 50em;
+  max-height: 25em;
+}
+</style>

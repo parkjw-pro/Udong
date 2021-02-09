@@ -59,7 +59,7 @@
 		WHERE p.club_id = #{clubId} AND p.user_id = u.user_id
 		ORDER BY p.post_id DESC
 		LIMIT #{limit} OFFSET #{offset}
-	</select>
+	</select>	
 	
 	<!-- 그룹 별 검색어를 포함하는 글 가져오기 -->
 	<select id="selectClubPostByClubIdAndSearchWord" parameterType="map"
@@ -182,6 +182,10 @@
 		parameterType="com.ssafy.udong.dto.CommentDto">
 		INSERT INTO club_post_comment ( post_id, club_id, user_id, comm_content, comm_like_count)
 		VALUES (#{postId}, #{clubId}, #{userId}, #{commContent}, 0);
+		
+		update club_post
+		set post_comment_count = post_comment_count + 1
+		where post_id = #{postId};
 	</insert>
 
 	<!-- 댓글 가져오기 -->
@@ -212,12 +216,20 @@
 		parameterType="com.ssafy.udong.dto.LikeDto">
 		INSERT INTO club_post_like(user_id, post_id, club_id)
 		VALUES (#{userId}, #{postId}, #{clubId});
+		
+		update club_post
+		set post_like_count = post_like_count + 1
+		where post_id = #{postId};
 	</insert>
 
 	<delete id="deleteClubPostLike"
 		parameterType="com.ssafy.udong.dto.LikeDto">
 		DELETE FROM club_post_like
-		WHERE post_id = #{postId} and user_id = #{userId}
+		WHERE post_id = #{postId} and user_id = #{userId};
+		
+		update club_post
+		set post_like_count = post_like_count - 1
+		where post_id = #{postId};
 	</delete>
 
 	<select id="selectClubPostCommentLike"
@@ -231,12 +243,20 @@
 		parameterType="com.ssafy.udong.dto.LikeDto">
 		INSERT INTO club_post_comment_like(user_id, post_id, club_id, comment_id)
 		VALUES (#{userId}, #{postId}, #{clubId}, #{commentId});
+		
+		update club_post_comment
+		set comm_like_count = comm_like_count + 1
+		where comment_id = #{commentId};
 	</insert>
 
 	<delete id="deleteClubPostCommentLike"
 		parameterType="com.ssafy.udong.dto.LikeDto">
 		DELETE FROM club_post_comment_like
 		WHERE comment_id = #{commentId} and user_id = #{userId}
+		
+		update club_post_comment
+		set comm_like_count = comm_like_count - 1
+		where comment_id = #{commentId};
 	</delete>
 
 	<insert id="createClubPostReport"

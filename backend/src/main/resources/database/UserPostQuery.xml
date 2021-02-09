@@ -112,10 +112,10 @@
 	</select>
 
 	<!--해당게시글의 파일 url찾기 -->
-	<select id="selectFileUrl" parameterType="String"
+	<select id="selectFileId" parameterType="String"
 		resultType="String">
-		select file_url from image
-		where file_id = ANY(select file_id from user_post_file where post_id = #{postId});
+		select file_id from user_post_file
+		where post_id = #{postId};
 	</select>
 
 

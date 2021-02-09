@@ -1,40 +1,33 @@
 <template>
-  <div>
-    <div class="map_wrap">
-      <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
-      <div class="hAddr">
-        <!-- <span class="title">지금 계신 위치가 이곳이 맞나요?</span> -->
-        <span></span>
-      </div>
-    </div>
-    <div id="box">
-      <h2 class="mb-5">우리 동네 장소를 검색해보세요!</h2>
-      <container style="width: 100%;">
+  <b-row class="my-2 pt-3 mx-5">
+    <!-- 1. 왼쪽 검색 테이블 -->
+    <b-col class="mr-0 pr-0">
+      <h4 class="mb-3" style="font-family: 'Hanna', sans-serif;">우리 동네 장소를 검색해보세요!</h4>
         <input
           type="text"
           class="active-cyan-2 active-purple-2 mt-0 mb-3"
-          placeholder="상점의 종류 및 상점명을 입력하세요"
+          placeholder="상점명을 입력하세요!"
           v-model="storeParamDto.searchWord"
           @keypress.enter="search"
           autofocus
+          style="text-align: center; width: 40%;"
         />
-      </container>
       <!-- 
-    <div class="mt-5">
-      <div v-if="stores">
-        <ul :v-for="(store, idx) in stores">
-          <li @click="createArticle(store)">{{ store }}</li>
-          <hr>
-        </ul>
-      </div>
-      <div v-else>
-        <img alt="Vue logo" src="@/assets/udonge.png" style="width: 10%">
-        <br>
-        <h5 class="mt-3">검색 결과가 없어요 ㅠㅠ</h5>
-      </div>
-    </div> -->
-      <table v-if="getSearchStoreList" class="table table-hover">
-        <thead>
+      <div class="mt-5">
+        <div v-if="stores">
+          <ul :v-for="(store, idx) in stores">
+            <li @click="createArticle(store)">{{ store }}</li>
+            <hr>
+          </ul>
+        </div>
+        <div v-else>
+          <img alt="Vue logo" src="@/assets/udonge.png" style="width: 10%">
+          <br>
+          <h5 class="mt-3">검색 결과가 없어요 ㅠㅠ</h5>
+        </div>
+      </div> -->
+      <table v-if="getSearchStoreList.length > 0" class="table table-hover"  striped hover style="background-color: #695549;">
+        <thead style="color: white;" class="small">
           <tr>
             <th>종류</th>
             <th>이름</th>
@@ -46,7 +39,7 @@
         <tbody>
           <tr v-for="(item, index) in getSearchStoreList" :key="index" @click="toDetail(item)">
             <td>{{ item.storeCtg2 }}</td>
-            <td>{{ item.storeName }} {{ item.storeNameDetail }}</td>
+            <td>{{ item.storeName }}</td>
             <td>{{ item.storeSidoName }}</td>
             <td>{{ item.storeGugunName }}</td>
             <td>{{ item.storeDong2Name }}</td>
@@ -54,13 +47,24 @@
         </tbody>
       </table>
 
-      <div v-else>
+      <div v-else class="mt-5 pt-5">
         <img alt="Vue logo" src="@/assets/udonge.png" style="width: 10%" />
         <br />
         <h5 class="mt-3">검색 결과가 없어요 ㅠㅠ</h5>
       </div>
-    </div>
-  </div>
+    </b-col>
+
+    <!-- 2. 오른쪽 지도 -->
+    <b-col class="mt-5 pt-3 mr-3 ml-0 pl-0">
+      <div class="map_wrap" style="width: 80%;">
+        <div id="map" style="width:100%; height:100%; position:relative; overflow:hidden;"></div>
+        <div class="hAddr">
+          <!-- <span class="title">지금 계신 위치가 이곳이 맞나요?</span> -->
+          <span></span>
+        </div>
+      </div>
+    </b-col>
+  </b-row>
 </template>
 
 <script>

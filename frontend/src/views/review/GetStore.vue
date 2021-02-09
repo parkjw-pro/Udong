@@ -1,6 +1,6 @@
 <template>
   <div id="box">
-    <h2 class="mb-5">어디를 리뷰할까요?</h2>
+    <h4 class="mb-3" style="font-family: 'Hanna', sans-serif;">우리 동네 장소를 검색해보세요!</h4>
     <b-row>
       <b-col offset="3">
         <b-form-input
@@ -13,8 +13,8 @@
         ></b-form-input>
       </b-col>
     </b-row>
-    <table class="table table-hover">
-      <thead>
+    <table class="table table-hover" striped hover style="background-color: #695549;">
+      <thead style="color: white;" class="small">
         <tr>
           <th>종류</th>
           <th>이름</th>

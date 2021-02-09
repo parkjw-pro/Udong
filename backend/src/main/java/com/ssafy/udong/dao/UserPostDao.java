@@ -32,7 +32,7 @@ public interface UserPostDao {
 	
 	//게시물 상세가져오기 
 	public UserPostDto selectUserPost(String postId);
-	public List<String> selectFileUrl(String postId);
+	public List<String> selectFileId(String postId);
 
 	//게시물 수정
 	public int updateUserPost(UserPostDto userBoardDto);
