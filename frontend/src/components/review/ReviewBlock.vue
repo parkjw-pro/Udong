@@ -11,23 +11,6 @@
         <template #header>
           <b-card-text>
             <b-row align-h="justify">
-<<<<<<< HEAD
-              <b-col>
-                <!-- <span class="mr-5">뱃지 img</span> -->
-                {{review.nickname}}
-              </b-col>
-              <b-col>
-                <span class="mr-5" >
-                  {{rate}}
-                </span>
-                <b-dropdown size="lg" dropup variant="link" toggle-class="text-decoration-none" no-caret>
-                  <template #button-content>
-                    <b-icon icon="three-dots-vertical"></b-icon>
-                  </template>
-                  <b-dropdown-item href="#" variant="danger" v-if="review.userId == getUserId">삭제</b-dropdown-item>
-                  <b-dropdown-item href="#" variant="danger" v-else>신고</b-dropdown-item>
-                </b-dropdown>
-=======
               <!-- <span class="mr-5">뱃지 img</span> -->
               <b-col><div class="mt-2" style="text-align: left"><span class="font-weight-bold" style="font-size: large;">{{review.nickname}}</span>님의 리뷰</div></b-col>
               <b-col style="text-align: right;">
@@ -45,7 +28,6 @@
                   <b-dropdown-item href="#" variant="danger">신고</b-dropdown-item>
                 </div>
               </b-dropdown>
->>>>>>> c9487ed091c92f24f5ce22c60a34018572accfa1
               </b-col>
             </b-row>
           </b-card-text>
@@ -93,10 +75,7 @@
 
 <script>
 import axios from 'axios'
-<<<<<<< HEAD
 import { mapGetters } from "vuex";
-=======
->>>>>>> c9487ed091c92f24f5ce22c60a34018572accfa1
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
 export default {
@@ -113,12 +92,8 @@ export default {
   },
   data: function() {
     return {
-<<<<<<< HEAD
-
       rate : "",
-=======
       userId: '',
->>>>>>> c9487ed091c92f24f5ce22c60a34018572accfa1
       reviewDetail : {},
       url : SERVER_URL,
       fileId : Array,
@@ -133,13 +108,11 @@ export default {
         "arrows": true,
       },
 
-
       // Carousel에 사용하는 데이터
       slide: 0,
       thumbnailContent : [],  
     }
   },
-
   
   methods: {
     deleteReview: function () {
