@@ -75,6 +75,7 @@
 
 <script>
 import axios from 'axios'
+import { mapGetters } from "vuex";
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
 export default {
@@ -85,8 +86,13 @@ export default {
     review : {},
 
   },
+  computed: {
+    ...mapGetters(["getUserId"]),
+    ...mapGetters(["getUserName"])
+  },
   data: function() {
     return {
+      rate : "",
       userId: '',
       reviewDetail : {},
       url : SERVER_URL,
@@ -102,13 +108,11 @@ export default {
         "arrows": true,
       },
 
-
       // Carousel에 사용하는 데이터
       slide: 0,
       thumbnailContent : [],  
     }
   },
-
   
   methods: {
     deleteReview: function () {
@@ -126,6 +130,11 @@ export default {
       .get(`${SERVER_URL}/review/` + `${this.review.reviewId}`)
       .then((response) => {
         this.fileId = response.data.fileId;
+        for (let index = 0; index < response.data.dto.rate; index++) {
+          this.rate = this.rate + "★";
+          console.log(this.rate);
+          
+        }
 
         // console.log( this.fileId);
 

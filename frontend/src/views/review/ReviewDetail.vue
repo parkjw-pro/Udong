@@ -28,8 +28,6 @@
       ></b-carousel-slide>
 
     </b-carousel>
-
-
     <!-- 2. store 정보 -->
     <div class="my-5 py-5">
       <b-row style="text-align: justify;">
@@ -95,22 +93,24 @@ export default {
   computed: {
     before3() {
       return this.store;
+      
     },
   },
   watch: {
     before3() {
+      
       this.selectBestReview();
       this.selectAllImage();
-
     },
   },
-  async created() {
+  async mounted() {
     this.storeId = this.$route.params.storeId;
     // this.fileId = [];
     // this.thumbnailContent = [],
     // this.temp = "",
     await this.getReview();
     await this.getStore();
+    
 
     // console.log(this.store);
     // this.store = this.key;
@@ -122,8 +122,8 @@ export default {
       axios
         .get(`${SERVER_URL}/review/store/` + `${this.storeId}`)
         .then((response) => {
-          this.reviews = response.data;
           this.reviews2 = response.data;
+          this.reviews = response.data;
           console.log(this.reviews);
           console.log(this.reviews2);
         })
@@ -146,13 +146,10 @@ export default {
       this.bestReviewlist = this.reviews2.sort(function(a, b) {
         var o1 = b['reviewLikeCount'];
         var o2 = a['reviewLikeCount'];
-        var p1 = a['createdAt'];
-        var p2 = b['createdAt'];
 
         if (o1 < o2) return -1;
         if (o1 > o2) return 1;
-        if (p1 < p2) return -1;
-        if (p1 > p2) return 1;
+
       });
 
       console.log(this.bestReviewlist);

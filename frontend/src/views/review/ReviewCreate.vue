@@ -11,7 +11,7 @@
 
     <!-- 1. 평점 -->
     <b-row class="my-3" align-h="center">
-      <star-rating v-model="review.rate" star-size="40" show-rating="true" active-on-click="true"></star-rating>
+      <star-rating v-model="review.rate" v-bind:star-size="40" v-bind:show-rating="true" v-bind:active-on-click="true" ></star-rating>
     </b-row>
     
     <!-- 2. 리뷰 내용 -->
@@ -30,14 +30,20 @@
     <!-- 3. 이미지 -->
     <b-container fluid class="p-4 mb-3" style="width: 70%;">
       <b-row>
-        <!-- 여기서 for문을 돌리면 된다! -->
-        <b-col class="mr-0 pr-0" style="width:80%;">
-          <b-img thumbnail fluid src="https://picsum.photos/250/250/?image=54" alt="Image 1"></b-img>
+        <!-- <b-col v-for="(file, index) in files" :key="index">
+            <div class="image_box">
+              <b-img left thumbnail fluid :src="file.name" alt="Image"></b-img>
+            </div>
+          </b-col> -->
+
+
+        <b-col>
+          <div >
+            <b-img v-for="(url, index) in imageUrl" :key="index"
+            left thumbnail fluid :src="url"></b-img>
+          </div>
         </b-col>
-        <b-col class="mr-0 pr-0" style="width:80%;">
-          <b-img thumbnail fluid src="https://picsum.photos/250/250/?image=54" alt="Image 1"></b-img>
-        </b-col>
-        <b-col class="ml-0 pl-0" align-self="center">
+       <b-col class="ml-0 pl-0" align-self="center">
           <b-icon icon="plus" v-b-modal.image-modal font-scale="4" variant="dark" style="cursor: pointer;" >
             &nbsp;
           </b-icon>
@@ -54,12 +60,11 @@
       <b-form-file
         multiple="multiple"
         v-model="files"
-        :state="Boolean(file1)"
         placeholder="첨부파일 없음"
         drop-placeholder="Drop file here..."
         required
         accept=".jpg, .png, .gif"
-        @change="previewImage()"
+        @change="previewImage"
         style="width: 70%;"
       ></b-form-file>
     </b-modal>
@@ -106,8 +111,8 @@ export default {
         rate: 0,
         nickName: '',
       },
-      
-      modal: false, //true : modal열림, false : modal닫힘
+      imageUrl: [],
+      modal: true, //true : modal열림, false : modal닫힘
       files: [],
       
       isValid: 0,
@@ -150,6 +155,10 @@ export default {
     createReview: function() {
       this.checkValidity()
       if (this.isValid) {
+        var text = document.getElementById("textarea-rows").value;
+        text = text.replace(/(?:\r\n|\r|\n)/g, '<br/>')
+        document.getElementById("textarea-rows").value = text
+        this.review.reviewContent = text
         var formData = new FormData();
         formData.append('reviewContent', this.review.reviewContent);
         formData.append('rate', this.review.rate);
@@ -163,10 +172,7 @@ export default {
         }
 
         // review 내용 줄바꾸기
-        var text = document.getElementById("textarea-rows").value;
-        text = text.replace(/(?:\r\n|\r|\n)/g, '<br/>')
-        document.getElementById("textarea-rows").value = text
-        this.review.reviewContent = text
+
 
         console.log(this.files);
         // formData.append('club', this.club)
@@ -191,8 +197,16 @@ export default {
       window.history.back()
     },
     // 이미지 preview 보여주는 함수
-    previewImage: function () {
-      
+   previewImage(event) {
+      console.log(this.imageUrl)
+      for(var i =0; i < this.imageUrl.length;i++){ this.imageUrl[i] = ""} 
+     
+      for (var image of event.target.files) {
+        const file = image;
+        console.log(file)
+        this.imageUrl.push(URL.createObjectURL(file));
+      }
+      console.log(this.imageUrl)
     },
   },
   async mounted () {

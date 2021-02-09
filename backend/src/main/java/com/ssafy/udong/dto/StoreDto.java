@@ -21,6 +21,7 @@ public class StoreDto {
 	private String storeState;
 	private String createdAt;
 	private String updatedAt;
+	private String reviewCount;
 	
 	
 	
@@ -66,13 +67,13 @@ public class StoreDto {
 
 
 
-	public String getstoreCtg1() {
+	public String getStoreCtg1() {
 		return storeCtg1;
 	}
 
 
 
-	public void setstoreCtg1(String storeCtg1) {
+	public void setStoreCtg1(String storeCtg1) {
 		this.storeCtg1 = storeCtg1;
 	}
 
@@ -174,13 +175,13 @@ public class StoreDto {
 
 
 
-	public String getstoregugunCode() {
+	public String getStoregugunCode() {
 		return storegugunCode;
 	}
 
 
 
-	public void setstoregugunCode(String storegugunCode) {
+	public void setStoregugunCode(String storegugunCode) {
 		this.storegugunCode = storegugunCode;
 	}
 
@@ -255,10 +256,19 @@ public class StoreDto {
 	public void setUpdatedAt(String updatedAt) {
 		this.updatedAt = updatedAt;
 	}
-	
-	
-	
-	
-	
+
+
+
+	public String getReviewCount() {
+		return reviewCount;
+	}
+
+
+
+	public void setReviewCount(String reviewCount) {
+		this.reviewCount = reviewCount;
+	}
+
+
 
 }
