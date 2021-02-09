@@ -177,6 +177,7 @@ export default {
       alert(JSON.stringify(this.article));
     },
     createGroup: function() {
+      console.log(this.club.isOpen)
       console.log(this.previewImageData[0]);
       console.log(this.fileId);
       console.log(this.fileId.name);

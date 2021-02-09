@@ -6,7 +6,7 @@
     <br />
 
     <div class="map_wrap">
-      <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
+      <div id="map" style="width:100%; height:100%; position:relative; overflow:hidden;"></div>
       <div class="hAddr">
         <!-- <span class="title">지금 계신 위치가 이곳이 맞나요?</span> -->
         <span></span>
@@ -143,11 +143,11 @@ export default {
     addUserAddress: function () {
       const userInfo = JSON.parse(localStorage.getItem('Login-token'))
       userInfo.user_address =  "1168064000"
-      userInfo.user_address_name = "역삼동"
+      userInfo.user_address_name = "역삼2동"
       localStorage.setItem("Login-token", JSON.stringify(userInfo));
 
       this.userLocation.addressCode = "1168064000"
-      this.userLocation.addressName = "역삼동"
+      this.userLocation.addressName = "역삼2동"
       axios
         .post(`${SERVER_URL}/user/address`, this.userLocation )
         .then((response) => {
