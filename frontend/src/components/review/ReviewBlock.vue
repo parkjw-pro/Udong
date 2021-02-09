@@ -191,7 +191,7 @@ export default {
   min-height: 15em;
   max-width: 30em;
   max-height: 15em;
-},
+}
 b-card-img {
   height: 5px;
   width: 5px;
