@@ -1,25 +1,25 @@
 <template>
   <div>
     <!-- 댓글 -->
-    <b-row>
-      <b-col class="col-10 text-left" sytle="text-align:left">
-      <span class="ml-2">{{comment.nickname}}</span>
-      <span class="ml-3" style="color:gray">{{comment.commContent}}</span>
-      <span class="small ml-2 mt-2" style="color:lightgray"><em>{{comment.createdAt.substr(0,10)}}</em></span>  <!--날짜까지만 표시-->
+    <b-row align-h="justify">
+      <b-col cols="10" class="text-left" sytle="text-align:left">
+        <span class="ml-2">{{comment.nickname}}</span>
+        <span class="ml-3" style="color:gray">{{comment.commContent}}</span>
+        <span class="small ml-2 mt-2" style="color:lightgray"><em>{{comment.createdAt.substr(0,10)}}</em></span>  <!--날짜까지만 표시-->
       </b-col>
-      <b-col>
+      <b-col cols="2" style="text-align: right;">
       <!--좋아요 여부와 좋아요 수-->
         <b-icon icon="suit-heart-fill" variant="danger" v-if="liked" @click="likeComment"></b-icon>
         <b-icon icon="suit-heart" variant="danger" v-else @click="likeComment"></b-icon>
         <span>{{comment.commLikeCount}}</span>
 
-      <b-dropdown size="sm" dropup variant="secondary-muted" no-caret>
-        <template #button-content>
-          <b-icon icon="three-dots-vertical"></b-icon>
-        </template>
-        <b-dropdown-item href="#" variant="danger" v-if="comment.userId == getUserId" @click="deleteComment">삭제</b-dropdown-item>
-        <b-dropdown-item href="#" variant="danger" v-else @click="reportComment">신고</b-dropdown-item>
-      </b-dropdown>
+        <b-dropdown size="sm" dropup variant="secondary-muted" no-caret>
+          <template #button-content>
+            <b-icon icon="three-dots-vertical"></b-icon>
+          </template>
+          <b-dropdown-item href="#" variant="danger" v-if="comment.userId == getUserId" @click="deleteComment">삭제</b-dropdown-item>
+          <b-dropdown-item href="#" variant="danger" v-else @click="reportComment">신고</b-dropdown-item>
+        </b-dropdown>
       </b-col>
     </b-row>
   </div>
