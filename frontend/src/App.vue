@@ -25,7 +25,7 @@ export default {
     if (localStorage.getItem('auth-token') != undefined) {
         this.login = true
     }
-  //  router.push( "/account");
+  // router.push( "/account");
   }
 }
 </script>

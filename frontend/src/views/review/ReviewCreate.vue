@@ -21,16 +21,17 @@
           id="textarea-rows"
           v-model="review.reviewContent"
           placeholder="소중한 리뷰를 남겨주세요!"
-          rows="12"
+          rows="11"
           class="text-align-center my-3"
           maxlength="500"
+          style="overflow: hidden;"
         ></b-form-textarea>
         <p style="text-align: right;">{{ contentLength }} / 500</p>
       </div>
 
       <!-- 3. 이미지 -->
       <b-container fluid class="my-3 pb-5" style="width: 70%;">
-        <b-row>
+        <b-row class="py-3">
           <b-col cols="3" v-for="(url, index) in imageUrl" :key="index" left align-self="center">
             <b-img thumbnail fluid :src="url">
             </b-img>
@@ -46,8 +47,10 @@
       <!-- 이미지 업로더 modal -->
       <b-modal 
         id="image-modal"
+        ref="image-modal"
         title="소중한 사진을 올려주세요!"
         style="font-family: 'Jeju Gothic', sans-serif;"
+        hide-footer
       >
         <b-form-file
           multiple="multiple"
@@ -56,9 +59,13 @@
           drop-placeholder="Drop file here..."
           required
           accept=".jpg, .png, .gif"
-          @change="previewImage"
           style="width: 70%;"
+          @change="previewImage"
         ></b-form-file>
+        <b-row class="mt-3 mx-3" align-h="end">
+          <b-button class="mr-1" variant="danger" size="sm" @click="hideModal">추가 안 할래요</b-button>
+          <b-button variant="primary" size="sm" @click="hideModal">추가하기!</b-button>
+        </b-row >
       </b-modal>
 
 
@@ -176,8 +183,8 @@ export default {
             headers: { 'Content-Type': `application/json; charset=UTF-8` },
           })
           .then(() => {
-            console.log('응으응')
-            console.log(this.store)
+            // console.log('응으응')
+            // console.log(this.store)
             this.$router.push({ name: 'ReviewDetail', params: { storeId: this.storeId } });
           })
           .catch((err) => {
@@ -190,16 +197,18 @@ export default {
       window.history.back()
     },
     // 이미지 preview 보여주는 함수
-   previewImage(event) {
-      console.log(this.imageUrl)
+    previewImage(event) {
       for(var i =0; i < this.imageUrl.length;i++){ this.imageUrl[i] = ""} 
-     
+    
       for (var image of event.target.files) {
         const file = image;
         console.log(file)
         this.imageUrl.push(URL.createObjectURL(file));
       }
-      console.log(this.imageUrl)
+      this.$refs['image-modal'].hide()
+    },
+    hideModal() {
+      this.$refs['image-modal'].hide()
     },
   },
   async mounted () {

@@ -48,7 +48,7 @@
     </b-container>
     <b-row align-h="between" class="mx-5 mb-5"> 
       <b-button variant="info" @click="$router.push({ name: 'NewsFeed' })">취소</b-button>
-      <b-button type="submit" variant="info" @click="createArticle"
+      <b-button type="submit" variant="info" @click="createArticle" 
         >확인</b-button
       >
     </b-row>
@@ -133,7 +133,9 @@ export default {
         axios
           .post(`${SERVER_URL}/userpost`,formData , { headers: { "Content-Type": `application/json; charset=UTF-8`}
         })
-          .then((response) => console.log(response.data));
+          .then((response) => {console.log(response.data)
+           this.$router.push({ name: 'NewsFeed' })  
+        }) 
       } else {
         //clubpost
         var clubId = 0; //clubId 가져오기
@@ -150,6 +152,7 @@ export default {
           .post(`${SERVER_URL}/clubpost`,formData , { headers: { "Content-Type": `application/json; charset=UTF-8`}
         })
           .then((response) => console.log(response.data));
+          this.$router.push({ name: 'NewsFeed' })  
       }
     },
   },

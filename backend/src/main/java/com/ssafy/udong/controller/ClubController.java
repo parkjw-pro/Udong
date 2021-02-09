@@ -57,11 +57,6 @@ public class ClubController {
 	public ResponseEntity<String> createClub(ClubDto club,
 			@RequestParam(value = "file", required = false) MultipartFile file){
 		System.out.println("club create");
-		System.out.println(club.getClubName());
-		System.out.println(file.getOriginalFilename());
-		System.out.println(club.getClubName());
-        club.setAreaCode("12341234");
-        club.setUserId("ssafy13");
 
 		
 		try {

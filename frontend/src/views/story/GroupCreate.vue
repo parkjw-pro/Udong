@@ -18,7 +18,8 @@
         </b-row> -->
         <b-row class="mb-3" align-h="center">
           <toggle-button
-            :value="club.isOpen"
+            @change="valueTogle()"
+            :value="false"
             :width="80"
             :height="35"
             :labels="{ checked: '공개', unchecked: '비공개' }"
@@ -132,9 +133,11 @@ export default {
       // props or 함수로 받아와야 한다!
       dong: "역삼동",
       club: {
+        userId : " ",
+        areaCode : " ",
         clubName: " ",
         clubContent: " ",
-        isOpen: "1",
+        isOpen: "0",
        
       },
       dongcode: "",
@@ -148,7 +151,20 @@ export default {
       return this.isVerified;
     },
   },
+  created(){
+    this.club.userId = JSON.parse(localStorage.getItem('Login-token'))['user-id'];
+    this.club.areaCode = JSON.parse(localStorage.getItem('Login-token'))['user_address'];
+  },
   methods: {
+    valueTogle(){
+       console.log("처음값 : "+ this.club.isOpen)
+        if(this.club.isOpen == 1){
+          this.club.isOpen = "0";
+        }else{
+           this.club.isOpen = "1";
+        }
+        console.log("바뀐값 : "+ this.club.isOpen)
+    },
     previewImage(event) {
       var input = event.target;
       if (input.files && input.files[0]) {
@@ -177,10 +193,9 @@ export default {
       alert(JSON.stringify(this.article));
     },
     createGroup: function() {
-      console.log(this.previewImageData[0]);
-      console.log(this.fileId);
-      console.log(this.fileId.name);
       var formData = new FormData();
+      formData.append('userId', this.club.userId)
+      formData.append('areaCode', this.club.areaCode)
       formData.append('clubName', this.club.clubName)
       formData.append('clubContent', this.club.clubContent)
       formData.append('isOpen', this.club.isOpen)
