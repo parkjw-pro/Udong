@@ -20,7 +20,8 @@
       justified
     >
       <b-tab title="글" active>
-        <PostBlockMy />
+        <div v-for="(post , idx) in posts" :key ="idx" ><PostBlockMy :post="post" /></div>
+        
       </b-tab>
       <b-tab title="리뷰">
         <!-- <PostBlockMy /> -->
@@ -45,7 +46,9 @@ import GroupBox from '@/components/story/GroupBox'
 import PostBlockMy from '@/components/story/PostBlockMy'
 import Profile2 from '@/components/app/Profile2'
 import TagBox from '@/components/story/TagBox'
-import { mapGetters } from "vuex";
+import axios from "axios";
+const SERVER_URL = "http://localhost:8000";
+
 // import axios from 'axios';
 
 // const SERVER_URL = "http://localhost:8000";
@@ -58,22 +61,37 @@ export default {
     Profile2,
     TagBox,
   },
-
-  computed: {
-    ...mapGetters(["getUserId"]),
-    ...mapGetters(["getUserName"])
-  },
   data() {
     return {
-      id: "",
-      nickname: ""
+      userId: "",
+      nickname: "",
+      posts:[],
+      limit: 5,  //한 페이지에 노출될 게시글의 수
+      offset: 0,  //게시글 번호 오프셋,
+      liked: false
     };
   },
   created() {
-    this.id = this.getUserId;
-    this.nickname = this.getUserName;
+    this.nickname = JSON.parse(localStorage.getItem('Login-token'))['user-name']
+    this.userId = JSON.parse(localStorage.getItem('Login-token'))['user-id']
+    this.getUserPosts();
+    
   },
   methods: {
+      getUserPosts(){
+      axios
+        .get(`${SERVER_URL}/userpost/user`, {
+          params: {
+            userId: this.userId,
+            limit: this.limit,
+            offset: this.offset
+          }
+      })
+        .then((response) => {
+          this.posts = response.data.list;
+          console.log(this.posts);
+        });
+    },
   },
 
 }

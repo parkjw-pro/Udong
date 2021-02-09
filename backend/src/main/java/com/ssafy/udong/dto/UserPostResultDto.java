@@ -7,17 +7,23 @@ public class UserPostResultDto {
 	private UserPostDto dto;
 	private List<UserPostDto> list;
 	private int count;
-	List<String> fileUrl;
+	List<String> fileId;
 
 	public UserPostResultDto() {}
 
-	public List<String> getFileUrl() {
-		return fileUrl;
+
+
+	public List<String> getFileId() {
+		return fileId;
 	}
 
-	public void setFileUrl(List<String> fileUrl) {
-		this.fileUrl = fileUrl;
+
+
+	public void setFileId(List<String> fileId) {
+		this.fileId = fileId;
 	}
+
+
 
 	public int getResult() {
 		return result;

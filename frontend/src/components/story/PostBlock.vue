@@ -89,9 +89,10 @@ export default {
           }
         })
         .then(
-          (response) => (
+          (response) => {
             this.posts = response.data.list
-          )
+            console.log(this.posts )
+           }
         );
 
     },
