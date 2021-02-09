@@ -11,7 +11,8 @@
         </template>
         <!--이미지-->
         <div class="postImage">
-          <b-card-img class="col-3 mb-5" src="https://placekitten.com/480/210" alt="Image" bottom></b-card-img>
+             <b-card-img v-for="(item, index) in fileId"
+        :key="index" class="col-4 mb-5" :src="url+`/clubpost/download/` + item" alt="Image" bottom></b-card-img>
         </div>
         <!--내용-->
         <p @click="detail(post)">{{post.postContent}}</p>
