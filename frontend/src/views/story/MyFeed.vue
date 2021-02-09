@@ -24,7 +24,9 @@
         
       </b-tab>
       <b-tab title="리뷰">
-        <!-- <PostBlockMy /> -->
+           <div v-for="(item, index) in reviews" :key="index">
+         <ReivewBlock :review="item"  />
+           </div>
       </b-tab>
       <b-tab title="태그">
         <TagBox />
@@ -44,6 +46,7 @@
 <script>
 import GroupBox from '@/components/story/GroupBox'
 import PostBlockMy from '@/components/story/PostBlockMy'
+import ReivewBlock from '@/components/review/ReviewBlock'
 import Profile2 from '@/components/app/Profile2'
 import TagBox from '@/components/story/TagBox'
 import axios from "axios";
@@ -60,6 +63,7 @@ export default {
     PostBlockMy,
     Profile2,
     TagBox,
+    ReivewBlock,
   },
   data() {
     return {
@@ -68,13 +72,15 @@ export default {
       posts:[],
       limit: 5,  //한 페이지에 노출될 게시글의 수
       offset: 0,  //게시글 번호 오프셋,
-      liked: false
+      liked: false,
+       reviews: Array,
     };
   },
   created() {
     this.nickname = JSON.parse(localStorage.getItem('Login-token'))['user-name']
     this.userId = JSON.parse(localStorage.getItem('Login-token'))['user-id']
     this.getUserPosts();
+    this.getReview();
     
   },
   methods: {
@@ -90,6 +96,19 @@ export default {
         .then((response) => {
           this.posts = response.data.list;
           console.log(this.posts);
+        });
+    },
+     getReview: function() {
+      axios
+        .get(`${SERVER_URL}/review/user/` + `${this.userId}`)
+        .then((response) => {
+        
+          this.reviews = response.data;
+          console.log(this.reviews);
+    
+        })
+        .catch((response) => {
+          console.log(response);
         });
     },
   },

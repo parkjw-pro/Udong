@@ -58,7 +58,7 @@ export default {
       colors: ["danger", "warning", "success", "primary"],
       groups: [],
       selected: 0,  //선택된 그룹
-      posts:[],
+      posts: Object,
       limit: 5,  //한 페이지에 노출될 게시글의 수
       offset: 0,  //게시글 번호 오프셋
     }

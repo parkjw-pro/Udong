@@ -1,8 +1,15 @@
 package com.ssafy.udong.controller;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -26,6 +33,7 @@ import com.ssafy.udong.dto.CommentResultDto;
 import com.ssafy.udong.dto.LikeDto;
 import com.ssafy.udong.dto.ReportDto;
 import com.ssafy.udong.service.ClubPostService;
+import com.ssafy.udong.service.ClubService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -38,7 +46,11 @@ public class ClubPostController {
 
 	@Autowired
 	ClubPostService service;
+	
 
+	@Autowired
+	ClubService clubService;
+	
 	private static final int SUCCESS = 1;
 	private static final int FAIL = -1;
 
@@ -46,8 +58,8 @@ public class ClubPostController {
 			+ " - postContent : 글 내용\n" + " - isOpen : 공개 여부(true/false 또는 1/0으로 구분)\n" + "## 가능값\n"
 			+ " - postTag : 태그\n")
 	@PostMapping
-	private ResponseEntity<String> createClubPost(@RequestBody ClubPostDto clubPostDto,
-			@RequestParam(value = "file", required = false) List<MultipartFile> files) {
+	private ResponseEntity<String> createClubPost(ClubPostDto clubPostDto,
+			@RequestParam(value = "file", required = false) MultipartFile[] files) {
 		System.out.println("그룹게시판");
 		int result = service.createClubPost(clubPostDto, files);
 
@@ -164,7 +176,7 @@ public class ClubPostController {
 
 	// 글 상세조회
 	@ApiOperation(value = "게시 글 조회", notes = "그룹 피드에 노출되는 글 한 개를 조회합니다.\n" + "## 필수값\n" + " - postId : 조회할 게시글 아이디\n")
-	@GetMapping(value = "/{postId}")
+	@GetMapping(value = "/postId/{postId}")
 	private ResponseEntity<ClubPostResultDto> selectClubPost(@PathVariable String postId) {
 		System.out.println("clubpost상세조회");
 
@@ -338,5 +350,25 @@ public class ClubPostController {
 			return new ResponseEntity<String>("게시글 댓글 신고 실패", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
+	@GetMapping("/download/{fileId}")
+	public ResponseEntity<Resource> download(@PathVariable String fileId) throws IOException {
+		System.out.println("다운로드" +fileId);
+		List<String> url = clubService.selectFileUrl(fileId);
+		System.out.println("가져온 url:" +url.get(0));
+		System.out.println("./uploads/clubpost/"+url.get(0).substring(17));
+		String madeUrl = "./uploads/clubpost/"+url.get(0).substring(17);	
+		Path path = Paths.get(madeUrl);
+			
+		String contentType = Files.probeContentType(path);
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.add(HttpHeaders.CONTENT_TYPE, contentType);
+
+		Resource resource = new InputStreamResource(Files.newInputStream(path));
+		return new ResponseEntity<>(resource, headers, HttpStatus.OK);
+	}
+	
+	
 
 }

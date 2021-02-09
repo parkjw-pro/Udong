@@ -11,7 +11,8 @@
         </template>
         <!--이미지-->
         <div class="postImage">
-          <b-card-img class="col-3 mb-5" src="https://placekitten.com/480/210" alt="Image" bottom></b-card-img>
+           <b-card-img v-for="(item, index) in fileId"
+        :key="index" class="col-4 mb-5" :src="url+`/clubpost/download/`+ item" alt="Image" bottom></b-card-img>
         </div>
         <!--내용-->
         <p @click="detail(post)">{{post.postContent}}</p>
@@ -93,7 +94,9 @@ export default {
       comments: [],
       comment: "",
       limit: 5,
-      offset: 0
+      offset: 0,
+      fileId: Object,
+      url : SERVER_URL,
     }
   },
   computed: {
@@ -101,8 +104,20 @@ export default {
     ...mapGetters(["getUserName"])
   },
   created() {
+     console.log("포스트 :" +this.post.postId)
+    axios.get(`${SERVER_URL}/clubpost/postId/${this.post.postId}`)
+    .then((res)=>{
+      console.log(res)
+      console.log(res.data.fileId)
+      this.fileId= res.data.fileId
+      
+    })
     this.getLikeInfo();
     this.getArticleComments();
+
+
+   
+
   },
   methods: {
     getLikeInfo(){
