@@ -32,7 +32,7 @@
       </b-tab>
       <b-tab title="리뷰">
            <div v-for="(item, index) in reviews" :key="index">
-         <ReivewBlock :review="item"  />
+         <ReviewBlock :review="item"  />
            </div>
       </b-tab>
       <b-tab title="태그">
@@ -52,6 +52,7 @@
 
 <script>
 import GroupBox from '@/components/story/GroupBox'
+import ReviewBlock from '@/components/review/ReviewBlock'
 import PostBlockMy from '@/components/story/PostBlockMy'
 import TagBox from '@/components/story/TagBox'
 import axios from "axios";
@@ -67,7 +68,7 @@ export default {
     GroupBox,
     PostBlockMy,
     TagBox,
-    ReivewBlock,
+    ReviewBlock,
   },
   data() {
     return {
