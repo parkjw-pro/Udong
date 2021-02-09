@@ -166,40 +166,43 @@ export default {
       for (let index = 0; index < this.getSearchStoreList.length; index++) {
         var temp = this.getSearchStoreList[index];
         console.log(temp);
+        list.push(temp)
         geocoder.addressSearch(temp.storeAddr, function(result, status) {
-
          // var title = temp.storeName;
           // 정상적으로 검색이 완료됐으면
           if (status === kakao.maps.services.Status.OK) {
 
             var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-            list.push(coords)
-           console.log(coords);
-           console.log(list);
 
+           var marker = new kakao.maps.Marker({
+              map: map, // 마커를 표시할 지도
+              position: coords, // 마커를 표시할 위치
+              title: "상점", // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+              image: markerImage, // 마커 이미지
+            });
+            //marker.setMap(map);
+            console.log(marker);
             // var marker = new kakao.maps.Marker({ map: map, position: coords });
             // 인포윈도우로 장소에 대한 설명을 표시합니다
             // console.log(this.getSearchStoreList[0]);
               //  console.log(temp);
-              //  var infowindow = new kakao.maps.InfoWindow({
-              //    content: '<div style="width:150px;text-align:center;padding:6px 0;">'+temp.storeName+'</div>',
-              //  });
-              // infowindow.open(map, marker); // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-              // console.log(marker);
-            //   map.setCenter(coords);
+              console.log(list[index]);
+               var infowindow = new kakao.maps.InfoWindow({
+                 content: '<div @click="toDetail('+list[index]+')" style="width:100px;text-align:center;padding:4px 0; cursor: pointer;">'+list[index].storeName+'</div>',
+               });
+              infowindow.open(map, marker); // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+              console.log(marker);
+              map.setCenter(coords);
+            
           }
         });
       }
-      for (let index = 0; index < this.getSearchStoreList.length; index++) {
-              var marker = new kakao.maps.Marker({
-              map: map, // 마커를 표시할 지도
-              position: list[index], // 마커를 표시할 위치
-              title: "상점", // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-              image: markerImage, // 마커 이미지
-            });
+      // for (let index = 0; index < this.getSearchStoreList.length; index++) {
+      //   console.log(list[index]);
+
         
-      }
-      console.log(marker);
+      // }
+      
 
     },
     addScript() {
@@ -209,7 +212,8 @@ export default {
       document.head.appendChild(script);
     },
 
-    toDetail: function(store) {
+    toDetail(store) {
+      console.log("toDetail");
       // 리뷰 작성 페이지로 넘어가준다!!
       this.$router.push({ name: 'ReviewDetail', params: { storeId: store.storeId } });
     },
@@ -226,7 +230,7 @@ export default {
   position: relative;
   width: 50%;
   height: 500px;
-  left: 25%;
+  left: 5%;
 }
 .hAddr {
   position: absolute;

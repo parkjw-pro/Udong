@@ -18,7 +18,7 @@
         img-width="1024"
         img-height="480"
         style="text-shadow: 1px 1px 2px #333; width: 50em; height: 25em;"
-        fade="true"
+        :fade="true"
       >
 
         <b-carousel-slide
