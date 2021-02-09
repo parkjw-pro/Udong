@@ -20,7 +20,7 @@
     </b-row>
 
     <div v-if="posts.length > 0">
-      <div class="mb-5" v-for="(post, i) in posts" :key="i"> <!-- for문 넣기 -->
+      <div class="mb-5" v-for="(post, i) in posts" :key="i">
         <PostBlock :post="post" />
       </div>
     </div>
@@ -55,7 +55,6 @@ export default {
   },
   data: function () {
     return {
-      colors: ["danger", "warning", "success", "primary"],
       groups: [],
       selected: 0,  //선택된 그룹
       postCount: 0,
@@ -93,7 +92,7 @@ export default {
     selectGroup(idx){
       this.selected = idx;
       this.offset = 0;
-      this.posts = {};
+      this.posts = [];
       this.getGroupPosts();
     },
     getMorePosts() {
@@ -101,7 +100,7 @@ export default {
       if(this.postCount < this.offset + this.limit) return;
 
       console.log("we have more~");
-      
+
       this.offset += this.limit;
       this.getGroupPosts();
       console.log("got more posts~");
