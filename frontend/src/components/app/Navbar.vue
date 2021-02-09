@@ -21,7 +21,7 @@
     <!-- 2. 햄버거메뉴 -->
     <component :is="currentMenu" :right="side === 'right' ? true: false" >
         <b-row id="option_v2" align-h="left">
-          <b-col><b-avatar variant="info" :src="require('@/assets/app/badge1.jpg')"></b-avatar>{{ user.nickname }}님</b-col>
+          <b-col @click="toBadge"><b-avatar variant="info" :src="require('@/assets/app/badge1.jpg')" style="cursor: pointer;"></b-avatar>{{ user.nickname }}님</b-col>
         </b-row>
         <b-row id="option_v2">안녕하세요!</b-row>
         <hr>
@@ -105,7 +105,7 @@ export default {
     },
     toFindLocation: function () {
       this.$router.push({ name: 'FindLocation'})
-    }, 
+    },
     toHome: function () {
       // this.$router.push({name: 'Home'})
       location.replace('/home')
