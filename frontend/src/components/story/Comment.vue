@@ -1,28 +1,27 @@
 <template>
   <div>
     <!-- 댓글 -->
-    <b-list-group style="text-align: left;">
-      <b-list-group-item>
-        <b-row>
-        <span class="font-weight-bold">{{comment.nickname}}</span>
-        <span class="ml-2 mr-1">{{comment.commContent}}</span>
-        <span class="small"><em>{{comment.createdAt.substr(0,10)}}</em></span>  <!--날짜까지만 표시-->
-        <div class="float-right"> <!--좋아요 여부와 좋아요 수-->
-          <b-icon icon="suit-heart-fill" variant="danger" v-if="liked" @click="likeComment"></b-icon>
-          <b-icon icon="suit-heart" variant="danger" v-else @click="likeComment"></b-icon>
-          <span>{{comment.commLikeCount}}</span>
-        </div>
-        </b-row>
-      </b-list-group-item>
+    <b-row>
+      <b-col class="col-10 text-left" sytle="text-align:left">
+      <span class="ml-2">{{comment.nickname}}</span>
+      <span class="ml-3" style="color:gray">{{comment.commContent}}</span>
+      <span class="small ml-2 mt-2" style="color:lightgray"><em>{{comment.createdAt.substr(0,10)}}</em></span>  <!--날짜까지만 표시-->
+      </b-col>
+      <b-col>
+      <!--좋아요 여부와 좋아요 수-->
+        <b-icon icon="suit-heart-fill" variant="danger" v-if="liked" @click="likeComment"></b-icon>
+        <b-icon icon="suit-heart" variant="danger" v-else @click="likeComment"></b-icon>
+        <span>{{comment.commLikeCount}}</span>
 
-      <b-dropdown class="float-right" dropup variant="link" toggle-class="text-decoration-none" no-caret>
+      <b-dropdown size="sm" dropup variant="secondary-muted" no-caret>
         <template #button-content>
           <b-icon icon="three-dots-vertical"></b-icon>
         </template>
         <b-dropdown-item href="#" variant="danger" v-if="comment.userId == getUserId" @click="deleteComment">삭제</b-dropdown-item>
         <b-dropdown-item href="#" variant="danger" v-else @click="reportComment">신고</b-dropdown-item>
       </b-dropdown>
-    </b-list-group>
+      </b-col>
+    </b-row>
   </div>
 </template>
 

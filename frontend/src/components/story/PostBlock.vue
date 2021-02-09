@@ -11,8 +11,7 @@
         </template>
         <!--이미지-->
         <div class="postImage">
-           <b-card-img v-for="(item, index) in fileId"
-        :key="index" class="col-4 mb-5" :src="url+`/clubpost/download/`+ item" alt="Image" bottom></b-card-img>
+          <b-card-img class="col-3 mb-5" src="https://placekitten.com/480/210" alt="Image" bottom></b-card-img>
         </div>
         <!--내용-->
         <p @click="detail(post)">{{post.postContent}}</p>
@@ -23,8 +22,9 @@
             <b-icon icon="suit-heart" variant="danger" v-else @click="likePost()"></b-icon><span>{{post.postLikeCount}}</span>
             </div>
             
-            <div class="postComment"> <!--댓글 수-->
-            <b-icon icon="chat" variant="warning"></b-icon>
+            <div class="postComment" @click="getArticleComments"> <!--댓글 수-->
+            <b-icon v-if="comments.length > 0" icon="chat-fill" variant="warning"></b-icon>
+            <b-icon v-else icon="chat" variant="warning"></b-icon>
             <span>{{post.postCommentCount}}</span>
             </div>
 
@@ -41,6 +41,9 @@
           <!-- 댓글 -->
           <div v-for="(comm, i) in comments" :key="i">
             <Comment :comment="comm" />
+          </div>
+          <div v-if="comments.length > 0 && comments.length < commentCount">
+            <b-button @click="getMoreComments">+) 더보기</b-button>
           </div>
 
           <br>
@@ -84,10 +87,9 @@ export default {
       liked: false,
       comments: [],
       comment: "",
+      commentCount: 0,
       limit: 5,
-      offset: 0,
-      fileId: Object,
-      url : SERVER_URL,
+      offset: 0
     }
   },
   computed: {
@@ -95,20 +97,7 @@ export default {
     ...mapGetters(["getUserName"])
   },
   created() {
-     console.log("포스트 :" +this.post.postId)
-    axios.get(`${SERVER_URL}/clubpost/postId/${this.post.postId}`)
-    .then((res)=>{
-      console.log(res)
-      console.log(res.data.fileId)
-      this.fileId= res.data.fileId
-      
-    })
     this.getLikeInfo();
-    this.getArticleComments();
-
-
-   
-
   },
   methods: {
     getLikeInfo(){
@@ -172,6 +161,7 @@ export default {
     //     });
     // },
     getArticleComments(){
+      if(this.comments.length > 0) return;
       axios
         .get(`${SERVER_URL}/clubpost/comment`, {
           params: {
@@ -183,6 +173,27 @@ export default {
         .then(
           (response) => {
             this.comments = response.data.list;
+            this.commentCount = response.data.count;
+            console.log(this.commentCount);
+          });
+    },
+    getMoreComments() {
+      if(this.commentCount <= this.comments.length){
+        return;
+      }
+
+      this.offset += this.limit;
+      axios
+        .get(`${SERVER_URL}/clubpost/comment`, {
+          params: {
+            postId: this.post.postId,
+            limit: this.limit,
+            offset: this.offset
+          }
+        })
+        .then(
+          (response) => {
+            this.comments.push(...response.data.list);
           });
     },
     writeComment() {
