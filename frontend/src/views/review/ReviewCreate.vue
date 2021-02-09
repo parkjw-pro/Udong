@@ -1,89 +1,82 @@
 <template>
   <div id="box">
-    <!-- 리뷰가게명 -->
-    <div>
-      <h1>
-        <span style="font-family: 'Hanna', sans-serif;">{{ store.storeName }} </span>
-        <span class="small">리뷰하기</span>
-      </h1>
-      <h4 class="small">{{ store.storeAddr}}</h4>
-    </div>
+    <div id="reviewCreateBox">
+      <!-- 리뷰가게명 -->
+      <div class="mt-3 pt-3">
+        <h1>
+          <span style="font-family: 'Hanna', sans-serif;">{{ store.storeName }} </span>
+          <span class="small">리뷰하기</span>
+        </h1>
+        <h4 class="small">{{ store.storeAddr}}</h4>
+      </div>
 
-    <!-- 1. 평점 -->
-    <b-row class="my-3" align-h="center">
-      <star-rating v-model="review.rate" v-bind:star-size="40" v-bind:show-rating="true" v-bind:active-on-click="true" ></star-rating>
-    </b-row>
-    
-    <!-- 2. 리뷰 내용 -->
-    <div class="mx-5 px-5 mt-2">
-      <b-form-textarea
-        id="textarea-rows"
-        v-model="review.reviewContent"
-        placeholder="소중한 리뷰를 남겨주세요!"
-        rows="12"
-        class="text-align-center my-3"
-        maxlength="500"
-      ></b-form-textarea>
-      <p style="text-align: right;">{{ contentLength }} / 500</p>
-    </div>
+      <!-- 1. 평점 -->
+      <b-row class="my-3" align-h="center">
+        <star-rating v-model="review.rate" v-bind:star-size="40" v-bind:show-rating="true" v-bind:active-on-click="true" ></star-rating>
+      </b-row>
+      
+      <!-- 2. 리뷰 내용 -->
+      <div class="mx-5 px-5 mt-4">
+        <b-form-textarea
+          id="textarea-rows"
+          v-model="review.reviewContent"
+          placeholder="소중한 리뷰를 남겨주세요!"
+          rows="12"
+          class="text-align-center my-3"
+          maxlength="500"
+        ></b-form-textarea>
+        <p style="text-align: right;">{{ contentLength }} / 500</p>
+      </div>
 
-    <!-- 3. 이미지 -->
-    <b-container fluid class="p-4 mb-3" style="width: 70%;">
-      <b-row>
-        <!-- <b-col v-for="(file, index) in files" :key="index">
-            <div class="image_box">
-              <b-img left thumbnail fluid :src="file.name" alt="Image"></b-img>
-            </div>
-          </b-col> -->
+      <!-- 3. 이미지 -->
+      <b-container fluid class="my-3 pb-5" style="width: 70%;">
+        <b-row>
+          <b-col cols="3" v-for="(url, index) in imageUrl" :key="index" left align-self="center">
+            <b-img thumbnail fluid :src="url">
+            </b-img>
+          </b-col>
+          <b-col cols="3" class="ml-0 pl-0" align-self="center">
+            <b-icon icon="plus" v-b-modal.image-modal font-scale="4" variant="dark" style="cursor: pointer;">
+              &nbsp;
+            </b-icon>
+          </b-col>
+        </b-row>
+      </b-container>
+
+      <!-- 이미지 업로더 modal -->
+      <b-modal 
+        id="image-modal"
+        title="소중한 사진을 올려주세요!"
+        style="font-family: 'Jeju Gothic', sans-serif;"
+      >
+        <b-form-file
+          multiple="multiple"
+          v-model="files"
+          placeholder="첨부파일 없음"
+          drop-placeholder="Drop file here..."
+          required
+          accept=".jpg, .png, .gif"
+          @change="previewImage"
+          style="width: 70%;"
+        ></b-form-file>
+      </b-modal>
 
 
-        <b-col>
-          <div >
-            <b-img v-for="(url, index) in imageUrl" :key="index"
-            left thumbnail fluid :src="url"></b-img>
-          </div>
+
+      <b-row align-h="center" class="mb-3 pb-3">
+        <b-col cols="3">
+          <b-button size="lg" variant="danger" v-b-modal.review-cancel-modal>돌아가기</b-button>
         </b-col>
-       <b-col class="ml-0 pl-0" align-self="center">
-          <b-icon icon="plus" v-b-modal.image-modal font-scale="4" variant="dark" style="cursor: pointer;" >
-            &nbsp;
-          </b-icon>
+        <b-col cols="3">
+          <b-button size="lg" style="background-color: #695549;" @click="createReview">리뷰작성</b-button>
         </b-col>
       </b-row>
-    </b-container>
 
-    <!-- 이미지 업로더 modal -->
-    <b-modal 
-      id="image-modal"
-      title="소중한 사진을 올려주세요!"
-      style="font-family: 'Jeju Gothic', sans-serif;"
-    >
-      <b-form-file
-        multiple="multiple"
-        v-model="files"
-        placeholder="첨부파일 없음"
-        drop-placeholder="Drop file here..."
-        required
-        accept=".jpg, .png, .gif"
-        @change="previewImage"
-        style="width: 70%;"
-      ></b-form-file>
-    </b-modal>
-
-
-
-    <b-row align-h="center">
-      <b-col cols="3">
-        <b-button size="lg" variant="danger" v-b-modal.review-cancel-modal>돌아가기</b-button>
-      </b-col>
-      <b-col cols="3">
-        <b-button size="lg" style="background-color: #695549;" @click="createReview">리뷰작성</b-button>
-      </b-col>
-    </b-row>
-
-    <!-- 돌아가기 버튼 클릭 후 나타나는 modal -->
-    <b-modal id="review-cancel-modal" @ok="toBack">
-      리뷰 작성을 취소하시겠습니까?
-    </b-modal>
+      <!-- 돌아가기 버튼 클릭 후 나타나는 modal -->
+      <b-modal id="review-cancel-modal" @ok="toBack">
+        리뷰 작성을 취소하시겠습니까?
+      </b-modal>
+    </div>
   </div>
 </template>
 
@@ -145,9 +138,9 @@ export default {
       if (this.review.rate == 0) {
         this.isValid = 0
         alert("평점을 선택해주세요!")
-      } else if (this.review.reviewContent.length < 10) {
+      } else if (this.review.reviewContent.length < 5) {
         this.isValid = 0
-        alert("리뷰를 10자 이상 작성해주세요!")
+        alert("리뷰를 5자 이상 작성해주세요!")
       } else {
         this.isValid = 1
       }
@@ -218,4 +211,7 @@ export default {
 </script>
 
 <style>
+#reviewCreateBox {
+  /* border: 3px dotted #695549; */
+}
 </style>
