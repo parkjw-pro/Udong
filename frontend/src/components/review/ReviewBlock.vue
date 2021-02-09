@@ -34,25 +34,31 @@
         </template>
 
         <!-- 2. 본문 부분 -->
-        <b-carousel
-          id="carousel-1"
-          v-model="slide"
-          controls
-          indicators
-          background="#ababab"
-          img-width="1024"
-          img-height="480"
-          style="text-shadow: 1px 1px 2px #333;"
-          fade="true"
-        >
-          <b-carousel-slide v-for="(item, index) in fileId"
-            :key="index"   
-            :img-src="url+`/review/download/` + item" 
-          ></b-carousel-slide>
-        </b-carousel>
-        <div class="my-3 mx-3" style="text-align: left;">
-          <h6>{{review.reviewContent}}</h6>
-        </div>
+        <b-row align-h="center">
+          <b-carousel
+            id="carousel-1"
+            v-model="slide"
+            controls
+            indicators
+            background="#ababab"
+            img-width="1024"
+            img-height="480"
+            style="text-shadow: 1px 1px 2px #333; width: 30em; height: 15em;"
+            fade="true"
+          >
+            <b-carousel-slide
+              id="review_img"
+              v-for="(item, index) in fileId"
+              :key="index"   
+              :img-src="url+`/review/download/` + item" 
+            ></b-carousel-slide>
+          </b-carousel>
+        </b-row>
+        <b-row>
+          <div class="my-3 mx-3" style="text-align: left;">
+            <h6>{{review.reviewContent}}</h6>
+          </div>
+        </b-row>
 
         
     
@@ -178,12 +184,16 @@ export default {
 </script>
 
 <style>
-  /* b-card-text{
-   background-color: blue;
-  } */
-  /* 적용안됨 */
-  b-card-img {
-    height: 5px;
-    width: 5px;
-  }
+#review_img {
+  top: 0;
+  left: 0;
+  min-width: 30em;
+  min-height: 15em;
+  max-width: 30em;
+  max-height: 15em;
+}
+b-card-img {
+  height: 5px;
+  width: 5px;
+}
 </style>

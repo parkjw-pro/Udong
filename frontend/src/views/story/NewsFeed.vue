@@ -27,7 +27,7 @@
     <div v-else>
       <h3>게시물이 없어요...</h3>
     </div>
-    <EndBlock />
+    <EndBlock v-on:more="getMorePosts" />
     <Button />
   </div>
 </template>
@@ -58,7 +58,8 @@ export default {
       colors: ["danger", "warning", "success", "primary"],
       groups: [],
       selected: 0,  //선택된 그룹
-      posts: Object,
+      postCount: 0,
+      posts:[],
       limit: 5,  //한 페이지에 노출될 게시글의 수
       offset: 0,  //게시글 번호 오프셋
     }
@@ -76,7 +77,6 @@ export default {
   },
   methods: {
     getGroupPosts(){
-      this.posts = {};
       axios
         .get(`${SERVER_URL}/clubpost/club`, {
           params: {
@@ -86,12 +86,25 @@ export default {
           }
         })
         .then((response) => {
-            this.posts = response.data.list;
+            this.posts.push(...response.data.list);
+            this.postCount = response.data.count;
         });
     },
     selectGroup(idx){
       this.selected = idx;
+      this.offset = 0;
+      this.posts = {};
       this.getGroupPosts();
+    },
+    getMorePosts() {
+      console.log("want to get more??");
+      if(this.postCount < this.offset + this.limit) return;
+
+      console.log("we have more~");
+      
+      this.offset += this.limit;
+      this.getGroupPosts();
+      console.log("got more posts~");
     },
     toList: function () {
       this.$router.push({ name: 'GroupList'})
