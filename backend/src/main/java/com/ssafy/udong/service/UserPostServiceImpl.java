@@ -156,11 +156,11 @@ public class UserPostServiceImpl implements UserPostService {
 		try {
 			userPostDao.updateUserPostViews(postId); // 조회수 1증가
 			userPostDto = userPostDao.selectUserPost(postId); // 상세 리스트 가져오기
-
-			List<String> list = userPostDao.selectFileUrl(postId);
+			
+			List<String> list = userPostDao.selectFileId(postId);
 
 			userPostResultDto.setDto(userPostDto);
-			userPostResultDto.setFileUrl(list);
+			userPostResultDto.setFileId(list);
 
 			return userPostResultDto;
 
@@ -319,7 +319,7 @@ public class UserPostServiceImpl implements UserPostService {
 			// 게시물 총개수
 			int count = userPostDao.userPostByUserIdTotalCount(userPostParamDto);
 			List<UserPostDto> list = userPostDao.selectUserPostByUserId(userPostParamDto);
-
+			
 			userPostResultDto.setList(list);
 			userPostResultDto.setCount(count);
 			userPostResultDto.setResult(SUCCESS);

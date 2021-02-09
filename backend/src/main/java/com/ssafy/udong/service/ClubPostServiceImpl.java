@@ -209,7 +209,7 @@ public class ClubPostServiceImpl implements ClubPostService {
 
 			int count = clubPostDao.clubPostByUserIdCount(clubPostParamDto);
 			List<ClubPostDto> list = clubPostDao.selectClubPostByUserId(clubPostParamDto);
-
+			
 			clubPostResultDto.setList(list);
 			clubPostResultDto.setCount(count);
 			clubPostResultDto.setResult(SUCCESS);

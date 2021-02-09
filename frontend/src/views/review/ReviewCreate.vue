@@ -155,6 +155,10 @@ export default {
     createReview: function() {
       this.checkValidity()
       if (this.isValid) {
+        var text = document.getElementById("textarea-rows").value;
+        text = text.replace(/(?:\r\n|\r|\n)/g, '<br/>')
+        document.getElementById("textarea-rows").value = text
+        this.review.reviewContent = text
         var formData = new FormData();
         formData.append('reviewContent', this.review.reviewContent);
         formData.append('rate', this.review.rate);
@@ -168,10 +172,7 @@ export default {
         }
 
         // review 내용 줄바꾸기
-        var text = document.getElementById("textarea-rows").value;
-        text = text.replace(/(?:\r\n|\r|\n)/g, '<br/>')
-        document.getElementById("textarea-rows").value = text
-        this.review.reviewContent = text
+
 
         console.log(this.files);
         // formData.append('club', this.club)

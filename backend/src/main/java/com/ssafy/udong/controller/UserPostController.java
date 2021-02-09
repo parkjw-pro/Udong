@@ -1,8 +1,16 @@
 package com.ssafy.udong.controller;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -24,6 +32,7 @@ import com.ssafy.udong.dto.ReportDto;
 import com.ssafy.udong.dto.UserPostDto;
 import com.ssafy.udong.dto.UserPostParamDto;
 import com.ssafy.udong.dto.UserPostResultDto;
+import com.ssafy.udong.service.ClubService;
 import com.ssafy.udong.service.UserPostService;
 
 import io.swagger.annotations.Api;
@@ -38,6 +47,8 @@ public class UserPostController {
 	@Autowired
 	UserPostService service;
 
+	@Autowired
+	ClubService clubService;
 	private static final int SUCCESS = 1;
 	private static final int FAIL = -1;
 
@@ -114,9 +125,7 @@ public class UserPostController {
 			"## 필수값\n" + " - postId : 조회할 게시글 아이디\n")
 	@GetMapping(value="/{postId}")
 	private ResponseEntity<UserPostResultDto> selectUserPost(@PathVariable String postId){
-
 		UserPostResultDto userPostResultDto = service.selectUserPost(postId);
-
 		if( userPostResultDto != null ) {
 			return new ResponseEntity<UserPostResultDto>(userPostResultDto, HttpStatus.OK);
 		}else {
@@ -289,6 +298,23 @@ public class UserPostController {
 		}else {
 			return new ResponseEntity<String>("게시글 댓글 신고 실패", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+	}
+	@GetMapping("/download/{fileId}")
+	public ResponseEntity<Resource> download(@PathVariable String fileId) throws IOException {
+		System.out.println("다운로드" +fileId);
+		List<String> url = clubService.selectFileUrl(fileId);
+		System.out.println("가져온 url:" +url.get(0));
+		System.out.println("./uploads/userpost/"+url.get(0).substring(17));
+		String madeUrl = "./uploads/userpost/"+url.get(0).substring(17);
+		Path path = Paths.get(madeUrl);
+			
+		String contentType = Files.probeContentType(path);
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.add(HttpHeaders.CONTENT_TYPE, contentType);
+
+		Resource resource = new InputStreamResource(Files.newInputStream(path));
+		return new ResponseEntity<>(resource, headers, HttpStatus.OK);
 	}
 	
 	

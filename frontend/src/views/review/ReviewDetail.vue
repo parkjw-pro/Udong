@@ -28,12 +28,6 @@
       ></b-carousel-slide>
 
     </b-carousel>
-<<<<<<< HEAD
-    <!-- 2. store 정보 -->
-=======
-
->>>>>>> c9487ed091c92f24f5ce22c60a34018572accfa1
-
     <!-- 2. store 정보 -->
     <div class="my-5 py-5">
       <b-row style="text-align: justify;">
