@@ -21,12 +21,16 @@
     <!-- 2. 공개 그룹 -->
     <div id="public_group" class="my-5">
       <h4 id="group_list_category">공개 그룹</h4>
-      <GroupCard />
+      <div v-for="(title, idx) in club" :key="idx"> 
+      <GroupCard :group = "title"/>
+       </div>
     </div>
     <!-- 3. 비공개 그룹 -->
     <div id="private_group" class="my-5">
       <h4 id="group_list_category">비공개 그룹</h4>
-      <GroupCard />
+        <div v-for="(title, idx) in club" :key="idx">   
+      <GroupCard :group = "title"/>
+        </div>
     </div>
   </div>
 </template>

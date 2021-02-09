@@ -139,10 +139,10 @@ public class ClubController {
 	}
 
 	@ApiOperation(value = "전체 그룹 정보 조회", notes = "모든 그룹의 정보를 조회합니다.\n" + "## 필수값\n")
-	@GetMapping("/clubs")
-	public ResponseEntity<List<ClubDto>> selectAllClub(){
+	@GetMapping("/clubs/{areaCode}")
+	public ResponseEntity<List<ClubDto>> selectAllClub(@PathVariable String areaCode){
 		try {
-			List<ClubDto> clubs = clubService.selectAllClub();
+			List<ClubDto> clubs = clubService.selectAllClub(areaCode);
 			return new ResponseEntity<List<ClubDto>>(clubs, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();

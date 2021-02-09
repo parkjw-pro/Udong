@@ -27,7 +27,7 @@ public interface ClubDao {
 
 	String selectNickname(String userId);
 	
-	List<ClubDto> selectAllClub();
+	List<ClubDto> selectAllClub(String areaCode);
 
 	int updateClub(ClubDto club);
 	int updateClubNoFile(ClubDto club);
