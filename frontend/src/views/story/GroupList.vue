@@ -1,31 +1,30 @@
 <template>
-  <div id="box" class="mx-5">
+  <div class="mx-5 px-5" id="box">
     <!-- 1. 내 그룹 -->
     <div id="my_group" class="my-5">
-        <b-row>
-          <b-col md="4"><h4 id="group_list_category">내 그룹</h4></b-col>
-          <b-col md="4" offset-md="4"><b-button pill variant="primary" @click="groupMake()">+</b-button>(그룹 만들기)</b-col>
+        <b-row align-h="justify">
+          <b-col align-self="center"><h4 id="group_list_category">내 그룹</h4></b-col>
+          <b-col align-self="center" offset-md="4"><b-button style="background-color: #695549;" @click="groupMake()">그룹 만들기</b-button></b-col>
         </b-row>
-      <!-- <div>
-        <h4 id="group_list_category">내 그룹</h4>
-        <b-button pill variant="primary">+</b-button>
-      </div> -->
-        <b-card-group   >
-          <div v-for="(title, idx) in club" :key="idx"> 
-              <GroupCard :group = "title"/>
-          </div>
-   
-        </b-card-group>
-        <!-- <GroupCard /> -->
+        <hr>
+        <b-row>
+          <b-card-group   >
+            <div id="group_card" v-for="(title, idx) in club" :key="idx"> 
+                <GroupCard :group="title"/>
+            </div>
+          </b-card-group>
+        </b-row>
     </div>
     <!-- 2. 공개 그룹 -->
-    <div id="public_group" class="my-5">
-      <h4 id="group_list_category">공개 그룹</h4>
+    <div id="public_group" class="my-5 py-5" style="text-align: left;">
+      <h4 class="mx-5" id="group_list_category">공개 그룹</h4>
+      <hr>
       <GroupCard />
     </div>
     <!-- 3. 비공개 그룹 -->
-    <div id="private_group" class="my-5">
-      <h4 id="group_list_category">비공개 그룹</h4>
+    <div id="private_group" class="my-5 py-5" style="text-align: left;">
+      <h4 class="mx-5" id="group_list_category">비공개 그룹</h4>
+      <hr>
       <GroupCard />
     </div>
   </div>
@@ -68,6 +67,12 @@ export default {
 </script>
 
 <style>
+#group_card {
+  width: 20rem;
+  height: 20rem;
+  max-width: 20rem;
+  max-height: 20rem;
+},
 #group_list_category {
   text-align: left;
   font-weight: bold;

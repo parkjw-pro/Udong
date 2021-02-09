@@ -7,11 +7,13 @@
         <b-card-text>
           <b-row align-h="justify" style="text-align: left;">
             <b-col align-self="center">
-              <!-- 뱃지 -->
-              <b-avatar :src="require('@/assets/app/badge1.jpg')" style="cursor: pointer;"></b-avatar>
-              <!-- 닉네임 -->
-              <span class="ml-1" style="">{{ post.nickname }}</span>
-              </b-col>
+              <span style="cursor: pointer;" @click="toFeed">
+                <!-- 뱃지 -->
+                <b-avatar :src="require('@/assets/app/badge1.jpg')"></b-avatar>
+                <!-- 닉네임 -->
+                <span class="ml-1" style="">{{ post.nickname }}</span>
+              </span>
+            </b-col>
             <!-- 추가 버튼(신고/삭제) -->
             <b-col style="text-align: right;">
               <b-dropdown size="lg" dropup variant="link" toggle-class="text-decoration-none" no-caret>
@@ -89,7 +91,12 @@
         </div>
             
         <b-row class="mt-3" v-if="comments.length > 0 && comments.length < commentCount">
-            <b-col><b-button pill variant="light" @click="getMoreComments">+</b-button></b-col>
+            <b-col>
+              <span style="cursor: pointer;" @click="getMoreComments">
+                <!-- <b-button pill variant="light" @click="getMoreComments">+</b-button> -->
+                <img alt="Vue logo" src="@/assets/udonge.png" style="width: 5%;">더보기
+              </span>
+            </b-col>
         </b-row>
 
         <br>
@@ -148,6 +155,35 @@ export default {
     this.userId = userInfo["userId"]
   },
   methods: {
+    deletePost() {
+      axios
+        .delete(`${SERVER_URL}/clubpost`, {
+          postId: this.post['postId']
+        })
+        .then((response) => {
+          console.log(response);
+        });
+    },
+    detail(post) {
+      this.$router.push({ name: "ArticleDetail", params: { post: post, group: this.group} });
+    },
+    getArticleComments(){
+      if(this.comments.length > 0) return;
+      axios
+        .get(`${SERVER_URL}/clubpost/comment`, {
+          params: {
+            postId: this.post.postId,
+            limit: this.limit,
+            offset: this.offset
+          }
+        })
+        .then(
+          (response) => {
+            this.comments = response.data.list;
+            this.commentCount = response.data.count;
+            console.log(this.commentCount);
+          });
+    },
     getLikeInfo(){
       axios
         .get(`${SERVER_URL}/clubpost/like`, {
@@ -163,6 +199,25 @@ export default {
           )
         );
     },
+    getMoreComments() {
+      if(this.commentCount <= this.comments.length){
+        return;
+      }
+
+      this.offset += this.limit;
+      axios
+        .get(`${SERVER_URL}/clubpost/comment`, {
+          params: {
+            postId: this.post.postId,
+            limit: this.limit,
+            offset: this.offset
+          }
+        })
+        .then(
+          (response) => {
+            this.comments.push(...response.data.list);
+          });
+    },
     likePost() {
       axios
         .post(`${SERVER_URL}/clubpost/like`, {
@@ -177,15 +232,6 @@ export default {
             } else {
               this.post['postLikeCount'] = this.post['postLikeCount']*1 - 1;
             }
-        });
-    },
-    deletePost() {
-      axios
-        .delete(`${SERVER_URL}/clubpost`, {
-          postId: this.post['postId']
-        })
-        .then((response) => {
-          console.log(response);
         });
     },
     // reportPost() {
@@ -208,41 +254,8 @@ export default {
     //       console.log(response);
     //     });
     // },
-    getArticleComments(){
-      if(this.comments.length > 0) return;
-      axios
-        .get(`${SERVER_URL}/clubpost/comment`, {
-          params: {
-            postId: this.post.postId,
-            limit: this.limit,
-            offset: this.offset
-          }
-        })
-        .then(
-          (response) => {
-            this.comments = response.data.list;
-            this.commentCount = response.data.count;
-            console.log(this.commentCount);
-          });
-    },
-    getMoreComments() {
-      if(this.commentCount <= this.comments.length){
-        return;
-      }
-
-      this.offset += this.limit;
-      axios
-        .get(`${SERVER_URL}/clubpost/comment`, {
-          params: {
-            postId: this.post.postId,
-            limit: this.limit,
-            offset: this.offset
-          }
-        })
-        .then(
-          (response) => {
-            this.comments.push(...response.data.list);
-          });
+    toFeed: function () {
+      this.$router.push({name: 'MyFeed', params: { userId: this.post.userId, nickname: this.post.nickname}})
     },
     writeComment() {
       axios
@@ -258,9 +271,7 @@ export default {
           this.post.postCommentCount = this.post.postCommentCount*1 + 1;
         });
     },
-    detail(post) {
-      this.$router.push({ name: "ArticleDetail", params: { post: post, group: this.group} });
-    }
+
   },
 }
 </script>

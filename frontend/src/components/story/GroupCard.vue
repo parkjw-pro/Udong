@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div @click="toGroupPage">
     <div class="group_list_img mx-4 my-4" :style="background_image">
       <div class="group_list_img_content">
-        <h2>{{ this.group.clubName }}</h2>
-           <h2>{{ this.group.fileId }}</h2>
+        <h4>{{ this.group.clubName }}</h4>
+        <!-- <h2>{{ this.group.fileId }}</h2> -->
       </div>
       <div class="group_list_img_cover"></div>
     </div>
@@ -32,7 +32,11 @@ export default {
       },
     };
   },
-  methods: {},
+  methods: {
+    toGroupPage: function () {
+      this.$router.push({ name: "GroupPage", params: { address: this.group.areaCode, groupId: this.group.clubId } })
+    },
+  },
   mounted() {
     // axios
     //   .get(`${SERVER_URL}/club/${this.group.clubId}`)
