@@ -8,10 +8,11 @@
         class="active-cyan-2 active-purple-2 mt-0 mb-3"
         placeholder="상점명을 입력하세요!"
         v-model="storeParamDto.searchWord"
-        @keypress.enter="search"
+        @keypress.enter="searchWord"
         autofocus
         style="text-align: center; width: 40%;"
       />
+      <b-button class="ml-3" size="sm" style="background-color: #695549;">검색</b-button>
       <!-- 
       <div class="mt-5">
         <div v-if="stores">
@@ -76,6 +77,7 @@ import axios from 'axios';
 // import { mdbInput, mdbContainer } from 'mdbvue';
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 const MAP_API_KEY = process.env.VUE_APP_MAP_API_KEY;
+
 export default {
   name: 'FindStore',
   components: {
@@ -106,15 +108,19 @@ export default {
 
   },
 
-  async mounted() {},
+  // async mounted() {},
   created() {
     this.storeParamDto.dongcode = this.$route.params.address;
     if (this.storeParamDto.searchWord === '') {
       this.storeParamDto.searchWord = this.$route.params.keyword;
     }
     this.search();
+
   },
   methods: {
+    searchWord: function () {
+      location.replace(`/store/find/${this.storeParamDto.dongcode}/${this.storeParamDto.searchWord}`)
+    },
     initMap() {
       var container = document.getElementById('map');
       var options = {
@@ -258,6 +264,7 @@ export default {
 .fixedHeader {
 	position: sticky;
 	top: 0;
-  background-color: rgb(231, 206, 173);
+  background-color: #695549;
+  color: white;
 }
 </style>
