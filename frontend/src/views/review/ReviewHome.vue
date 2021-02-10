@@ -32,26 +32,17 @@
     <!-- for문으로 출력한다!!! -->
     <div>
       <b-card-group deck>
-        <b-card bg-variant="white" text-variant="black" class="text-center">
-          <div id="category" v-draggabilly v-packery-item class='packery-item'>
-            <b-img thumbnail fluid src="https://picsum.photos/250/250/?image=9" content="asdasd" alt="Image 1"></b-img>
-            전자기기
-          </div>
-        </b-card>
+          <CategoryCard />
 
-        <b-card bg-variant="white" text-variant="black" class="text-center">
-          <div id="category" v-draggabilly v-packery-item class='packery-item'>
-            <b-img thumbnail fluid src="https://picsum.photos/250/250/?image=30" alt="Image 2"></b-img>
-            카페
-          </div>
-        </b-card>
+          <b-col id="category" v-draggabilly v-packery-item class='packery-item'>
+            <b-row align-h="center"><b-img thumbnail fluid src="https://picsum.photos/250/250/?image=30" alt="Image 2"></b-img></b-row>
+            <b-row align-h="center">카페</b-row>
+          </b-col>
         
-        <b-card bg-variant="white" text-variant="black" class="text-center">
-          <div id="category" v-draggabilly v-packery-item class='packery-item'>
-            <b-img thumbnail fluid src="https://picsum.photos/250/250/?image=118" alt="Image 3"></b-img>
-            건축물
-          </div>
-        </b-card>
+          <b-col id="category" v-draggabilly v-packery-item class='packery-item'>
+            <b-row align-h="center"><b-img thumbnail fluid src="https://picsum.photos/250/250/?image=118" alt="Image 3"></b-img></b-row>
+            <b-row align-h="center">건축물</b-row>
+          </b-col>
       </b-card-group>
     </div>
     <div class="mt-3">
@@ -83,10 +74,15 @@
 
 
 <script>
+import CategoryCard from '@/components/review/CategoryCard'
+
 const userInfo = JSON.parse(localStorage.getItem('Login-token'))
 
 export default {
- name: 'ReviewHome',
+  name: 'ReviewHome',
+  components: {
+    CategoryCard,
+  },
   data: function() {
     return {
       storeParamDto:{
@@ -97,18 +93,18 @@ export default {
       },
     };
   },
- methods: {
-   FindStore: function () {
-     if (this.storeParamDto.searchWord === "") {
-       alert("검색어를 입력하세요!")
-     } else {
-       this.$router.push({ name: 'FindStore', params: {address: this.storeParamDto.dongcode ,keyword : this.storeParamDto.searchWord}})
-     }
-   },
-    CreateReview: function () {
-     this.$router.push({ name: 'GetStore', params: {address : this.storeParamDto.dongcode}})
-   }
- }
+  methods: {
+    FindStore: function () {
+      if (this.storeParamDto.searchWord === "") {
+        alert("검색어를 입력하세요!")
+      } else {
+        this.$router.push({ name: 'FindStore', params: {address: this.storeParamDto.dongcode ,keyword : this.storeParamDto.searchWord}})
+      }
+    },
+      CreateReview: function () {
+      this.$router.push({ name: 'GetStore', params: {address : this.storeParamDto.dongcode}})
+    }
+  }
 }
 </script>
 

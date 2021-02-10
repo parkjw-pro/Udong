@@ -31,6 +31,7 @@ npm install mint-ui -S
 npm i vue-star-rating
 npm install vue-coverflow --save
 npm i vue-slick-carousel
+npm i vue-glide-js
 ```
 
 ### 폴더 구조
