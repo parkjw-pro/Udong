@@ -149,7 +149,13 @@ export default {
         );
     },
     deletePost() {
-
+      axios
+        .delete(`${SERVER_URL}/userpost`, {
+          postId: this.post['postId']
+        })
+        .then((response) => {
+          console.log(response);
+        });
     },
     reportPost() {
       
@@ -170,7 +176,7 @@ export default {
         });
     },
     getArticleComments() {
-      if(this.comments.length > 0) return;
+      // if(this.comments.length > 0) return;
       axios
         .get(`${SERVER_URL}/userpost/comment`, {
           params: {
@@ -186,7 +192,23 @@ export default {
           });
     },
     getMoreComments(){
+      if(this.commentCount <= this.comments.length){
+        return;
+      }
 
+      this.offset += this.limit;
+      axios
+        .get(`${SERVER_URL}/userpost/comment`, {
+          params: {
+            postId: this.post.postId,
+            limit: this.limit,
+            offset: this.offset
+          }
+        })
+        .then(
+          (response) => {
+            this.comments.push(...response.data.list);
+          });
     },
     writeComment() {
       axios

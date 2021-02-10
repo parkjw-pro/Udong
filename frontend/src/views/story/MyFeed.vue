@@ -36,7 +36,7 @@
         
       </b-tab>
       <b-tab title="리뷰">
-        <div v-for="(item, index) in 0" :key="index">
+        <div v-for="(item, index) in reviews" :key="index">
           <ReviewBlock :review="item"  />
         </div>
       </b-tab>

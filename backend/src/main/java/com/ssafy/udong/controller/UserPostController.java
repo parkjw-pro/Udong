@@ -232,7 +232,7 @@ public class UserPostController {
 	@GetMapping(value = "/comment/like")
 	private ResponseEntity<String> selectClubPostCommentLike(@RequestParam(value="userId") String userId, @RequestParam(value="postId") String postId, @RequestParam(value="commentId") String commentId ) {
 		try {
-			int result = service.selectClubPostCommentLike(userId, postId, commentId);
+			int result = service.selectUserPostCommentLike(userId, postId, commentId);
 			if(result != 0)
 				return new ResponseEntity<String>("true", HttpStatus.OK);
 			else

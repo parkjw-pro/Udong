@@ -17,8 +17,8 @@
           <template #button-content>
             <b-icon icon="three-dots-vertical"></b-icon>
           </template>
-          <b-dropdown-item href="#" variant="danger" v-if="comment.userId == getUserId" @click="deleteComment">삭제</b-dropdown-item>
-          <b-dropdown-item href="#" variant="danger" v-else @click="reportComment">신고</b-dropdown-item>
+          <b-dropdown-item href="#" variant="danger" v-if="comment.userId != getUserId" @click="reportComment">신고</b-dropdown-item>
+          <!-- <b-dropdown-item href="#" variant="danger" v-else @click="deleteComment">삭제</b-dropdown-item> -->
         </b-dropdown>
       </b-col>
     </b-row>
@@ -58,6 +58,10 @@ export default {
   },
   methods: {
     getLikeInfo() {
+      console.log(this.getUserId);
+      console.log(this.comment['postId']);
+      console.log(this.comment['clubId']);
+      console.log(this.comment['commentId']);
       axios
         .get(`${SERVER_URL}/${this.type}/comment/like`, {
           params: {
@@ -69,6 +73,7 @@ export default {
         })
         .then(
           (response) => (
+            console.log(response),
             this.liked = response.data
           )
         );
@@ -91,7 +96,7 @@ export default {
         });
     },
     deleteComment() {
-      
+      //backend 함수가 없음
     },
     reportComment() {
       //모달창에서 content, category 입력

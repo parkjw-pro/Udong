@@ -208,18 +208,26 @@
 		parameterType="com.ssafy.udong.dto.LikeDto">
 		INSERT INTO user_post_comment_like(user_id, post_id, comment_id)
 		VALUES (#{userId}, #{postId}, #{commentId});
+		
+		update user_post_comment
+		set comm_like_count = comm_like_count + 1
+		where comment_id = #{commentId};
 	</insert>
 	
 	<select id="selectUserPostCommentLike"
 		parameterType="com.ssafy.udong.dto.LikeDto" resultType="String">
-		select user_id as userId
+		select user_id
 		from user_post_comment_like
-		where comment_id = #{commentId}	and user_id = #{userId}
+		where comment_id = #{commentId}	and user_id = #{userId};
 	</select>
 
 	<delete id="deleteUserPostCommentLike" parameterType="com.ssafy.udong.dto.LikeDto">
 		DELETE FROM user_post_comment_like
-		WHERE comment_id = #{commentId} and user_id = #{userId}
+		WHERE comment_id = #{commentId} and user_id = #{userId};
+		
+		update user_post_comment
+		set comm_like_count = comm_like_count - 1
+		where comment_id = #{commentId};
 	</delete>
 
 

@@ -181,7 +181,7 @@ export default {
       this.$router.push({ name: "ArticleDetail", params: { post: post, group: this.group} });
     },
     getArticleComments(){
-      if(this.comments.length > 0) return;
+      // if(this.comments.length > 0) return;
       axios
         .get(`${SERVER_URL}/clubpost/comment`, {
           params: {
