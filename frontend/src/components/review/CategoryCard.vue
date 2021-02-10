@@ -1,13 +1,15 @@
 <template>
-  <b-col id="category" v-draggabilly v-packery-item>
-    <b-img thumbnail fluid class="category_img mx-4 my-4" :style="category_img" @click="toReviewList">
-      <div class="category_img_content">
-        <!-- <h2>{{ this.category }}</h2> -->
-        <h2>자전거</h2>
+  <b-row id="category" align-h="center">
+    <b-col class="category packery-item" v-draggabilly v-packery-item>
+      <div class="category_img" :style="category_img" >
+      <div id="category_name" class="category_img_content" @click="toReviewList">
+          <h4 >공원</h4>
+          <!-- <h2>{{ this.category.fileId }}</h2> -->
       </div>
       <div class="category_img_cover"></div>
-    </b-img>
-  </b-col>
+    </div>
+    </b-col>
+  </b-row>
 </template>
 
 <script>
@@ -27,12 +29,13 @@ export default {
       // props한 이미지 가져오기
       category_img: {
         // backgroundImage: `url(${SERVER_URL}/club/download/${this.category.fileId})`,
-        backgroundImage: "url(https://picsum.photos/250/250/?image=9)",
+        backgroundImage: "url(https://picsum.photos/250/250/?image=17)",
       },
     };
   },
   methods: {
     toReviewList: function () {
+      // ReviewList로 이동하기
       // this.$router.push({name: 'GroupPage', params: {address:  JSON.parse(localStorage.getItem('Login-token'))['user_address'], categorys : this.category }})
     }
   },
@@ -43,29 +46,32 @@ export default {
 </script>
 
 <style>
+#category_name {
+  cursor: pointer;
+}
+
 .category_img {
   position: relative;
   height: 100vh;
   background-size: cover;
-  width: 300px;
-  height: 300px;
+  width: 12rem;
+  height: 12rem;
 }
 
 .category_img_cover {
   position: absolute;
-  height: 300px;
-  width: 300px;
+  height: 12rem;
+  width: 12rem;
   background-color: rgba(0, 0, 0, 0.4);
   z-index: 1;
 }
 
 .category_img_content {
   position: absolute;
-  top: 280px;
-  left: 70px;
+  top: 95px;
+  left: 95px;
   transform: translate(-50%, -50%);
-  font-size: 5rem;
-  font-weight: bold;
+  font-size: medium;
   color: white;
   z-index: 2;
   text-align: center;

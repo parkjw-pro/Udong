@@ -71,7 +71,7 @@ public class StoreController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return new ResponseEntity<List<StoreDto>>(HttpStatus.INTERNAL_SERVER_ERROR);
+		return new ResponseEntity<List<StoreDto>>(list, HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "상점 조회(검색어)", notes = "검색어를 이용하여 상점을 조회합니다.")

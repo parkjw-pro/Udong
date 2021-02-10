@@ -18,8 +18,8 @@
         </b-row>
         <b-row align-h="center">
           <b-col class="mx-0 px-0"><b-button disabled style="background-color: #695549;">게시물: {{ posts.length }}</b-button></b-col>
-          <b-col class="mx-0 px-0"><b-button disabled style="background-color: #695549;">리뷰: 0</b-button></b-col>
-          <b-col class="mx-0 px-0"><b-button disabled style="background-color: #695549;">그룹: 0</b-button></b-col>
+          <b-col class="mx-0 px-0"><b-button disabled style="background-color: #695549;">리뷰: {{reviews.length}}</b-button></b-col>
+          <b-col class="mx-0 px-0"><b-button disabled style="background-color: #695549;">그룹: {{groups.length}}</b-button></b-col>
         </b-row>
       </b-col>
     </b-row>
@@ -30,13 +30,15 @@
       justified
     >
       <b-tab title="글" active>
-        <div v-for="(post , idx) in posts" :key ="idx" ><PostBlockMy :post="post" /></div>
+        <div v-for="(post , idx) in posts" :key ="idx" >
+          <PostBlockMy :post="post" />
+        </div>
         
       </b-tab>
       <b-tab title="리뷰">
-           <div v-for="(item, index) in reviews" :key="index">
-         <ReviewBlock :review="item"  />
-           </div>
+        <div v-for="(item, index) in reviews" :key="index">
+          <ReviewBlock :review="item"  />
+        </div>
       </b-tab>
       <b-tab title="태그">
         <TagBox />
@@ -80,18 +82,20 @@ export default {
         nickname: "",
       },
       
-      posts:[],
+      posts: [],
       limit: 5,  //한 페이지에 노출될 게시글의 수
       offset: 0,  //게시글 번호 오프셋,
       liked: false,
-      reviews: Array,
+      reviews: [],
+      groups: [],
     };
   },
   created() {
     this.user.nickname = JSON.parse(localStorage.getItem('Login-token'))['user-name']
     this.user.userId = JSON.parse(localStorage.getItem('Login-token'))['user-id']
     this.getUserPosts();
-    this.getReview();
+    this.getReviews();
+    this.getGroups();
     
   },
   methods: {
@@ -106,25 +110,30 @@ export default {
       })
         .then((response) => {
           this.posts = response.data.list;
-          console.log(this.posts);
         });
     },
     toAccountDetail: function () {
       this.$router.push({name: 'AccountDetail'})
     },
-    getReview: function() {
+    getReviews: function() {
     axios
-      .get(`${SERVER_URL}/review/user/` + `${this.user.userId}`)
+      .get(`${SERVER_URL}/review/user/${this.user.userId}`)
       .then((response) => {
-      
         this.reviews = response.data;
-        console.log(this.reviews);
-  
       })
       .catch((response) => {
         console.log(response);
       });
     },
+    getGroups() {
+      axios
+      .get(`${SERVER_URL}/club/user/${this.user.userId}/member`)
+      .then(
+        (response) => (
+          this.groups = response.data
+        )
+      );
+    }
   },
 
 }

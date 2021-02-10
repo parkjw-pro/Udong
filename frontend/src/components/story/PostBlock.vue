@@ -36,7 +36,7 @@
 
         <!-- 2. 중앙 부분 -->
         <!--2.1 이미지-->
-        <b-row class="postImage" align-h="center">
+        <b-row v-if="this.fieldId" class="postImage" align-h="center">
           <b-carousel
             id="carousel-1"
             v-model="slide"
@@ -56,37 +56,41 @@
               :img-src="url+`/clubpost/download/` + item" 
             ></b-carousel-slide>
           </b-carousel>
+
         </b-row>
+        <b-row v-else class="my-5 ">
+        </b-row>
+
         <!--2.2 내용-->
         <b-row class="mt-3" align-h="center">
           <div class="my-3 mx-3" style="text-align: left;">
-            <h6 @click="detail(post)">{{post.postContent}}</h6>
+            <h6>{{post.postContent}}</h6>
           </div>
         </b-row>
 
         <b-row class="h2 mb-2 ml-2" align-h="start">
           <!-- 좋아요 -->
           <div class="postLike mr-3">
-            <b-icon v-if="liked" font-scale="1" icon="suit-heart-fill" variant="danger" @click="likePost()"></b-icon>
+            <b-icon v-if="liked" font-scale="1" icon="suit-heart-fill" variant="danger" @click="likePost()" ></b-icon>
             <b-icon v-else font-scale="1" icon="suit-heart" variant="danger" @click="likePost()"></b-icon>
           </div>
           
           <!-- 댓글 -->
           <div class="postComment" @click="getArticleComments">
-            <b-icon v-if="comments.length > 0" font-scale="1" icon="chat-fill" variant="warning"></b-icon>
+            <b-icon v-if="comments.length > 0" font-scale="1" icon="chat-fill" variant="warning" ></b-icon>
             <b-icon v-else font-scale="1" icon="chat" variant="warning"></b-icon>
           </div>
         </b-row>
 
         <b-row class="ml-2 mb-3">
-          <div v-if="post.postLikeCount">{{post.postLikeCount}}명이 좋아합니다</div>
+          <div v-if="post.postLikeCount >= 0">{{post.postLikeCount}}명이 좋아합니다</div>
         </b-row>
 
         <!-- 댓글 -->
        
         <div style="width: 80%; display: inline-block">
           <div v-for="(comm, i) in comments" :key="i">
-            <Comment :comment="comm" />
+            <Comment :comment="comm" type="clubpost" />
           </div>
         </div>
             
@@ -143,8 +147,6 @@ export default {
       offset: 0,
       fileId: Object,
       url : SERVER_URL,
-
-
       userId: '', // 현재 사용자의 아이디
     }
   },
@@ -178,11 +180,8 @@ export default {
           console.log(response);
         });
     },
-    detail(post) {
-      this.$router.push({ name: "ArticleDetail", params: { post: post, group: this.group} });
-    },
     getArticleComments(){
-      if(this.comments.length > 0) return;
+      // if(this.comments.length > 0) return;
       axios
         .get(`${SERVER_URL}/clubpost/comment`, {
           params: {
@@ -285,6 +284,7 @@ export default {
           this.post.postCommentCount = this.post.postCommentCount*1 + 1;
         });
     },
+
 
   },
 }
