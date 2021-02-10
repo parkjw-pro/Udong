@@ -60,7 +60,6 @@ public class UserPostController {
 	@PostMapping
 	private ResponseEntity<String> createUserPost(UserPostDto userPostDto,
 			@RequestParam(value = "file", required = false) MultipartFile[] files)throws NullPointerException {
-		System.out.println(userPostDto.getUserId() + files.length);
 		int result = service.createUserPost(userPostDto, files);
 	
 		if( result == SUCCESS ) {	

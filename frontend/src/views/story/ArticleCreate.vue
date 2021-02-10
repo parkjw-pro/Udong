@@ -100,6 +100,7 @@ export default {
       options: ["내 피드"],
       selected: "내 피드",
       isOpen: "1", //공개면 1, 비공개면 0
+      tag: null
     };
   },
   created() {
@@ -110,10 +111,12 @@ export default {
   },
   methods: {
     createArticle() {
+      var tags = this.getTag();
       var formData = new FormData();
-      formData.append('isOpen', this.isOpen)
-      formData.append('postContent', this.content)
-      formData.append('userId', this.getUserId)
+      formData.append('isOpen', this.isOpen);
+      formData.append('postContent', this.content);
+      formData.append('userId', this.getUserId);
+      formData.append('postTag', tags);
       for (let i = 0; i < this.files.length; i++) {
         formData.append('file', this.files[i]);
       }
@@ -126,7 +129,7 @@ export default {
       if (this.selected == "내 피드") {
         //userpost`
         //file 넣어야 함
-
+        console.log(formData);
         axios
           .post(`${SERVER_URL}/userpost`,formData , { headers: { "Content-Type": `application/json; charset=UTF-8`}
         })
@@ -152,10 +155,19 @@ export default {
           this.$router.push({ name: 'NewsFeed' })  
       }
     },
+    getTag() {
+      var strs = this.content.split("#").slice(1);
+      var tags = "";
+      for(var i in strs){
+        var str = strs[i].replace(" ", "");
+        if(str != "")
+          tags += "#" + str;
+      }
+      return tags;
+    },
     hideModal() {
       this.$refs['image-modal'].hide()
     },
-    
     previewImage(event) {
       console.log(this.imageUrl)
       for(var i =0; i < this.imageUrl.length;i++){ this.imageUrl[i] = ""} 

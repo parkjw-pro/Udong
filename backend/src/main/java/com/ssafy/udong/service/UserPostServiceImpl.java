@@ -40,7 +40,6 @@ public class UserPostServiceImpl implements UserPostService {
 	public int createUserPost(UserPostDto userPostDto, MultipartFile[] files) {
 		try {
 			userPostDao.createUserPost(userPostDto);
-			System.out.println(files.length);
 			if (files != null && !(files.length == 0)) {
 				File uploadDir = new File(
 						root + File.separator + "userPost" + File.separator + userPostDto.getUserId());
