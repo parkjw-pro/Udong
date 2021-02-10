@@ -36,7 +36,7 @@
 
         <!-- 2. 중앙 부분 -->
         <!--2.1 이미지-->
-        <b-row v-if="this.fieldId" class="postImage" align-h="center">
+        <b-row v-if="fileId.length > 0" class="postImage" align-h="center">
           <b-carousel
             id="carousel-1"
             v-model="slide"
@@ -155,7 +155,6 @@ export default {
     ...mapGetters(["getUserName"])
   },
   created() {
-      console.log("포스트 :" +this.post.postId)
     axios.get(`${SERVER_URL}/clubpost/postId/${this.post.postId}`)
     .then((res)=>{
       console.log(res)
