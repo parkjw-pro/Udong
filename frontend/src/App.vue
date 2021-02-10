@@ -8,7 +8,7 @@
 <script>
 import Navbar from '@/components/app/Navbar'
 import 'vue-select/dist/vue-select.css';
-//import router from "./router";
+
 export default {
   name: 'App',
   components: {

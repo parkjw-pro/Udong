@@ -32,7 +32,6 @@
         <!-- bootstrap > Form File 참고하면 나와있음 -->
         <b-row align-h="center">
           <b-form-file
-         
             v-model="fileId"
             :state="Boolean(file1)"
             placeholder="첨부파일 없음"
@@ -41,7 +40,6 @@
             accept=".jpg, .png, .gif"
              @change="previewImage"
             style="width: 70%;"
-
           ></b-form-file>
           <!-- <div class="mt-3">Selected file: {{ file1 ? file1.name : '' }}</div> -->
         </b-row>
@@ -68,6 +66,7 @@
               v-model="club.clubName"
               placeholder="그룹명"
               required
+              @keypress.enter="verifyName"
             ></b-form-input>
           </b-col>
           <b-col>
@@ -133,17 +132,17 @@ export default {
       // props or 함수로 받아와야 한다!
       dong: "역삼동",
       club: {
-        userId : " ",
-        areaCode : " ",
-        clubName: " ",
-        clubContent: " ",
-        isOpen: "0",
+        userId : "",
+        areaCode : "",
+        clubName: "",
+        clubContent: "",
+        isOpen: "1",
        
       },
       dongcode: "",
       fileId: null,
       isVerified: null,
-      previewImageData: null,
+      previewImageData: "https://source.unsplash.com/random",
     };
   },
   computed: {
@@ -193,44 +192,53 @@ export default {
       alert(JSON.stringify(this.article));
     },
     createGroup: function() {
-      var formData = new FormData();
-      formData.append('userId', this.club.userId)
-      formData.append('areaCode', this.club.areaCode)
-      formData.append('clubName', this.club.clubName)
-      formData.append('clubContent', this.club.clubContent)
-      formData.append('isOpen', this.club.isOpen)
-      formData.append('file', this.fileId)
-      //formData.append('file', this.fileId[1])
-      // formData.append('club', this.club)
-      console.log(formData);
-     // if (this.verification) {
-        axios.post(`${SERVER_URL}/club`, formData, 
-        { headers: { "Content-Type": `application/json; charset=UTF-8`}
-        }
-        
-      ).then(() => {
-          this.$router.push({name: 'GroupPage', query: {club: this.club}})
-         })
-         .catch((err) => {
-           console.log(err)
-         })
-      // }
-     //  else {
-     //    this.isVerified = false
-     //  }
+      if (this.club.clubName.length > 5 || this.club.clubContent.length < 5 || !this.verification) {
+        alert("입력하신 정보를 확인해주세요! \n소개글은 5자 이상 작성하셔야 합니다!")
+      } else {
+        var formData = new FormData();
+        formData.append('userId', this.club.userId)
+        formData.append('areaCode', this.club.areaCode)
+        formData.append('clubName', this.club.clubName)
+        formData.append('clubContent', this.club.clubContent)
+        formData.append('isOpen', this.club.isOpen)
+        formData.append('file', this.fileId)
+        //formData.append('file', this.fileId[1])
+        // formData.append('club', this.club)
+        console.log(formData);
+      // if (this.verification) {
+          axios.post(`${SERVER_URL}/club`, formData, 
+          { headers: { "Content-Type": `application/json; charset=UTF-8`}
+          }
+          
+        ).then(() => {
+            this.$router.push({name: 'GroupList', params: {addrress: this.club}})
+            // this.$router.push({name: 'GroupPage', params: {addrress: this.club, groupId: this.club.}})
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+        // }
+      //  else {
+      //    this.isVerified = false
+      //  }
+      }
     },
     verifyName: function() {
-      console.log(JSON.parse(localStorage.getItem('Login-token'))['user_address']);
-      this.dongcode = JSON.parse(localStorage.getItem('Login-token'))['user_address'];
-      axios
-        .get(`${SERVER_URL}/club/${this.club.clubName}/${this.dongcode}`)
-        .then(() => {
-          this.isVerified = true;
-        })
-        .catch((err) => {
-          console.log(err);
-          this.isVerified = false;
-        });
+      if (this.club.clubName > 5) {
+        alert("그룹명을 5자 이내로 작성해주세요!")
+      }
+      else {
+        this.dongcode = JSON.parse(localStorage.getItem('Login-token'))['user_address'];
+        axios
+          .get(`${SERVER_URL}/club/${this.club.clubName}/${this.dongcode}`)
+          .then(() => {
+            this.isVerified = true;
+          })
+          .catch((err) => {
+            console.log(err);
+            this.isVerified = false;
+          });
+      }
     },
   },
 };

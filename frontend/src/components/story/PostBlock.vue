@@ -2,63 +2,113 @@
   <div>
     <!-- <b-card-group deck> -->
     <div>
-      <b-card header-tag="header" footer-tag="footer"> <!-- title="Title" 속성 사용 가능  -->
-        <template #header>
-          <b-card-text class="font-weight-bold">
-            <!-- <span class="mr-5">뱃지 img</span> -->
-            <span >{{post.nickname}}</span>
-          </b-card-text>
-        </template>
-        <!--이미지-->
-        <div class="postImage">
-             <b-card-img v-for="(item, index) in fileId"
-        :key="index" class="col-4 mb-5" :src="url+`/clubpost/download/` + item" alt="Image" bottom></b-card-img>
-        </div>
-        <!--내용-->
-        <p @click="detail(post)">{{post.postContent}}</p>
-        <template #footer>
-          <b-row class="h2 mb-2" align-h="between">
-            <div class="postLike"> <!--좋아요 여부와 좋아요 수-->
-            <b-icon icon="suit-heart-fill" variant="danger" v-if="liked" @click="likePost()"></b-icon>
-            <b-icon icon="suit-heart" variant="danger" v-else @click="likePost()"></b-icon><span>{{post.postLikeCount}}</span>
-            </div>
-            
-            <div class="postComment" @click="getArticleComments"> <!--댓글 수-->
-            <b-icon v-if="comments.length > 0" icon="chat-fill" variant="warning"></b-icon>
-            <b-icon v-else icon="chat" variant="warning"></b-icon>
-            <span>{{post.postCommentCount}}</span>
-            </div>
-
-            <!--신고/삭제-->
-            <b-dropdown size="lg" dropup variant="link" toggle-class="text-decoration-none" no-caret>
+      <b-card>
+        <!-- 1. 상단 부분 -->
+        <b-card-text>
+          <b-row align-h="justify" style="text-align: left;">
+            <b-col align-self="center">
+              <span style="cursor: pointer;" @click="toFeed">
+                <!-- 뱃지 -->
+                <b-avatar :src="require('@/assets/app/badge1.jpg')"></b-avatar>
+                <!-- 닉네임 -->
+                <span class="ml-1" style="">{{ post.nickname }}</span>
+              </span>
+            </b-col>
+            <!-- 추가 버튼(신고/삭제) -->
+            <b-col style="text-align: right;">
+              <b-dropdown size="lg" dropup variant="link" toggle-class="text-decoration-none" no-caret>
               <template #button-content>
-                <b-icon icon="three-dots-vertical"></b-icon>
+                <b-icon icon="three-dots" variant="dark"></b-icon>
               </template>
-              <b-dropdown-item href="#" variant="danger" v-if="post.userId == getUserId" @click="deletePost">삭제</b-dropdown-item>
-              <b-dropdown-item href="#" variant="danger" v-else @click="reportPost">신고</b-dropdown-item>
+              <div v-if="post.userId === userId">
+                <b-dropdown-item href="" variant="danger" v-b-modal.post-delete-modal>삭제</b-dropdown-item>
+                <b-modal id="post-delete-modal" @ok="deletePost">
+                  <p><img alt="Vue logo" src="@/assets/udonge.png" style="width: 10%" />소중한 리뷰를 정말 삭제하시겠습니까?</p>
+                </b-modal>
+              </div>
+              <div v-else>
+                <b-dropdown-item href="#" variant="danger" @click="reportPost">신고</b-dropdown-item>
+              </div>
             </b-dropdown>
+            </b-col>
           </b-row>
+        </b-card-text>
 
+        <!-- 2. 중앙 부분 -->
+        <!--2.1 이미지-->
+        <b-row class="postImage" align-h="center">
+          <b-carousel
+            id="carousel-1"
+            v-model="slide"
+            controls
+            indicators
+            background="#ababab"
+            img-width="1024"
+            img-height="480"
+            style="text-shadow: 1px 1px 2px #333; width: 30em; height: 15em;"
+            fade="true"
+          > 
+            <!-- fileId 정의해주어야한다!!! -->
+            <b-carousel-slide
+              id="post_img"
+              v-for="(item, index) in fileId"
+              :key="index"   
+              :img-src="url+`/post/download/` + item" 
+            ></b-carousel-slide>
+          </b-carousel>
+        </b-row>
+        <!--2.2 내용-->
+        <b-row class="mt-3" align-h="center">
+          <div class="my-3 mx-3" style="text-align: left;">
+            <h6 @click="detail(post)">{{post.postContent}}</h6>
+          </div>
+        </b-row>
+
+        <b-row class="h2 mb-2 ml-2" align-h="start">
+          <!-- 좋아요 -->
+          <div class="postLike mr-3">
+            <b-icon v-if="liked" font-scale="1" icon="suit-heart-fill" variant="danger" @click="likePost()"></b-icon>
+            <b-icon v-else font-scale="1" icon="suit-heart" variant="danger" @click="likePost()"></b-icon>
+          </div>
+          
           <!-- 댓글 -->
+          <div class="postComment" @click="getArticleComments">
+            <b-icon v-if="comments.length > 0" font-scale="1" icon="chat-fill" variant="warning"></b-icon>
+            <b-icon v-else font-scale="1" icon="chat" variant="warning"></b-icon>
+          </div>
+        </b-row>
+
+        <b-row class="ml-2 mb-3">
+          <div v-if="post.postLikeCount">{{post.postLikeCount}}명이 좋아합니다</div>
+        </b-row>
+
+        <!-- 댓글 -->
+       
+        <div style="width: 80%; display: inline-block">
           <div v-for="(comm, i) in comments" :key="i">
             <Comment :comment="comm" />
           </div>
-          <div v-if="comments.length > 0 && comments.length < commentCount">
-            <b-button @click="getMoreComments">+) 더보기</b-button>
-          </div>
+        </div>
+            
+        <b-row class="mt-3" v-if="comments.length > 0 && comments.length < commentCount">
+            <b-col>
+              <span style="cursor: pointer;" @click="getMoreComments">
+                <!-- <b-button pill variant="light" @click="getMoreComments">+</b-button> -->
+                <img alt="Vue logo" src="@/assets/udonge.png" style="width: 5%;">더보기
+              </span>
+            </b-col>
+        </b-row>
 
-          <br>
-          <!--댓글 입력창-->
-          <div class="container">
-            <div class="row">
-              <b-form-input class="col-10" placeholder="댓글을 달아보세요!" v-model="comment" @keypress.enter="writeComment"></b-form-input>
-              <b-button type="submit" variant="info" class="col" @click="writeComment">확인</b-button>
-            </div>
-          </div>
-        </template>
+        <br>
+        <!--댓글 입력창-->
+        <div class="container">
+          <b-row align-h="justify">
+            <b-col cols="8" offset="1"><b-form-input placeholder="댓글을 달아보세요!" v-model="comment" @keypress.enter="writeComment"></b-form-input></b-col>
+            <b-col cols="2"><b-button type="submit" variant="info" @click="writeComment">확인</b-button></b-col>
+          </b-row>
+        </div>
       </b-card>
     </div>
-    <!-- </b-card-group> -->
    <div>
 </div>   
   </div>
@@ -94,6 +144,8 @@ export default {
       fileId: Object,
       url : SERVER_URL,
 
+
+      userId: '', // 현재 사용자의 아이디
     }
   },
   computed: {
@@ -112,7 +164,41 @@ export default {
 
     this.getLikeInfo();
   },
+  async mounted() {
+    await this.getLikeInfo();
+    const userInfo = JSON.parse(localStorage.getItem('Info-token'))
+    this.userId = userInfo["userId"]
+  },
   methods: {
+    deletePost() {
+      axios
+        .delete(`${SERVER_URL}/clubpost`, {
+          postId: this.post['postId']
+        })
+        .then((response) => {
+          console.log(response);
+        });
+    },
+    detail(post) {
+      this.$router.push({ name: "ArticleDetail", params: { post: post, group: this.group} });
+    },
+    getArticleComments(){
+      if(this.comments.length > 0) return;
+      axios
+        .get(`${SERVER_URL}/clubpost/comment`, {
+          params: {
+            postId: this.post.postId,
+            limit: this.limit,
+            offset: this.offset
+          }
+        })
+        .then(
+          (response) => {
+            this.comments = response.data.list;
+            this.commentCount = response.data.count;
+            console.log(this.commentCount);
+          });
+    },
     getLikeInfo(){
       axios
         .get(`${SERVER_URL}/clubpost/like`, {
@@ -128,6 +214,25 @@ export default {
           )
         );
     },
+    getMoreComments() {
+      if(this.commentCount <= this.comments.length){
+        return;
+      }
+
+      this.offset += this.limit;
+      axios
+        .get(`${SERVER_URL}/clubpost/comment`, {
+          params: {
+            postId: this.post.postId,
+            limit: this.limit,
+            offset: this.offset
+          }
+        })
+        .then(
+          (response) => {
+            this.comments.push(...response.data.list);
+          });
+    },
     likePost() {
       axios
         .post(`${SERVER_URL}/clubpost/like`, {
@@ -142,15 +247,6 @@ export default {
             } else {
               this.post['postLikeCount'] = this.post['postLikeCount']*1 - 1;
             }
-        });
-    },
-    deletePost() {
-      axios
-        .delete(`${SERVER_URL}/clubpost`, {
-          postId: this.post['postId']
-        })
-        .then((response) => {
-          console.log(response);
         });
     },
     // reportPost() {
@@ -173,41 +269,8 @@ export default {
     //       console.log(response);
     //     });
     // },
-    getArticleComments(){
-      if(this.comments.length > 0) return;
-      axios
-        .get(`${SERVER_URL}/clubpost/comment`, {
-          params: {
-            postId: this.post.postId,
-            limit: this.limit,
-            offset: this.offset
-          }
-        })
-        .then(
-          (response) => {
-            this.comments = response.data.list;
-            this.commentCount = response.data.count;
-            console.log(this.commentCount);
-          });
-    },
-    getMoreComments() {
-      if(this.commentCount <= this.comments.length){
-        return;
-      }
-
-      this.offset += this.limit;
-      axios
-        .get(`${SERVER_URL}/clubpost/comment`, {
-          params: {
-            postId: this.post.postId,
-            limit: this.limit,
-            offset: this.offset
-          }
-        })
-        .then(
-          (response) => {
-            this.comments.push(...response.data.list);
-          });
+    toFeed: function () {
+      this.$router.push({name: 'MyFeed', params: { userId: this.post.userId, nickname: this.post.nickname}})
     },
     writeComment() {
       axios
@@ -223,18 +286,10 @@ export default {
           this.post.postCommentCount = this.post.postCommentCount*1 + 1;
         });
     },
-    detail(post) {
-      this.$router.push({ name: "ArticleDetail", params: { post: post, group: this.group} });
-    }
+
   },
 }
 </script>
 
 <style>
-  
-  /* 적용안됨 */
-  b-card-img {
-    height: 5px;
-    width: 5px;
-  }
 </style>

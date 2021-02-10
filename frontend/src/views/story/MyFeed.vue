@@ -10,8 +10,11 @@
       </b-col> -->
       <b-col cols="6" align-self="center">
         <b-row align-h="center" class="mb-4">
-          <b-col cols="3"><h2 style="font-family: 'Nanum Pen Script', cursive; display: inline;">{{ nickname }}  </h2></b-col>
-          <b-col cols="2" class="mt-2"><b-icon icon="gear" font-scale="1.5" style="cursor: pointer;" type="bold" @click="toAccountDetail"></b-icon></b-col>
+          <b-col>
+            <h2 v-if="$route.params.userId === user.userId" style="font-family: 'Nanum Pen Script', cursive; display: inline;">{{ this.user.nickname }} </h2>
+            <h2 v-else style="font-family: 'Nanum Pen Script', cursive; display: inline;">{{ $route.params.nickname }} </h2>
+            <b-icon v-if="$route.params.userId === user.userId" icon="gear" font-scale="1.5" style="cursor: pointer;" type="bold" @click="toAccountDetail"></b-icon>
+          </b-col>
         </b-row>
         <b-row align-h="center">
           <b-col class="mx-0 px-0"><b-button disabled style="background-color: #695549;">게시물: {{ posts.length }}</b-button></b-col>
@@ -72,18 +75,21 @@ export default {
   },
   data() {
     return {
-      userId: "",
-      nickname: "",
+      user: {
+        userId: "",
+        nickname: "",
+      },
+      
       posts:[],
       limit: 5,  //한 페이지에 노출될 게시글의 수
       offset: 0,  //게시글 번호 오프셋,
       liked: false,
-       reviews: Array,
+      reviews: Array,
     };
   },
   created() {
-    this.nickname = JSON.parse(localStorage.getItem('Login-token'))['user-name']
-    this.userId = JSON.parse(localStorage.getItem('Login-token'))['user-id']
+    this.user.nickname = JSON.parse(localStorage.getItem('Login-token'))['user-name']
+    this.user.userId = JSON.parse(localStorage.getItem('Login-token'))['user-id']
     this.getUserPosts();
     this.getReview();
     
@@ -93,7 +99,7 @@ export default {
       axios
         .get(`${SERVER_URL}/userpost/user`, {
           params: {
-            userId: this.userId,
+            userId: this.user.userId,
             limit: this.limit,
             offset: this.offset
           }
@@ -108,7 +114,7 @@ export default {
     },
     getReview: function() {
     axios
-      .get(`${SERVER_URL}/review/user/` + `${this.userId}`)
+      .get(`${SERVER_URL}/review/user/` + `${this.user.userId}`)
       .then((response) => {
       
         this.reviews = response.data;

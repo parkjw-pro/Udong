@@ -30,10 +30,10 @@
       </div>
 
       <!-- 3. 이미지 -->
-      <b-container fluid class="my-3 pb-5" style="width: 70%;">
+      <b-container fluid class="my-3 pb-5" style=""><!-- width: 70% -->
         <b-row class="py-3">
           <b-col cols="3" v-for="(url, index) in imageUrl" :key="index" left align-self="center">
-            <b-img thumbnail fluid :src="url">
+            <b-img class="px-3"  id="img_thumbnail" thumbnail fluid :src="url">
             </b-img>
           </b-col>
           <b-col cols="3" class="ml-0 pl-0" align-self="center">
@@ -220,7 +220,10 @@ export default {
 </script>
 
 <style>
-#reviewCreateBox {
-  /* border: 3px dotted #695549; */
+#img_thumbnail {
+  width: 10rem;
+  height: 12rem;
+  max-width: 10rem;
+  max-height: 12rem;
 }
 </style>

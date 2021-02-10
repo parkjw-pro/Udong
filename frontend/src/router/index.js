@@ -111,7 +111,7 @@ const routes = [
 
   //앱
   {
-    path: '/badge/:pk',
+    path: '/badge/:userId',
     name: 'Badge',
     component: Badge,
   },
