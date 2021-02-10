@@ -352,7 +352,10 @@ public class ClubPostController {
 	}
 	
 	@GetMapping("/download/{fileId}")
-	public ResponseEntity<Resource> download(@PathVariable String fileId) throws IOException {
+	public ResponseEntity<Resource> download(@PathVariable String fileId) throws Exception {
+		if(fileId.equals("0")) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 		System.out.println("다운로드" +fileId);
 		List<String> url = clubService.selectFileUrl(fileId);
 		System.out.println("가져온 url:" +url.get(0));

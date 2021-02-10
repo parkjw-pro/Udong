@@ -81,7 +81,7 @@ export default {
   },
   data: function () {
     return {
-      groups: [],
+      groups: [], // 가입한 그룹 
       selected: 0,  //선택된 그룹
       postCount: 0,
       posts:[],

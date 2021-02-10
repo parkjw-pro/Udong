@@ -53,7 +53,7 @@
               id="post_img"
               v-for="(item, index) in fileId"
               :key="index"   
-              :img-src="url+`/post/download/` + item" 
+              :img-src="url+`/clubpost/download/` + item" 
             ></b-carousel-slide>
           </b-carousel>
 
@@ -148,6 +148,7 @@ export default {
       fileId: Object,
       url : SERVER_URL,
       userId: '', // 현재 사용자의 아이디
+   
     }
   },
   computed: {
@@ -157,13 +158,13 @@ export default {
   created() {
     axios.get(`${SERVER_URL}/clubpost/postId/${this.post.postId}`)
     .then((res)=>{
-      console.log(res)
-      console.log(res.data.fileId)
+    
       this.fileId= res.data.fileId
       
     })
 
     this.getLikeInfo();
+    this.fileCheck();
   },
   async mounted() {
     await this.getLikeInfo();
@@ -171,6 +172,7 @@ export default {
     this.userId = userInfo["userId"]
   },
   methods: {
+    
     deletePost() {
       axios
         .delete(`${SERVER_URL}/clubpost`, {
