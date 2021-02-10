@@ -30,45 +30,30 @@
     <hr class="mb-5">
     <!-- 2. 추천 카테고리 -->
     <!-- for문으로 출력한다!!! -->
-    <div>
-      <b-card-group deck>
-          <CategoryCard />
-
-          <b-col id="category" v-draggabilly v-packery-item class='packery-item'>
-            <b-row align-h="center"><b-img thumbnail fluid src="https://picsum.photos/250/250/?image=30" alt="Image 2"></b-img></b-row>
-            <b-row align-h="center">카페</b-row>
-          </b-col>
-        
-          <b-col id="category" v-draggabilly v-packery-item class='packery-item'>
-            <b-row align-h="center"><b-img thumbnail fluid src="https://picsum.photos/250/250/?image=118" alt="Image 3"></b-img></b-row>
-            <b-row align-h="center">건축물</b-row>
-          </b-col>
-      </b-card-group>
-    </div>
-    <div class="mt-3">
-      <b-card-group deck>
-        <b-card bg-variant="white" text-variant="black" class="text-center">
-          <div id="category" v-draggabilly v-packery-item class='packery-item'>
-            <b-img thumbnail fluid src="https://picsum.photos/250/250/?image=23" alt="Image 3"></b-img>
-            주방용품
-          </div>
-        </b-card>
-
-        <b-card bg-variant="white" text-variant="black" class="text-center">
-          <div id="category" v-draggabilly v-packery-item class='packery-item'>
-            <b-img thumbnail fluid src="https://picsum.photos/250/250/?image=35" alt="Image 3"></b-img>
-            과일
-          </div>
-        </b-card>
-
-        <b-card bg-variant="white" text-variant="black" class="text-center">
-          <div id="category" v-draggabilly v-packery-item class='packery-item'>
-            <b-img thumbnail fluid src="https://picsum.photos/250/250/?image=44" alt="Image 3"></b-img>
-            바다
-          </div>
-        </b-card>
-      </b-card-group>
-    </div>
+      <div>
+        <b-row align-h="center">
+          <b-card-group deck style="width: 80%;">
+            <CategoryCard/>
+            <CategoryCard/>
+            <CategoryCard/>
+          </b-card-group>
+        </b-row>
+        <b-row align-h="center">
+          <b-card-group deck style="width: 80%;">
+            <CategoryCard/>
+            <CategoryCard/>
+            <CategoryCard/>
+          </b-card-group>
+        </b-row>
+        <b-row align-h="center">
+          <b-card-group deck style="width: 80%;">
+            <CategoryCard/>
+            <CategoryCard/>
+            <CategoryCard/>
+          </b-card-group>
+        </b-row>
+   
+      </div>
   </div>
 </template>
 
@@ -89,7 +74,10 @@ export default {
         searchWord: "",
         dongcode: userInfo["user_address"],
         //  dongcode: "1168064000",
-
+        category_img: {
+        // backgroundImage: `url(${SERVER_URL}/club/download/${this.category.fileId})`,
+        backgroundImage: "url(https://picsum.photos/250/250/?image=9)",
+      },
       },
     };
   },
@@ -103,13 +91,11 @@ export default {
     },
       CreateReview: function () {
       this.$router.push({ name: 'GetStore', params: {address : this.storeParamDto.dongcode}})
-    }
+    },
+    
   }
 }
 </script>
 
 <style>
-#category {
-  cursor: pointer;
-}
 </style>
