@@ -156,8 +156,7 @@ export default {
       console.log("포스트 :" +this.post.postId)
     axios.get(`${SERVER_URL}/clubpost/postId/${this.post.postId}`)
     .then((res)=>{
-      console.log(res)
-      console.log(res.data.fileId)
+    
       this.fileId= res.data.fileId
       
     })

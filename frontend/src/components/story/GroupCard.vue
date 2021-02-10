@@ -18,7 +18,7 @@
 //import axios from "axios";
 
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
-
+import axios from "axios";
 export default {
   name: "GroupCard",
   props: {
@@ -28,6 +28,8 @@ export default {
     return {
       urls: "",
       result: "",
+      myClub: Object,
+      checkMygroup: "0",
       // props한 이미지 가져오기
       background_image: {
         //  backgroundImage: `url(${require('@/assets/story/group_sample_diet.jpg')})`
@@ -38,15 +40,50 @@ export default {
   },
   methods: {
     groupDetail() {
-      this.$router.push({
-        name: "GroupPage",
-        params: {
-          address: JSON.parse(localStorage.getItem("Login-token"))[
-            "user_address"
-          ],
-          groups: this.group,
-        },
-      });
+      // 내그룹 내역 가져오기
+      axios
+        .get(
+          `${SERVER_URL}/club/user/${
+            JSON.parse(localStorage.getItem("Login-token"))["user-id"]
+          }/member`
+        )
+        .then((res) => {
+          this.myClub = res.data;
+          console.log("내그룹 조회성공");
+
+          for (var i in this.myClub) {
+            console.log(this.myClub[i].clubId);
+            if (this.group.clubId == this.myClub[i].clubId) {
+              // 내그룹에 있으면 체크변수 1로
+              this.checkMygroup = "1";
+            }
+          }
+
+          if (this.checkMygroup == "1") { // 내그룹에 있을떄 
+            this.$router.push({
+              name: "GroupPage",
+              params: {
+                address: JSON.parse(localStorage.getItem("Login-token"))[
+                  "user_address"
+                ],
+                groupId: this.group.clubId,
+              },
+            });
+          } else { // 내그룹에 없을때 
+            this.$router.push({
+              name: "GroupProfile",
+              params: {
+                address: JSON.parse(localStorage.getItem("Login-token"))[
+                  "user_address"
+                ],
+                groupId: this.group.clubId,
+              },
+            });
+          }
+        })
+        .catch(() => {
+          console.log("내그룹 조회 실패");
+        });
     },
   },
   mounted() {
