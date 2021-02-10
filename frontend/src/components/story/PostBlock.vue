@@ -53,7 +53,7 @@
               id="post_img"
               v-for="(item, index) in fileId"
               :key="index"   
-              :img-src="url+`/post/download/` + item" 
+              :img-src="url+`/clubpost/download/` + item" 
             ></b-carousel-slide>
           </b-carousel>
         </b-row>
