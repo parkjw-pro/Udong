@@ -225,6 +225,8 @@ public class ReviewController {
 			+ " - userId : 좋아요를 누른 사용자 아이디\n" + " - reviewId : 조회할 리뷰 아이디\n")
 	@PostMapping(value = "/comment/like")
 	private ResponseEntity<String> createReviewLike(@RequestBody LikeDto likeDto) {
+		System.out.println(likeDto.getStoreId());
+		System.out.println(likeDto.getReviewId());
 		
 		int result = service.createReviewLike(likeDto);
 		
