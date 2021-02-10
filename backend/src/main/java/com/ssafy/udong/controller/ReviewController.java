@@ -60,7 +60,6 @@ public class ReviewController {
 	@PostMapping
 	private ResponseEntity<String> createReview(ReviewDto reviewDto,
 			@RequestParam(value = "file", required = false) MultipartFile[] files)throws NullPointerException{
-//		System.out.println(files[0].getOriginalFilename());
 		try {
 			if (service.createReview(reviewDto, files) == SUCCESS)
 				return new ResponseEntity<String>("SUCCESS: review creation", HttpStatus.OK);
@@ -88,10 +87,8 @@ public class ReviewController {
 			"## 필수값\n" + " - userId : 리뷰를 조회할 사용자 아이디\n")
 	@GetMapping(value = "/user/{userId}")
 	private ResponseEntity<List<ReviewDto>> selectMyReview(@PathVariable String userId) {
-		System.out.println(userId);
 		try {
 			List<ReviewDto> list = service.selectMyReview(userId);
-			System.out.println(list.get(0));
 			if (list != null)
 				return new ResponseEntity<List<ReviewDto>>(list, HttpStatus.OK);
 		} catch (Exception e) {
@@ -104,12 +101,9 @@ public class ReviewController {
 			"## 필수값\n" + " - reviewId : 조회할 리뷰 아이디\n")
 	@GetMapping(value = "/{reviewId}")
 	private ResponseEntity<ReviewResultDto> selectReview(@PathVariable String reviewId) {
-		System.out.println("review");
 		
 		try {
-			System.out.println("review1");
 			ReviewResultDto resultDto = service.selectReview(reviewId);
-			System.out.println("review2");
 			
 			return new ResponseEntity<ReviewResultDto>(resultDto, HttpStatus.OK);
 		} catch (Exception e) {
@@ -194,10 +188,7 @@ public class ReviewController {
 	}
 	@GetMapping("/download/{fileId}")
 	public ResponseEntity<Resource> download(@PathVariable String fileId) throws IOException {
-		System.out.println("다운로드" +fileId);
 		List<String> url = clubService.selectFileUrl(fileId);
-		System.out.println("가져온 url:" +url.get(0));
-		System.out.println("./uploads/review/"+url.get(0).substring(15));
 		String madeUrl = "./uploads/review/"+url.get(0).substring(15);
 		Path path = Paths.get(madeUrl);
 			

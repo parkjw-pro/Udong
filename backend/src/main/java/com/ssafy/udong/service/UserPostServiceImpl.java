@@ -207,7 +207,7 @@ public class UserPostServiceImpl implements UserPostService {
 	public CommentResultDto selectUserPostComment(String postId, int limit, int offset) {
 		CommentResultDto commentResultDto = new CommentResultDto();
 		try {
-			int count = userPostDao.userPostCommentTotalCount();
+			int count = userPostDao.userPostCommentTotalCount(postId);
 			List<CommentDto> list = userPostDao.selectUserPostComment(postId, limit, offset);
 
 			commentResultDto.setList(list);

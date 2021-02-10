@@ -34,7 +34,8 @@ const SERVER_URL = process.env.VUE_APP_SERVER_URL
 export default {
   name: 'Comment',
   props: {
-    comment: Object
+    comment: Object,
+    type: String
   },
   watch: {
     comment(){
@@ -58,7 +59,7 @@ export default {
   methods: {
     getLikeInfo() {
       axios
-        .get(`${SERVER_URL}/clubpost/comment/like`, {
+        .get(`${SERVER_URL}/${this.type}/comment/like`, {
           params: {
             userId: this.getUserId,
             postId: this.comment['postId'],
@@ -74,7 +75,7 @@ export default {
     },
     likeComment() {
       axios
-        .post(`${SERVER_URL}/clubpost/comment/like`, {
+        .post(`${SERVER_URL}/${this.type}/comment/like`, {
           postId: this.comment['postId'],
           userId: this.getUserId,
           clubId: this.comment['clubId'],
@@ -98,7 +99,7 @@ export default {
       var category = "";
       //axios 요청
       axios
-        .post(`${SERVER_URL}/clubpost/comment/report`, {
+        .post(`${SERVER_URL}/${this.type}/comment/report`, {
           userId: this.getUserId,
           postId: this.comment['postId'],
           clubId: this.comment['clubId'],

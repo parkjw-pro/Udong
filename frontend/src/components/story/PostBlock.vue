@@ -79,14 +79,14 @@
         </b-row>
 
         <b-row class="ml-2 mb-3">
-          <div v-if="post.postLikeCount">{{post.postLikeCount}}명이 좋아합니다</div>
+          <div v-if="post.postLikeCount >= 0">{{post.postLikeCount}}명이 좋아합니다</div>
         </b-row>
 
         <!-- 댓글 -->
        
         <div style="width: 80%; display: inline-block">
           <div v-for="(comm, i) in comments" :key="i">
-            <Comment :comment="comm" />
+            <Comment :comment="comm" type="clubpost" />
           </div>
         </div>
             
@@ -143,8 +143,6 @@ export default {
       offset: 0,
       fileId: Object,
       url : SERVER_URL,
-
-
       userId: '', // 현재 사용자의 아이디
     }
   },
