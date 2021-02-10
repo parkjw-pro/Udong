@@ -11,7 +11,7 @@
         <b-button pill variant="primary">+</b-button>
       </div> -->
         <b-card-group   >
-          <div v-for="(title, idx) in club" :key="idx"> 
+          <div v-for="(title, idx) in myClub" :key="idx"> 
               <GroupCard :group = "title"/>
           </div>
    
@@ -21,14 +21,14 @@
     <!-- 2. 공개 그룹 -->
     <div id="public_group" class="my-5">
       <h4 id="group_list_category">공개 그룹</h4>
-      <div v-for="(title, idx) in club" :key="idx"> 
+      <div v-for="(title, idx) in openClub" :key="idx"> 
       <GroupCard :group = "title"/>
        </div>
     </div>
     <!-- 3. 비공개 그룹 -->
     <div id="private_group" class="my-5">
       <h4 id="group_list_category">비공개 그룹</h4>
-        <div v-for="(title, idx) in club" :key="idx">   
+        <div v-for="(title, idx) in closeClub" :key="idx">   
       <GroupCard :group = "title"/>
         </div>
     </div>
@@ -48,7 +48,9 @@ export default {
   },
   data() {
     return {
-      club : Object
+      myClub : Object,
+      openClub : [],
+      closeClub : [],
     }
   },
   methods: {
@@ -57,15 +59,41 @@ export default {
     }
   },
   created(){
+    //내그룹에 가입한 정보들 
     axios.get(`${SERVER_URL}/club/user/${JSON.parse(localStorage.getItem('Login-token'))['user-id']}/member`)
     .then((res)=>{
      
-     this.club = res.data
-     console.log("조회성공")
-     console.log(this.club)
+     this.myClub = res.data
+     console.log("내그룹 조회성공")
+     console.log(this.myClub)
      }) 
     .catch(()=>{
-       console.log("조회 실패")
+       console.log("내그룹 조회 실패")
+    });
+
+    // 해당 동코드에 생성된 전체 그룹
+    axios.get(`${SERVER_URL}/club/clubs/${JSON.parse(localStorage.getItem('Login-token'))['user_address']}`)
+    .then((res)=>{
+     console.log("전체그룹 조회성공")
+     console.log(res.data)
+
+      for(var i in res.data){
+        console.log(res.data[i].isOpen)
+        if(res.data[i].isOpen== "1"){
+          console.log("1111")
+          this.openClub.push(res.data[i])
+          
+        }else{
+          console.log("22222")
+           this.closeClub.push(res.data[i])
+        }
+      }
+      console.log("데이터 확인")
+      console.log(this.openClub)
+      console.log(this.closeClub)
+    }) 
+    .catch(()=>{
+       console.log("전체 그룹 조회 실패")
     });
   }
 }

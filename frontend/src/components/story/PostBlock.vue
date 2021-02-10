@@ -90,7 +90,10 @@ export default {
       comment: "",
       commentCount: 0,
       limit: 5,
-      offset: 0
+      offset: 0,
+      fileId: Object,
+      url : SERVER_URL,
+
     }
   },
   computed: {
@@ -98,6 +101,15 @@ export default {
     ...mapGetters(["getUserName"])
   },
   created() {
+      console.log("포스트 :" +this.post.postId)
+    axios.get(`${SERVER_URL}/clubpost/postId/${this.post.postId}`)
+    .then((res)=>{
+      console.log(res)
+      console.log(res.data.fileId)
+      this.fileId= res.data.fileId
+      
+    })
+
     this.getLikeInfo();
   },
   methods: {

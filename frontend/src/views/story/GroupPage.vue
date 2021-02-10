@@ -7,12 +7,12 @@
     </b-nav-form>
 
     <b-row class="my-5" align-h="between">
-      <b-col cols="4"><h2 class="font-weight-bold">다이어트</h2></b-col>
+      <b-col cols="4"><h2 class="font-weight-bold">asdasd</h2></b-col>
       <b-col cols="2">
         <!-- v-if="user.group.status=Admin" -->
         <!-- <b-button variant="info">회원관리</b-button> -->
         <!-- v-else -->
-        <b-button variant="info">회원조회</b-button>
+        <b-button variant="info">fadfa</b-button>
       </b-col>
       
     </b-row>
@@ -45,6 +45,7 @@ import PostBlock from '@/components/story/PostBlock'
 
 export default {
   name: "GroupPage",
+ 
   components: {
     Button,
     EndBlock,
@@ -53,15 +54,15 @@ export default {
   data() {
     return {
       
-      clubName : "",
+     // groups : Object,
     }
   },
   methods :{
     
   },
   created() {
-    this.clubName = this.$route.query.club.clubName
-    console(this.clubName);
+   // this.groups = this.$route.query.groups
+  //  console(this.groups);
 
   },
 }
