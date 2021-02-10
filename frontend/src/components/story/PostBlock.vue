@@ -23,7 +23,7 @@
               <div v-if="post.userId === userId">
                 <b-dropdown-item href="" variant="danger" v-b-modal.post-delete-modal>삭제</b-dropdown-item>
                 <b-modal id="post-delete-modal" @ok="deletePost">
-                  <p><img alt="Vue logo" src="@/assets/udonge.png" style="width: 10%" />소중한 리뷰를 정말 삭제하시겠습니까?</p>
+                  <p><img alt="Vue logo" src="@/assets/udonge.png" style="width: 10%" />소중한 이야기를 정말 삭제하시겠습니까?</p>
                 </b-modal>
               </div>
               <div v-else>
@@ -293,4 +293,12 @@ export default {
 </script>
 
 <style>
+#post_img {
+  top: 0;
+  left: 0;
+  min-width: 30em;
+  min-height: 15em;
+  max-width: 30em;
+  max-height: 15em;
+}
 </style>
