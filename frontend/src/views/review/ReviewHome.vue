@@ -30,90 +30,72 @@
     <hr class="mb-5">
     <!-- 2. 추천 카테고리 -->
     <!-- for문으로 출력한다!!! -->
-    <div>
-      <b-card-group deck>
-        <b-card bg-variant="white" text-variant="black" class="text-center">
-          <div id="category" v-draggabilly v-packery-item class='packery-item'>
-            <b-img thumbnail fluid src="https://picsum.photos/250/250/?image=9" content="asdasd" alt="Image 1"></b-img>
-            전자기기
-          </div>
-        </b-card>
-
-        <b-card bg-variant="white" text-variant="black" class="text-center">
-          <div id="category" v-draggabilly v-packery-item class='packery-item'>
-            <b-img thumbnail fluid src="https://picsum.photos/250/250/?image=30" alt="Image 2"></b-img>
-            카페
-          </div>
-        </b-card>
-        
-        <b-card bg-variant="white" text-variant="black" class="text-center">
-          <div id="category" v-draggabilly v-packery-item class='packery-item'>
-            <b-img thumbnail fluid src="https://picsum.photos/250/250/?image=118" alt="Image 3"></b-img>
-            건축물
-          </div>
-        </b-card>
-      </b-card-group>
-    </div>
-    <div class="mt-3">
-      <b-card-group deck>
-        <b-card bg-variant="white" text-variant="black" class="text-center">
-          <div id="category" v-draggabilly v-packery-item class='packery-item'>
-            <b-img thumbnail fluid src="https://picsum.photos/250/250/?image=23" alt="Image 3"></b-img>
-            주방용품
-          </div>
-        </b-card>
-
-        <b-card bg-variant="white" text-variant="black" class="text-center">
-          <div id="category" v-draggabilly v-packery-item class='packery-item'>
-            <b-img thumbnail fluid src="https://picsum.photos/250/250/?image=35" alt="Image 3"></b-img>
-            과일
-          </div>
-        </b-card>
-
-        <b-card bg-variant="white" text-variant="black" class="text-center">
-          <div id="category" v-draggabilly v-packery-item class='packery-item'>
-            <b-img thumbnail fluid src="https://picsum.photos/250/250/?image=44" alt="Image 3"></b-img>
-            바다
-          </div>
-        </b-card>
-      </b-card-group>
-    </div>
+      <div>
+        <b-row align-h="center">
+          <b-card-group deck style="width: 80%;">
+            <CategoryCard/>
+            <CategoryCard/>
+            <CategoryCard/>
+          </b-card-group>
+        </b-row>
+        <b-row align-h="center">
+          <b-card-group deck style="width: 80%;">
+            <CategoryCard/>
+            <CategoryCard/>
+            <CategoryCard/>
+          </b-card-group>
+        </b-row>
+        <b-row align-h="center">
+          <b-card-group deck style="width: 80%;">
+            <CategoryCard/>
+            <CategoryCard/>
+            <CategoryCard/>
+          </b-card-group>
+        </b-row>
+   
+      </div>
   </div>
 </template>
 
 
 <script>
+import CategoryCard from '@/components/review/CategoryCard'
+
 const userInfo = JSON.parse(localStorage.getItem('Login-token'))
 
 export default {
- name: 'ReviewHome',
+  name: 'ReviewHome',
+  components: {
+    CategoryCard,
+  },
   data: function() {
     return {
       storeParamDto:{
         searchWord: "",
         dongcode: userInfo["user_address"],
         //  dongcode: "1168064000",
-
+        category_img: {
+        // backgroundImage: `url(${SERVER_URL}/club/download/${this.category.fileId})`,
+        backgroundImage: "url(https://picsum.photos/250/250/?image=9)",
+      },
       },
     };
   },
- methods: {
-   FindStore: function () {
-     if (this.storeParamDto.searchWord === "") {
-       alert("검색어를 입력하세요!")
-     } else {
-       this.$router.push({ name: 'FindStore', params: {address: this.storeParamDto.dongcode ,keyword : this.storeParamDto.searchWord}})
-     }
-   },
-    CreateReview: function () {
-     this.$router.push({ name: 'GetStore', params: {address : this.storeParamDto.dongcode}})
-   }
- }
+  methods: {
+    FindStore: function () {
+      if (this.storeParamDto.searchWord === "") {
+        alert("검색어를 입력하세요!")
+      } else {
+        this.$router.push({ name: 'FindStore', params: {address: this.storeParamDto.dongcode ,keyword : this.storeParamDto.searchWord}})
+      }
+    },
+      CreateReview: function () {
+      this.$router.push({ name: 'GetStore', params: {address : this.storeParamDto.dongcode}})
+    },
+    
+  }
 }
 </script>
 
 <style>
-#category {
-  cursor: pointer;
-}
 </style>

@@ -193,9 +193,9 @@ export default {
             alert("작별의 인사 드립니다. \n또 함께 할 시간을 기다리고 있겠습니다.")
             this.$router.push({ name: 'Login' })
           })
-          .catch((err) => {
+          .catch(() => {
             alert("현재 서버가 우리의 이별을 허락하지 않습니다ㅠㅠ \n잠시후 다시 시도해주세요.")
-            console.log(err)
+            // console.log(err)
           })
     },
     deleteLocation: function () {
@@ -208,7 +208,7 @@ export default {
       this.isCheck = -1
     },
     updateNickname: function () {
-      console.log(this.user)
+      // console.log(this.user)
       axios.put(`${SERVER_URL}/user`, this.user)
         .then(() => {
           console.log('닉네임 변경 성공!!!!')
@@ -248,9 +248,9 @@ export default {
             this.isCorrect = -1
             alert("비밀번호가 변경되었습니다!")
           })
-          .catch((err) => {
+          .catch(() => {
             alert("오류가 발생했습니다!")
-            console.log(err)
+            // console.log(err)
           })
       }
       this.password = ''

@@ -16,7 +16,7 @@
               <b-col style="text-align: right;">
                 <b-dropdown size="lg" dropup variant="link" toggle-class="text-decoration-none" no-caret>
                 <template #button-content>
-                  <b-icon icon="three-dots-vertical" variant="dark"></b-icon>
+                  <b-icon icon="three-dots" variant="dark"></b-icon>
                 </template>
                 <div v-if="review.userId === userId">
                   <b-dropdown-item href="" variant="danger" v-b-modal.review-delete-modal>삭제</b-dropdown-item>

@@ -18,7 +18,7 @@ public interface ClubService {
 	
 	public List<String> selectFileUrl(String clubId);
 
-	public List<ClubDto> selectAllClub();
+	public List<ClubDto> selectAllClub(String areaCode);
 
 	public int updateClub(ClubDto club, MultipartFile file);
 	

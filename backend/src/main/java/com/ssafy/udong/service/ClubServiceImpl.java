@@ -118,9 +118,9 @@ public class ClubServiceImpl implements ClubService {
 	}
 
 	@Override
-	public List<ClubDto> selectAllClub() {
+	public List<ClubDto> selectAllClub(String areaCode) {
 		try {
-			List<ClubDto> list = clubDao.selectAllClub();
+			List<ClubDto> list = clubDao.selectAllClub(areaCode);
 			return list;
 		} catch (Exception e) {
 			e.printStackTrace();

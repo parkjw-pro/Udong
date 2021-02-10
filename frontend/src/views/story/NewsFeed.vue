@@ -13,17 +13,22 @@
     </b-row>
 
     <!-- 그룹 고르는 공간 -->
-    <b-row class="my-5 pb-5">
+    <div class="ml-4 mt-5 mb-2 font-weight-bold" style="text-align: left;">내 그룹</div>
+    <b-row class="">
       <b-col v-if="groups.length > 0" md="7">
-        <vue-glide>
-          <vue-glide-slide>1</vue-glide-slide>
-          <vue-glide-slide>2</vue-glide-slide>
-          <vue-glide-slide>3</vue-glide-slide>
-          <vue-glide-slide>4</vue-glide-slide>
-        </vue-glide>
-        <vue-glide v-for="(group, i) in groups" :key="i">
-          <vue-glide-slide v-if="i != selected"><b-button  variant="secondary" @click="selectGroup(i)">{{group['clubName']}}</b-button></vue-glide-slide>
-          <vue-glide-slide v-else><b-button variant="primary">{{group['clubName']}}</b-button></vue-glide-slide>
+        <vue-glide
+          :type="carousel" 
+          :perView="3"
+          :gap="0"
+        >
+          <vue-glide-slide v-for="(group, i) in groups" :key="i"><b-button  variant="info" @click="selectGroup(i)">{{group['clubName']}}</b-button></vue-glide-slide>
+          <template slot="control">
+            <b-button variant="transparent" size="sm" data-glide-dir="<">◀</b-button>
+            <b-button variant="transparent" size="sm" data-glide-dir=">">▶</b-button>
+          </template>
+          <!-- <vue-glide-slide v-if="i != selected"><b-button  variant="secondary" @click="selectGroup(i)">{{group['clubName']}}</b-button></vue-glide-slide>
+          <vue-glide-slide v-else><b-button variant="primary">{{group['clubName']}}</b-button></vue-glide-slide> -->
+          
         </vue-glide>
       </b-col>
       <b-col v-else md="7" class="mt-2">
@@ -54,6 +59,8 @@ import Button from '@/components/story/Button'
 import EndBlock from '@/components/story/EndBlock'
 import PostBlock from '@/components/story/PostBlock'
 
+import { Glide, GlideSlide } from 'vue-glide-js'
+
 import { mapGetters } from "vuex";
 import axios from 'axios';
 
@@ -63,7 +70,9 @@ export default {
   name: 'NewsFeed',
   computed: {
     ...mapGetters(["getUserId"]),
-    ...mapGetters(["getUserName"])
+    ...mapGetters(["getUserName"]),
+    [Glide.name]: Glide,
+    [GlideSlide.name]: GlideSlide,
   },
   components: {
     Button,

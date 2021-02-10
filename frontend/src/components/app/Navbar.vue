@@ -121,7 +121,7 @@ export default {
       this.$router.push({name: 'NewsFeed', params: {address: this.user.address, userId: this.user.userId}})
     },
     toMyfeed: function () {
-      this.$router.push({name: 'MyFeed', params: { userId: this.user.userId}})
+      this.$router.push({name: 'MyFeed', params: { userId: this.user.userId, nickname: this.user.nickname}})
     },
     toAccountDetail: function () {
       this.$router.push({name: 'AccountDetail'})

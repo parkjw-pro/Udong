@@ -139,10 +139,10 @@ public class ClubController {
 	}
 
 	@ApiOperation(value = "전체 그룹 정보 조회", notes = "모든 그룹의 정보를 조회합니다.\n" + "## 필수값\n")
-	@GetMapping("/clubs")
-	public ResponseEntity<List<ClubDto>> selectAllClub(){
+	@GetMapping("/clubs/{areaCode}")
+	public ResponseEntity<List<ClubDto>> selectAllClub(@PathVariable String areaCode){
 		try {
-			List<ClubDto> clubs = clubService.selectAllClub();
+			List<ClubDto> clubs = clubService.selectAllClub(areaCode);
 			return new ResponseEntity<List<ClubDto>>(clubs, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -317,7 +317,7 @@ public class ClubController {
 	}
 	
 	@GetMapping("/download/{fileId}")
-	public ResponseEntity<Resource> download(@PathVariable String fileId) throws IOException {
+	public ResponseEntity<Resource> download(@PathVariable String fileId) throws Exception {
 		System.out.println("다운로드" +fileId);
 		List<String> url = clubService.selectFileUrl(fileId);
 		System.out.println("가져온 url:" +url.get(0));
