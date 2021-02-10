@@ -36,7 +36,7 @@
 
         <!-- 2. 중앙 부분 -->
         <!--2.1 이미지-->
-        <b-row v-if="this.fieldId" class="postImage" align-h="center">
+        <b-row v-if="this.fileId" class="postImage" align-h="center">
           <b-carousel
             id="carousel-1"
             v-model="slide"
@@ -148,6 +148,7 @@ export default {
       fileId: Object,
       url : SERVER_URL,
       userId: '', // 현재 사용자의 아이디
+   
     }
   },
   computed: {
@@ -164,6 +165,7 @@ export default {
     })
 
     this.getLikeInfo();
+    this.fileCheck();
   },
   async mounted() {
     await this.getLikeInfo();
@@ -171,6 +173,7 @@ export default {
     this.userId = userInfo["userId"]
   },
   methods: {
+    
     deletePost() {
       axios
         .delete(`${SERVER_URL}/clubpost`, {
