@@ -83,7 +83,6 @@ export default {
     this.user.userId = userInfo["userId"]
     this.user.nickname = userInfo["nickname"]
     this.user.email = userInfo["email"]
-    this.getUser()
   }
 }
 </script>
