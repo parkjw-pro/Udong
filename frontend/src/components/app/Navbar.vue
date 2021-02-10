@@ -111,7 +111,8 @@ export default {
       location.replace('/home')
     },
     toReview: function () {
-      this.$router.push({name: 'ReviewHome'})
+      // this.$router.push({name: 'ReviewHome'})
+      location.replace('/review')
     },
     toNews: function () {
       this.$router.push({name: 'NewsHome'})

@@ -7,6 +7,8 @@ public class StoreDto {
 	private String locLng;
 	private String storeCtg1;
 	private String storeCtg2;
+	private String storeCtg3;
+	private String storeCtg4;
 	private String storeDongName;
 	private String storeDong2Name;
 	private String storeSidoName;
@@ -270,5 +272,30 @@ public class StoreDto {
 	}
 
 
+
+	public String getStoreCtg3() {
+		return storeCtg3;
+	}
+
+
+
+	public void setStoreCtg3(String storeCtg3) {
+		this.storeCtg3 = storeCtg3;
+	}
+
+
+
+	public String getStoreCtg4() {
+		return storeCtg4;
+	}
+
+
+
+	public void setStoreCtg4(String storeCtg4) {
+		this.storeCtg4 = storeCtg4;
+	}
+
+
+	
 
 }

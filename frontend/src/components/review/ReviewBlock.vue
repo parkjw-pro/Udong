@@ -44,7 +44,7 @@
             img-width="1024"
             img-height="480"
             style="text-shadow: 1px 1px 2px #333; width: 30em; height: 15em;"
-            fade="true"
+            :fade="true"
           >
             <b-carousel-slide
               id="review_img"
@@ -68,8 +68,10 @@
         <!-- 3. footer 부분 -->
           <template #footer>
             <div style="text-align: left;">
-              <b-icon icon="suit-heart" variant="danger"></b-icon>
-              <b-icon icon="suit-heart-fill" variant="danger" @click="reviewLike"></b-icon>
+            <div class="reviewLike"> <!--좋아요 여부와 좋아요 수-->
+            <b-icon icon="suit-heart-fill" variant="danger" v-if="liked" @click="likeReview()"></b-icon>
+            <b-icon icon="suit-heart" variant="danger" v-else @click="likeReview()"></b-icon>
+            </div>
               <small class="ml-2">{{review.reviewLikeCount}}명이 좋아합니다.</small>
             </div>
           </template>
@@ -96,8 +98,12 @@ export default {
     ...mapGetters(["getUserId"]),
     ...mapGetters(["getUserName"])
   },
+  created() {
+    this.getLikeInfo();
+  },
   data: function() {
     return {
+      liked: false,
       rate : "",
       userId: '',
       reviewDetail : {},
@@ -138,7 +144,6 @@ export default {
         this.fileId = response.data.fileId;
         for (let index = 0; index < response.data.dto.rate; index++) {
           this.rate = this.rate + "★";
-          console.log(this.rate);
           
         }
 
@@ -149,30 +154,38 @@ export default {
         console.log(response);
       });
     },
-    reviewLike: function() {
-      var formData = new FormData();
-      formData.append('reviewId', this.review.reviewId);
-      formData.append('storeId', this.review.storeId);
-      formData.append('userId', this.review.userId);
-      // var likeDto = [
-      //   reviewId = this.review.reviewId,
-      //   storeId =  this.review.storeId,
-      //   userId = this.review.userId
-      // ]
+    likeReview() {
       axios
-      .post(`${SERVER_URL}/review/comment/like` + formData,{
-          headers: { 'Content-Type': `application/json; charset=UTF-8` },
+        .post(`${SERVER_URL}/review/comment/like`, {
+            storeId: this.review['storeId'],
+            userId: this.getUserId,
+            reviewId: this.review['reviewId'],
         })
-      .then((response) => {
-        this.fileId = response.data.fileId;
-
-        // console.log( this.fileId);
-
-      })
-      .catch((response) => {
-        console.log(response);
-      });
+        .then((response) => {
+            this.liked = !response.data.includes("취소");
+            if(this.liked) {
+              this.review['reviewLikeCount'] = this.review['reviewLikeCount']*1 + 1;
+            } else {
+              this.review['reviewLikeCount'] = this.review['reviewLikeCount']*1 - 1;
+            }
+        });
     },
+    getLikeInfo(){
+      axios
+        .get(`${SERVER_URL}/review/comment/like`, {
+          params: {
+            userId: this.getUserId,
+            reviewId: this.review['reviewId']
+            
+          }
+        })
+        .then(
+          (response) => (
+            this.liked = response.data
+          )
+        );
+    },
+
 
   },
   async mounted () {
