@@ -122,14 +122,22 @@ export default {
       this.getGroupPosts();
     },
     getMorePosts() {
-      console.log("want to get more??");
-      if(this.postCount < this.offset + this.limit) return;
-
-      console.log("we have more~");
-
+      if(this.postCount <= this.posts.length){
+        return;
+      }
       this.offset += this.limit;
-      this.getGroupPosts();
-      console.log("got more posts~");
+      axios
+        .get(`${SERVER_URL}/clubpost/club`, {
+          params: {
+            clubId: this.groups[this.selected]['clubId'],
+            limit: this.limit,
+            offset: this.offset
+          }
+        })
+        .then(
+          (response) => {
+            this.posts.push(...response.data.list);
+        });
     },
     toList: function () {
       this.$router.push({ name: 'GroupList'})

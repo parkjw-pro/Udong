@@ -33,7 +33,7 @@
         <div v-for="(post , idx) in posts" :key ="idx" >
           <PostBlockMy :post="post" />
         </div>
-        
+        <EndBlock v-on:more="getMorePosts" />
       </b-tab>
       <b-tab title="리뷰">
         <div v-for="(item, index) in reviews" :key="index">
@@ -59,6 +59,7 @@
 import GroupBox from '@/components/story/GroupBox'
 import ReviewBlock from '@/components/review/ReviewBlock'
 import PostBlockMy from '@/components/story/PostBlockMy'
+import EndBlock from '@/components/story/EndBlock'
 import TagBox from '@/components/story/TagBox'
 import axios from "axios";
 const SERVER_URL = "http://localhost:8000";
@@ -72,6 +73,7 @@ export default {
   components: {
     GroupBox,
     PostBlockMy,
+    EndBlock,
     TagBox,
     ReviewBlock,
   },
@@ -81,8 +83,8 @@ export default {
         userId: "",
         nickname: "",
       },
-      
       posts: [],
+      postCount: 0,
       limit: 5,  //한 페이지에 노출될 게시글의 수
       offset: 0,  //게시글 번호 오프셋,
       liked: false,
@@ -99,19 +101,7 @@ export default {
     
   },
   methods: {
-      getUserPosts(){
-      axios
-        .get(`${SERVER_URL}/userpost/user`, {
-          params: {
-            userId: this.user.userId,
-            limit: this.limit,
-            offset: this.offset
-          }
-      })
-        .then((response) => {
-          this.posts = response.data.list;
-        });
-    },
+    
     toAccountDetail: function () {
       this.$router.push({name: 'AccountDetail'})
     },
@@ -133,6 +123,41 @@ export default {
           this.groups = response.data
         )
       );
+    },
+    getUserPosts(){
+      axios
+        .get(`${SERVER_URL}/userpost/user`, {
+          params: {
+            userId: this.user.userId,
+            limit: this.limit,
+            offset: this.offset
+          }
+      })
+        .then((response) => {
+          this.posts = response.data.list;
+          this.postCount = response.data.count;
+        });
+    },
+    getMorePosts() {
+      if(this.postCount <= this.posts.length){
+        return;
+      }
+      this.offset += this.limit;
+      axios
+        .get(`${SERVER_URL}/userpost/user`, {
+          params: {
+            userId: this.user.userId,
+            limit: this.limit,
+            offset: this.offset
+          }
+        })
+        .then(
+          (response) => {
+            this.posts.push(...response.data.list);
+        });
+    },
+    toList: function () {
+      this.$router.push({ name: 'GroupList'})
     }
   },
 
