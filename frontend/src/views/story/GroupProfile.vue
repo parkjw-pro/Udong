@@ -68,7 +68,7 @@
       <!-- 1. v-if 가입되어 있으면 -->
       <div v-if="isJoin">
         <b-button class="mx-3" variant="danger" @click="leaveGroup">그룹탈퇴</b-button>
-        <b-button class="mx-3" variant="info" @click="toMemberList">회원조회</b-button>
+        <b-button class="mx-3" variant="info" @click="toMemberList">회원관리</b-button>
       </div>
       <!-- 2. v-else (가입이 안 되어 있으면) -->
       <b-button v-else class="mx-3" type="submit" variant="info" @click="joinGroup">가입하기</b-button>

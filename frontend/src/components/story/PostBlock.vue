@@ -23,7 +23,7 @@
               <div v-if="post.userId === userId">
                 <b-dropdown-item href="" variant="danger" v-b-modal.post-delete-modal>삭제</b-dropdown-item>
                 <b-modal id="post-delete-modal" @ok="deletePost">
-                  <p><img alt="Vue logo" src="@/assets/udonge.png" style="width: 10%" />소중한 리뷰를 정말 삭제하시겠습니까?</p>
+                  <p><img alt="Vue logo" src="@/assets/udonge.png" style="width: 10%" />소중한 이야기를 정말 삭제하시겠습니까?</p>
                 </b-modal>
               </div>
               <div v-else>
@@ -36,7 +36,7 @@
 
         <!-- 2. 중앙 부분 -->
         <!--2.1 이미지-->
-        <b-row v-if="this.fieldId" class="postImage" align-h="center">
+        <b-row v-if="fileId.length > 0" class="postImage" align-h="center">
           <b-carousel
             id="carousel-1"
             v-model="slide"
@@ -53,7 +53,7 @@
               id="post_img"
               v-for="(item, index) in fileId"
               :key="index"   
-              :img-src="url+`/post/download/` + item" 
+              :img-src="url+`/clubpost/download/` + item" 
             ></b-carousel-slide>
           </b-carousel>
 
@@ -148,6 +148,7 @@ export default {
       fileId: Object,
       url : SERVER_URL,
       userId: '', // 현재 사용자의 아이디
+   
     }
   },
   computed: {
@@ -155,13 +156,14 @@ export default {
     ...mapGetters(["getUserName"])
   },
   created() {
-      console.log("포스트 :" +this.post.postId)
     axios.get(`${SERVER_URL}/clubpost/postId/${this.post.postId}`)
     .then((res)=>{
+    
       this.fileId= res.data.fileId
     })
 
     this.getLikeInfo();
+    this.fileCheck();
   },
   async mounted() {
     await this.getLikeInfo();
@@ -169,6 +171,7 @@ export default {
     this.userId = userInfo["userId"]
   },
   methods: {
+    
     deletePost() {
       axios
         .delete(`${SERVER_URL}/clubpost`, {
@@ -289,4 +292,12 @@ export default {
 </script>
 
 <style>
+#post_img {
+  top: 0;
+  left: 0;
+  min-width: 30em;
+  min-height: 15em;
+  max-width: 30em;
+  max-height: 15em;
+}
 </style>

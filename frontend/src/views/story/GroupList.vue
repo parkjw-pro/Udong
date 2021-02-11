@@ -75,7 +75,7 @@ export default {
      
      this.myClub = res.data
      console.log("내그룹 조회성공")
-     console.log(this.myClub)
+    
      }) 
     .catch(()=>{
        console.log("내그룹 조회 실패")
@@ -84,26 +84,23 @@ export default {
     // 해당 동코드에 생성된 전체 그룹
     axios.get(`${SERVER_URL}/club/clubs/${JSON.parse(localStorage.getItem('Login-token'))['user_address']}`)
     .then((res)=>{
-     console.log("전체그룹 조회성공")
-     console.log(res.data)
+     console.log("전체그룹 (공개,비공개) 조회성공")
 
       for(var i in res.data){
-        console.log(res.data[i].isOpen)
+       
         if(res.data[i].isOpen== "1"){
-          console.log("1111")
+       
           this.openClub.push(res.data[i])
           
         }else{
-          console.log("22222")
+      
            this.closeClub.push(res.data[i])
         }
       }
-      console.log("데이터 확인")
-      console.log(this.openClub)
-      console.log(this.closeClub)
+     
     }) 
     .catch(()=>{
-       console.log("전체 그룹 조회 실패")
+       console.log("전체 그룹  (공개,비공개)  조회 실패")
     });
   }
 }
