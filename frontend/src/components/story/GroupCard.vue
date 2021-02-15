@@ -59,7 +59,7 @@ export default {
             }
           }
 
-          if (this.checkMygroup == "1") { // 내그룹에 있을떄 
+          if (this.checkMygroup == "1") { // 내그룹에 있을떄  
             this.$router.push({
               name: "GroupPage",
               params: {
@@ -69,7 +69,7 @@ export default {
                 groupId: this.group.clubId,
               },
             });
-          } else { // 내그룹에 없을때 
+          } else { // 내그룹에 없을때  가입창으로 
             this.$router.push({
               name: "GroupProfile",
               params: {
@@ -77,6 +77,7 @@ export default {
                   "user_address"
                 ],
                 groupId: this.group.clubId,
+                groupcheck: 0, // 가입자
               },
             });
           }
