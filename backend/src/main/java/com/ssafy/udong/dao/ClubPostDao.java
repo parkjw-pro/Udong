@@ -61,7 +61,7 @@ public interface ClubPostDao {
 	
 	//댓글 조회
 	public List<CommentDto> selectClubPostComment(String postId, int limit, int offset);
-	public int userPostCommentTotalCount();
+	public int userPostCommentTotalCount(String postId);
 	
 	//좋아요
 	public String selectClubPostLike(LikeDto likeDto);

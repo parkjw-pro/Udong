@@ -4,7 +4,7 @@
     <div id="box" class="mx-5">
       <!-- 검색창 -->
       <b-row align-h="center">
-        <b-nav>
+        <!-- <b-nav> -->
           <div>
           <b-input
             class="mr-sm-2 ml-auto" 
@@ -15,7 +15,7 @@
           ></b-input>
           <b-button style="background-color: #695549;" class="my-2 my-sm-0" @click="search">Search</b-button>
           </div>
-        </b-nav>
+        <!-- </b-nav> -->
       </b-row>
 
       <!-- 그룹 고르는 공간 -->
@@ -50,7 +50,7 @@
           <PostBlockMy :post="post" v-for="(post , idx) in posts" :key ="idx" />
         </div>
         <div v-else>
-          <PostBlock :post="post" class="mb-5" v-for="(post, i) in posts" :key="i" />
+          <PostBlock :post="post" :groupName="groupNames[selected]" class="mb-5" v-for="(post, i) in posts" :key="i" />
         </div>
       </div>
       <div v-else>

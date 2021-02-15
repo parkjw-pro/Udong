@@ -8,6 +8,8 @@
           <b-row align-h="justify" style="text-align: left;">
             <b-col align-self="center">
               <span style="cursor: pointer;" @click="toFeed">
+                <!--그룹 게시물 - 그룹 정보-->
+                <span style="">{{groupName}} </span>
                 <!-- 뱃지 -->
                 <b-avatar :src="require('@/assets/app/badge1.jpg')"></b-avatar>
                 <!-- 닉네임 -->
@@ -46,7 +48,7 @@
             img-width="1024"
             img-height="480"
             style="text-shadow: 1px 1px 2px #333; width: 30em; height: 15em;"
-            fade="true"
+            fade
           > 
             <!-- fileId 정의해주어야한다!!! -->
             <b-carousel-slide
@@ -76,9 +78,10 @@
           </div>
           
           <!-- 댓글 버튼 -->
-          <div class="postComment" @click="getArticleComments">
-            <b-icon v-if="comments.length > 0" font-scale="1" icon="chat-fill" variant="warning" ></b-icon>
+          <div class="postComment" @click="showComment">
+            <b-icon v-if="commentFlag" font-scale="1" icon="chat-fill" variant="warning" ></b-icon>
             <b-icon v-else font-scale="1" icon="chat" variant="warning"></b-icon>
+            <span style="color:orange">{{commentCount}}</span>
           </div>
         </b-row>
 
@@ -87,11 +90,10 @@
         </b-row>
 
         <!-- 댓글 목록 -->
-        
         <!-- <div v-if="cmtCount === -1">
           <div>아직 작성된 댓글이 없습니다.</div>
         </div> -->
-        <div>
+        <div v-show="commentFlag">
           <div style="width: 80%; display: inline-block">
             <div v-for="(comm, i) in comments" :key="i">
               <Comment :comment="comm" type="clubpost" />
@@ -99,16 +101,15 @@
           </div>
               
           <b-row class="mt-3" v-if="comments.length > 0 && comments.length < commentCount">
-              <b-col>
-                <span style="cursor: pointer;" @click="getMoreComments">
-                  <!-- <b-button pill variant="light" @click="getMoreComments">+</b-button> -->
-                  <img alt="Vue logo" src="@/assets/udonge.png" style="width: 5%;">더보기
-                </span>
-              </b-col>
+            <b-col>
+              <span style="cursor: pointer;" @click="getMoreComments">
+                <img alt="Vue logo" src="@/assets/udonge.png" style="width: 5%;">더보기
+              </span>
+            </b-col>
           </b-row>
-
         </div>
         <br>
+
         <!--댓글 입력창-->
         <div class="container">
           <b-row align-h="justify">
@@ -134,7 +135,8 @@ const SERVER_URL = process.env.VUE_APP_SERVER_URL
 export default {
   name: 'PostBlock',
   props: {
-    post: Object
+    post: Object,
+    groupName: String
   },
   components: {
     Comment
@@ -144,10 +146,12 @@ export default {
   },
   data() {
     return {
+      slide: 0,  //이미지 carousel 부분
       liked: false,
       comments: [],
       comment: "",
       commentCount: 0,
+      commentFlag: false,
       limit: 5,
       offset: 0,
       fileId: Object,
@@ -166,11 +170,10 @@ export default {
   created() {
     axios.get(`${SERVER_URL}/clubpost/postId/${this.post.postId}`)
     .then((res)=>{
-    
       this.fileId= res.data.fileId
     })
 
-    this.getLikeInfo();
+    this.getComments();
     // this.fileCheck();
   },
   async mounted() {
@@ -179,7 +182,6 @@ export default {
     this.userId = userInfo["userId"]
   },
   methods: {
-    
     deletePost() {
       axios
         .delete(`${SERVER_URL}/clubpost`, {
@@ -188,28 +190,6 @@ export default {
         .then((response) => {
           console.log(response);
         });
-    },
-    getArticleComments(){
-      // if(this.comments.length > 0) return;
-      axios
-        .get(`${SERVER_URL}/clubpost/comment`, {
-          params: {
-            postId: this.post.postId,
-            limit: this.limit,
-            offset: this.offset
-          }
-        })
-        .then(
-          (response) => {
-            this.comments = response.data.list;
-            this.commentCount = response.data.count;
-            // comment가 없으면 -1 값 넣어주기
-            console.log(response.data.count)
-            if (response.data.count === 0) {
-              this.commentCount = -1
-            }
-            console.log(this.commentCount);
-          });
     },
     getLikeInfo(){
       axios
@@ -226,12 +206,10 @@ export default {
           )
         );
     },
-    getMoreComments() {
-      if(this.commentCount <= this.comments.length){
-        return;
-      }
-
-      this.offset += this.limit;
+    showComment() {
+      this.commentFlag = !this.commentFlag;
+    },
+    getComments() {
       axios
         .get(`${SERVER_URL}/clubpost/comment`, {
           params: {
@@ -242,8 +220,17 @@ export default {
         })
         .then(
           (response) => {
+            console.log(response.data);
             this.comments.push(...response.data.list);
+            this.commentCount = response.data.count;
           });
+    },
+    getMoreComments(){
+      if(this.commentCount <= this.comments.length){
+        return;
+      }
+      this.offset += this.limit;
+      this.getComments();
     },
     likePost() {
       axios
@@ -259,6 +246,22 @@ export default {
             } else {
               this.post['postLikeCount'] = this.post['postLikeCount']*1 - 1;
             }
+        });
+    },
+    writeComment() {
+      axios
+        .post(`${SERVER_URL}/clubpost/comment`, {
+          postId: this.post['postId'],
+          userId: this.getUserId,
+          clubId: this.post['clubId'],
+          commContent: this.comment
+        })
+        .then((response) => {
+          console.log(response);
+          this.offset = 0;
+          this.comments = [];  //댓글 초기화
+          this.getComments();
+          this.post.postCommentCount = this.post.postCommentCount*1 + 1;
         });
     },
     reportPost() {
@@ -284,20 +287,6 @@ export default {
     },
     toFeed: function () {
       this.$router.push({name: 'MyFeed', params: { userId: this.post.userId, nickname: this.post.nickname}})
-    },
-    writeComment() {
-      axios
-        .post(`${SERVER_URL}/clubpost/comment`, {
-          postId: this.post['postId'],
-          userId: this.getUserId,
-          clubId: this.post['clubId'],
-          commContent: this.comment
-        })
-        .then((response) => {
-          console.log(response);
-          this.getArticleComments();
-          this.post.postCommentCount = this.post.postCommentCount*1 + 1;
-        });
     },
 
 
