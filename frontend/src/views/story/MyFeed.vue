@@ -34,6 +34,7 @@
           <PostBlockMy :post="post" />
         </div>
         <EndBlock v-on:more="getMorePosts" />
+        <span v-if="this.postCount > this.posts.length">더보기</span>
       </b-tab>
       <b-tab title="리뷰">
         <div v-for="(item, index) in reviews" :key="index">
@@ -41,7 +42,7 @@
         </div>
       </b-tab>
       <b-tab title="태그">
-        <TagBox />
+        <TagBox :reviews="reviews" :userposts="posts" :user="user" />
       </b-tab>
       <b-tab title="그룹">
         <GroupBox />
