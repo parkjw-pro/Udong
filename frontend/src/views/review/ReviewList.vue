@@ -4,7 +4,7 @@
     <div id="box" v-if="!flag">
       <div class="mb-5">
         <h3>{{ storeParamDto.searchWord }}</h3>
-        <b-icon id="map_btn" icon="map" font-scale="2" @click="LookMap()"></b-icon>
+        <b-icon id="map_btn" icon="map" font-scale="2" @click="LookMap()" ></b-icon>
       </div>
       <div v-for="(item, index) in getSearchStoreList" :key="index">
         <b-card bg-variant="white" text-variant="black" :title="item.storeName">
@@ -20,7 +20,7 @@
     <b-col class="mr-0 pr-0" v-if="flag">
       <div class="mb-5">
         <h3>{{ storeParamDto.searchWord }}</h3>
-        <b-icon id="map_btn" icon="map" font-scale="2" @click="LookMap()"></b-icon>
+        <!-- <b-icon id="map_btn" icon="map" font-scale="2" @click="LookMap()"></b-icon> -->
       </div>
       <div v-for="(item, index) in getSearchStoreList" :key="index">
         <b-card bg-variant="white" text-variant="black" :title="item.storeName">
