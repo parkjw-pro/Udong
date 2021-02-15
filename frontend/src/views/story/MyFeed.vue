@@ -103,17 +103,18 @@ export default {
   },
   methods: {
     getUserPosts(){
-    axios
-      .get(`${SERVER_URL}/userpost/user`, {
-        params: {
-          userId: this.user.userId,
-          limit: this.limit,
-          offset: this.offset
-        }
-    })
-      .then((response) => {
-        this.posts = response.data.list;
-      });
+      axios
+        .get(`${SERVER_URL}/userpost/user`, {
+          params: {
+            userId: this.user.userId,
+            limit: this.limit,
+            offset: this.offset
+          }
+      })
+        .then((response) => {
+          this.posts = response.data.list;
+          this.postCount = response.data.count;
+        });
     },
     toAccountDetail: function () {
       this.$router.push({name: 'AccountDetail'})
@@ -136,20 +137,6 @@ export default {
           this.groups = response.data
         )
       );
-    },
-    getUserPosts(){
-      axios
-        .get(`${SERVER_URL}/userpost/user`, {
-          params: {
-            userId: this.user.userId,
-            limit: this.limit,
-            offset: this.offset
-          }
-      })
-        .then((response) => {
-          this.posts = response.data.list;
-          this.postCount = response.data.count;
-        });
     },
     getMorePosts() {
       if(this.postCount <= this.posts.length){

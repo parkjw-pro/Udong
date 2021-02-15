@@ -55,7 +55,7 @@
           </b-carousel>
         </b-row>
         <b-row>
-          <div class="my-3 mx-3" style="text-align: left;">
+          <div class="my-3 mx-5" style="text-align: left;">
             <h6>{{review.reviewContent}}</h6>
           </div>
         </b-row>
