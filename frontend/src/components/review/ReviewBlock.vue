@@ -12,7 +12,7 @@
           <b-card-text>
             <b-row align-h="justify">
               <!-- <span class="mr-5">뱃지 img</span> -->
-              <b-col><div class="mt-2" style="text-align: left"><span class="font-weight-bold" style="font-size: large;">{{review.nickname}}</span>님의 리뷰</div></b-col>
+              <b-col><div class="mt-2" style="text-align: left"><span class="font-weight-bold" style="font-size: large;">{{review.nickname}}</span>님의 리뷰 {{rate}}</div></b-col>
               <b-col style="text-align: right;">
                 <b-dropdown size="lg" dropup variant="link" toggle-class="text-decoration-none" no-caret>
                 <template #button-content>
@@ -34,9 +34,10 @@
         </template>
 
         <!-- 2. 본문 부분 -->
-        <b-row align-h="center">
+        <b-row v-if="fileId.length > 0" align-h="center">
           <b-carousel
             id="carousel-1"
+            v-if="fileId.length > 0"
             v-model="slide"
             controls
             indicators
@@ -55,7 +56,7 @@
           </b-carousel>
         </b-row>
         <b-row>
-          <div class="my-3 mx-3" style="text-align: left;">
+          <div class="my-3 mx-5" style="text-align: left;">
             <h6>{{review.reviewContent}}</h6>
           </div>
         </b-row>
@@ -68,10 +69,10 @@
         <!-- 3. footer 부분 -->
           <template #footer>
             <div style="text-align: left;">
-            <div class="reviewLike"> <!--좋아요 여부와 좋아요 수-->
-            <b-icon icon="suit-heart-fill" variant="danger" v-if="liked" @click="likeReview()"></b-icon>
-            <b-icon icon="suit-heart" variant="danger" v-else @click="likeReview()"></b-icon>
-            </div>
+            <span class="reviewLike mt-5"> <!--좋아요 여부와 좋아요 수-->
+              <b-icon icon="suit-heart-fill" variant="danger" v-if="liked" @click="likeReview()"></b-icon>
+              <b-icon icon="suit-heart" variant="danger" v-else @click="likeReview()"></b-icon>
+            </span>
               <small class="ml-2">{{review.reviewLikeCount}}명이 좋아합니다.</small>
             </div>
           </template>

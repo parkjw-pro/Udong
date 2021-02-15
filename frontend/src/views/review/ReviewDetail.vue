@@ -1,8 +1,9 @@
 <template>
   <b-row class="my-2 pt-3 mx-5">
-    <b-col class="mr-0 pr-0">
+    <b-col class="mr-0 pr-0 mt-2">
 
-      <!-- 1. 이미지 -->
+      <!-- 1. Carousel -->
+      <!-- 이미지가 있을 경우에만 표시 -->
       <b-row v-if="fileId.length > 0" align-h="center">
         <b-carousel
           id="carousel-1"
@@ -29,7 +30,7 @@
         </b-carousel>
       </b-row>
       <!-- 2. store 정보 -->
-      <div class="my-5 py-5">
+      <div class="my-3 mb-5">
         <b-row style="text-align: justify;">
           <b-col>
             <h2 style="font-family: 'Hanna', sans-serif;">{{ store.storeName }}</h2>
@@ -44,24 +45,26 @@
       </div>
 
       <!-- 여기서 for문 -->
-      <div v-for="(item, index) in bestReviewlist" :key="index">
-        <ReviewBlock :review="item" />
+      <div v-if="reviews.length > 0">
+        <div v-for="(item, index) in bestReviewlist" :key="index">
+          <ReviewBlock :review="item" />
+        </div>
       </div>
-      <div v-if="!reviews.length">
+      <div v-else>
         <div id="box">
           <img class="my-5" alt="Vue logo" src="@/assets/udonge.png" style="width: 25%" />
           <h5>아직 작성된 리뷰가 없어요...</h5>
           <h5>첫 리뷰 작성자가 되어주세요 <b-icon icon="heart-fill" variant="danger"></b-icon></h5>
-          <a href="" @click="createReview">리뷰 작성하러 가기!</a>
+          <a href="" @click="createReview">{{ store.storeName }} 리뷰 작성하러 가기!</a>
         </div>
       </div>
     </b-col>
 
-    <b-col class="mt-5 pt-3 mr-3 ml-0 pl-0">
+    <!-- 지도 -->
+    <b-col class="mt-5 pt-5 mr-3 ml-0 pl-0">
       <div class="map_wrap2" style="width: 80%;">
         <div id="map" style="width:100%; height:100%; position:relative; overflow:hidden;"></div>
         <div class="hAddr">
-          <!-- <span class="title">지금 계신 위치가 이곳이 맞나요?</span> -->
           <span></span>
         </div>
       </div>
@@ -228,7 +231,6 @@ export default {
       var bounds = new kakao.maps.LatLngBounds();
       var infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
 
-      var fragment = document.createDocumentFragment();
       var displayInfowindow = function(marker, title) {
         var content = '<div style="padding:5px; text-align: center;">' + title + '</div>';
 
@@ -245,7 +247,9 @@ export default {
         position: coords, // 마커를 표시할 위치locLng
         // title: this.getSearchStoreList[index].storeName, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
         image: markerImage, // 마커 이미지
+        
       });
+      var store = this.store;
 
       (function(marker, title) {
         kakao.maps.event.addListener(marker, 'mouseover', function() {
@@ -254,15 +258,14 @@ export default {
         kakao.maps.event.addListener(marker, 'mouseout', function() {
           infowindow.close();
         });
-        this.store.onmouseover = function() {
+        store.onmouseover = function() {
           displayInfowindow(marker, title);
         };
-        this.store.onmouseout = function() {
+        store.onmouseout = function() {
           infowindow.close();
         };
-      })(marker, this.store.storeName);
+      })(marker, store.storeName);
 
-      fragment.appendChild(this.store);
 
       //infowindow.open(map, marker); // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
       bounds.extend(coords);
