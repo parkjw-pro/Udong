@@ -1,21 +1,20 @@
 <template>
   <div>
-    <h2 class="mb-5 text-dark">우리동네 이야기</h2>
     <div id="box" class="mx-5">
+    <h1 id="top_title" class="mb-5">우리동네 이야기</h1>
       <!-- 검색창 -->
       <b-row align-h="center">
         <!-- <b-nav> -->
-          <div>
           <b-input
-            class="mr-sm-2 ml-auto" 
+            class="mr-sm-2" 
             placeholder="우리동네 이야기 찾기" 
             v-model="searchWord"
-            style="text-align: center;"
+            style="text-align: center; width: 30%;"
             @keypress.enter="search"
           ></b-input>
-          <b-button style="background-color: #695549;" class="my-2 my-sm-0" @click="search">Search</b-button>
-          </div>
+          <span><b-button style="background-color: #695549; text-align: left;" class="my-2 my-sm-0" @click="search">Search</b-button></span>
         <!-- </b-nav> -->
+        <b-button class="ml-3" pill size="sm" variant="transparent" style="color: #695549;" v-b-popover.hover.top="'# 태그를 이용해 검색해보세요!'" title="검색 팁!">검색팁</b-button>
       </b-row>
 
       <!-- 그룹 고르는 공간 -->

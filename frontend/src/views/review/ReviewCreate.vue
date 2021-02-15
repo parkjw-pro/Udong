@@ -1,6 +1,6 @@
 <template>
   <b-row class="my-2 pt-3 mx-5">
-    <b-col class="mr-0 pr-0">
+    <b-col cols="7" class="mr-0 pr-0">
       <div id="reviewCreateBox">
         <!-- 리뷰가게명 -->
         <div class="mt-3 pt-3">

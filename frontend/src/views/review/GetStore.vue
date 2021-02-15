@@ -12,7 +12,9 @@
           autofocus
         >
         <b-button class="ml-3" size="sm" style="background-color: #695549;" @click="search">검색</b-button>
-    <table class="table table-hover" striped hover style="background-color: #695549;">
+        <b-button class="ml-3" pill size="sm" variant="transparent" style="color: #695549;" v-b-popover.hover.top="'카테고리, 상점명 등을 검색해보세요!'" title="검색 팁!">검색팁</b-button>
+    <div v-if="getSearchStoreList.length > 0" style="overflow: auto; height: 650px;">
+      <table class="table table-hover" striped hover style="background-color: #695549;">
       <thead style="color: white;" class="small">
         <tr>
           <th>종류</th>
@@ -36,6 +38,22 @@
         </tr>
       </tbody>
     </table>
+    </div>
+
+
+    <div v-else class="mt-5 pt-5">
+        <img alt="Vue logo" src="@/assets/udonge.png" style="width: 10%" />
+        <br />
+        <h5 class="my-3">검색 결과가 없어요 ㅠㅠ</h5>
+        <div class="mb-2">
+          이런 검색어는 어떠세요?
+        </div>
+        <div>
+          <a class="mx-1">카페</a>
+          <a class="mx-1">독서실</a>
+          <a class="mx-1">편의점</a>
+        </div>
+      </div>
   </div>
 </template>
 

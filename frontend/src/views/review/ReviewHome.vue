@@ -18,6 +18,7 @@
             <b-icon icon="search" variant="black" @click="FindStore"/>
           </span>
         </div>
+        <b-button class="ml-3" pill size="sm" variant="transparent" style="color: #695549;" v-b-popover.hover.top="'카테고리, 상점명 등을 검색해보세요!'" title="검색 팁!">검색팁</b-button>
       </b-col>
       
     </b-row>

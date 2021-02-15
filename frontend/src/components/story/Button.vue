@@ -1,6 +1,6 @@
 <template>
   <div class="add_btn">
-    <b-button @click="toCreate" pill variant="info" class="mb-3 font-weight-bold">+</b-button>
+    <b-button @click="toCreate" class="mb-3" style="background-color: #695549;">게시글 작성하기</b-button>
   </div>
 </template>
 

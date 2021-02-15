@@ -11,7 +11,7 @@
                 <!--그룹 게시물 - 그룹 정보-->
                 <span style="">{{groupName}} </span>
                 <!-- 뱃지 -->
-                <b-avatar :src="require('@/assets/app/badge1.jpg')"></b-avatar>
+                <b-avatar :src="require('@/assets/app/badge/badge1.jpg')"></b-avatar>
                 <!-- 닉네임 -->
                 <span class="ml-1" style="">{{ post.nickname }}</span>
               </span>
@@ -286,6 +286,7 @@ export default {
       //   });
     },
     toFeed: function () {
+      console.log(this.post.userId)
       this.$router.push({name: 'MyFeed', params: { userId: this.post.userId, nickname: this.post.nickname}})
     },
 

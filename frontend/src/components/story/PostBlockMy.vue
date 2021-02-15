@@ -8,7 +8,7 @@
             <b-col align-self="center">
               <span style="cursor: pointer;" @click="toFeed">
                 <!-- 뱃지 -->
-                <b-avatar :src="require('@/assets/app/badge1.jpg')"></b-avatar>
+                <b-avatar :src="require('@/assets/app/badge/badge1.jpg')"></b-avatar>
                 <!-- 닉네임 -->
                 <span class="ml-1" style="">{{ post.nickname }}</span>
               </span>
@@ -20,8 +20,12 @@
                 <b-icon icon="three-dots" variant="dark"></b-icon>
               </template>
               <div v-if="post.userId === userId">
-                <b-dropdown-item href="" variant="danger" v-b-modal.post-delete-modal>삭제</b-dropdown-item>
-                <b-modal id="post-delete-modal" @ok="deletePost">
+
+                <b-dropdown-item href="" variant="danger" @click="showModal">삭제</b-dropdown-item>
+                <!-- 삭제 modal 창 -->
+
+                <b-modal :ref="post.postId" @ok="deletePost">
+
                   <p><img alt="Vue logo" src="@/assets/udonge.png" style="width: 10%" />소중한 게시글을 정말 삭제하시겠습니까?</p>
                 </b-modal>
               </div>
@@ -137,7 +141,13 @@ export default {
   },
   methods: {
     toFeed: function () {
-      this.$router.push({name: 'MyFeed', params: { userId: this.post.userId, nickname: this.post.nickname}})
+      // 자신의 배지를 누르기 때문에 새로고침! 기록을 남기지 않기 위해 replace 사용
+      if (this.post.userId === this.userId) {
+        location.replace(`/story/${this.userId}`)
+      }
+      else {
+        this.$router.push({name: 'MyFeed', params: { userId: this.post.userId, nickname: this.post.nickname}})
+      }
     },
     getLikeInfo(){
       axios
@@ -220,7 +230,10 @@ export default {
           this.getComments();
           this.post.postCommentCount = this.post.postCommentCount*1 + 1;
         });
-    }
+    },
+    showModal () {
+      this.$refs[`${this.post.postId}`].show()
+    },
   },
 }
 </script>
