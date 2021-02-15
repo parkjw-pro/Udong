@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="pb-5">  
     <div v-if="login"><Navbar /></div>
-    <router-view></router-view>   
+    <router-view />
   </div>
 </template>
 
@@ -12,7 +12,7 @@ import 'vue-select/dist/vue-select.css';
 export default {
   name: 'App',
   components: {
-     Navbar,
+    Navbar,
   },
   data: function () {
     return {

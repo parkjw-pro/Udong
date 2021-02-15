@@ -36,13 +36,15 @@
         </b-row>
       </b-col>
       <b-col cols="4" align-self="center">
-        <p style="cursor: pointer;" @click="toReview"><img alt="Vue logo" src="@/assets/udonge.png" style="width: 10%;">우동 리뷰 보러가기!</p>
+        <img alt="Vue logo" src="@/assets/app/home_review.png" style="width: 100%; cursor: pointer;" @click="toReview">
+        <p style="cursor: pointer;" @click="toReview"><img alt="Vue logo" src="@/assets/udonge.png" style="width: 8%;">우동 리뷰 보러가기!</p>
       </b-col>
     </b-row>
     <!-- 2. 우리 동네 소식 -->
     <b-row id="paper" class="color_red">
       <b-col cols="3" offset="2" align-self="center">
-        <p style="cursor: pointer;" @click="toNews"><img alt="Vue logo" src="@/assets/udonge.png" style="width: 10%;">우동 소식 보러가기!</p>
+        <img class="mb-3" alt="Vue logo" src="@/assets/app/home_news.png" style="width: 80%; cursor: pointer;" @click="toNews">
+        <p style="cursor: pointer;" @click="toNews">서비스 준비중입니다</p>
       </b-col>
       <b-col cols="4" offset="2" align-self="center">
         <b-row class="mb-3">
@@ -64,13 +66,15 @@
         </b-row>
       </b-col>
       <b-col cols="4" align-self="center">
-        <p style="cursor: pointer;" @click="toStory"><img alt="Vue logo" src="@/assets/udonge.png" style="width: 10%;">우동 이야기 보러가기!</p>
+        <img alt="Vue logo" src="@/assets/app/home_story.png" style="width: 80%; cursor: pointer;" @click="toStory">
+        <p style="cursor: pointer;" @click="toStory"><img alt="Vue logo" src="@/assets/udonge.png" style="width: 6%;">우동 이야기 보러가기!</p>
       </b-col>
     </b-row>
     <!-- 4. 내 피드 -->
     <b-row id="paper" class="color_green">
       <b-col cols="3" offset="2" align-self="center">
-        <p style="cursor: pointer;" @click="toMyFeed"><img alt="Vue logo" src="@/assets/udonge.png" style="width: 10%;">내 피드 가기!</p>
+        <img class="mb-2" alt="Vue logo" src="@/assets/app/home_myfeed.png" style="width: 100%; cursor: pointer;" @click="toMyFeed">
+        <p style="cursor: pointer;" @click="toMyFeed"><img alt="Vue logo" src="@/assets/udonge.png" style="width: 8%;">내 피드 가기!</p>
       </b-col>
       <b-col cols="4" offset="2" align-self="center">
         <b-row class="mb-3">
@@ -114,6 +118,8 @@
 
 export default {
   name: 'Home',
+  props: {
+  },
   data: function () {
     return {
       reviewList: [],

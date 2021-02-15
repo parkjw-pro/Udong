@@ -52,7 +52,7 @@ npm i vue-glide-js
 
 - :ballot_box_with_check: 페이지로 구성되면 `src/views` 폴더 안에, 컴포넌트로 활용되면 `src/components` 폴더 안에 배치하는 것을 원칙으로 한다.
 
-### Nameing Rule
+### Naming Rule
 
 - 파일 명은 `PascalCase`를 따른다.
 - 변수 및 함수명은 `snake_case`를 따른다.
@@ -85,3 +85,4 @@ npm install
   ```
 
 - :ballot_box_with_check: 환경변수를 입력할 때는, 띄워쓰기를 하지 않도록 주의한다!
+

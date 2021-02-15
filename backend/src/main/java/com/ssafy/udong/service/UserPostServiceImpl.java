@@ -207,7 +207,7 @@ public class UserPostServiceImpl implements UserPostService {
 	public CommentResultDto selectUserPostComment(String postId, int limit, int offset) {
 		CommentResultDto commentResultDto = new CommentResultDto();
 		try {
-			int count = userPostDao.userPostCommentTotalCount();
+			int count = userPostDao.userPostCommentTotalCount(postId);
 			List<CommentDto> list = userPostDao.selectUserPostComment(postId, limit, offset);
 
 			commentResultDto.setList(list);
@@ -252,13 +252,13 @@ public class UserPostServiceImpl implements UserPostService {
 	}
 
 	@Override
-	public int selectClubPostCommentLike(String userId, String postId, String commentId) {
+	public int selectUserPostCommentLike(String userId, String postId, String commentId) {
 		try {
 			LikeDto likeDto = new LikeDto();
 			likeDto.setUserId(userId);
 			likeDto.setPostId(postId);
 			likeDto.setCommentId(commentId);
-			if (userPostDao.selectUserPostLike(likeDto) != null)
+			if (userPostDao.selectUserPostCommentLike(likeDto) != null)
 				return 1;
 		} catch (Exception e) {
 			e.printStackTrace();

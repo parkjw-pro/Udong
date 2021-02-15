@@ -23,7 +23,7 @@
               <div v-if="post.userId === userId">
                 <b-dropdown-item href="" variant="danger" v-b-modal.post-delete-modal>삭제</b-dropdown-item>
                 <b-modal id="post-delete-modal" @ok="deletePost">
-                  <p><img alt="Vue logo" src="@/assets/udonge.png" style="width: 10%" />소중한 리뷰를 정말 삭제하시겠습니까?</p>
+                  <p><img alt="Vue logo" src="@/assets/udonge.png" style="width: 10%" />소중한 이야기를 정말 삭제하시겠습니까?</p>
                 </b-modal>
               </div>
               <div v-else>
@@ -36,7 +36,7 @@
 
         <!-- 2. 중앙 부분 -->
         <!--2.1 이미지-->
-        <b-row class="postImage" align-h="center">
+        <b-row v-if="fileId.length > 0" class="postImage" align-h="center">
           <b-carousel
             id="carousel-1"
             v-model="slide"
@@ -53,52 +53,61 @@
               id="post_img"
               v-for="(item, index) in fileId"
               :key="index"   
-              :img-src="url+`/post/download/` + item" 
+              :img-src="url+`/clubpost/download/` + item" 
             ></b-carousel-slide>
           </b-carousel>
+
         </b-row>
+        <b-row v-else class="my-5 ">
+        </b-row>
+
         <!--2.2 내용-->
         <b-row class="mt-3" align-h="center">
           <div class="my-3 mx-3" style="text-align: left;">
-            <h6 @click="detail(post)">{{post.postContent}}</h6>
+            <h6>{{post.postContent}}</h6>
           </div>
         </b-row>
 
         <b-row class="h2 mb-2 ml-2" align-h="start">
           <!-- 좋아요 -->
           <div class="postLike mr-3">
-            <b-icon v-if="liked" font-scale="1" icon="suit-heart-fill" variant="danger" @click="likePost()"></b-icon>
+            <b-icon v-if="liked" font-scale="1" icon="suit-heart-fill" variant="danger" @click="likePost()" ></b-icon>
             <b-icon v-else font-scale="1" icon="suit-heart" variant="danger" @click="likePost()"></b-icon>
           </div>
           
-          <!-- 댓글 -->
+          <!-- 댓글 버튼 -->
           <div class="postComment" @click="getArticleComments">
-            <b-icon v-if="comments.length > 0" font-scale="1" icon="chat-fill" variant="warning"></b-icon>
+            <b-icon v-if="comments.length > 0" font-scale="1" icon="chat-fill" variant="warning" ></b-icon>
             <b-icon v-else font-scale="1" icon="chat" variant="warning"></b-icon>
           </div>
         </b-row>
 
         <b-row class="ml-2 mb-3">
-          <div v-if="post.postLikeCount">{{post.postLikeCount}}명이 좋아합니다</div>
+          <div v-if="post.postLikeCount >= 0">{{post.postLikeCount}}명이 좋아합니다</div>
         </b-row>
 
-        <!-- 댓글 -->
-       
-        <div style="width: 80%; display: inline-block">
-          <div v-for="(comm, i) in comments" :key="i">
-            <Comment :comment="comm" />
+        <!-- 댓글 목록 -->
+        
+        <!-- <div v-if="cmtCount === -1">
+          <div>아직 작성된 댓글이 없습니다.</div>
+        </div> -->
+        <div>
+          <div style="width: 80%; display: inline-block">
+            <div v-for="(comm, i) in comments" :key="i">
+              <Comment :comment="comm" type="clubpost" />
+            </div>
           </div>
-        </div>
-            
-        <b-row class="mt-3" v-if="comments.length > 0 && comments.length < commentCount">
-            <b-col>
-              <span style="cursor: pointer;" @click="getMoreComments">
-                <!-- <b-button pill variant="light" @click="getMoreComments">+</b-button> -->
-                <img alt="Vue logo" src="@/assets/udonge.png" style="width: 5%;">더보기
-              </span>
-            </b-col>
-        </b-row>
+              
+          <b-row class="mt-3" v-if="comments.length > 0 && comments.length < commentCount">
+              <b-col>
+                <span style="cursor: pointer;" @click="getMoreComments">
+                  <!-- <b-button pill variant="light" @click="getMoreComments">+</b-button> -->
+                  <img alt="Vue logo" src="@/assets/udonge.png" style="width: 5%;">더보기
+                </span>
+              </b-col>
+          </b-row>
 
+        </div>
         <br>
         <!--댓글 입력창-->
         <div class="container">
@@ -143,26 +152,26 @@ export default {
       offset: 0,
       fileId: Object,
       url : SERVER_URL,
-
-
       userId: '', // 현재 사용자의 아이디
+   
     }
   },
   computed: {
     ...mapGetters(["getUserId"]),
-    ...mapGetters(["getUserName"])
+    ...mapGetters(["getUserName"]),
+    cmtCount: function () {
+      return this.commentCount
+    },
   },
   created() {
-      console.log("포스트 :" +this.post.postId)
     axios.get(`${SERVER_URL}/clubpost/postId/${this.post.postId}`)
     .then((res)=>{
-      console.log(res)
-      console.log(res.data.fileId)
+    
       this.fileId= res.data.fileId
-      
     })
 
     this.getLikeInfo();
+    this.fileCheck();
   },
   async mounted() {
     await this.getLikeInfo();
@@ -170,6 +179,7 @@ export default {
     this.userId = userInfo["userId"]
   },
   methods: {
+    
     deletePost() {
       axios
         .delete(`${SERVER_URL}/clubpost`, {
@@ -179,11 +189,8 @@ export default {
           console.log(response);
         });
     },
-    detail(post) {
-      this.$router.push({ name: "ArticleDetail", params: { post: post, group: this.group} });
-    },
     getArticleComments(){
-      if(this.comments.length > 0) return;
+      // if(this.comments.length > 0) return;
       axios
         .get(`${SERVER_URL}/clubpost/comment`, {
           params: {
@@ -196,6 +203,11 @@ export default {
           (response) => {
             this.comments = response.data.list;
             this.commentCount = response.data.count;
+            // comment가 없으면 -1 값 넣어주기
+            console.log(response.data.count)
+            if (response.data.count === 0) {
+              this.commentCount = -1
+            }
             console.log(this.commentCount);
           });
     },
@@ -287,9 +299,18 @@ export default {
         });
     },
 
+
   },
 }
 </script>
 
 <style>
+#post_img {
+  top: 0;
+  left: 0;
+  min-width: 30em;
+  min-height: 15em;
+  max-width: 30em;
+  max-height: 15em;
+}
 </style>

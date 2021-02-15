@@ -183,7 +183,7 @@ const routes = [
 
   //스토리
   {
-    path: '/story/:address/article',
+    path: '/story/:address/article/:groupId/:groupcheck', // 뉴스피드에서 게시물작성과 그룹에서 게시물작성시 구분(groupcheck)
     name: 'ArticleCreate',
     component: ArticleCreate,
   },
@@ -219,7 +219,7 @@ const routes = [
     component: GroupPage,
   },
   {
-    path: '/story/:address/group/:groupId/profile',
+    path: '/story/:address/group/:groupId/profile/:groupcheck', // 그룹조회시  비가입자인지 가입자인지 그룹장인지.
     name: 'GroupProfile',
     component: GroupProfile,
   },

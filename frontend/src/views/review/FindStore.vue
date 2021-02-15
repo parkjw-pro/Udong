@@ -5,27 +5,16 @@
       <h4 class="mb-3" style="font-family: 'Hanna', sans-serif;">우리 동네 장소를 검색해보세요!</h4>
       <input
         type="text"
+        pill
         class="active-cyan-2 active-purple-2 mt-0 mb-3"
         placeholder="상점명을 입력하세요!"
         v-model="storeParamDto.searchWord"
-        @keypress.enter="search"
+        @keypress.enter="searchWord"
         autofocus
         style="text-align: center; width: 40%;"
       />
-      <!-- 
-      <div class="mt-5">
-        <div v-if="stores">
-          <ul :v-for="(store, idx) in stores">
-            <li @click="createArticle(store)">{{ store }}</li>
-            <hr>
-          </ul>
-        </div>
-        <div v-else>
-          <img alt="Vue logo" src="@/assets/udonge.png" style="width: 10%">
-          <br>
-          <h5 class="mt-3">검색 결과가 없어요 ㅠㅠ</h5>
-        </div>
-      </div> -->
+      <b-button class="ml-3" size="sm" style="background-color: #695549;" @click="searchWord">검색</b-button>
+     
 
       <div v-if="getSearchStoreList.length > 0" style="overflow: auto; height: 650px;">
         <table
@@ -76,6 +65,7 @@ import axios from 'axios';
 // import { mdbInput, mdbContainer } from 'mdbvue';
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 const MAP_API_KEY = process.env.VUE_APP_MAP_API_KEY;
+
 export default {
   name: 'FindStore',
   components: {
@@ -107,7 +97,7 @@ export default {
 
   },
 
-  async mounted() {},
+  // async mounted() {},
   created() {
     this.storeParamDto.dongcode = this.$route.params.address;
     if (this.storeParamDto.searchWord === '') {
@@ -118,6 +108,9 @@ export default {
     this.search();
   },
   methods: {
+    searchWord: function () {
+      location.replace(`/store/find/${this.storeParamDto.dongcode}/${this.storeParamDto.searchWord}`)
+    },
     initMap() {
       var container = document.getElementById('map');
       var options = {
@@ -149,8 +142,6 @@ export default {
       };
       var rou = this.$router;
       var toDetail = function(store) {
-        console.log('toDetail');
-        console.log(store);
         // 리뷰 작성 페이지로 넘어가준다!!
         rou.push({ name: 'ReviewDetail', params: { storeId: store.storeId } });
       };
@@ -172,8 +163,6 @@ export default {
 
         (function(marker, title) {
           kakao.maps.event.addListener(marker, 'click', function() {
-            console.log('markerClick');
-            console.log(list[index]);
             toDetail(list[index]);
           });
           kakao.maps.event.addListener(marker, 'mouseover', function() {
@@ -183,8 +172,6 @@ export default {
             infowindow.close();
           });
           itemEl.onclick = function() {
-            console.log('tableClick');
-            console.log(list[index]);
             toDetail(list[index]);
           };
           itemEl.onmouseover = function() {
@@ -211,7 +198,6 @@ export default {
       document.head.appendChild(script);
     },
     search() {
-      console.log(this.storeParamDto);
       axios
         .post(`${SERVER_URL}/store/stores`, this.storeParamDto)
         .then((response) => {
@@ -223,7 +209,7 @@ export default {
           }
         })
         .catch(() => {
-          console.log('fail');
+          // console.log('fail');
         });
     },
     getListItem(index, places) {
@@ -265,6 +251,7 @@ export default {
 .fixedHeader {
 	position: sticky;
 	top: 0;
-  background-color: rgb(231, 206, 173);
+  background-color: #695549;
+  color: white;
 }
 </style>

@@ -17,8 +17,8 @@
           <template #button-content>
             <b-icon icon="three-dots-vertical"></b-icon>
           </template>
-          <b-dropdown-item href="#" variant="danger" v-if="comment.userId == getUserId" @click="deleteComment">삭제</b-dropdown-item>
-          <b-dropdown-item href="#" variant="danger" v-else @click="reportComment">신고</b-dropdown-item>
+          <b-dropdown-item href="#" variant="danger" v-if="comment.userId != getUserId" @click="reportComment">신고</b-dropdown-item>
+          <!-- <b-dropdown-item href="#" variant="danger" v-else @click="deleteComment">삭제</b-dropdown-item> -->
         </b-dropdown>
       </b-col>
     </b-row>
@@ -34,7 +34,8 @@ const SERVER_URL = process.env.VUE_APP_SERVER_URL
 export default {
   name: 'Comment',
   props: {
-    comment: Object
+    comment: Object,
+    type: String
   },
   watch: {
     comment(){
@@ -57,8 +58,12 @@ export default {
   },
   methods: {
     getLikeInfo() {
+      console.log(this.getUserId);
+      console.log(this.comment['postId']);
+      console.log(this.comment['clubId']);
+      console.log(this.comment['commentId']);
       axios
-        .get(`${SERVER_URL}/clubpost/comment/like`, {
+        .get(`${SERVER_URL}/${this.type}/comment/like`, {
           params: {
             userId: this.getUserId,
             postId: this.comment['postId'],
@@ -68,13 +73,14 @@ export default {
         })
         .then(
           (response) => (
+            console.log(response),
             this.liked = response.data
           )
         );
     },
     likeComment() {
       axios
-        .post(`${SERVER_URL}/clubpost/comment/like`, {
+        .post(`${SERVER_URL}/${this.type}/comment/like`, {
           postId: this.comment['postId'],
           userId: this.getUserId,
           clubId: this.comment['clubId'],
@@ -90,7 +96,7 @@ export default {
         });
     },
     deleteComment() {
-      
+      //backend 함수가 없음
     },
     reportComment() {
       //모달창에서 content, category 입력
@@ -98,7 +104,7 @@ export default {
       var category = "";
       //axios 요청
       axios
-        .post(`${SERVER_URL}/clubpost/comment/report`, {
+        .post(`${SERVER_URL}/${this.type}/comment/report`, {
           userId: this.getUserId,
           postId: this.comment['postId'],
           clubId: this.comment['clubId'],

@@ -51,7 +51,7 @@ public interface UserPostService {
 	public CommentResultDto selectUserPostComment(String postId, int limit, int offset);
 	
 	// 댓글 좋아요 조회
-	public int selectClubPostCommentLike(String userId, String postId, String commentId);
+	public int selectUserPostCommentLike(String userId, String postId, String commentId);
 
 	// 댓글 좋아요
 	public int createUserPostCommentLike(LikeDto likeDto);

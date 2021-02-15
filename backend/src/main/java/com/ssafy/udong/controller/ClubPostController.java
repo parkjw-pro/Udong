@@ -61,6 +61,7 @@ public class ClubPostController {
 	private ResponseEntity<String> createClubPost(ClubPostDto clubPostDto,
 			@RequestParam(value = "file", required = false) MultipartFile[] files) {
 		System.out.println("그룹게시판");
+		System.out.println(clubPostDto.getClubId());
 		int result = service.createClubPost(clubPostDto, files);
 
 		if (result == SUCCESS) {
@@ -352,7 +353,10 @@ public class ClubPostController {
 	}
 	
 	@GetMapping("/download/{fileId}")
-	public ResponseEntity<Resource> download(@PathVariable String fileId) throws IOException {
+	public ResponseEntity<Resource> download(@PathVariable String fileId) throws Exception {
+		if(fileId.equals("0")) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 		System.out.println("다운로드" +fileId);
 		List<String> url = clubService.selectFileUrl(fileId);
 		System.out.println("가져온 url:" +url.get(0));

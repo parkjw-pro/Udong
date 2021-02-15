@@ -9,7 +9,7 @@
       <!-- 1.2 Navbar dropdowns -->
       <b-navbar-brand href="#">
         <b-navbar-nav>
-          <b-nav-item-dropdown :text="user.dongName" class="px-0 mt-1 d-inline">
+          <b-nav-item-dropdown :text="user.dongName" variant="dark" class="px-0 mt-1 d-inline">
             <b-dropdown-item href="#" disabled>{{ user.dongName }}</b-dropdown-item>
             <!-- <b-dropdown-item href="#">신림동</b-dropdown-item> -->
             <b-dropdown-item href="#" @click="toFindLocation">다른 동네 구경하기</b-dropdown-item>

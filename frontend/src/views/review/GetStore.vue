@@ -1,18 +1,17 @@
 <template>
   <div id="box">
     <h4 class="mb-3" style="font-family: 'Hanna', sans-serif;">우리 동네 장소를 검색해보세요!</h4>
-    <b-row>
-      <b-col offset="3">
-        <b-form-input
+        <input
+          type="text"
+          pill
           class="active-cyan-2 active-purple-2 mt-0 mb-3"
           placeholder="상점의 종류 혹은 상점명을 입력하세요"
           v-model="storeParamDto.searchWord"
           @keypress.enter="search"
           style="text-align: center; width: 65%;"
           autofocus
-        ></b-form-input>
-      </b-col>
-    </b-row>
+        >
+        <b-button class="ml-3" size="sm" style="background-color: #695549;" @click="search">검색</b-button>
     <table class="table table-hover" striped hover style="background-color: #695549;">
       <thead style="color: white;" class="small">
         <tr>
@@ -82,18 +81,13 @@ export default {
   
   methods: {
     search: function() {
-      console.log('search');
-      console.log(this.storeParamDto.searchWord);
-      console.log(this.storeParamDto.dongcode);
-      // 상점 조회 axios 요청 보내기!!!!
-      // var params = new URLSearchParams();
-      // params.append("searchWord", this.storeParamDto.searchWord);
-      // params.append("dongcode", this.storeParamDto.dongcode);
+      // console.log('search');
+      // console.log(this.storeParamDto.dongcode);
 
       axios
       .post(`${SERVER_URL}/store/stores`, this.storeParamDto)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         this.getSearchStoreList = response.data;
       });
     },
