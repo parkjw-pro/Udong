@@ -109,12 +109,10 @@ import axios from 'axios'
 import StarRating from 'vue-star-rating'
 
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
+const MAP_API_KEY = process.env.VUE_APP_MAP_API_KEY
 
 export default {
   name: 'ReviewCreate',
-  // props: {
-  //   store: Object,
-  // },
   components: {
     StarRating,
   },
@@ -150,8 +148,10 @@ export default {
       axios
       .get(`${SERVER_URL}/store/` + `${this.storeId}`)
       .then((res) => {
-        // console.log(res)
+        // 1. store 정보 가져오기
         this.store = res.data;
+        // 2. 이후 지도 표시하기
+        window.kakao && window.kakao.maps ? this.initMap() : this.addScript();
       })
       .catch((err) => {
         console.log(err);
@@ -231,70 +231,69 @@ export default {
 
 
     // 맵 정보 가져오기
-    // initMap() {
-    //   var container = document.getElementById('map');
-    //   var options = {
-    //     center: new kakao.maps.LatLng(37.501303210343146, 127.03961032748188),
-    //     level: 5,
-    //   };
-    //   var map = new kakao.maps.Map(container, options);
+    addScript() {
+      const script = document.createElement('script'); /* global kakao */
+      script.onload = () => kakao.maps.load(this.initMap);
+      script.src = `http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${MAP_API_KEY}&libraries=services`;
+      document.head.appendChild(script);
+    },
+    initMap() {
+      var container = document.getElementById('map');
+      var options = {
+        center: new kakao.maps.LatLng(this.store.locLat, this.store.locLng),
+        level: 5,
+      };
+      var map = new kakao.maps.Map(container, options);
 
-    //   var imageSrc = require('@/assets/marker3.png'), // 마커이미지의 주소입니다
-    //     imageSize = new kakao.maps.Size(24, 35), // 마커이미지의 크기입니다
-    //     imageOption = { offset: new kakao.maps.Point(20, 35) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
-    //   var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
-    //   // var list = [];
-    //   var bounds = new kakao.maps.LatLngBounds();
-    //   var infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
+      var imageSrc = require('@/assets/marker3.png'), // 마커이미지의 주소입니다
+        imageSize = new kakao.maps.Size(24, 35), // 마커이미지의 크기입니다
+        imageOption = { offset: new kakao.maps.Point(20, 35) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+      var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+      // var list = [];
+      var bounds = new kakao.maps.LatLngBounds();
+      var infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
 
-    //   var listEl = document.getElementById('placesList');
-    //   var fragment = document.createDocumentFragment();
-    //   var displayInfowindow = function(marker, title) {
-    //     var content = '<div style="padding:5px;z-index:1;">' + title + '</div>';
+      var fragment = document.createDocumentFragment();
+      var displayInfowindow = function(marker, title) {
+        var content = '<div style="padding:5px; text-align: center;">' + title + '</div>';
 
-    //     infowindow.setContent(content);
-    //     infowindow.open(map, marker);
-    //   };
-    //   var removeAllChildNods = function(el) {
-    //     while (el.hasChildNodes()) {
-    //       el.removeChild(el.lastChild);
-    //     }
-    //   };
-    //   removeAllChildNods(listEl);
-    //   var coords = new kakao.maps.LatLng(
-    //       this.store.locLat,
-    //       this.store.locLng
-    //     );
-    //     var marker = new kakao.maps.Marker({
-    //       map: map, // 마커를 표시할 지도
-    //       position: coords, // 마커를 표시할 위치locLng
-    //       // title: this.getSearchStoreList[index].storeName, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-    //       image: markerImage, // 마커 이미지
-    //     });
+        infowindow.setContent(content);
+        infowindow.open(map, marker);
+      };
 
-    //     (function(marker, title) {
-    //       kakao.maps.event.addListener(marker, 'mouseover', function() {
-    //         displayInfowindow(marker, title);
-    //       });
-    //       kakao.maps.event.addListener(marker, 'mouseout', function() {
-    //         infowindow.close();
-    //       });
-    //       itemEl.onmouseover = function() {
-    //         displayInfowindow(marker, title);
-    //       };
-    //       itemEl.onmouseout = function() {
-    //         infowindow.close();
-    //       };
-    //     })(marker, this.getSearchStoreList[index].storeName);
+      var coords = new kakao.maps.LatLng(
+          this.store.locLat,
+          this.store.locLng
+        );
+      var marker = new kakao.maps.Marker({
+        map: map, // 마커를 표시할 지도
+        position: coords, // 마커를 표시할 위치locLng
+        // title: this.getSearchStoreList[index].storeName, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+        image: markerImage, // 마커 이미지
+      });
 
-    //     fragment.appendChild(itemEl);
+      (function(marker, title) {
+        kakao.maps.event.addListener(marker, 'mouseover', function() {
+          displayInfowindow(marker, title);
+        });
+        kakao.maps.event.addListener(marker, 'mouseout', function() {
+          infowindow.close();
+        });
+        this.store.onmouseover = function() {
+          displayInfowindow(marker, title);
+        };
+        this.store.onmouseout = function() {
+          infowindow.close();
+        };
+      })(marker, this.store.storeName);
 
-    //     //infowindow.open(map, marker); // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-    //     bounds.extend(coords);
-    //   }
-    //   // displayPagination(pagination);
+      fragment.appendChild(this.store);
+
+      //infowindow.open(map, marker); // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+      bounds.extend(coords);
+    }
   },
-  async mounted () {
+  async created () {
     this.storeId = this.$route.params.storeId
     await this.getStore()
     this.review.userId = JSON.parse(localStorage.getItem('Login-token'))['user-id'];

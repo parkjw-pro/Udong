@@ -81,18 +81,13 @@ export default {
   
   methods: {
     search: function() {
-      console.log('search');
-      console.log(this.storeParamDto.searchWord);
-      console.log(this.storeParamDto.dongcode);
-      // 상점 조회 axios 요청 보내기!!!!
-      // var params = new URLSearchParams();
-      // params.append("searchWord", this.storeParamDto.searchWord);
-      // params.append("dongcode", this.storeParamDto.dongcode);
+      // console.log('search');
+      // console.log(this.storeParamDto.dongcode);
 
       axios
       .post(`${SERVER_URL}/store/stores`, this.storeParamDto)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         this.getSearchStoreList = response.data;
       });
     },

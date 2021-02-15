@@ -95,12 +95,14 @@ export default {
     },
 
   },
-  async created() {
+
+  // async mounted() {},
+  created() {
     this.storeParamDto.dongcode = this.$route.params.address;
     if (this.storeParamDto.searchWord === '') {
       this.storeParamDto.searchWord = this.$route.params.keyword;
     }
-    await this.search()
+    this.search();
   },
   methods: {
     searchWord: function () {

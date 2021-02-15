@@ -2,172 +2,170 @@
   <div id="box">
     <div id="border" class="my-5 py-5">
     <!-- 1. 제목 -->
-    <div id="title" class="mb-5">
-      <span><img alt="Vue logo" src="@/assets/udonge.png" style="width: 10%"></span>
-      <span class="font-weight-bold " style="color: #695549;">비밀번호 찾기</span>
-    </div>
-    <!-- 2. 내용 -->
-    <b-form @submit.prevent="onSubmit">
-      <b-row id="accountBox" class="ml-5">
-        <b-col cols="10">
-          <ValidationProvider
-            name="아이디"
-            rules="required|min:5"
-            v-slot="{ errors }"
-          >
-            <b-form-group>
-              <label
-                style="float:left; padding-right:10px; padding-top:5px"
-                for="userId"
-                >아이디:
-              </label>
-              <b-form-input
-                type="text"
-                style="width:50%; float:left;"
-                v-model="credentials.userId"
-                placeholder="아이디 입력"
-                required
-                autofocus
-              ></b-form-input>
-              <br>
-              <br>
-              <small class="text-danger" style="margin-top:5px">{{
-                errors[0]
-              }}</small>
-            </b-form-group>
-          </ValidationProvider>
-        </b-col>
-      </b-row>
-      <b-row id="accountBox" class="ml-5">
-        <b-col cols="10">
-          <ValidationProvider
-            name="이메일"
-            rules="required|email"
-            v-slot="{ errors }"
-          >
-            <b-form-group>
-              <label
-                style="float:left; padding-right:10px; padding-top:5px"
-                for="email"
-                >이메일:
-              </label>
-              <b-form-input
-                type="email"
-                style="width:50%; float:left;"
-                v-model="credentials.email"
-                placeholder="이메일 입력"
-                required
-                @keypress.enter="onSubmit()"
-              ></b-form-input>
-              <b-button type="submit" size="sm" style="background-color: #695549;">인증번호받기</b-button>
-              <br>
-              <br>
-              <small class="text-danger" style="float:left; margin-top:5px">{{
-                errors[0]
-              }}</small>
-            </b-form-group>
-          </ValidationProvider>
-        </b-col>
-      </b-row>
-    </b-form>
-    <b-form v-if="this.possible_post" @submit.prevent="onSubmit2">
-      <b-row id="accountBox" class="ml-5">
-        <b-col cols="10">
-          <ValidationProvider
-            name="인증코드"
-            rules="required"
-            v-slot="{ errors }"
-          >
-            <b-form-group>
-              <label
-                style="float:left; padding-right:10px; padding-top:5px"
-                for="인증코드"
-                >인증코드:
-              </label>
-              <b-form-input
-                type="text"
-                style="width:50%; float:left;"
-                v-model="emailcode"
-                placeholder="인증번호"
-                required
-              ></b-form-input>
-              <b-button style="background-color: #695549;" size="sm" type="submit" class="btn btn-secondary">인증완료</b-button>
-              <small class="text-danger" style="float:left; margin-top:5px">{{
-                errors[0]
-              }}</small>
-            </b-form-group>
-          </ValidationProvider>
-        </b-col>
-      </b-row>
-    </b-form>
-    <b-row v-if="this.possible_post && !this.possible_id">
-       <small class="text-danger" style="float:left; margin-top:5px"
-        >아이디 및 이메일을 확인해주세요</small>
-    </b-row>
-
-
-    <div v-if="this.makepassword">
-      <b-form @submit.prevent="onSubmit3">
-        <div class="container" style="padding:10px">
-          <ValidationProvider
-            name="비밀번호"
-            rules="required|min:6"
-            v-slot="{ errors }"
-          >
-            <b-form-group>
-              <label
-                style="float:left; padding-right:10px; padding-top:5px"
-                for="password"
-                >비밀번호:
-              </label>
-              <b-form-input
-                type="password"
-                style="width:50%; float:left;"
-                v-model="credentials2.password"
-                placeholder="비밀번호 입력"
-                required
-              ></b-form-input>
-              <small class="text-danger" style="float:left; margin-top:5px">{{
-                errors[0]
-              }}</small>
-            </b-form-group>
-          </ValidationProvider>
-        </div>
-
-        <div class="container" style="padding:10px">
-          <ValidationProvider
-            name="비밀번호 확인"
-            rules="required|confirmed:비밀번호"
-            v-slot="{ errors }"
-          >
-            <b-form-group>
-              <label
-                style="float:left; padding-right:10px; padding-top:5px"
-                for="password_confirmation"
-                >비밀번호 확인:
-              </label>
-              <b-form-input
-                type="password"
-                style="width:50%; float:left;"
-                v-model="credentials2.password_confirmation"
-                placeholder="비밀번호 확인"
-                required
-              ></b-form-input>
-              <small class="text-danger" style="float:left; margin-top:5px">{{
-                errors[0]
-              }}</small>
-            </b-form-group>
-          </ValidationProvider>
-        </div>
-        <b-button style="background-color: #695549;" type="submit" class="btn btn-secondary"
-          >비밀번호 설정 완료</b-button
-        >
+      <div id="title" class="mb-5">
+        <span><img alt="Vue logo" src="@/assets/udonge.png" style="width: 10%"></span>
+        <span class="font-weight-bold " style="color: #695549;">비밀번호 찾기</span>
+      </div>
+      <!-- 2. 내용 -->
+      <b-form @submit.prevent="onSubmit">
+        <b-row id="accountBox" class="ml-5">
+          <b-col>
+            <ValidationProvider
+              name="아이디"
+              rules="required|min:5"
+              v-slot="{ errors }"
+            >
+              <b-form-group>
+                <label
+                  style="float:left; padding-right:10px; padding-top:5px"
+                  for="userId"
+                  >아이디:
+                </label>
+                <b-form-input
+                  type="text"
+                  style="width:41%; float:left;"
+                  v-model="credentials.userId"
+                  placeholder="아이디 입력"
+                  required
+                  autofocus
+                ></b-form-input>
+                <br>
+                <br>
+                <small class="text-danger" style="margin-top:5px; text-align: left;">{{
+                  errors[0]
+                }}</small>
+              </b-form-group>
+            </ValidationProvider>
+          </b-col>
+        </b-row>
+        <b-row id="accountBox" class="ml-5">
+          <b-col cols="10">
+            <ValidationProvider
+              name="이메일"
+              rules="required|email"
+              v-slot="{ errors }"
+            >
+              <b-form-group>
+                <label
+                  style="float:left; padding-right:10px; padding-top:5px"
+                  for="email"
+                  >이메일:
+                </label>
+                <b-form-input
+                  type="email"
+                  style="width:50%; float:left;"
+                  v-model="credentials.email"
+                  placeholder="이메일 입력"
+                  required
+                  @keypress.enter="onSubmit()"
+                ></b-form-input>
+                <b-button type="submit" size="sm" style="background-color: #695549;">인증번호받기</b-button>
+                <br>
+                <br>
+                <small class="text-danger" style="float:left; margin-top:5px">{{
+                  errors[0]
+                }}</small>
+              </b-form-group>
+            </ValidationProvider>
+          </b-col>
+        </b-row>
       </b-form>
+      <b-form v-if="this.possible_post" @submit.prevent="onSubmit2">
+        <b-row id="accountBox" class="ml-5">
+          <b-col cols="10">
+            <ValidationProvider
+              name="인증코드"
+              rules="required"
+              v-slot="{ errors }"
+            >
+              <b-form-group>
+                <label
+                  style="float:left; padding-right:10px; padding-top:5px"
+                  for="인증코드"
+                  >인증코드:
+                </label>
+                <b-form-input
+                  type="text"
+                  style="width:50%; float:left;"
+                  v-model="emailcode"
+                  placeholder="인증번호"
+                  required
+                ></b-form-input>
+                <b-button style="background-color: #695549;" size="sm" type="submit" class="btn btn-secondary">인증완료</b-button>
+                <small class="text-danger" style="float:left; margin-top:5px">{{
+                  errors[0]
+                }}</small>
+              </b-form-group>
+            </ValidationProvider>
+          </b-col>
+        </b-row>
+      </b-form>
+      <b-row v-if="this.possible_post && !this.possible_id">
+        <small class="text-danger" style="float:left; margin-top:5px"
+          >아이디 및 이메일을 확인해주세요</small>
+      </b-row>
+
+
+      <div v-if="this.makepassword">
+        <b-form @submit.prevent="onSubmit3">
+          <div class="container" style="padding:10px">
+            <ValidationProvider
+              name="비밀번호"
+              rules="required|min:6"
+              v-slot="{ errors }"
+            >
+              <b-form-group>
+                <label
+                  style="float:left; padding-right:10px; padding-top:5px"
+                  for="password"
+                  >비밀번호:
+                </label>
+                <b-form-input
+                  type="password"
+                  style="width:50%; float:left;"
+                  v-model="credentials2.password"
+                  placeholder="비밀번호 입력"
+                  required
+                ></b-form-input>
+                <small class="text-danger" style="float:left; margin-top:5px">{{
+                  errors[0]
+                }}</small>
+              </b-form-group>
+            </ValidationProvider>
+          </div>
+
+          <div class="container" style="padding:10px">
+            <ValidationProvider
+              name="비밀번호 확인"
+              rules="required|confirmed:비밀번호"
+              v-slot="{ errors }"
+            >
+              <b-form-group>
+                <label
+                  style="float:left; padding-right:10px; padding-top:5px"
+                  for="password_confirmation"
+                  >비밀번호 확인:
+                </label>
+                <b-form-input
+                  type="password"
+                  style="width:50%; float:left;"
+                  v-model="credentials2.password_confirmation"
+                  placeholder="비밀번호 확인"
+                  required
+                ></b-form-input>
+                <small class="text-danger" style="float:left; margin-top:5px">{{
+                  errors[0]
+                }}</small>
+              </b-form-group>
+            </ValidationProvider>
+          </div>
+          <b-button style="background-color: #695549;" type="submit" class="btn btn-secondary"
+            >비밀번호 설정 완료</b-button
+          >
+        </b-form>
+      </div>
     </div>
-    </div>
-    <br>
-    <br>
-    <b-button id="btn_signup" class="mx-3" @click="$router.push({ name: 'Login' })">로그인</b-button>
+    <b-button id="btn_signup" class="mx-3" @click="$router.push({ name: 'Login' })">로그인 페이지</b-button>
   </div>
 </template>
 

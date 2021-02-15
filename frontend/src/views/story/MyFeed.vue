@@ -13,7 +13,7 @@
           <b-col>
             <h2 v-if="$route.params.userId === user.userId" style="font-family: 'Nanum Pen Script', cursive; display: inline;">{{ this.user.nickname }} </h2>
             <h2 v-else style="font-family: 'Nanum Pen Script', cursive; display: inline;">{{ $route.params.nickname }} </h2>
-            <b-icon v-if="$route.params.userId === user.userId" icon="gear" font-scale="1.5" style="cursor: pointer;" type="bold" @click="toAccountDetail"></b-icon>
+            <b-icon v-if="$route.params.userId === user.userId" icon="gear-fill" font-scale="1.5" style="cursor: pointer;" type="bold" @click="toAccountDetail"></b-icon>
           </b-col>
         </b-row>
         <b-row align-h="center">
@@ -99,18 +99,18 @@ export default {
     
   },
   methods: {
-      getUserPosts(){
-      axios
-        .get(`${SERVER_URL}/userpost/user`, {
-          params: {
-            userId: this.user.userId,
-            limit: this.limit,
-            offset: this.offset
-          }
-      })
-        .then((response) => {
-          this.posts = response.data.list;
-        });
+    getUserPosts(){
+    axios
+      .get(`${SERVER_URL}/userpost/user`, {
+        params: {
+          userId: this.user.userId,
+          limit: this.limit,
+          offset: this.offset
+        }
+    })
+      .then((response) => {
+        this.posts = response.data.list;
+      });
     },
     toAccountDetail: function () {
       this.$router.push({name: 'AccountDetail'})
