@@ -24,7 +24,6 @@ export default {
   name: "CategoryCard",
   props: {
     category: String,
-    
   },
   data: function() {
     return {
@@ -36,15 +35,10 @@ export default {
         dongcode: userInfo["user_address"],
       },
       // props한 이미지 가져오기
+
       category_img: {
-        // backgroundImage: `url(${SERVER_URL}/club/download/${this.category.fileId})`,
-       // backgroundImage: "url(https://picsum.photos/250/250/?image=17)",
-       // backgroundImage:`url${require('@/assets/category/라면김밥분식.png')}`
-       // url("../image/hero_image.jpg");
-        //backgroundImage: 'url(@/assets/category/라면김밥분식.png)',
-      //  backgroundImage: "url('@/assets/category/라면김밥분식.png')",
-        //("../../media/examples/lizard.png");
-        backgroundImage: 'url("@/assets/category/라면김밥분식.png")',
+        // backgroundImage: 'url(\'' + require('@/assets/category/라면김밥분식.png') + '\')',
+        backgroundImage: 'url(\'' + require(`@/assets/category/${this.category}.png`) + '\')',
       },
     };
   },
@@ -52,15 +46,12 @@ export default {
     toReviewList: function () {
       this.storeParamDto.searchWord = this.category;
       console.log(this.storeParamDto);
-      this.$router.push({ name: 'ReviewList', params: {address: this.storeParamDto.dongcode ,keyword : this.storeParamDto.searchWord}})
-
-    
+      this.$router.push({ name: 'ReviewList', params: {category: this.category, address: this.storeParamDto.dongcode, keyword : this.storeParamDto.searchWord}})
       // ReviewList로 이동하기
       // this.$router.push({name: 'GroupPage', params: {address:  JSON.parse(localStorage.getItem('Login-token'))['user_address'], categorys : this.category }})
     }
   },
   mounted() {
-   // console.log(this.category);
     
   },
 };
