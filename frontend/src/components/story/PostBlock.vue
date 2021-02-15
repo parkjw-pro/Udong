@@ -75,7 +75,7 @@
             <b-icon v-else font-scale="1" icon="suit-heart" variant="danger" @click="likePost()"></b-icon>
           </div>
           
-          <!-- 댓글 -->
+          <!-- 댓글 버튼 -->
           <div class="postComment" @click="getArticleComments">
             <b-icon v-if="comments.length > 0" font-scale="1" icon="chat-fill" variant="warning" ></b-icon>
             <b-icon v-else font-scale="1" icon="chat" variant="warning"></b-icon>
@@ -86,23 +86,28 @@
           <div v-if="post.postLikeCount >= 0">{{post.postLikeCount}}명이 좋아합니다</div>
         </b-row>
 
-        <!-- 댓글 -->
-       
-        <div style="width: 80%; display: inline-block">
-          <div v-for="(comm, i) in comments" :key="i">
-            <Comment :comment="comm" type="clubpost" />
+        <!-- 댓글 목록 -->
+        
+        <!-- <div v-if="cmtCount === -1">
+          <div>아직 작성된 댓글이 없습니다.</div>
+        </div> -->
+        <div>
+          <div style="width: 80%; display: inline-block">
+            <div v-for="(comm, i) in comments" :key="i">
+              <Comment :comment="comm" type="clubpost" />
+            </div>
           </div>
-        </div>
-            
-        <b-row class="mt-3" v-if="comments.length > 0 && comments.length < commentCount">
-            <b-col>
-              <span style="cursor: pointer;" @click="getMoreComments">
-                <!-- <b-button pill variant="light" @click="getMoreComments">+</b-button> -->
-                <img alt="Vue logo" src="@/assets/udonge.png" style="width: 5%;">더보기
-              </span>
-            </b-col>
-        </b-row>
+              
+          <b-row class="mt-3" v-if="comments.length > 0 && comments.length < commentCount">
+              <b-col>
+                <span style="cursor: pointer;" @click="getMoreComments">
+                  <!-- <b-button pill variant="light" @click="getMoreComments">+</b-button> -->
+                  <img alt="Vue logo" src="@/assets/udonge.png" style="width: 5%;">더보기
+                </span>
+              </b-col>
+          </b-row>
 
+        </div>
         <br>
         <!--댓글 입력창-->
         <div class="container">
@@ -153,7 +158,10 @@ export default {
   },
   computed: {
     ...mapGetters(["getUserId"]),
-    ...mapGetters(["getUserName"])
+    ...mapGetters(["getUserName"]),
+    cmtCount: function () {
+      return this.commentCount
+    },
   },
   created() {
     axios.get(`${SERVER_URL}/clubpost/postId/${this.post.postId}`)
@@ -196,6 +204,11 @@ export default {
           (response) => {
             this.comments = response.data.list;
             this.commentCount = response.data.count;
+            // comment가 없으면 -1 값 넣어주기
+            console.log(response.data.count)
+            if (response.data.count === 0) {
+              this.commentCount = -1
+            }
             console.log(this.commentCount);
           });
     },
