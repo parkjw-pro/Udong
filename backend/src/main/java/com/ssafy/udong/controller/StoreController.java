@@ -90,6 +90,22 @@ public class StoreController {
 		return new ResponseEntity<List<StoreDto>>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
+	@ApiOperation(value = "베스트 상점 조회(검색어)", notes = "지역코드를 이용하여 최고의 상점을 조회합니다.")
+	@GetMapping(value = "/beststore/{dongcode}")
+	private ResponseEntity<List<String>> selectBestCtg(@PathVariable String dongcode) {
+		System.out.println("selectBestCtg");
+		List<String> list = service.selectBestCtg(dongcode);
+		
+		try {
+			if (list != null)
+				return new ResponseEntity<List<String>>(list, HttpStatus.OK);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ResponseEntity<List<String>>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
 	@ApiOperation(value = "상점조회", notes = "한 상점에 대한 모든 정보를 조회합니다.\n" +
 			"## 필수값\n" + " - storeId : 정보를 조회할 상점 아이디\n")
 	@GetMapping(value = "/{storeId}")
@@ -121,5 +137,41 @@ public class StoreController {
 //		}
 //		return new ResponseEntity<StoreDto>(HttpStatus.INTERNAL_SERVER_ERROR);
 //	}
+	
+	@ApiOperation(value = "카테고리 상점 조회(검색어)", notes = "카테고리 이용하여 최고의 상점을 조회합니다.")
+	@PostMapping(value = "/bestctgstore")
+	private ResponseEntity<List<StoreDto>> selectBestCtgStore(@RequestBody StoreParamDto storeParamDto) {
+
+		List<StoreDto> list = service.selectBestCtgStore(storeParamDto);
+		//System.out.println(list.get(0).getStoreName());
+		
+		try {
+			if (list != null)
+				return new ResponseEntity<List<StoreDto>>(list, HttpStatus.OK);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ResponseEntity<List<StoreDto>>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
+	@ApiOperation(value = "최다리뷰 상점 조회(검색어)", notes = " 최고의 상점을 조회합니다.")
+	@PostMapping(value = "/beststore")
+	private ResponseEntity<List<StoreDto>> selectBestStore(@RequestBody StoreParamDto storeParamDto) {
+
+		List<StoreDto> list = service.selectBestStore(storeParamDto);
+		//System.out.println(list.get(0).getStoreName());
+		
+		try {
+			if (list != null)
+				return new ResponseEntity<List<StoreDto>>(list, HttpStatus.OK);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ResponseEntity<List<StoreDto>>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
+	
 	
 }

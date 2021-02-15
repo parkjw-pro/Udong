@@ -31,25 +31,25 @@
     <!-- 2. 추천 카테고리 -->
     <!-- for문으로 출력한다!!! -->
       <div>
-        <b-row align-h="center">
+        <b-row align-h="center" >
           <b-card-group deck style="width: 80%;">
-            <CategoryCard/>
-            <CategoryCard/>
-            <CategoryCard/>
+            <CategoryCard :category="bestCtgList[0]"/>
+            <CategoryCard :category="bestCtgList[1]"/>
+            <CategoryCard :category="bestCtgList[2]"/>
           </b-card-group>
         </b-row>
         <b-row align-h="center">
           <b-card-group deck style="width: 80%;">
-            <CategoryCard/>
-            <CategoryCard/>
-            <CategoryCard/>
+            <CategoryCard :category="bestCtgList[3]"/>
+            <CategoryCard :category="bestCtgList[4]"/>
+            <CategoryCard :category="bestCtgList[5]"/>
           </b-card-group>
         </b-row>
         <b-row align-h="center">
           <b-card-group deck style="width: 80%;">
-            <CategoryCard/>
-            <CategoryCard/>
-            <CategoryCard/>
+            <CategoryCard :category="bestCtgList[6]"/>
+            <CategoryCard :category="bestCtgList[7]"/>
+            <CategoryCard category="가장 인기 많은 상점"/>
           </b-card-group>
         </b-row>
    
@@ -60,8 +60,9 @@
 
 <script>
 import CategoryCard from '@/components/review/CategoryCard'
-
 const userInfo = JSON.parse(localStorage.getItem('Login-token'))
+import axios from 'axios';
+const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
 export default {
   name: 'ReviewHome',
@@ -79,7 +80,20 @@ export default {
         backgroundImage: "url(https://picsum.photos/250/250/?image=9)",
       },
       },
+      bestStoreList : {},
+      bestCtgList : [],
     };
+  },
+  async mounted() {
+    // this.fileId = [];
+    // this.thumbnailContent = [],
+    // this.temp = "",
+    await this.search();
+    
+
+    // console.log(this.store);
+    // this.store = this.key;
+    // console.log(this.store)
   },
   methods: {
     FindStore: function () {
@@ -91,6 +105,24 @@ export default {
     },
       CreateReview: function () {
       this.$router.push({ name: 'GetStore', params: {address : this.storeParamDto.dongcode}})
+    },
+    search: function() {
+      console.log(this.storeParamDto.dongcode);
+      axios
+        .get(`${SERVER_URL}/store/beststore/` + `${this.storeParamDto.dongcode}`)
+        .then((response) => {
+          // console.log(response.data);
+          console.log("success");
+          this.bestCtgList = response.data;
+          console.log("res",this.bestCtgList);
+          console.log( this.bestCtgList[0]);
+          // if(this.getSearchStoreList!=null){
+          //   window.kakao && window.kakao.maps ? this.initMap() : this.addScript();
+          // }
+        })
+        .catch(() => {
+          console.log('fail');
+        });
     },
     
   }

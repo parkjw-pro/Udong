@@ -50,7 +50,7 @@
     <!-- 2. 오른쪽 지도 -->
     <b-col class="mt-5 pt-3 mr-3 ml-0 pl-0">
       <div class="map_wrap2" style="width: 80%;">
-        <div id="map" style="width:100%; height:100%; position:relative; overflow:hidden;"></div>
+        <div id="map" v-if="getSearchStoreList.length" style="width:100%; height:100%; position:relative; overflow:hidden;"></div>
         <div class="hAddr">
           <!-- <span class="title">지금 계신 위치가 이곳이 맞나요?</span> -->
           <span></span>
@@ -91,6 +91,7 @@ export default {
   },
   computed: {
     storeList: function() {
+      console.log("storeList");
       return this.getSearchStoreList;
     },
 
@@ -102,6 +103,8 @@ export default {
     if (this.storeParamDto.searchWord === '') {
       this.storeParamDto.searchWord = this.$route.params.keyword;
     }
+    console.log("11")
+    
     this.search();
   },
   methods: {
@@ -143,6 +146,7 @@ export default {
         rou.push({ name: 'ReviewDetail', params: { storeId: store.storeId } });
       };
       removeAllChildNods(listEl);
+      var list = this.getSearchStoreList;
       for (let index = 0; index < this.getSearchStoreList.length; index++) {
         var coords = new kakao.maps.LatLng(
           this.getSearchStoreList[index].locLat,
@@ -155,7 +159,7 @@ export default {
           image: markerImage, // 마커 이미지
         });
         var itemEl = this.getListItem(index, this.getSearchStoreList[index]);
-        var list = this.getSearchStoreList;
+        
 
         (function(marker, title) {
           kakao.maps.event.addListener(marker, 'click', function() {
@@ -199,7 +203,10 @@ export default {
         .then((response) => {
           // console.log(response.data);
           this.getSearchStoreList = response.data;
-          window.kakao && window.kakao.maps ? this.initMap() : this.addScript();
+          console.log("res",this.getSearchStoreList )
+          if(this.getSearchStoreList!=null){
+            window.kakao && window.kakao.maps ? this.initMap() : this.addScript();
+          }
         })
         .catch(() => {
           // console.log('fail');
