@@ -21,6 +21,7 @@
       <div class="mb-5">
         <h3>{{ storeParamDto.searchWord }}</h3>
         <!-- <b-icon id="map_btn" icon="map" font-scale="2" @click="LookMap()"></b-icon> -->
+        
       </div>
       <div v-for="(item, index) in getSearchStoreList" :key="index">
         <b-card bg-variant="white" text-variant="black" :title="item.storeName">
@@ -67,10 +68,14 @@ export default {
     };
   },
   created() {
-    this.storeParamDto.dongcode = this.$route.params.address;
-    this.storeParamDto.searchWord = this.$route.params.keyword;
+   // location.reload(true);
+   
+    this.storeParamDto.searchWord = this.$route.params.category;
+    const userInfo = JSON.parse(localStorage.getItem('Login-token'))
+    this.storeParamDto.dongcode = userInfo["user_address"]
 
     console.log(this.storeParamDto.searchWord);
+    console.log(this.storeParamDto.dongcode);
 
     if (this.storeParamDto.searchWord != '가장 인기 많은 상점') {
       this.searchBestStore();
@@ -119,6 +124,7 @@ export default {
     },
     LookMap: function() {
       //기존 태그 사이즈 조정
+      //history.go(0);
       console.log("makeMap");
      // el.removeChild(el.lastChild);
       if(this.flag==false){

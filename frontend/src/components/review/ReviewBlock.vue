@@ -37,6 +37,7 @@
         <b-row align-h="center">
           <b-carousel
             id="carousel-1"
+            v-if="fileId.length > 0"
             v-model="slide"
             controls
             indicators

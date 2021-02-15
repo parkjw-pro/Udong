@@ -229,7 +229,6 @@ export default {
       var bounds = new kakao.maps.LatLngBounds();
       var infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
 
-      var fragment = document.createDocumentFragment();
       var displayInfowindow = function(marker, title) {
         var content = '<div style="padding:5px; text-align: center;">' + title + '</div>';
 
@@ -246,7 +245,9 @@ export default {
         position: coords, // 마커를 표시할 위치locLng
         // title: this.getSearchStoreList[index].storeName, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
         image: markerImage, // 마커 이미지
+        
       });
+      var store = this.store;
 
       (function(marker, title) {
         kakao.maps.event.addListener(marker, 'mouseover', function() {
@@ -255,15 +256,14 @@ export default {
         kakao.maps.event.addListener(marker, 'mouseout', function() {
           infowindow.close();
         });
-        this.store.onmouseover = function() {
+        store.onmouseover = function() {
           displayInfowindow(marker, title);
         };
-        this.store.onmouseout = function() {
+        store.onmouseout = function() {
           infowindow.close();
         };
-      })(marker, this.store.storeName);
+      })(marker, store.storeName);
 
-      fragment.appendChild(this.store);
 
       //infowindow.open(map, marker); // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
       bounds.extend(coords);
