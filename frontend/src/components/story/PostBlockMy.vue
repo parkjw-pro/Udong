@@ -22,7 +22,7 @@
               <div v-if="post.userId === userId">
                 <b-dropdown-item href="" variant="danger" v-b-modal.post-delete-modal>삭제</b-dropdown-item>
                 <b-modal id="post-delete-modal" @ok="deletePost">
-                  <p><img alt="Vue logo" src="@/assets/udonge.png" style="width: 10%" />소중한 리뷰를 정말 삭제하시겠습니까?</p>
+                  <p><img alt="Vue logo" src="@/assets/udonge.png" style="width: 10%" />소중한 게시글을 정말 삭제하시겠습니까?</p>
                 </b-modal>
               </div>
               <div v-else>
@@ -94,7 +94,8 @@
 //import ImageSlick from '@/components/story/ImageSlick'
 import Comment from '@/components/story/Comment'
 import axios from 'axios';
-const SERVER_URL = "http://localhost:8000";
+
+const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
 export default {
   name: 'PostBlockMy',
@@ -151,7 +152,7 @@ export default {
     deletePost() {
       axios
         .delete(`${SERVER_URL}/userpost`, {
-          postId: this.post['postId']
+          params:{ postId: this.post['postId'] }
         })
         .then((response) => {
           console.log(response);

@@ -168,7 +168,6 @@ export default {
     .then((res)=>{
     
       this.fileId= res.data.fileId
-      
     })
 
     this.getLikeInfo();
