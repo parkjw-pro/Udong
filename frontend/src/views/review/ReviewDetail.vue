@@ -1,8 +1,9 @@
 <template>
   <b-row class="my-2 pt-3 mx-5">
-    <b-col class="mr-0 pr-0">
+    <b-col class="mr-0 pr-0 mt-2">
 
-      <!-- 1. 이미지 -->
+      <!-- 1. Carousel -->
+      <!-- 이미지가 있을 경우에만 표시 -->
       <b-row v-if="fileId.length > 0" align-h="center">
         <b-carousel
           id="carousel-1"

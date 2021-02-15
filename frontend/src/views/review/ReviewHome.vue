@@ -85,15 +85,7 @@ export default {
     };
   },
   async mounted() {
-    // this.fileId = [];
-    // this.thumbnailContent = [],
-    // this.temp = "",
     await this.search();
-    
-
-    // console.log(this.store);
-    // this.store = this.key;
-    // console.log(this.store)
   },
   methods: {
     FindStore: function () {
@@ -112,9 +104,8 @@ export default {
         .get(`${SERVER_URL}/store/beststore/` + `${this.storeParamDto.dongcode}`)
         .then((response) => {
           // console.log(response.data);
-          console.log("success");
           this.bestCtgList = response.data;
-          console.log("res",this.bestCtgList);
+          // console.log("res",this.bestCtgList);
           // if(this.getSearchStoreList!=null){
           //   window.kakao && window.kakao.maps ? this.initMap() : this.addScript();
           // }

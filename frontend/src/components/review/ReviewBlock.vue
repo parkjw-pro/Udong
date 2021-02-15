@@ -12,7 +12,7 @@
           <b-card-text>
             <b-row align-h="justify">
               <!-- <span class="mr-5">뱃지 img</span> -->
-              <b-col><div class="mt-2" style="text-align: left"><span class="font-weight-bold" style="font-size: large;">{{review.nickname}}</span>님의 리뷰</div></b-col>
+              <b-col><div class="mt-2" style="text-align: left"><span class="font-weight-bold" style="font-size: large;">{{review.nickname}}</span>님의 리뷰 {{rate}}</div></b-col>
               <b-col style="text-align: right;">
                 <b-dropdown size="lg" dropup variant="link" toggle-class="text-decoration-none" no-caret>
                 <template #button-content>
@@ -55,7 +55,7 @@
           </b-carousel>
         </b-row>
         <b-row>
-          <div class="my-3 mx-3" style="text-align: left;">
+          <div class="my-3 mx-5" style="text-align: left;">
             <h6>{{review.reviewContent}}</h6>
           </div>
         </b-row>
