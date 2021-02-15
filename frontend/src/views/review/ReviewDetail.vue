@@ -45,10 +45,12 @@
       </div>
 
       <!-- 여기서 for문 -->
-      <div v-for="(item, index) in bestReviewlist" :key="index">
-        <ReviewBlock :review="item" />
+      <div v-if="reviews.length > 0">
+        <div v-for="(item, index) in bestReviewlist" :key="index">
+          <ReviewBlock :review="item" />
+        </div>
       </div>
-      <div v-if="!reviews.length">
+      <div v-else>
         <div id="box">
           <img class="my-5" alt="Vue logo" src="@/assets/udonge.png" style="width: 25%" />
           <h5>아직 작성된 리뷰가 없어요...</h5>
