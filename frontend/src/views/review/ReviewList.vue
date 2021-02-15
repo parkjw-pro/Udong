@@ -50,6 +50,7 @@
 import axios from 'axios';
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 const MAP_API_KEY = process.env.VUE_APP_MAP_API_KEY;
+
 export default {
   name: 'ReviewList',
   data: function() {

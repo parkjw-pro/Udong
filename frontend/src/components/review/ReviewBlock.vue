@@ -34,7 +34,7 @@
         </template>
 
         <!-- 2. 본문 부분 -->
-        <b-row align-h="center">
+        <b-row v-if="fileId.length > 0" align-h="center">
           <b-carousel
             id="carousel-1"
             v-if="fileId.length > 0"
@@ -69,10 +69,10 @@
         <!-- 3. footer 부분 -->
           <template #footer>
             <div style="text-align: left;">
-            <div class="reviewLike"> <!--좋아요 여부와 좋아요 수-->
-            <b-icon icon="suit-heart-fill" variant="danger" v-if="liked" @click="likeReview()"></b-icon>
-            <b-icon icon="suit-heart" variant="danger" v-else @click="likeReview()"></b-icon>
-            </div>
+            <span class="reviewLike mt-5"> <!--좋아요 여부와 좋아요 수-->
+              <b-icon icon="suit-heart-fill" variant="danger" v-if="liked" @click="likeReview()"></b-icon>
+              <b-icon icon="suit-heart" variant="danger" v-else @click="likeReview()"></b-icon>
+            </span>
               <small class="ml-2">{{review.reviewLikeCount}}명이 좋아합니다.</small>
             </div>
           </template>

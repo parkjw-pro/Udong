@@ -47,7 +47,6 @@ export default {
   methods: {
     toReviewList: function () {
       this.storeParamDto.searchWord = this.category;
-      console.log(this.storeParamDto);
       this.$router.push({ name: 'ReviewList', params: {category: this.category, address: this.storeParamDto.dongcode, keyword : this.storeParamDto.searchWord}})
       // ReviewList로 이동하기
       // this.$router.push({name: 'GroupPage', params: {address:  JSON.parse(localStorage.getItem('Login-token'))['user_address'], categorys : this.category }})
