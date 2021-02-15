@@ -30,7 +30,7 @@
     <hr class="mb-5">
     <!-- 2. 추천 카테고리 -->
     <!-- for문으로 출력한다!!! -->
-      <div>
+      <div v-if="bestCtgList.length > 0">
         <b-row align-h="center" >
           <b-card-group deck style="width: 80%;">
             <CategoryCard :category="bestCtgList[0]"/>
@@ -115,7 +115,6 @@ export default {
           console.log("success");
           this.bestCtgList = response.data;
           console.log("res",this.bestCtgList);
-          console.log( this.bestCtgList[0]);
           // if(this.getSearchStoreList!=null){
           //   window.kakao && window.kakao.maps ? this.initMap() : this.addScript();
           // }

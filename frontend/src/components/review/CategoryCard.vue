@@ -30,11 +30,14 @@ export default {
     return {
       urls: "",
       result: "",
+      flag : false,
       bestCtgStore : {},
       storeParamDto:{
         searchWord: '',
         dongcode: userInfo["user_address"],
       },
+      temp : this.category,
+      
       // props한 이미지 가져오기
       category_img: {
         // backgroundImage: `url(${SERVER_URL}/club/download/${this.category.fileId})`,
@@ -44,7 +47,10 @@ export default {
         //backgroundImage: 'url(@/assets/category/라면김밥분식.png)',
       //  backgroundImage: "url('@/assets/category/라면김밥분식.png')",
         //("../../media/examples/lizard.png");
-        backgroundImage: 'url("@/assets/category/라면김밥분식.png")',
+       // backgroundImage: "url('@/assets/category/라면김밥분식.png')",
+      // backgroundImage:  'url("@/assets/category/라면김밥분식.png")',
+      
+       backgroundImage: 'url(\'' + require(`@/assets/category/${this.category.replace(/\//g,"")}.png`) + '\')',
       },
     };
   },
@@ -57,7 +63,8 @@ export default {
     
       // ReviewList로 이동하기
       // this.$router.push({name: 'GroupPage', params: {address:  JSON.parse(localStorage.getItem('Login-token'))['user_address'], categorys : this.category }})
-    }
+    },
+    
   },
   mounted() {
    // console.log(this.category);
