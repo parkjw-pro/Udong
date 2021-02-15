@@ -61,6 +61,7 @@ public class ClubPostController {
 	private ResponseEntity<String> createClubPost(ClubPostDto clubPostDto,
 			@RequestParam(value = "file", required = false) MultipartFile[] files) {
 		System.out.println("그룹게시판");
+		System.out.println(clubPostDto.getClubId());
 		int result = service.createClubPost(clubPostDto, files);
 
 		if (result == SUCCESS) {

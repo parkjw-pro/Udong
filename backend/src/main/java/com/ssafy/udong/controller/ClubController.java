@@ -129,6 +129,7 @@ public class ClubController {
 			"## 필수값\n" + " - clubId : 그룹 id\n")
 	@GetMapping("/{clubId}")
 	public ResponseEntity<ClubResultDto> selectClub(@PathVariable String clubId){
+		
 		try {
 			ClubResultDto clubdto = clubService.selectClub(clubId);
 			return new ResponseEntity<ClubResultDto>(clubdto, HttpStatus.OK);
@@ -183,10 +184,10 @@ public class ClubController {
 
 	@ApiOperation(value = "그룹 삭제", notes = "그룹을 삭제합니다.\n" + "## 필수값\n" + " - clubId : 그룹 아이디\n")
 	@DeleteMapping
-	public ResponseEntity<String> deleteClub(@RequestBody ClubDto club){
+	public ResponseEntity<String> deleteClub(@RequestParam("clubId") String clubId){
 		try {
 			//삭제 전에 member들에게 다 알려야 함
-			if(clubService.deleteClub(club.getClubId()) == SUCCESS)
+			if(clubService.deleteClub(clubId) == SUCCESS)
 				return new ResponseEntity<String>("SUCCESS: club deletion", HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();

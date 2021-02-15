@@ -7,13 +7,14 @@
 <script>
 export default {
   name: "Button",
+
   methods: {
     toCreate: function () {
-      this.$router.push({ name: 'ArticleCreate'})
+      this.$router.push({ name: 'ArticleCreate' ,params:{address:  JSON.parse(localStorage.getItem('Login-token'))['user_address'] ,groupId : 0, groupcheck : 0}})
     },
   }
 }
-</script>
+</script> 
 
 <style>
   .add_btn {

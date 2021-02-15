@@ -58,6 +58,7 @@ export default {
       limit: 5,  //한 페이지에 노출될 게시글의 수
       offset: 0,  //게시글 번호 오프셋
       user_address: "",
+      groupcheck : "0",
     }
   },
   methods :{
@@ -81,6 +82,7 @@ export default {
       axios.get(`${SERVER_URL}/club/${this.$route.params.groupId}`)
         .then((res) => {
           this.group = res.data.dto
+      
         })
         .catch((err) => {
           console.log(err)
@@ -88,11 +90,20 @@ export default {
     },
     //게시물작성 버튼
     toArticleCreate: function () {
-      this.$router.push({ name: 'ArticleCreate', params: {address: this.user_address, group: this.group} })
+      this.groupcheck = "1"; // 그룹에서 게시물 작성한다는뜻 
+      this.$router.push({ name: 'ArticleCreate', params: {address: this.user_address, groupId: this.group.clubId ,groupcheck: this.groupcheck} })
     },
     //프로필 작성 버튼
+
+
      toGroupProfile: function () {
-      this.$router.push({ name: 'GroupProfile', params: {address: this.user_address, groupId: this.group.clubId} })
+       //그룹장이랑 로그인한 아이뒤랑 같으면.
+      if(this.group.userId == JSON.parse(localStorage.getItem('Login-token'))['user-id']){
+      this.$router.push({ name: 'GroupProfile', params: {address: this.user_address, groupId: this.group.clubId , groupcheck : 2} })
+       } // 디르면
+      else{
+       this.$router.push({ name: 'GroupProfile', params: {address: this.user_address, groupId: this.group.clubId , groupcheck : 1} })
+      }
     },
   },
   created() {
