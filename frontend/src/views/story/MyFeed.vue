@@ -102,19 +102,6 @@ export default {
     
   },
   methods: {
-    getUserPosts(){
-    axios
-      .get(`${SERVER_URL}/userpost/user`, {
-        params: {
-          userId: this.user.userId,
-          limit: this.limit,
-          offset: this.offset
-        }
-    })
-      .then((response) => {
-        this.posts = response.data.list;
-      });
-    },
     toAccountDetail: function () {
       this.$router.push({name: 'AccountDetail'})
     },

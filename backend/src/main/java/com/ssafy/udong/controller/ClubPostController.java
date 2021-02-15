@@ -89,8 +89,8 @@ public class ClubPostController {
 
 	@ApiOperation(value = "검색어를 포함하는 그룹 게시물 조회", notes = "그룹 게시물로 작성한 모든 글 중 검색어를 포함하는 글을 조회합니다.\n" + "## 필수값\n"
 			+ " - searchWord : 검색어\n" + " - limit : 한 페이지에 노출될 게시글 수\n" + " - offset : 오프셋\n")
-	@GetMapping(value = "/{searchWord}")
-	private ResponseEntity<ClubPostResultDto> selectClubPostBySearchWord(@PathVariable String searchWord,
+	@GetMapping(value = "/word")
+	private ResponseEntity<ClubPostResultDto> selectClubPostBySearchWord(@RequestParam(value="searchWord") String searchWord,
 			@RequestParam(value = "limit") int limit, @RequestParam(value = "offset") int offset) {
 
 		ClubPostResultDto clubPostResultDto;
@@ -123,8 +123,8 @@ public class ClubPostController {
 
 	@ApiOperation(value = "그룹 별 검색어를 포함하는 게시물 조회", notes = "그룹 내에 작성된 모든 중 검색어를 포함하는 글을 조회합니다.\n" + "## 필수값\n"
 			+ " - clubId : 그룹 아이디\n" + " - searchWord : 검색어\n" + " - limit : 한 페이지에 노출될 게시글 수\n" + " - offset : 오프셋\n")
-	@GetMapping(value = "/club/{searchWord}")
-	private ResponseEntity<ClubPostResultDto> selectClubPostByClubIdAndSearchWord(@PathVariable String searchWord,
+	@GetMapping(value = "/club/word")
+	private ResponseEntity<ClubPostResultDto> selectClubPostByClubIdAndSearchWord(@RequestParam(value="searchWord") String searchWord,
 			@RequestParam(value = "clubId") String clubId, @RequestParam(value = "limit") int limit,
 			@RequestParam(value = "offset") int offset) {
 
@@ -159,8 +159,8 @@ public class ClubPostController {
 	@ApiOperation(value = "유저 별 검색어를 포함하는그룹 게시물 조회", notes = "한 명의 유저가 그룹 게시물로 작성한 글 중 검색어를 포함하는 글을 조회합니다.\n"
 			+ "## 필수값\n" + " - userId : 유저 아이디\n" + " - searchWord : 검색어\n" + " - limit : 한 페이지에 노출될 게시글 수\n"
 			+ " - offset : 오프셋\n")
-	@GetMapping(value = "/user/{searchWord}")
-	private ResponseEntity<ClubPostResultDto> selectClubPostByUserId(@PathVariable String searchWord,
+	@GetMapping(value = "/user/word")
+	private ResponseEntity<ClubPostResultDto> selectClubPostByUserId(@RequestParam(value="searchWord") String searchWord,
 			@RequestParam(value = "userId") String userId, @RequestParam(value = "limit") int limit,
 			@RequestParam(value = "offset") int offset) {
 

@@ -4,14 +4,18 @@
     <div id="box" class="mx-5">
       <!-- 검색창 -->
       <b-row align-h="center">
-        <b-nav-form>
-          <b-form-input
+        <b-nav>
+          <div>
+          <b-input
             class="mr-sm-2 ml-auto" 
             placeholder="우리동네 이야기 찾기" 
+            v-model="searchWord"
             style="text-align: center;"
-          ></b-form-input>
-          <b-button style="background-color: #695549;" class="my-2 my-sm-0" type="submit">Search</b-button>
-        </b-nav-form>
+            @keypress.enter="search"
+          ></b-input>
+          <b-button style="background-color: #695549;" class="my-2 my-sm-0" @click="search">Search</b-button>
+          </div>
+        </b-nav>
       </b-row>
 
       <!-- 그룹 고르는 공간 -->
@@ -19,11 +23,11 @@
       <b-row class="">
         <b-col v-if="groups.length > 0" md="7">
           <vue-glide
-            :type="carousel"
-            :perView="5"
+            type="carousel"
+            :perView="perView"
             :gap="0"
           >
-            <vue-glide-slide v-for="(group, i) in groups" :key="i"><b-button  variant="info" @click="selectGroup(i)">{{group['clubName']}}</b-button></vue-glide-slide>
+            <vue-glide-slide v-for="(group, i) in groupNames" :key="i"><b-button  variant="info" @click="selectGroup(i)">{{group}}</b-button></vue-glide-slide>
             <template slot="control">
               <b-button variant="transparent" size="sm" data-glide-dir="<">◀</b-button>
               <b-button variant="transparent" size="sm" data-glide-dir=">">▶</b-button>
@@ -42,8 +46,11 @@
       </b-row>
 
       <div v-if="posts.length > 0">
-        <div class="mb-5" v-for="(post, i) in posts" :key="i">
-          <PostBlock :post="post" />
+        <div v-if="selected == 0">
+          <PostBlockMy :post="post" v-for="(post , idx) in posts" :key ="idx" />
+        </div>
+        <div v-else>
+          <PostBlock :post="post" class="mb-5" v-for="(post, i) in posts" :key="i" />
         </div>
       </div>
       <div v-else>
@@ -61,6 +68,7 @@
 import Button from '@/components/story/Button'
 import EndBlock from '@/components/story/EndBlock'
 import PostBlock from '@/components/story/PostBlock'
+import PostBlockMy from '@/components/story/PostBlockMy'
 
 import { Glide, GlideSlide } from 'vue-glide-js'
 
@@ -81,15 +89,19 @@ export default {
     Button,
     EndBlock,
     PostBlock,
+    PostBlockMy,
   },
   data: function () {
     return {
-      groups: [], // 가입한 그룹 
+      perView: 5,
+      groups: [], // 가입한 그룹
+      groupNames: [],
       selected: 0,  //선택된 그룹
       postCount: 0,
       posts:[],
       limit: 5,  //한 페이지에 노출될 게시글의 수
       offset: 0,  //게시글 번호 오프셋
+      searchWord: "",
     }
   },
   created() {
@@ -97,14 +109,50 @@ export default {
     axios
       .get(`${SERVER_URL}/club/user/${this.getUserId}/member`)
       .then(
-        (response) => (
-          this.groups = response.data,
-          this.getGroupPosts()
-        )
+        (response) => {
+          this.groups.push(response.data[0]);  //groupNames와 idx 맞춰주기 위해 [0]번째에 dummy data 넣어줌
+          this.groups.push(...response.data);
+          this.getGroupNames(response.data);
+          if(this.perView > this.groups.length) this.perView = this.groups.length;
+        }
       );
+    this.getPosts();
   },
   methods: {
-    getGroupPosts(){
+    getGroupNames(data){
+      this.groupNames.push('모두의 이야기');
+      for(var g of data){
+        this.groupNames.push(g.clubName);
+      }
+    },
+    selectGroup(idx){
+      this.searchWord = "";
+      this.selected = idx;
+      this.offset = 0;
+      this.posts = [];
+      this.getPosts();
+    },
+    getPosts(){
+      if(this.selected == 0) {  //userpost 전체 조회
+        this.getUserPosts();
+      } else { //groupPosts
+        this.getGroupPosts();
+      }
+    },
+    getUserPosts() {
+      axios
+        .get(`${SERVER_URL}/userpost`, {
+          params: {
+            limit: this.limit,
+            offset: this.offset
+          }
+        })
+        .then((response) => {
+            this.posts.push(...response.data.list);
+            this.postCount = response.data.count;
+        });
+    },
+    getGroupPosts() {
       axios
         .get(`${SERVER_URL}/clubpost/club`, {
           params: {
@@ -118,28 +166,57 @@ export default {
             this.postCount = response.data.count;
         });
     },
-    selectGroup(idx){
-      this.selected = idx;
-      this.offset = 0;
-      this.posts = [];
-      this.getGroupPosts();
-    },
     getMorePosts() {
       if(this.postCount <= this.posts.length){
         return;
       }
       this.offset += this.limit;
+      if(this.searchWord == ""){
+        this.getPosts();
+      } else {
+        if(this.selected == 0){
+          this.userPostSearch();
+        } else {
+          this.groupPostSearch();
+        }
+      }
+    },
+    search() {
+      this.offset = 0;  //오프셋 초기화
+      this.posts = [];  //post 리스트 초기화
+      if(this.selected == 0){
+        this.userPostSearch();
+      } else {
+        this.groupPostSearch();
+      }
+    },
+    userPostSearch(){
       axios
-        .get(`${SERVER_URL}/clubpost/club`, {
+        .get(`${SERVER_URL}/userpost/word`, {
           params: {
-            clubId: this.groups[this.selected]['clubId'],
+            searchWord: this.searchWord,
             limit: this.limit,
             offset: this.offset
           }
         })
-        .then(
-          (response) => {
-            this.posts.push(...response.data.list);
+        .then((response) => {
+          this.postCount = response.data.count;
+          this.posts.push(...response.data.list);
+        });
+    },
+    groupPostSearch(){
+      axios
+        .get(`${SERVER_URL}/clubpost/club/word`, {
+          params: {
+            clubId: this.groups[this.selected]['clubId'],
+            searchWord: this.searchWord,
+            limit: this.limit,
+            offset: this.offset
+          }
+        })
+        .then((response) => {
+          this.postCount = response.data.count;
+          this.posts.push(...response.data.list);
         });
     },
     toList: function () {

@@ -171,7 +171,7 @@ export default {
     })
 
     this.getLikeInfo();
-    this.fileCheck();
+    // this.fileCheck();
   },
   async mounted() {
     await this.getLikeInfo();
@@ -261,26 +261,27 @@ export default {
             }
         });
     },
-    // reportPost() {
-    //   var content = "";
-    //   var category = "";
+    reportPost() {
 
-    //   //모달창으로 신고 내역 보여주기
-    //   //content, category 입력 해야 함!
+      //모달창으로 신고 내역 보여주기
+      //content, category 입력 해야 함!
 
-    //   //axios 요청
-    //   axios
-    //     .post(`${SERVER_URL}/clubpost/report`, {
-    //       userId: this.getUserId,
-    //       postId: this.post['postId'],
-    //       clubId: this.post['clubId'],
-    //       content: content,
-    //       category: category
-    //     })
-    //     .then((response) => {
-    //       console.log(response);
-    //     });
-    // },
+      //axios 요청
+      
+      // var content = "";
+      // var category = "";
+      // axios
+      //   .post(`${SERVER_URL}/clubpost/report`, {
+      //     userId: this.getUserId,
+      //     postId: this.post['postId'],
+      //     clubId: this.post['clubId'],
+      //     content: content,
+      //     category: category
+      //   })
+      //   .then((response) => {
+      //     console.log(response);
+      //   });
+    },
     toFeed: function () {
       this.$router.push({name: 'MyFeed', params: { userId: this.post.userId, nickname: this.post.nickname}})
     },
