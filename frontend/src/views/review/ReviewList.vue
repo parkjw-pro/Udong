@@ -47,8 +47,10 @@
 
 <script>
 import axios from 'axios';
+
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 const MAP_API_KEY = process.env.VUE_APP_MAP_API_KEY;
+
 export default {
   name: 'ReviewList',
   data: function() {
@@ -69,6 +71,7 @@ export default {
   created() {
     this.storeParamDto.dongcode = this.$route.params.address;
     this.storeParamDto.searchWord = this.$route.params.keyword;
+    
 
     console.log(this.storeParamDto.searchWord);
 
