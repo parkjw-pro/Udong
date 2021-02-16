@@ -5,8 +5,10 @@
 
 	<select id="login" parameterType="com.ssafy.udong.dto.UserDto"
 		resultType="com.ssafy.udong.dto.UserDto">
-		select user_id as userId , password , nickname, email, created_at as createdAt, is_manager as isManager,
-		user_state as userState
+		select user_id as userId , password , nickname, email,
+		created_at as createdAt, is_manager as isManager,
+		user_state as
+		userState
 		from user
 		where user_id = #{userId} and password = #{password}
 	</select>
@@ -14,9 +16,10 @@
 	<update id="deleteUser"
 		parameterType="com.ssafy.udong.dto.UserDto">
 		UPDATE user set user_state = #{userState}
-		WHERE user_id = #{userId}
+		WHERE user_id =
+		#{userId}
 	</update>
-	
+
 	<insert id="insertUser"
 		parameterType="com.ssafy.udong.dto.UserDto">
 		INSERT INTO user (user_id, password, nickname, email)
@@ -33,63 +36,97 @@
 		parameterType="com.ssafy.udong.dto.UserDto"
 		resultType="com.ssafy.udong.dto.UserDto">
 		SELECT user_id as userId, nickname, password, email
-		FROM user
+		FROM
+		user
 		WHERE user_id = #{userId}
 		AND email = #{email}
 	</select>
-	
+
 	<update id="updatePassword"
 		parameterType="com.ssafy.udong.dto.UserDto">
 		UPDATE user set password = #{password}
-		WHERE user_id = #{userId}
+		WHERE user_id =
+		#{userId}
 	</update>
-	
+
 	<select id="selectUserAll"
 		resultType="com.ssafy.udong.dto.UserDto">
 		SELECT user_id as userId, nickname, password, email
-		FROM user
+		FROM
+		user
 	</select>
-	
-	<select id="selectDuplicateID"
-		parameterType="String" resultType="String">
-		SELECT  user_id as userId
+
+	<select id="selectDuplicateID" parameterType="String"
+		resultType="String">
+		SELECT user_id as userId
 		FROM user
 		WHERE user_id = #{userId}
 	</select>
-	
-	<select id="selectDuplicateNickname"
-		parameterType="String" resultType="String">
-		SELECT  nickname
+
+	<select id="selectDuplicateNickname" parameterType="String"
+		resultType="String">
+		SELECT nickname
 		FROM user
 		WHERE nickname = #{nickname}
 	</select>
-	
-	<select id="selectDuplicateEmail"
-		parameterType="String" resultType="String">
-		SELECT  email
+
+	<select id="selectDuplicateEmail" parameterType="String"
+		resultType="String">
+		SELECT email
 		FROM user
 		WHERE email = #{email}
 	</select>
-	
-		<update id="updateUserAddress"
+
+	<update id="updateUserAddress"
 		parameterType="com.ssafy.udong.dto.UserParamDto">
-		UPDATE user_address set user_address_code = #{addressCode}
+		UPDATE user_address set user_address_code =
+		#{addressCode}
 		WHERE user_id = #{userId}
 	</update>
-	
+
 	<insert id="createUserAddress"
 		parameterType="com.ssafy.udong.dto.UserParamDto">
 		insert INTO user_address (user_id, user_address_code)
 		VALUES (#{userId}, #{addressCode})
 	</insert>
-	
+
 	<select id="selectUserAddress"
-		parameterType="com.ssafy.udong.dto.UserParamDto" resultType="com.ssafy.udong.dto.UserParamDto">
-		SELECT  user_address_code as addressCode
+		parameterType="com.ssafy.udong.dto.UserParamDto"
+		resultType="com.ssafy.udong.dto.UserParamDto">
+		SELECT user_address_code as addressCode
 		FROM user_address
 		WHERE user_id = #{userId}
 	</select>
+
+	<insert id="insertBadge" parameterType="String">
+		INSERT INTO user_badge (user_id, badge_id, is_main)
+		VALUES (#{param1}, #{param2}, '1')
+	</insert>
+
+	<select id="selectBadge" parameterType="String"
+		resultType="com.ssafy.udong.dto.BadgeDto">
+		select u.badge_id, u.is_main, b.badge_name, b.content, b.badge_url from user_badge u, badge b
+		where u.user_id = #{userId}
+        and u.badge_id = b.badge_id
+        order by u.is_main desc
+	</select>
 	
+	<update id="updateBadge" parameterType="String">
+	UPDATE user_badge SET is_main = '1'
+	WHERE user_id = '${param1}'
+	and badge_id = ${param2};
+	
+	UPDATE user_badge SET is_main = '0' 
+	WHERE user_id = '${param1}'
+	and badge_id != ${param2}
+	</update>
+	
+	<delete id="deleteBadge" parameterType="String">
+		delete from user_badge
+		where user_id = #{param1}
+		and badge_id = #{param2}
+	</delete>
+
 	<insert id="createEmailCode"
 		parameterType="map">
 		insert into emailcode( user_id , email_code) values( #{param1},#{param2})

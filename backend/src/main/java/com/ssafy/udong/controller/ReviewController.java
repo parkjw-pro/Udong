@@ -130,9 +130,10 @@ public class ReviewController {
 	@ApiOperation(value = "리뷰 삭제", notes = "리뷰를 삭제합니다.\n" +
 			"## 필수값\n" + " - reviewId : 삭제할 리뷰 아이디\n")
 	@DeleteMapping
-	private ResponseEntity<String> deleteReview(ReviewDto reviewDto) {
+	private ResponseEntity<String> deleteReview(@RequestParam("reviewId") String reviewId) {
+		System.out.println(reviewId+"controller");
 		try {
-			if (service.deleteReview(reviewDto.getReviewId()) == SUCCESS) {
+			if (service.deleteReview(reviewId) == SUCCESS) {
 				return new ResponseEntity<String>("SUCCESS: review deleted", HttpStatus.OK);
 			} else {
 				return new ResponseEntity<String>("FAILURE: review deleted", HttpStatus.INTERNAL_SERVER_ERROR);

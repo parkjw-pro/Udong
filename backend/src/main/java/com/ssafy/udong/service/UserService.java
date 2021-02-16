@@ -3,6 +3,7 @@ package com.ssafy.udong.service;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.ssafy.udong.dto.BadgeDto;
 import com.ssafy.udong.dto.UserDto;
 import com.ssafy.udong.dto.UserParamDto;
 
@@ -37,4 +38,16 @@ public interface UserService {
 //	public int gmailCheck(String checkCode) throws Exception;
 	
 	public int createUserAddress(UserParamDto dto);
+
+
+	public int insertBadge(String userId, String badgeId);
+
+
+	public int deleteBadge(String userId, String badgeId);
+
+
+	public int updateBadge(String userId, String badgeId);
+
+
+	public List<BadgeDto> selectBadge(String userId);
 }
