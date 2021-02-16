@@ -32,6 +32,8 @@
         <div v-for="(post , idx) in posts" :key ="idx" >
           <PostBlockMy :post="post" />
         </div>
+        <br>
+        <br>
         <EndBlock v-on:more="getMorePosts" />
         <span v-if="this.postCount > this.posts.length">더보기</span>
       </b-tab>
