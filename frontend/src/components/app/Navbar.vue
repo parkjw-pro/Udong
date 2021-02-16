@@ -4,7 +4,7 @@
     <b-navbar class="pl-5 mt-3" toggleable="sm" type="light" variant="faded" fixed="top">
       <!-- 1.1 Navbar Logo -->
       <b-navbar-brand href="#" @click="toHome" style="color: #695549;">
-        <img src="@/assets/logo.png" alt="우동" style="width: 60px; height: 60px;"> 은
+        <img src="@/assets/logo2.png" alt="우동" style="width: 60px; height: 60px;"> 은
       </b-navbar-brand>
       <!-- 1.2 Navbar dropdowns -->
       <b-navbar-brand href="#">
