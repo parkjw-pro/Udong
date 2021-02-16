@@ -39,7 +39,27 @@
 
         <!-- 2. 중앙 부분 -->
         <!--2.1 이미지-->
-
+        <b-row v-if="fileId.length > 0" align-h="center">
+          <b-carousel
+            id="carousel-1"
+            v-if="fileId.length > 0"
+            v-model="slide"
+            controls
+            indicators
+            background="#ababab"
+            img-width="1024"
+            img-height="480"
+            style="text-shadow: 1px 1px 2px #333; width: 30em; height: 15em;"
+            :fade="true"
+          >
+            <b-carousel-slide
+              id="post_img"
+              v-for="(item, index) in fileId"
+              :key="index"   
+              :img-src="url+`/userpost/download/` + item" 
+            ></b-carousel-slide>
+          </b-carousel>
+        </b-row>
         <!--2.2 내용-->
         <b-row class="mt-3" align-h="center">
           <div class="my-3 mx-3" style="text-align: left;">
@@ -49,11 +69,10 @@
 
         <b-row class="h2 mb-2 ml-2" align-h="start">
           <!-- 좋아요 -->
-          <div class="postLike mr-3">
+          <div class="postLike mr-2" style="margin-top: 2px;">
             <div class="h4" v-if="liked"><b-icon icon="suit-heart-fill" variant="danger" @click="likePost()"></b-icon></div>
             <div class="h4" v-else><b-icon icon="suit-heart" variant="danger" @click="likePost()"></b-icon></div>
           </div>
-          
           <!-- 댓글 수 -->
           <div class="postComment" @click="showComment">
             <div class="h4" v-if="commentFlag">
