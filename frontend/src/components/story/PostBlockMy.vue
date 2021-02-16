@@ -39,7 +39,27 @@
 
         <!-- 2. 중앙 부분 -->
         <!--2.1 이미지-->
-
+        <b-row v-if="fileId.length > 0" align-h="center">
+          <b-carousel
+            id="carousel-1"
+            v-if="fileId.length > 0"
+            v-model="slide"
+            controls
+            indicators
+            background="#ababab"
+            img-width="1024"
+            img-height="480"
+            style="text-shadow: 1px 1px 2px #333; width: 30em; height: 15em;"
+            :fade="true"
+          >
+            <b-carousel-slide
+              id="post_img"
+              v-for="(item, index) in fileId"
+              :key="index"   
+              :img-src="url+`/userpost/download/` + item" 
+            ></b-carousel-slide>
+          </b-carousel>
+        </b-row>
         <!--2.2 내용-->
         <b-row class="mt-3" align-h="center">
           <div class="my-3 mx-3" style="text-align: left;">
@@ -49,16 +69,20 @@
 
         <b-row class="h2 mb-2 ml-2" align-h="start">
           <!-- 좋아요 -->
-          <div class="postLike mr-3">
-            <b-icon v-if="liked" font-scale="1" icon="suit-heart-fill" variant="danger" @click="likePost()"></b-icon>
-            <b-icon v-else font-scale="1" icon="suit-heart" variant="danger" @click="likePost()"></b-icon>
+          <div class="postLike mr-2" style="margin-top: 2px;">
+            <div class="h4" v-if="liked"><b-icon icon="suit-heart-fill" variant="danger" @click="likePost()"></b-icon></div>
+            <div class="h4" v-else><b-icon icon="suit-heart" variant="danger" @click="likePost()"></b-icon></div>
           </div>
-          
           <!-- 댓글 수 -->
           <div class="postComment" @click="showComment">
-            <b-icon v-if="commentFlag" font-scale="1" icon="chat-fill" variant="warning"></b-icon>
-            <b-icon v-else font-scale="1" icon="chat" variant="warning"></b-icon>
-            <span style="color:orange">{{commentCount}}</span>
+            <div class="h4" v-if="commentFlag">
+              <b-icon icon="chat-fill" variant="warning"></b-icon>
+              <span class="ml-1" style="color:orange"><small>{{commentCount}}</small></span>
+            </div>
+            <div class="h4" v-else>
+              <b-icon icon="chat" variant="warning"></b-icon>
+              <span class="ml-1" style="color:orange"><small>{{commentCount}}</small></span>
+            </div>
           </div>
         </b-row>
 
@@ -68,10 +92,13 @@
 
         <!-- 댓글 -->
         <div v-show="commentFlag">
-          <div style="width: 80%; display: inline-block">
+          <div v-if="comments.length > 0" style="width: 80%; display: inline-block">
             <div v-for="(comm, i) in comments" :key="i">
               <Comment :comment="comm" type="userpost" />
             </div>
+          </div>
+          <div v-else>
+            아직 댓글이 없어요! 처음으로 댓글을 달아보세요!
           </div>
               
           <b-row class="mt-3" v-if="comments.length > 0 && comments.length < commentCount">
@@ -142,12 +169,7 @@ export default {
   methods: {
     toFeed: function () {
       // 자신의 배지를 누르기 때문에 새로고침! 기록을 남기지 않기 위해 replace 사용
-      if (this.post.userId === this.userId) {
-        location.replace(`/story/${this.userId}`)
-      }
-      else {
-        this.$router.push({name: 'MyFeed', params: { userId: this.post.userId, nickname: this.post.nickname}})
-      }
+      this.$router.push({name: 'MyFeed', params: { userId: this.post.userId, nickname: this.post.nickname}})
     },
     getLikeInfo(){
       axios
@@ -240,7 +262,14 @@ export default {
 
 
 <style>
-  
+#post_img {
+  top: 0%;
+  left: 0%;
+  min-width: 30em;
+  min-height: 15em;
+  max-width: 30em;
+  max-height: 15em;
+}
   /* 적용안됨 */
   b-card-img {
     height: 5px;

@@ -9,8 +9,7 @@
         <b-col cols="6" align-self="center">
           <b-row align-h="center" class="mb-4">
             <b-col>
-              <h2 v-if="$route.params.userId === user.userId" style="font-family: 'Nanum Pen Script', cursive; display: inline;">{{ this.user.nickname }} </h2>
-              <h2 v-else style="font-family: 'Nanum Pen Script', cursive; display: inline;">{{ $route.params.nickname }} </h2>
+              <h2 style="font-family: 'Nanum Pen Script', cursive; display: inline;">{{ this.user.nickname }} </h2>
               <b-icon v-if="$route.params.userId === user.userId" icon="gear-fill" font-scale="1.5" style="cursor: pointer;" type="bold" @click="toAccountDetail"></b-icon>
             </b-col>
           </b-row>
@@ -38,7 +37,7 @@
       </b-tab>
       <b-tab title="리뷰">
         <div v-for="(item, index) in reviews" :key="index">
-          <ReviewBlock :review="item"  />
+          <ReviewBlock :review="item" :user="user"  />
         </div>
       </b-tab>
       <b-tab title="태그">
@@ -52,37 +51,37 @@
     <br>
     <br>
     <br>
+    <Button />
   </div>
 </template>
 
 
 <script>
-import GroupBox from '@/components/story/GroupBox'
-import ReviewBlock from '@/components/review/ReviewBlock'
-import PostBlockMy from '@/components/story/PostBlockMy'
-import EndBlock from '@/components/story/EndBlock'
-import TagBox from '@/components/story/TagBox'
 import axios from "axios";
-const SERVER_URL = "http://localhost:8000";
+import Button from '@/components/story/Button'
+import EndBlock from '@/components/story/EndBlock'
+import GroupBox from '@/components/story/GroupBox'
+import PostBlockMy from '@/components/story/PostBlockMy'
+import ReviewBlock from '@/components/story/ReviewBlock'
+import TagBox from '@/components/story/TagBox'
 
-// import axios from 'axios';
-
-// const SERVER_URL = "http://localhost:8000";
+const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
 export default {
   name: 'MyFeed',
   components: {
+    Button,
+    EndBlock,
     GroupBox,
     PostBlockMy,
-    EndBlock,
-    TagBox,
     ReviewBlock,
+    TagBox,
   },
   data() {
     return {
       user: {
-        userId: "",
-        nickname: "",
+        userId: this.$route.params.userId,
+        nickname: this.$route.params.nickname
       },
       posts: [],
       postCount: 0,
@@ -94,8 +93,6 @@ export default {
     };
   },
   created() {
-    this.user.nickname = JSON.parse(localStorage.getItem('Login-token'))['user-name']
-    this.user.userId = JSON.parse(localStorage.getItem('Login-token'))['user-id']
     this.getUserPosts();
     this.getReviews();
     this.getGroups();

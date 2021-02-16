@@ -118,12 +118,12 @@ export default {
       this.$router.push({name: 'NewsHome'})
     },
     toStory: function () {
-      location.replace(`/story/${this.user.address}/${this.user.userId}`)
-      // this.$router.push({name: 'NewsFeed', params: {address: this.user.address, userId: this.user.userId}})
+      // location.replace(`/story/${this.user.address}/${this.user.userId}`)
+      this.$router.push({name: 'NewsFeed', params: {address: this.user.address, userId: this.user.userId}})
     },
     toMyfeed: function () {
-      location.replace(`/story/${this.user.userId}`)
-      // this.$router.push({name: 'MyFeed', params: { userId: this.user.userId, nickname: this.user.nickname}})
+      // location.replace(`/story/${this.user.userId}`)
+      this.$router.push({name: 'MyFeed', params: { userId: this.user.userId, nickname: this.user.nickname}})
     },
     toAccountDetail: function () {
       this.$router.push({name: 'AccountDetail'})

@@ -9,7 +9,8 @@
             <b-col align-self="center">
               <span style="cursor: pointer;" @click="toFeed">
                 <!--그룹 게시물 - 그룹 정보-->
-                <span style="">{{groupName}} </span>
+                <span style="">[그룹] {{groupName}} </span>
+                <br>
                 <!-- 뱃지 -->
                 <b-avatar :src="require('@/assets/app/badge/badge1.jpg')"></b-avatar>
                 <!-- 닉네임 -->
@@ -72,16 +73,20 @@
 
         <b-row class="h2 mb-2 ml-2" align-h="start">
           <!-- 좋아요 -->
-          <div class="postLike mr-3">
-            <b-icon v-if="liked" font-scale="1" icon="suit-heart-fill" variant="danger" @click="likePost()" ></b-icon>
-            <b-icon v-else font-scale="1" icon="suit-heart" variant="danger" @click="likePost()"></b-icon>
+          <div class="postLike mr-2" style="margin-top: 2px;">
+            <div class="h4" v-if="liked"><b-icon icon="suit-heart-fill" variant="danger" @click="likePost()"></b-icon></div>
+            <div class="h4" v-else><b-icon icon="suit-heart" variant="danger" @click="likePost()"></b-icon></div>
           </div>
-          
-          <!-- 댓글 버튼 -->
+          <!-- 댓글 수 -->
           <div class="postComment" @click="showComment">
-            <b-icon v-if="commentFlag" font-scale="1" icon="chat-fill" variant="warning" ></b-icon>
-            <b-icon v-else font-scale="1" icon="chat" variant="warning"></b-icon>
-            <span style="color:orange">{{commentCount}}</span>
+            <div class="h4" v-if="commentFlag">
+              <b-icon icon="chat-fill" variant="warning"></b-icon>
+              <span class="ml-1" style="color:orange"><small>{{commentCount}}</small></span>
+            </div>
+            <div class="h4" v-else>
+              <b-icon icon="chat" variant="warning"></b-icon>
+              <span class="ml-1" style="color:orange"><small>{{commentCount}}</small></span>
+            </div>
           </div>
         </b-row>
 
@@ -89,23 +94,24 @@
           <div v-if="post.postLikeCount >= 0">{{post.postLikeCount}}명이 좋아합니다</div>
         </b-row>
 
-        <!-- 댓글 목록 -->
-        <!-- <div v-if="cmtCount === -1">
-          <div>아직 작성된 댓글이 없습니다.</div>
-        </div> -->
+        <!-- 댓글 -->
         <div v-show="commentFlag">
-          <div style="width: 80%; display: inline-block">
+          <div v-if="comments.length > 0" style="width: 80%; display: inline-block">
             <div v-for="(comm, i) in comments" :key="i">
-              <Comment :comment="comm" type="clubpost" />
+              <Comment :comment="comm" type="userpost" />
             </div>
+          </div>
+          <div v-else>
+            아직 댓글이 없어요! 처음으로 댓글을 달아보세요!
           </div>
               
           <b-row class="mt-3" v-if="comments.length > 0 && comments.length < commentCount">
-            <b-col>
-              <span style="cursor: pointer;" @click="getMoreComments">
-                <img alt="Vue logo" src="@/assets/udonge.png" style="width: 5%;">더보기
-              </span>
-            </b-col>
+              <b-col>
+                <span style="cursor: pointer;" @click="getMoreComments">
+                  <!-- <b-button pill variant="light" @click="getMoreComments">+</b-button> -->
+                  <img alt="Vue logo" src="@/assets/udonge.png" style="width: 5%;">더보기
+                </span>
+              </b-col>
           </b-row>
         </div>
         <br>
