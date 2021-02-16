@@ -9,8 +9,7 @@
         <b-col cols="6" align-self="center">
           <b-row align-h="center" class="mb-4">
             <b-col>
-              <h2 v-if="$route.params.userId === user.userId" style="font-family: 'Nanum Pen Script', cursive; display: inline;">{{ this.user.nickname }} </h2>
-              <h2 v-else style="font-family: 'Nanum Pen Script', cursive; display: inline;">{{ $route.params.nickname }} </h2>
+              <h2 style="font-family: 'Nanum Pen Script', cursive; display: inline;">{{ this.user.nickname }} </h2>
               <b-icon v-if="$route.params.userId === user.userId" icon="gear-fill" font-scale="1.5" style="cursor: pointer;" type="bold" @click="toAccountDetail"></b-icon>
             </b-col>
           </b-row>
