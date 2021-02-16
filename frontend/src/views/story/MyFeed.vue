@@ -4,13 +4,13 @@
     <b-jumbotron>  <!-- head, lead 속성 사용가능! -->
       <b-row class="mb-5">
         <b-col cols="4">
-          <b-avatar size="8rem" variant="info" :src="require('@/assets/app/badge/badge1.jpg')" style="cursor: pointer; width:"></b-avatar>
+          <span @click="toBadge" style="cursor: pointer;"><b-avatar size="8rem" variant="info" :src="require('@/assets/app/badge/badge1.jpg')" ></b-avatar></span>
         </b-col>
         <b-col cols="6" align-self="center">
           <b-row align-h="center" class="mb-4">
             <b-col>
               <h2 style="font-family: 'Nanum Pen Script', cursive; display: inline;">{{ user.nickname }} </h2>
-              <b-icon v-if="$route.params.userId === user.userId" icon="gear-fill" font-scale="1.5" style="cursor: pointer;" type="bold" @click="toAccountDetail"></b-icon>
+              <b-icon v-if="userId === user.userId" icon="gear-fill" font-scale="1.5" style="cursor: pointer;" type="bold" @click="toAccountDetail"></b-icon>
             </b-col>
           </b-row>
           <b-row align-h="center">
@@ -79,6 +79,7 @@ export default {
   },
   data() {
     return {
+      // 사용자 정보
       user: {
         userId: this.$route.params.userId,
         nickname: this.$route.params.nickname
@@ -90,6 +91,9 @@ export default {
       liked: false,
       reviews: [],
       groups: [],
+
+      // 내 정보
+      userId: JSON.parse(localStorage.getItem('Login-token'))['user-id'],
     };
   },
   created() {
@@ -98,59 +102,68 @@ export default {
     this.getGroups();
   },
   methods: {
-  getUserPosts(){
-    axios
-      .get(`${SERVER_URL}/userpost/user`, {
-        params: {
-          userId: this.user.userId,
-          limit: this.limit,
-          offset: this.offset
-        }
-    })
-      .then((response) => {
-        this.posts = response.data.list;
-        this.postCount = response.data.count;
-      });
-  },
-  toAccountDetail: function () {
-    this.$router.push({name: 'AccountDetail'})
-  },
-  getReviews: function() {
-  axios
-    .get(`${SERVER_URL}/review/user/${this.user.userId}`)
-    .then((response) => {
-      this.reviews = response.data;
-    })
-    .catch((response) => {
-      console.log(response);
-    });
-  },
-  getGroups() {
-    axios
-    .get(`${SERVER_URL}/club/user/${this.user.userId}/member`)
-    .then(
-      (response) => (
-        this.groups = response.data
-      )
-    );
-  },
-  getMorePosts() {
-    if(this.postCount <= this.posts.length){
-      return;
-    }
-    this.offset += this.limit;
-    axios
-      .get(`${SERVER_URL}/userpost/user`, {
-        params: {
-          userId: this.user.userId,
-          limit: this.limit,
-          offset: this.offset
-        }
+    getUserPosts(){
+      axios
+        .get(`${SERVER_URL}/userpost/user`, {
+          params: {
+            userId: this.user.userId,
+            limit: this.limit,
+            offset: this.offset
+          }
       })
-      .then(
-        (response) => {
-          this.posts.push(...response.data.list);
+        .then((response) => {
+          this.posts = response.data.list;
+          this.postCount = response.data.count;
+        });
+    },
+    getReviews: function() {
+    axios
+      .get(`${SERVER_URL}/review/user/${this.user.userId}`)
+      .then((response) => {
+        this.reviews = response.data;
+      })
+      .catch((response) => {
+        console.log(response);
       });
+    },
+    getGroups() {
+      axios
+      .get(`${SERVER_URL}/club/user/${this.user.userId}/member`)
+      .then(
+        (response) => (
+          this.groups = response.data
+        )
+      );
+    },
+    getMorePosts() {
+      if(this.postCount <= this.posts.length){
+        return;
+      }
+      this.offset += this.limit;
+      axios
+        .get(`${SERVER_URL}/userpost/user`, {
+          params: {
+            userId: this.user.userId,
+            limit: this.limit,
+            offset: this.offset
+          }
+        })
+        .then(
+          (response) => {
+            this.posts.push(...response.data.list);
+        });
+    },
+    toAccountDetail: function () {
+      this.$router.push({name: 'AccountDetail'})
+    },
+    toBadge: function () {
+      // 본인이면 뱃지 페이지로 이동
+      if (this.userId == this.user.userId) {
+        this.$router.push({ name: 'Badge', params: { userId: this.user.userId}})
+      } else {
+        // 아니면
+        alert(`${this.user.userId}님의 대표뱃지!`)
+      }
     },
     toList: function () {
       this.$router.push({ name: 'GroupList'})

@@ -18,8 +18,8 @@
         </b-row> -->
         <b-row class="mb-3" align-h="center">
           <toggle-button
-            @change="valueTogle()"
-            :value="false"
+            @change="toggleValue()"
+            :value="true"
             :width="80"
             :height="35"
             :labels="{ checked: '공개', unchecked: '비공개' }"
@@ -136,7 +136,7 @@ export default {
         areaCode : "",
         clubName: "",
         clubContent: "",
-        isOpen: "0",
+        isOpen: "1",
        
       },
       dongcode: "",
@@ -155,8 +155,7 @@ export default {
     this.club.areaCode = JSON.parse(localStorage.getItem('Login-token'))['user_address'];
   },
   methods: {
-    valueTogle(){
-     
+    toggleValue(){
         if(this.club.isOpen == 1){
           this.club.isOpen = "0";
         }else{
@@ -194,6 +193,8 @@ export default {
     createGroup: function() {
       if (this.club.clubName.length > 5 || this.club.clubContent.length < 5 || !this.verification) {
         alert("입력하신 정보를 확인해주세요! \n소개글은 5자 이상 작성하셔야 합니다!")
+      } else if (this.fileId == null) {
+        alert("그룹 이미지를 업로드 해주세요!")
       } else {
         var formData = new FormData();
         formData.append('userId', this.club.userId)
@@ -224,7 +225,7 @@ export default {
       }
     },
     verifyName: function() {
-      if (this.club.clubName > 5) {
+      if (this.club.clubName.length > 5) {
         alert("그룹명을 5자 이내로 작성해주세요!")
       }
       else {

@@ -55,7 +55,7 @@
       </b-col>
     </div>
     <!-- 그룹소개 -->
-    <div class="mb-5 pb-5" style="text-align: left;">
+    <div class="mb-5 pb-2" style="text-align: left;">
       <b-col>
         <h4 class="font-weight-bold mb-4">소개글</h4>
         <b-form-textarea
@@ -78,7 +78,7 @@
         v-b-modal.modal-2
         >가입하기</b-button
       >
-      <b-modal id="modal-2" title="가입인사" hide-footer>
+      <b-modal id="modal-2" :title="club.dto.clubName + ' 그룹 가입하기'" hide-footer>
         <div class="container">
           <div class="col-md-12">
             <div class="well">
@@ -87,11 +87,13 @@
                 class="form-control"
                 id="text"
                 name="text"
-                placeholder="Type in your message"
+                placeholder="가입인사를 작성해주세요!"
                 rows="5"
               ></textarea>
               <h6 class="pull-right" id="count_message"></h6>
-              <button class="btn btn-info" @click="joinGroup">가입 신청</button>
+              <div style="text-align: right;">
+                <b-button variant="info" size="sm" @click="joinGroup">가입 신청</b-button>
+              </div>
             </div>
           </div>
         </div>
@@ -158,8 +160,6 @@ export default {
   components: {
     Profile,
   },
-  // clubId를 props 받아온다.
-  props: {},
   data: function() {
     return {
       dong: JSON.parse(localStorage.getItem("Login-token"))[
@@ -171,6 +171,7 @@ export default {
       selected: null,
       options: [],
       contents : "",
+      group: this.$route.params.group,
     };
   },
   computed: {
@@ -327,6 +328,7 @@ export default {
           address: this.club.dto.areaCode,
           groupId: this.club.dto.clubId,
           groupcheck: 1,
+          group: this.group,
         },
       });
     },

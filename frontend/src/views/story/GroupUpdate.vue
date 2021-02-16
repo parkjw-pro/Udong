@@ -82,12 +82,15 @@
     </div>
     <!-- 하단 버튼 -->
     <div id="group_profile_buttons">
-      <b-button class="mx-3" variant="danger" @click="deleteGroup"
+      <b-button class="mx-3" variant="danger" v-b-modal.group_delete_modal
         >그룹삭제</b-button
       >
       <b-button class="mx-3" variant="info" @click="updateGroup"
         >변경하기</b-button
       >
+      <b-modal id="group_delete_modal" hide-header @ok="deleteGroup">
+        <p class="my-4">정말 그룹을 삭제하시겠습니까?</p>
+      </b-modal>
     </div>
     <br />
     <br />

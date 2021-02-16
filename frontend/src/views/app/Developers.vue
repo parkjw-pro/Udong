@@ -1,156 +1,163 @@
 <template>
-  <div class="mt-5 pt-5">
-    <h2>개발진 소개</h2>
-    <div class="pt-5 mt-5 mx-5">
+  <div class="mt-5">
+    <h1 style="font-family: 'Nanum Pen Script', cursive;">Developers</h1>
+    <div class="mt-5 mx-5">
       <b-card-group>
         <!-- 강용욱 -->
         <b-card
           title="강용욱"
           id="developers_card"
-          img-src="https://ppss.kr/wp-content/uploads/2015/01/MP9102208971.jpg"
+          :img-src="require('@/assets/app/developers/santa.jpg')"
           img-alt="Image"
           img-top
           tag="article"
-          style="max-width: 30rem;"
+          style="max-width: 21rem; font-family: 'Hanna', sans-serif;"
           class="mb-2 mx-2"
         >
           <b-card-text>
-            어록: "결쿡엔"(외국인 아님)
-            <br>
-            <br>
-            특징: 프로질문러. 이해가 안되면 안 넘어감.
-            <br>
-            다른 사람도 얄짤없음.
-            <br>
-            하지만 그만큼 설명을 잘해줌.
+            <h3 style="font-family: 'Nanum Pen Script', cursive;">BE, FE, DB</h3>
+            <hr>
+            <div>어록: '결쿡엔'(외국인 아님)</div>
+            <hr>
+            <div>#우수한개발자</div>
+            <div>#열정적</div>
+            <div>#꼼꼼함</div>
           </b-card-text>
-
-          <b-button href="#" variant="primary" v-b-modal="'yong-modal'">자세히 탐구하기</b-button>
-          <b-modal id="yong-modal">4팀의 멋있는 에이스 <br>캉!룡용용!욱!!</b-modal>
+          <br>
+          <b-button href="#" variant="primary" size="sm" v-b-modal="'yong-modal'">자세히 탐구하기</b-button>
+          <b-modal title="4팀 에이스 강용욱" id="yong-modal">"끝까지 재밌었다!"</b-modal>
         </b-card>
         <!-- 박종원 -->
         <b-card
           title="박종원"
           id="developers_card"
-          img-src="https://funshop.akamaized.net/abroad/034/17450/Blacn%202_3.png"
+          :img-src="require('@/assets/app/developers/gat.jpg')"
           img-alt="Image"
           img-top
           tag="article"
-          style="max-width: 30rem;"
+          style="max-width: 21rem; font-family: 'Hanna', sans-serif;"
           class="mb-2 mx-2"
         >
           <b-card-text>
-            어록: "~인데 그치?" (완곡한 어법 사용)
-            <br>
-            <br>
-            특징: 웹엑스에서 맨날 얼굴이 가려져있어서 
-            <br>
-            아직까지 얼굴을 제대로 본 적이 없음.
-            <br>
-            프로젝트 끝날때까지 얼굴 모를것 같음.
-            <br>
-            은둔 고수
+            <h3 style="font-family: 'Nanum Pen Script', cursive;">BE, DB, Server</h3>
+            <hr>
+            <div>어록: (주로 완곡한 어법 사용)</div>
+            <hr>
+            <div>#능력자</div>
+            <div>#중재</div>
+            <div>#노력형</div>
           </b-card-text>
-
-          <b-button href="#" variant="primary" v-b-modal="'jong-modal'">자세히 탐구하기</b-button>
-          <b-modal id="jong-modal">4팀 므째이 두째이 세째이 <br> 파크!종!워이~~</b-modal>
+          <br>
+          <b-button href="#" variant="primary" size="sm" v-b-modal="'jong-modal'">자세히 탐구하기</b-button>
+          <b-modal title="4팀 므째이므째이 박종원" id="jong-modal">"재밌었다!"</b-modal>
         </b-card>
 
+        <!-- 이규용 -->
         <b-card
           title="이규용"
           id="developers_card"
-          img-src="https://i.pinimg.com/736x/95/6c/1d/956c1d1df35320eb4ee1ff967a489474.jpg"
+          :img-src="require('@/assets/app/developers/rudolf.jpg')"
           img-alt="Image"
           img-top
           tag="article"
-          style="max-width: 30rem;"
+          style="max-width: 21rem; font-family: 'Hanna', sans-serif;"
           class="mb-2 mx-2"
         >
           <b-card-text>
-            어록: '좀 구려'
-            <br>
-            <br>
-            특징: 히피펌 사자머리
-            <br>
-            팀내 디자인, UCC 등 온갖 잡다한
-            <br>
-            업무를 다 도맡아서 함.
-            <br>
-            팀장이 개인적으로 미안해함.
-            <br>
-            (그래서 홍설 사진으로)
+            <h3 style="font-family: 'Nanum Pen Script', cursive;">BE, DB, UCC</h3>
+            <hr>
+            <div>어록: '좀 구려'</div>
+            <hr>
+            <div>#뛰어난개발역량</div>
+            <div>#소통</div>
+            <div>#다재다능</div>
           </b-card-text>
-
-          <b-button href="#" variant="primary" v-b-modal="'yongyong-modal'">자세히 탐구하기</b-button>
-          <b-modal id="yongyong-modal">4팀의 든든한 막내 <br> 리!규!용용용용용용용 용용용용용용용용ㅇ!</b-modal>
+          <br>
+          <b-button href="#" variant="primary" size="sm" v-b-modal="'yongyong-modal'">자세히 탐구하기</b-button>
+          <b-modal id="yongyong-modal" title="4팀의 든든한 막내 이규용">재밌었다.</b-modal>
         </b-card>
-      </b-card-group>
-      <b-card-group>
-        <!-- 이규용 -->
-        
-        <!-- 이송영 -->
+
+         <!-- 이송영 -->
         <b-card
           title="이송영"
           id="developers_card"
-          img-src="https://t1.daumcdn.net/cfile/blog/257A65445542EA850F"
+          :img-src="require('@/assets/app/developers/mask.jpg')"
           img-alt="Image"
           img-top
           tag="article"
-          style="max-width: 30rem;"
+          style="max-width: 21rem; font-family: 'Hanna', sans-serif;"
           class="mb-2 mx-2"
         >
           <b-card-text>
-            어록: "오케이오케이"
-            <br>
-            <br>
-            특징: 그냥 갑자기 혼자서 노래부름
-            <br>
-            입을 잘 텀
-            <br>
-            아침부터 말이 많음
-            <br>
-            하지만 사실 분위기를 띄우려는
-            <br>
-            부담감을 가지고 있음
+            <h3 style="font-family: 'Nanum Pen Script', cursive;">FE, Presentation</h3>
+            <hr>
+            <div>어록: '오케이오케이'</div>
+            <hr>
+            <div>#팀장</div>
+            <div>#발표자</div>
+            <div>#개발재밌어</div>
           </b-card-text>
-
-          <b-button href="#" variant="primary" v-b-modal="'song-modal'">자세히 탐구하기</b-button>
-          <b-modal id="song-modal">그냥 4팀의 송!제!로!</b-modal>
+          <br>
+          <b-button href="#" variant="primary" size="sm" v-b-modal="'song-modal'">자세히 탐구하기</b-button>
+          <b-modal id="song-modal" title="4팀의 송제로 이송영">재밌었다.</b-modal>
         </b-card>
+
         <!-- 우진하 -->
         <b-card
           title="우진하"
           id="developers_card"
-          img-src="https://img.sbs.co.kr/newsnet/etv/upload/2013/11/15/30000333550_700.jpg"
+          :img-src="require('@/assets/app/developers/gasmask.jpg')"
           img-alt="Image"
           img-top
           tag="article"
-          style="max-width: 22rem;"
+          style="max-width: 21rem; font-family: 'Hanna', sans-serif;"
           class="mb-2 mx-2"
         >
           <b-card-text>
-            어록: '하... 나 출첵은 했는데 다시 잤어..'
-            <br>
-            <br>
-            특징: 프로지각러
-            <br>
-            1주일에 기본 4-5번 지각
-            <br>
-            덕분에 매일 프로님, 컨설턴트님, 코치님과
-            <br>
-            연락하는 사이가 됨.
-            <br>
-            그러다가 갑자기 탈싸피함.
-            <br>
-            (?????)
+            <h3 style="font-family: 'Nanum Pen Script', cursive;">FE, Semiconductor</h3>
+            <hr>
+            <div>어록: '하 나 출첵은 했는데 다시 잤어..'</div>
+            <hr>
+            <div>#전지전자과</div>
+            <div>#성남통</div>
+            <div>#장래가기대됨</div>
           </b-card-text>
-
-          <b-button href="#" variant="primary" v-b-modal="'woo-modal'">자세히 탐구하기</b-button>
-          <b-modal id="woo-modal">4팀의 변!절!자! 우~~~~~~~~~~~ <br> 진!하!</b-modal>
+          <br>
+          <b-button href="#" variant="primary" size="sm" v-b-modal="'woo-modal'">자세히 탐구하기</b-button>
+          <b-modal id="woo-modal" title="4팀의 변절자 하지만 장래가 기대되는 우진하">재밌었다.</b-modal>
         </b-card>
       </b-card-group>
+      <b-card-group>
+        
+       
+        
+      </b-card-group>
+      
+      <div style="font-family: 'Nanum Pen Script', cursive;">
+        <h1 class="py-5 mt-5">Development Tools</h1>
 
-      <coverflow :coverList="coverList" :coverWidth="260" :index="2"></coverflow>
+        <b-jumbotron header="Programming Language">
+          <br>
+          <h2><span id="UL">#Java #Javascript #SQL #CSS</span></h2>
+        </b-jumbotron>
+        
+        <b-jumbotron header="Environment">
+          <br>
+          <h3><span id="UL2">#openjdk 11.0.9 #npm 6.14.10 #vue/cli 4.5.19 #MySQL 8.0.22</span></h3>
+        </b-jumbotron>
+
+        <b-jumbotron header="Programs">
+          <br>
+          <h2><span id="UL">#Spring Boot #VSCode #Swagger #GitLab #Jira #AWS EC2</span></h2>
+        </b-jumbotron>
+
+        <b-jumbotron header="Framework">
+          <br>
+          <h3><span id="UL2">#Bootstrap</span></h3>
+        </b-jumbotron>
+
+      </div>
+      <!-- <coverflow :coverList="coverList" :coverWidth="260" :index="2"></coverflow> -->
     </div>
   </div>
 </template>
@@ -186,5 +193,14 @@ export default {
   min-height: 15em;
   max-width: 20em;
   max-height: 15em; */
+}
+
+#UL {
+  background: linear-gradient(to top, #FFE400 50%, transparent 50%);
+}
+
+#UL2 {
+  background-color: #FF00DD;
+  color: #fff;
 }
 </style>
