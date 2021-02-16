@@ -157,9 +157,10 @@ public class ClubController {
 						" - clubContent : 그룹 설명\n" + 
 			"## 가능값\n" + " - file : 그룹 대표 이미지(MultipartFile 형식)")
 	@PutMapping
-	public ResponseEntity<String> updateClub(@RequestBody ClubDto club,
+	public ResponseEntity<String> updateClub(ClubDto club,
 			@RequestParam(value = "file", required = false) MultipartFile file){
 		try {
+		
 			if(clubService.updateClub(club, file) == 1)
 				return new ResponseEntity<String>("SUCCESS: club update", HttpStatus.OK);
 		} catch (Exception e) {
@@ -172,9 +173,9 @@ public class ClubController {
 			"## 필수값\n" + " - clubId : 그룹 아이디\n" + 
 						" - userId : 변경될 그룹장 아이디\n")
 	@PutMapping("/manager")
-	public ResponseEntity<String> updateClubManager(@RequestBody ClubDto club){
+	public ResponseEntity<String> updateClubManager(@RequestParam String clubId ,@RequestParam String userId){
 		try {
-			if(clubService.updateClubManager(club.getClubId(), club.getUserId()) == 1)
+			if(clubService.updateClubManager(clubId, userId) == 1)
 				return new ResponseEntity<String>("SUCCESS: club manager update", HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -209,7 +210,7 @@ public class ClubController {
 		return new ResponseEntity<List<MemberDto>>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
-	@ApiOperation(value = "그룹 멤버 조회", notes = "한 그룹에 등록된 모든 멤버의 정보를 조회합니다.\n" + "## 필수값\n" + " - clubId : 그룹 아이디\n")
+	@ApiOperation(value = "그룹 멤버 조회", notes = "한 그룹에 승인대기중인 모든 멤버의 정보를 조회합니다.\n" + "## 필수값\n" + " - clubId : 그룹 아이디\n")
 	@GetMapping("/{clubId}/waiting")
 	public ResponseEntity<List<MemberDto>> selectAllClubMemberWaiting(@PathVariable String clubId){  //read every member's info
 		try {
@@ -234,6 +235,7 @@ public class ClubController {
 					return new ResponseEntity<String>("SUCCESS: club joining", HttpStatus.OK);
 				}
 			}else {
+				System.out.println("앙기목띠");
 				if(clubService.createClubMemberWaiting(member) == SUCCESS) {
 					return new ResponseEntity<String>("SUCCESS: club apply", HttpStatus.OK);
 				}
@@ -265,7 +267,13 @@ public class ClubController {
 			"## 필수값\n" + " - clubId : 그룹 아이디\n" + 
 			" - userId : 탈퇴 신청하는 사용자 아이디\n")
 	@DeleteMapping("/member")
-	public ResponseEntity<String> withdrawClub(@RequestBody MemberDto member){
+	public ResponseEntity<String> withdrawClub(@RequestParam("clubId") String clubId,@RequestParam String type,
+			@RequestParam String contents ,@RequestParam String userId){
+		MemberDto member = new MemberDto();
+		member.setClubId(clubId);
+		member.setContent(contents);
+		member.setType(type);
+		member.setUserId(userId);
 		try {
 			if(clubService.deleteClubMember(member.getClubId(), member.getUserId()) == SUCCESS)
 				return new ResponseEntity<String>("SUCCESS: club withdraw", HttpStatus.OK);
@@ -319,6 +327,9 @@ public class ClubController {
 	
 	@GetMapping("/download/{fileId}")
 	public ResponseEntity<Resource> download(@PathVariable String fileId) throws Exception {
+		if(fileId.equals("0")) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 		System.out.println("다운로드" +fileId);
 		List<String> url = clubService.selectFileUrl(fileId);
 		System.out.println("가져온 url:" +url.get(0));

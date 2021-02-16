@@ -5,7 +5,7 @@
       <!-- 프로필 이미지 -->
       <b-col class="ml-3">
         <!-- props:  :fileId="Club.fileId" -->
-        <Profile :fileId="this.club.dto.fileId"/>
+        <Profile :fileId="this.club.dto.fileId" />
       </b-col>
 
       <!-- 공개/비공개 버튼 -->
@@ -15,7 +15,7 @@
         </b-row> -->
         <b-row class="mb-3" align-h="center">
           <toggle-button
-             :value="isOpen"
+            :value="isOpen"
             :width="80"
             :height="35"
             :labels="{ checked: '공개', unchecked: '비공개' }"
@@ -32,7 +32,7 @@
     <!-- 동네 이름 -->
     <b-row class="ml-3 mb-5">
       <h3 style="text-align: left;">
-        <span class="large">{{dong}}</span> 그룹
+        <span class="large">{{ dong }}</span> 그룹
       </h3>
     </b-row>
 
@@ -75,9 +75,27 @@
         class="mx-3"
         type="submit"
         variant="info"
-        @click="joinGroup"
+        v-b-modal.modal-2
         >가입하기</b-button
       >
+      <b-modal id="modal-2" title="가입인사" hide-footer>
+        <div class="container">
+          <div class="col-md-12">
+            <div class="well">
+              <textarea
+                v-model="contents"
+                class="form-control"
+                id="text"
+                name="text"
+                placeholder="Type in your message"
+                rows="5"
+              ></textarea>
+              <h6 class="pull-right" id="count_message"></h6>
+              <button class="btn btn-info" @click="joinGroup">가입 신청</button>
+            </div>
+          </div>
+        </div>
+      </b-modal>
 
       <!-- 그룹 회원이면  -->
       <b-button
@@ -103,14 +121,27 @@
         @click="toMemberList"
         >회원관리</b-button
       >
+
       <b-button
         v-if="isJoin == 2"
         class="mx-3"
         variant="info"
-        @click="leaveGroup"
-        >그룹탈퇴</b-button
+        @click="memberList"
+        v-b-modal.modal-1
+        >그룹 위임 및 탈퇴</b-button
       >
-    
+
+      <b-modal id="modal-1" title="그룹장 위임 및 탈퇴" hide-footer>
+        <b-form-select
+          v-model="selected"
+          :options="options"
+          size="sm"
+          class="my-3"
+        ></b-form-select>
+        <b-button class="mx-3" variant="info" @click="leaveGroup"
+          >그룹 탈퇴하기
+        </b-button>
+      </b-modal>
     </div>
     <br />
     <br />
@@ -120,7 +151,7 @@
 <script>
 import Profile from "@/components/app/Profile";
 import axios from "axios";
-const SERVER_URL = process.env.VUE_APP_SERVER_URL
+const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
 export default {
   name: "GroupProfile",
@@ -131,11 +162,15 @@ export default {
   props: {},
   data: function() {
     return {
-      
-      dong: JSON.parse(localStorage.getItem('Login-token'))["user_address_name"],
-      club:  Object,
+      dong: JSON.parse(localStorage.getItem("Login-token"))[
+        "user_address_name"
+      ],
+      club: Object,
       isOpen: false,
       isJoined: 0,
+      selected: null,
+      options: [],
+      contents : "",
     };
   },
   computed: {
@@ -144,85 +179,166 @@ export default {
     },
   },
   created() {
-    
-    this.isJoined = this.$route.params.groupcheck;
+    this.isJoined = this.$route.params.groupcheck; // 2이면 그룹장이보는 그룹프로필  0이면 가입프로필 1이면 회원이보는 그룹프로필
     // 그룹정보 가져오기
     axios
-        .get(`${SERVER_URL}/club/${this.$route.params.groupId}`)
-        .then((res) => {
-          this.club = res.data;
-          // 비공개, 공개여부
-         
-          if(this.club.dto.isOpen == 1){
-            this.isOpen = true;
-          }else{
-            this.isOpen = false; 
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-      
-    
+      .get(`${SERVER_URL}/club/${this.$route.params.groupId}`)
+      .then((res) => {
+        this.club = res.data;
+        // 비공개, 공개여부
+
+        if (this.club.dto.isOpen == 1) {
+          this.isOpen = true;
+        } else {
+          this.isOpen = false;
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   },
   methods: {
-    
     // 가입하기
     onSubmit(evt) {
-      evt.preventDefault()
-       this.$router.push({ name: 'GroupList', params: {address: this.club.dto.areaCode} })
+      evt.preventDefault(); // 기본 form태그 이벤트를 막아줌
     },
     // 가입하기
     joinGroup: function() {
-      axios
-        .post(`${SERVER_URL}/club/member`,{
-          clubId : this.club.dto.clubId,
-          userId : JSON.parse(localStorage.getItem('Login-token'))["user-id"],
-          type : 1,
-          contents : "ㅁㄴㅇ",
-        } )
-        .then((res) => {
-          console.log(res)
-         this.$router.push({ name: 'GroupList', params: {address: this.club.dto.areaCode} })
-        })
-        .catch((err) => {
-          console.log(err);
-         this.$router.push({ name: 'GroupList', params: {address: this.club.dto.areaCode} })
-        });
-    
-    },
-    //그룹 탈퇴 //여기부터 
-    leaveGroup: function() {
+      if (this.isOpen == 1) {
+        // 공개일때 바로가입
         axios
-        .delete(`${SERVER_URL}/club/member`,{
-          clubId : this.club.dto.clubId,
-          userId : JSON.parse(localStorage.getItem('Login-token'))["user-id"],
-          type : 1,
-          contents : "ㅁㄴㅇ",
-        } )
+          .post(`${SERVER_URL}/club/member`, {
+            clubId: this.club.dto.clubId,
+            userId: JSON.parse(localStorage.getItem("Login-token"))["user-id"],
+            type: 0,
+            content: this.contents,
+          })
+          .then((res) => {
+            console.log(res);
+            alert("가입완료되었습니다.");
+            this.$router.push({
+              name: "GroupList",
+              params: { address: this.club.dto.areaCode },
+            });
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else {
+        // 비공개일때
+        axios
+          .post(`${SERVER_URL}/club/member`, {
+            clubId: this.club.dto.clubId,
+            userId: JSON.parse(localStorage.getItem("Login-token"))["user-id"],
+            type: 0,
+            content: this.contents,
+          })
+          .then((res) => {
+            console.log(res);
+            alert("가입신청되었습니다.");
+            this.$router.push({
+              name: "GroupList",
+              params: { address: this.club.dto.areaCode },
+            });
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    },
+    // 멤버리스트 불러오기
+    memberList: function() {
+      axios
+        .get(`${SERVER_URL}/club/${this.club.dto.clubId}/member`)
         .then((res) => {
-          console.log(res)
-         this.$router.push({ name: 'GroupList', params: {address: this.club.dto.areaCode} })
+          console.log(res.data[0].nickname);
+          this.options.length = 0;
+          for (var i in res.data) this.options.push(res.data[i].nickname);
         })
         .catch((err) => {
           console.log(err);
-         this.$router.push({ name: 'GroupList', params: {address: this.club.dto.areaCode} })
+          alert("서버에 오류발생하였습니다.");
         });
+    },
+    //그룹 탈퇴 //여기부터
+    leaveGroup: function() {
+      if (this.isJoined == 2) {
+        // 그룹장인경우  그룹장 변경후 탈퇴
+        axios
+          .put(
+            `${SERVER_URL}/club/manager?userId=${
+              JSON.parse(localStorage.getItem("Login-token"))["user-id"]
+            }&&clubId=${this.club.dto.clubId}`
+          )
+          .then((res) => {
+            console.log(res);
+
+            axios
+              .delete(
+                `${SERVER_URL}/club/member?clubId=${
+                  this.club.dto.clubId
+                }&&userId=${
+                  JSON.parse(localStorage.getItem("Login-token"))["user-id"]
+                }&&type=1&&contents=aaa`
+              )
+              .then((res) => {
+                console.log(res);
+                this.$router.push({
+                  name: "GroupList",
+                  params: { address: this.club.dto.areaCode },
+                });
+              })
+              .catch((err) => {
+                console.log(err);
+                alert("서버에 오류발생하였습니다.");
+              });
+          })
+          .catch((err) => {
+            console.log(err);
+            alert("서버에 오류발생하였습니다.");
+          });
+      } else {
+        // 그룹장이 아닌경우
+
+        axios
+          .delete(
+            `${SERVER_URL}/club/member?clubId=${this.club.dto.clubId}&&userId=${
+              JSON.parse(localStorage.getItem("Login-token"))["user-id"]
+            }&&type=1&&contents=aaa`
+          )
+          .then((res) => {
+            console.log(res);
+            this.$router.push({
+              name: "GroupList",
+              params: { address: this.club.dto.areaCode },
+            });
+          })
+          .catch((err) => {
+            console.log(err);
+            alert("서버에 오류발생하였습니다.");
+          });
+      }
     },
     // 회원관리
     toMemberList: function() {
-      this.$router.push({ name: 'GroupList', params: {address: this.club.dto.areaCode} })
+      this.$router.push({
+        name: "GroupMemberList",
+        params: {
+          address: this.club.dto.areaCode,
+          groupId: this.club.dto.clubId,
+          groupcheck: 1,
+        },
+      });
     },
-    // 그룹수정
-    updateGroup(){
-      this.$router.push({ name: 'GroupUpdate', params: {address: this.club.dto.areaCode , groupId : this.club.dto.clubId} })
+    updateGroup: function() {
+      this.$router.push({
+        name: "GroupUpdate",
+        params: {
+          address: this.club.dto.areaCode,
+          groupId: this.club.dto.clubId,
+        },
+      });
     },
-    // 그룹 삭제
-    deleteGroup(){
-
-    },
-    
-
   },
 };
 </script>

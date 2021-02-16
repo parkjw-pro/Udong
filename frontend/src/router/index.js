@@ -209,7 +209,7 @@ const routes = [
     component: GroupList,
   },
   {
-    path: '/story/:address/group/:groupId/member',
+    path: '/story/:address/group/:groupId/member/:groupcheck', //  관리자 1 가입자 0 
     name: 'GroupMemberList',
     component: GroupMemberList,
   },
@@ -219,7 +219,7 @@ const routes = [
     component: GroupPage,
   },
   {
-    path: '/story/:address/group/:groupId/profile/:groupcheck', // 그룹조회시  비가입자인지 가입자인지 그룹장인지.
+    path: '/story/:address/group/:groupId/profile/:groupcheck', //  groupcheck -> 관리자2  비가입자 0 가입자 1
     name: 'GroupProfile',
     component: GroupProfile,
   },

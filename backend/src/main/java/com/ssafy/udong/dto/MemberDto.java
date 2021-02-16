@@ -1,12 +1,14 @@
 package com.ssafy.udong.dto;
 
 public class MemberDto {
-
+	
+	private String nickname;
 	private String clubId;
 	private String userId;
 	private String type;
 	private String content;
-	private String requested_at;
+	private String createdAt;
+	private String requestedAt;
 	
 	public MemberDto() {}
 	
@@ -21,11 +23,28 @@ public class MemberDto {
 		this.type = type;
 	}
 
-	public MemberDto(String clubId, String userId, String content, String requested_at) {
+	public MemberDto(String clubId, String userId, String content, String requestedAt) {
 		this.clubId = clubId;
 		this.userId = userId;
 		this.content = content;
-		this.requested_at = requested_at;
+		this.requestedAt = requestedAt;
+	}
+
+	
+	public String getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(String createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 
 	public String getClubId() {
@@ -52,11 +71,11 @@ public class MemberDto {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public String getRequested_at() {
-		return requested_at;
+	public String getRequestedAt() {
+		return requestedAt;
 	}
-	public void setRequested_at(String requested_at) {
-		this.requested_at = requested_at;
+	public void setRequestedAt(String requestedAt) {
+		this.requestedAt = requestedAt;
 	}
 	
 }

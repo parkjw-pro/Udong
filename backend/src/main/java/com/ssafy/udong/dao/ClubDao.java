@@ -48,7 +48,7 @@ public interface ClubDao {
 
 	int createClubMemberWaiting(MemberDto member);
 
-	int deleteClubMember(String clubId, String userId);
+	int deleteClubMember(MemberDto member);
 
 	int deleteClubMemberWaiting(String clubId, String userId);
 

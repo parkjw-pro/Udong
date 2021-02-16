@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="pb-5">  
     <div v-if="login"><Navbar /></div>
-    <router-view></router-view>   
+    <router-view :address="$route.fullPath" :groupId="$route.fullPath"></router-view>   
   </div>
 </template>
 
