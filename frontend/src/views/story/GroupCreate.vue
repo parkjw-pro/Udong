@@ -136,7 +136,7 @@ export default {
         areaCode : "",
         clubName: "",
         clubContent: "",
-        isOpen: "1",
+        isOpen: "0",
        
       },
       dongcode: "",
@@ -156,13 +156,13 @@ export default {
   },
   methods: {
     valueTogle(){
-       console.log("처음값 : "+ this.club.isOpen)
+     
         if(this.club.isOpen == 1){
           this.club.isOpen = "0";
         }else{
            this.club.isOpen = "1";
         }
-        console.log("바뀐값 : "+ this.club.isOpen)
+     
     },
     previewImage(event) {
       var input = event.target;

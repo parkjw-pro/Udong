@@ -140,12 +140,17 @@ public class ClubServiceImpl implements ClubService {
 				List<String> fileNames = new ArrayList<>();
 				Path path = root.resolve("club");
 				Path path2 = path.resolve(Club.getUserId());
+				
+
+				DateFormat sdFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
+				Date nowDate = new Date();
+				String tempDate = sdFormat.format(nowDate);
 
 				try {
 
 					System.out.println("file service");
 					System.out.println(file.getOriginalFilename());
-					Files.copy(file.getInputStream(), path2.resolve(file.getOriginalFilename()));
+					Files.copy(file.getInputStream(), path2.resolve("udong_" + tempDate + file.getOriginalFilename()));
 
 					System.out.println("file service after");
 
@@ -162,7 +167,7 @@ public class ClubServiceImpl implements ClubService {
 				imageDto.setFileSize(file.getSize());
 				imageDto.setFileContentType(file.getContentType());
 
-				String imageFileUrl = root + "club" + Club.getUserId();
+				String imageFileUrl = root + File.separator+ "club" + File.separator+ Club.getUserId()+"/" + fileName;
 				imageDto.setFileUrl(imageFileUrl);
 
 				clubDao.createClubFile(imageDto);
@@ -253,7 +258,10 @@ public class ClubServiceImpl implements ClubService {
 	@Override
 	public int deleteClubMember(String clubId, String userId) {
 		try {
-			int delete = clubDao.deleteClubMember(clubId, userId);
+			MemberDto member = new MemberDto();
+			member.setClubId(clubId);
+			member.setUserId(userId);
+			int delete = clubDao.deleteClubMember(member);
 			int update = clubDao.reduceClubMemberNumber(clubId);
 			if (delete == 1 && update == 1)
 				return 1;

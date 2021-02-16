@@ -8,22 +8,15 @@
         </b-row>
         <hr>
         <b-row>
-          <b-card-group   >
-            <div id="group_card" v-for="(title, idx) in club" :key="idx"> 
-                <GroupCard :group="title"/>
-            </div>
-          </b-card-group>
-        </b-row>
-      <!-- <div>
-        <h4 id="group_list_category">내 그룹</h4>
-        <b-button pill variant="primary">+</b-button>
-      </div> -->
-        <b-card-group   >
+           <b-card-group   >
           <div v-for="(title, idx) in myClub" :key="idx"> 
-              <GroupCard :group = "title"/>
+              <GroupCard :group ="title"/>
           </div>
-   
+          
         </b-card-group>
+        </b-row>
+      
+   
         <!-- <GroupCard /> -->
     </div>
     <!-- 2. 공개 그룹 -->

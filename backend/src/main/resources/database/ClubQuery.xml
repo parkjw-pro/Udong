@@ -72,7 +72,7 @@
 	<!-- club 정보 수정 - club이름, 설명, 사진없음-->
 	<update id="updateClubNoFile" parameterType="com.ssafy.udong.dto.ClubDto">
 		update club
-		set club_name = #{clubName}, club_content = #{clubContent}, file_id = 0
+		set club_name = #{clubName}, club_content = #{clubContent}
 		where club_id = #{clubId}
 	</update>
 
@@ -90,18 +90,20 @@
 	
 	<!-- CLUB MEMBER -->
 	<select id="selectAllClubMember" parameterType="String" resultType="com.ssafy.udong.dto.MemberDto">
-		select * from club_member
-		where club_id = #{clubId}
+			select c.club_id as clubId, u.nickname as nickname , c.user_id  as userId , c.type as type , c.created_at
+			 from club_member c , user u
+			where c.user_id = u.user_id and club_id = #{param1}
 	</select>
 		
 	<select id="selectAllClubMemberWaiting" parameterType="String" resultType="com.ssafy.udong.dto.MemberDto">
-		select * from club_member_waiting
-		where club_id = #{clubId}
+		select c.club_id as clubId, u.nickname as nickname , c.user_id as userId , c.content, c.requested_at as requestedAt 
+		from club_member_waiting c, user u 
+		where c.user_id= u.user_id and club_id = #{clubId}
 	</select>
 	
 	<insert id="createClubMember" parameterType="com.ssafy.udong.dto.MemberDto">
-		insert into club_member(club_id, user_id, type)
-		values(#{clubId}, #{userId}, #{type})
+		insert into club_member(club_id, user_id, type, created_at)
+		values(#{clubId}, #{userId}, #{type},now())
 	</insert>
 	
 	<update id="addClubMemberNumber" parameterType="String">
@@ -117,7 +119,7 @@
 	</update>
 	
 	<insert id="createClubMemberWaiting" parameterType="com.ssafy.udong.dto.MemberDto">
-		insert into club_member(club_id, user_id, content)
+		insert into club_member_waiting(club_id, user_id, content)
 		values(#{clubId}, #{userId}, #{content})
 	</insert>
 	
@@ -132,13 +134,13 @@
 	</delete>
 
 	<select id="selectAllClubByUserId" parameterType="String" resultType="com.ssafy.udong.dto.ClubDto">
-		select c.club_id, club_name, member_number, club_content, is_open, created_at, area_code, c.user_id, file_id
+		select c.club_id, club_name, member_number, club_content, is_open, c.created_at, area_code, c.user_id, file_id
 		from club c, club_member m
 		where m.user_id = #{userId} and m.club_id = c.club_id;
 	</select>
 
 	<select id="selectAllClubWaitingByUserId" parameterType="String" resultType="com.ssafy.udong.dto.ClubDto">
-		select c.club_id, club_name, member_number, club_content, is_open, created_at, area_code, c.user_id, file_id
+		select c.club_id, club_name, member_number, club_content, is_open, c.created_at, area_code, c.user_id, file_id
 		from club c, club_member_waiting m
 		where m.user_id = #{userId} and m.club_id = c.club_id;
 	</select>

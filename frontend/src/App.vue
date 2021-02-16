@@ -1,7 +1,8 @@
 <template>
   <div id="app" class="pb-5">  
     <div v-if="login"><Navbar /></div>
-    <router-view />
+    <router-view ></router-view>   
+ 
   </div>
 </template>
 
