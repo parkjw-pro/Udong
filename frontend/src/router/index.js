@@ -230,7 +230,7 @@ const routes = [
   },
 
   {
-    path: '/story/:userId',
+    path: '/story/:userId/:nickname',
     name: 'MyFeed',
     component: MyFeed,
   },

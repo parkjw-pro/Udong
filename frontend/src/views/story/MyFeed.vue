@@ -9,7 +9,7 @@
         <b-col cols="6" align-self="center">
           <b-row align-h="center" class="mb-4">
             <b-col>
-              <h2 style="font-family: 'Nanum Pen Script', cursive; display: inline;">{{ this.user.nickname }} </h2>
+              <h2 style="font-family: 'Nanum Pen Script', cursive; display: inline;">{{ user.nickname }} </h2>
               <b-icon v-if="$route.params.userId === user.userId" icon="gear-fill" font-scale="1.5" style="cursor: pointer;" type="bold" @click="toAccountDetail"></b-icon>
             </b-col>
           </b-row>
@@ -98,59 +98,59 @@ export default {
     this.getGroups();
   },
   methods: {
-    getUserPosts(){
-      axios
-        .get(`${SERVER_URL}/userpost/user`, {
-          params: {
-            userId: this.user.userId,
-            limit: this.limit,
-            offset: this.offset
-          }
-      })
-        .then((response) => {
-          this.posts = response.data.list;
-          this.postCount = response.data.count;
-        });
-    },
-    toAccountDetail: function () {
-      this.$router.push({name: 'AccountDetail'})
-    },
-    getReviews: function() {
+  getUserPosts(){
     axios
-      .get(`${SERVER_URL}/review/user/${this.user.userId}`)
+      .get(`${SERVER_URL}/userpost/user`, {
+        params: {
+          userId: this.user.userId,
+          limit: this.limit,
+          offset: this.offset
+        }
+    })
       .then((response) => {
-        this.reviews = response.data;
-      })
-      .catch((response) => {
-        console.log(response);
+        this.posts = response.data.list;
+        this.postCount = response.data.count;
       });
-    },
-    getGroups() {
-      axios
-      .get(`${SERVER_URL}/club/user/${this.user.userId}/member`)
+  },
+  toAccountDetail: function () {
+    this.$router.push({name: 'AccountDetail'})
+  },
+  getReviews: function() {
+  axios
+    .get(`${SERVER_URL}/review/user/${this.user.userId}`)
+    .then((response) => {
+      this.reviews = response.data;
+    })
+    .catch((response) => {
+      console.log(response);
+    });
+  },
+  getGroups() {
+    axios
+    .get(`${SERVER_URL}/club/user/${this.user.userId}/member`)
+    .then(
+      (response) => (
+        this.groups = response.data
+      )
+    );
+  },
+  getMorePosts() {
+    if(this.postCount <= this.posts.length){
+      return;
+    }
+    this.offset += this.limit;
+    axios
+      .get(`${SERVER_URL}/userpost/user`, {
+        params: {
+          userId: this.user.userId,
+          limit: this.limit,
+          offset: this.offset
+        }
+      })
       .then(
-        (response) => (
-          this.groups = response.data
-        )
-      );
-    },
-    getMorePosts() {
-      if(this.postCount <= this.posts.length){
-        return;
-      }
-      this.offset += this.limit;
-      axios
-        .get(`${SERVER_URL}/userpost/user`, {
-          params: {
-            userId: this.user.userId,
-            limit: this.limit,
-            offset: this.offset
-          }
-        })
-        .then(
-          (response) => {
-            this.posts.push(...response.data.list);
-        });
+        (response) => {
+          this.posts.push(...response.data.list);
+      });
     },
     toList: function () {
       this.$router.push({ name: 'GroupList'})

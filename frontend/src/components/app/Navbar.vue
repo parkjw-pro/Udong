@@ -29,7 +29,10 @@
       <!-- 2. 햄버거메뉴 -->
       <component :is="currentMenu" :right="side === 'right' ? true: false" >
         <b-row id="option_v2" align-h="center" class="px-0 py-0 my-0">
-          <b-col @click="toBadge"><b-avatar variant="info" :src="require('@/assets/app/badge/badge1.jpg')" style="cursor: pointer;"></b-avatar>{{ user.nickname }}님 <small>안녕하세요!</small></b-col>
+          <b-col @click="toBadge">
+            <b-avatar variant="info" :src="require('@/assets/app/badge/badge1.jpg')" style="cursor: pointer;"></b-avatar>
+            {{ user.nickname }}님 <small>안녕하세요!</small>
+          </b-col>
         </b-row>
         <hr>
         <b-row id="option_v1" class="pl-3" @click="toReview">
@@ -126,17 +129,16 @@ export default {
     },
     toNews: function () {
       this.$router.push({name: 'NewsHome'})
-      location.reload(true)
+      // location.reload(true)
     },
     toStory: function () {
       // location.replace(`/story/${this.user.address}/${this.user.userId}`)
       this.$router.push({name: 'NewsFeed', params: {address: this.user.address, userId: this.user.userId}})
-      location.reload(true)
+      // location.reload(true)
     },
     toMyfeed: function () {
-      // location.replace(`/story/${this.user.userId}`)
       this.$router.push({name: 'MyFeed', params: { userId: this.user.userId, nickname: this.user.nickname}})
-      location.reload(true)
+      // location.reload(true)
     },
     toAccountDetail: function () {
       this.$router.push({name: 'AccountDetail'})
