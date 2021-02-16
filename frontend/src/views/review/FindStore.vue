@@ -14,7 +14,7 @@
         style="text-align: center; width: 40%;"
       />
       <b-button class="ml-3" size="sm" style="background-color: #695549;" @click="searchWord">검색</b-button>
-     
+      <b-button class="ml-3" pill size="sm" variant="transparent" style="color: #695549;" v-b-popover.hover.top="'카테고리, 상점명 등을 검색해보세요!'" title="검색 팁!">검색팁</b-button>
 
       <div v-if="getSearchStoreList.length > 0" style="overflow: auto; height: 650px;">
         <table
@@ -43,14 +43,22 @@
       <div v-else class="mt-5 pt-5">
         <img alt="Vue logo" src="@/assets/udonge.png" style="width: 10%" />
         <br />
-        <h5 class="mt-3">검색 결과가 없어요 ㅠㅠ</h5>
+        <h5 class="my-3">검색 결과가 없어요 ㅠㅠ</h5>
+        <div class="mb-2">
+          이런 검색어는 어떠세요?
+        </div>
+        <div>
+          <a class="mx-1" href="#" @click="searchRec('카페')">카페</a>
+          <a class="mx-1" href="#" @click="searchRec('독서실')">독서실</a>
+          <a class="mx-1" href="#" @click="searchRec('편의점')">편의점</a>
+        </div>
       </div>
     </b-col>
 
     <!-- 2. 오른쪽 지도 -->
     <b-col class="mt-5 pt-3 mr-3 ml-0 pl-0">
       <div class="map_wrap2" style="width: 80%;">
-        <div id="map" style="width:100%; height:100%; position:relative; overflow:hidden;"></div>
+        <div id="map" v-if="getSearchStoreList.length" style="width:100%; height:100%; position:relative; overflow:hidden;"></div>
         <div class="hAddr">
           <!-- <span class="title">지금 계신 위치가 이곳이 맞나요?</span> -->
           <span></span>
@@ -91,6 +99,7 @@ export default {
   },
   computed: {
     storeList: function() {
+      console.log("storeList");
       return this.getSearchStoreList;
     },
 
@@ -100,7 +109,9 @@ export default {
     if (this.storeParamDto.searchWord === '') {
       this.storeParamDto.searchWord = this.$route.params.keyword;
     }
-    await this.search()
+    console.log("11")
+    
+    await this.search();
   },
   methods: {
     searchWord: function () {
@@ -141,6 +152,7 @@ export default {
         rou.push({ name: 'ReviewDetail', params: { storeId: store.storeId } });
       };
       removeAllChildNods(listEl);
+      var list = this.getSearchStoreList;
       for (let index = 0; index < this.getSearchStoreList.length; index++) {
         var coords = new kakao.maps.LatLng(
           this.getSearchStoreList[index].locLat,
@@ -153,7 +165,7 @@ export default {
           image: markerImage, // 마커 이미지
         });
         var itemEl = this.getListItem(index, this.getSearchStoreList[index]);
-        var list = this.getSearchStoreList;
+        
 
         (function(marker, title) {
           kakao.maps.event.addListener(marker, 'click', function() {
@@ -195,9 +207,11 @@ export default {
       axios
         .post(`${SERVER_URL}/store/stores`, this.storeParamDto)
         .then((response) => {
-          // console.log(response.data);
           this.getSearchStoreList = response.data;
-          window.kakao && window.kakao.maps ? this.initMap() : this.addScript();
+          // console.log("res",this.getSearchStoreList )
+          if(this.getSearchStoreList!=null){
+            window.kakao && window.kakao.maps ? this.initMap() : this.addScript();
+          }
         })
         .catch(() => {
           // console.log('fail');
@@ -213,6 +227,13 @@ export default {
       el.className = 'item';
 
       return el;
+    },
+
+
+
+    // 추천 검색어로 검색
+    searchRec (wordRec) {
+      location.href = `/store/find/${this.storeParamDto.dongcode}/${wordRec}`
     },
   },
 };

@@ -45,7 +45,7 @@
 		SELECT p.post_id, p.club_id, p.user_id, u.nickname, p.post_content, p.created_at, 
 		p.post_views, p.is_open, p.post_like_count, p.post_tag, p.is_updated, p.updated_at, p.post_comment_count
 		FROM club_post p, user u
-		WHERE p.user_id = u.user_id AND p.post_content LIKE CONCAT('%', #{searchWord} ,'%')
+		WHERE p.user_id = u.user_id AND (p.post_content LIKE CONCAT('%', #{searchWord},'%') or u.nickname LIKE CONCAT('%', #{searchWord},'%'))
 		ORDER BY p.post_id DESC
 		LIMIT #{limit} OFFSET #{offset}
 	</select>
@@ -67,7 +67,7 @@
 		SELECT p.post_id, p.club_id, p.user_id, u.nickname,	p.post_content, p.created_at,
 		p.post_views, p.is_open, p.post_like_count, p.post_tag, p.is_updated, p.updated_at, p.post_comment_count
 		FROM club_post p, user u
-		WHERE p.club_id = #{clubId} AND p.user_id = u.user_id AND p.post_content LIKE CONCAT('%', #{searchWord} ,'%')
+		WHERE p.club_id = #{clubId} AND p.user_id = u.user_id AND (p.post_content LIKE CONCAT('%', #{searchWord},'%') or u.nickname LIKE CONCAT('%', #{searchWord},'%'))
 		ORDER BY p.post_id DESC
 		LIMIT #{limit} OFFSET #{offset}
 	</select>
@@ -89,7 +89,7 @@
 		SELECT p.post_id, p.club_id, p.user_id, u.nickname,	p.post_content, p.created_at,
 		p.post_views, p.is_open, p.post_like_count, p.post_tag, p.is_updated, p.updated_at, p.post_comment_count
 		FROM club_post p, user u
-		WHERE u.user_id = #{userId} AND p.user_id = u.user_id AND p.post_content LIKE CONCAT('%', #{searchWord} ,'%')
+		WHERE u.user_id = #{userId} AND p.user_id = u.user_id AND p.post_content LIKE CONCAT('%', #{searchWord},'%')
 		ORDER BY p.post_id DESC
 		LIMIT #{limit} OFFSET #{offset}
 	</select>
@@ -102,8 +102,8 @@
 	<!-- 글 총개수(검색어) -->
 	<select id="clubPostBySearchWordCount" parameterType="string"
 		resultType="int">
-		SELECT COUNT(*) FROM club_post
-		WHERE post_content LIKE CONCAT('%', #{searchWord} ,'%')
+		SELECT COUNT(*) FROM club_post p, user u
+		WHERE p.user_id = u.user_id AND (p.post_content LIKE CONCAT('%', #{searchWord},'%') or u.nickname LIKE CONCAT('%', #{searchWord},'%'))
 	</select>
 
 	<!-- 글 총개수(그룹) -->
@@ -115,8 +115,8 @@
 	<!-- 글 총개수(그룹, 검색어) -->
 	<select id="clubPostByClubIdAndSearchWordCount" parameterType="string"
 		resultType="int">
-		SELECT COUNT(*) FROM club_post
-		WHERE club_id = #{clubId} AND post_content LIKE CONCAT('%', #{searchWord} ,'%')
+		SELECT COUNT(*) FROM club_post p, user u
+		WHERE p.club_id = #{clubId} AND p.user_id = u.user_id AND (p.post_content LIKE CONCAT('%', #{searchWord},'%') or u.nickname LIKE CONCAT('%', #{searchWord},'%'))
 	</select>
 	
 	<!-- 글 총개수(유저) -->
@@ -205,9 +205,10 @@
 	</select>
 
 	<!-- 댓글 총개수 -->
-	<select id="userPostCommentTotalCount" resultType="int">
+	<select id="userPostCommentTotalCount" parameterType="map" resultType="int">
 		SELECT COUNT(*) FROM
 		club_post_comment
+		where post_id = #{postId}
 	</select>
 
 

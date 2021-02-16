@@ -8,7 +8,7 @@
             <b-col align-self="center">
               <span style="cursor: pointer;" @click="toFeed">
                 <!-- 뱃지 -->
-                <b-avatar :src="require('@/assets/app/badge1.jpg')"></b-avatar>
+                <b-avatar :src="require('@/assets/app/badge/badge1.jpg')"></b-avatar>
                 <!-- 닉네임 -->
                 <span class="ml-1" style="">{{ post.nickname }}</span>
               </span>
@@ -20,9 +20,13 @@
                 <b-icon icon="three-dots" variant="dark"></b-icon>
               </template>
               <div v-if="post.userId === userId">
-                <b-dropdown-item href="" variant="danger" v-b-modal.post-delete-modal>삭제</b-dropdown-item>
-                <b-modal id="post-delete-modal" @ok="deletePost">
-                  <p><img alt="Vue logo" src="@/assets/udonge.png" style="width: 10%" />소중한 리뷰를 정말 삭제하시겠습니까?</p>
+
+                <b-dropdown-item href="" variant="danger" @click="showModal">삭제</b-dropdown-item>
+                <!-- 삭제 modal 창 -->
+
+                <b-modal :ref="post.postId" @ok="deletePost">
+
+                  <p><img alt="Vue logo" src="@/assets/udonge.png" style="width: 10%" />소중한 게시글을 정말 삭제하시겠습니까?</p>
                 </b-modal>
               </div>
               <div v-else>
@@ -51,9 +55,10 @@
           </div>
           
           <!-- 댓글 수 -->
-          <div class="postComment" @click="getArticleComments">
-            <b-icon v-if="comments.length > 0" font-scale="1" icon="chat-fill" variant="warning"></b-icon>
+          <div class="postComment" @click="showComment">
+            <b-icon v-if="commentFlag" font-scale="1" icon="chat-fill" variant="warning"></b-icon>
             <b-icon v-else font-scale="1" icon="chat" variant="warning"></b-icon>
+            <span style="color:orange">{{commentCount}}</span>
           </div>
         </b-row>
 
@@ -62,21 +67,22 @@
         </b-row>
 
         <!-- 댓글 -->
-        <div style="width: 80%; display: inline-block">
-          <div v-for="(comm, i) in comments" :key="i">
-            <Comment :comment="comm" type="userpost" />
+        <div v-show="commentFlag">
+          <div style="width: 80%; display: inline-block">
+            <div v-for="(comm, i) in comments" :key="i">
+              <Comment :comment="comm" type="userpost" />
+            </div>
           </div>
+              
+          <b-row class="mt-3" v-if="comments.length > 0 && comments.length < commentCount">
+              <b-col>
+                <span style="cursor: pointer;" @click="getMoreComments">
+                  <!-- <b-button pill variant="light" @click="getMoreComments">+</b-button> -->
+                  <img alt="Vue logo" src="@/assets/udonge.png" style="width: 5%;">더보기
+                </span>
+              </b-col>
+          </b-row>
         </div>
-            
-        <b-row class="mt-3" v-if="comments.length > 0 && comments.length < commentCount">
-            <b-col>
-              <span style="cursor: pointer;" @click="getMoreComments">
-                <!-- <b-button pill variant="light" @click="getMoreComments">+</b-button> -->
-                <img alt="Vue logo" src="@/assets/udonge.png" style="width: 5%;">더보기
-              </span>
-            </b-col>
-        </b-row>
-
         <br>
         <!--댓글 입력창-->
         <div class="container">
@@ -94,7 +100,8 @@
 //import ImageSlick from '@/components/story/ImageSlick'
 import Comment from '@/components/story/Comment'
 import axios from 'axios';
-const SERVER_URL = "http://localhost:8000";
+
+const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
 export default {
   name: 'PostBlockMy',
@@ -113,6 +120,7 @@ export default {
       liked: false,
       comments: [],  //글에 달린 댓글
       commentCount: 0,
+      commentFlag: false,
       limit: 5,
       offset: 0,
       comment: '',  //작성하는 댓글
@@ -128,11 +136,18 @@ export default {
       this.fileId= res.data.fileId;
     });
 
-    this.getLikeInfo();
+    this.getLikeInfo();  //해당 게시글에 좋아요를 눌렀는지 확인
+    this.getComments(); //게시글에 달린 댓글 가져오기
   },
   methods: {
     toFeed: function () {
-      this.$router.push({name: 'MyFeed', params: { userId: this.post.userId, nickname: this.post.nickname}})
+      // 자신의 배지를 누르기 때문에 새로고침! 기록을 남기지 않기 위해 replace 사용
+      if (this.post.userId === this.userId) {
+        location.replace(`/story/${this.userId}`)
+      }
+      else {
+        this.$router.push({name: 'MyFeed', params: { userId: this.post.userId, nickname: this.post.nickname}})
+      }
     },
     getLikeInfo(){
       axios
@@ -151,7 +166,7 @@ export default {
     deletePost() {
       axios
         .delete(`${SERVER_URL}/userpost`, {
-          postId: this.post['postId']
+          params:{ postId: this.post['postId'] }
         })
         .then((response) => {
           console.log(response);
@@ -175,28 +190,10 @@ export default {
             }
         });
     },
-    getArticleComments() {
-      // if(this.comments.length > 0) return;
-      axios
-        .get(`${SERVER_URL}/userpost/comment`, {
-          params: {
-            postId: this.post.postId,
-            limit: this.limit,
-            offset: this.offset
-          }
-        })
-        .then(
-          (response) => {
-            this.comments = response.data.list;
-            this.commentCount = response.data.count;
-          });
+    showComment() {
+      this.commentFlag = !this.commentFlag;
     },
-    getMoreComments(){
-      if(this.commentCount <= this.comments.length){
-        return;
-      }
-
-      this.offset += this.limit;
+    getComments() {
       axios
         .get(`${SERVER_URL}/userpost/comment`, {
           params: {
@@ -208,7 +205,16 @@ export default {
         .then(
           (response) => {
             this.comments.push(...response.data.list);
+            this.commentCount = response.data.count;
           });
+    },
+    getMoreComments(){
+      if(this.commentCount <= this.comments.length){
+        return;
+      }
+
+      this.offset += this.limit;
+      this.getComments();
     },
     writeComment() {
       axios
@@ -219,10 +225,15 @@ export default {
         })
         .then((response) => {
           console.log(response);
-          this.getArticleComments();
+          this.offset = 0;
+          this.comments = [];  //댓글 초기화
+          this.getComments();
           this.post.postCommentCount = this.post.postCommentCount*1 + 1;
         });
-    }
+    },
+    showModal () {
+      this.$refs[`${this.post.postId}`].show()
+    },
   },
 }
 </script>

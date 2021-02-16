@@ -1,25 +1,11 @@
 <template>
   <div class="mb-5 pb-5">
-    <b-button variant="primary" v-on:click="getRandom">SHUFFLE</b-button>
+    <b-button variant="primary" v-on:click="randomize">SHUFFLE</b-button>
     <br>
     <br>
     <div>
-      <div class="circle" id="circle1" v-bind:style="{ left: circles.circle1.left + 'px', top: circles.circle1.top + 'px' }"># 이송영집</div>
-      <div class="circle" id="circle2" v-bind:style="{ left: circles.circle2.left + 'px', top: circles.circle2.top + 'px' }"># 바다</div>
-      <div class="circle" id="circle3" v-bind:style="{ left: circles.circle3.left + 'px', top: circles.circle3.top + 'px' }"># 붕어빵</div>
-      <div class="circle" id="circle4" v-bind:style="{ left: circles.circle4.left + 'px', top: circles.circle4.top + 'px' }"># 겨울</div>
-      <div class="circle" id="circle5" v-bind:style="{ left: circles.circle5.left + 'px', top: circles.circle5.top + 'px' }"># 핫해핫해</div>
-      <div class="circle" id="circle6" v-bind:style="{ left: circles.circle6.left + 'px', top: circles.circle6.top + 'px' }"># 노을</div>
+      <span v-for="(tag, i) in tags" :key="i" class="circle" :style="{background: colors[Math.floor(Math.random()*colors.length)]}"># {{tag}}</span>
     </div>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
     <br>
     <br>
     <br>
@@ -27,21 +13,83 @@
 </template>
 
 <script>
+import axios from 'axios';
+const SERVER_URL = process.env.VUE_APP_SERVER_URL
+
 export default {
   name: 'TagBox',
+  props:{
+    user: Object
+  },
   data: function () {
     return {
-      circles: {
-        circle1: { left: 0, top: 0 },
-        circle2: { left: 0, top: 0 },
-        circle3: { left: 0, top: 0 },
-        circle4: { left: 0, top: 0 },
-        circle5: { left: 0, top: 0 },
-        circle6: { left: 0, top: 0 },
-      },
+      userposts: [],
+      userPostCount: 0,
+      groupposts: [],
+      groupPostCount: 0,
+      limit: 5,  //한 페이지에 노출될 게시글의 수
+      offset: 0,  //게시글 번호 오프셋,
+      tags: [],
+      colors: ['#D5D6EA', '#F6F6EB', '#D7ECD9', '#F5D5CB', '#F6ECF5', '#F3DDF2'],
     }
   },
+  async created() {
+    await this.getPosts()
+    this.getTags();
+    console.log(this.tags);
+  },
   methods: {
+    async getPosts() {
+      await axios
+        .get(`${SERVER_URL}/userpost/user`, {
+          params: {
+            userId: this.user.userId,
+            limit: this.limit,
+            offset: this.offset
+          }
+        })
+        .then((response) => {
+            this.userposts = response.data.list;
+            this.userPostCount = response.data.count;
+        });
+
+      await axios
+        .get(`${SERVER_URL}/clubpost/user`, {
+          params: {
+            userId: this.user.userId,
+            limit: this.limit,
+            offset: this.offset
+          }
+        })
+        .then((response) => {
+            this.groupposts = response.data.list;
+            this.groupPostCount = response.data.count;
+        });
+    },
+    getTags: async function() {
+      for(let up of this.userposts){
+        if(up.postTag != ""){
+          var t1 = up.postTag;
+          if(t1 != null)
+            this.tags = t1.split("#").slice(1);
+        }
+      }
+      for(let gp of this.groupposts){
+        if(gp.postTag != ""){
+          var t2 = gp.postTag;
+          if(t2 != null)
+            this.tags.push(...t2.split("#").slice(1));
+        }
+      }
+    },
+    randomize(){
+      for (let i = this.tags.length - 1; i > 0; i--) {
+        let randomIndex = Math.floor(Math.random() * i)
+        let temp = this.tags[i]
+        this.$set(this.tags, i, this.tags[randomIndex])
+        this.$set(this.tags, randomIndex, temp)
+      }
+    },
     getRandom: function () {
       // for문을 돌려줘야 한다!!!!
       var circles = this.circles
@@ -59,47 +107,18 @@ export default {
       circles.circle6.top = Math.floor(Math.random() * 300)
     }
   },
-  created: async function() {
-      await this.getRandom()
-  }
+  // created: async function() {
+  //     await this.getRandom()
+  // }
 }
 </script>
 
-<style>
+<style scoped>
 .circle {
   border-radius: 50%;
   display: inline;
   position: relative;
+  margin: 2%;
   /* box-shadow: 0.375em 0.375em 0 0 rgba(15, 28, 63, 0.125); */
-}
-#circle1 {
-  background: #D5D6EA;
-  height: 3em;
-  width: 3em;
-}
-#circle2 {
-  background: #F6F6EB;
-  height: 10em;
-  width: 10em;
-}
-#circle3 {
-  background: #D7ECD9;
-  height: 8em;
-  width: 8em;
-}
-#circle4 {
-  background: #F5D5CB;
-  height: 15em;
-  width: 15em;
-}
-#circle5 {
-  background: #F6ECF5;
-  height: 3em;
-  width: 3em;
-}
-#circle6 {
-  background: #F3DDF2;
-  height: 3em;
-  width: 3em;
 }
 </style>

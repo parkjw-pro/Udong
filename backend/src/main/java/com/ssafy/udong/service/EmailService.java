@@ -41,7 +41,7 @@ public class EmailService {
 						"    </h1>\n"                                                                                                                                                                                                + 
 						"    <p style=\"font-size: 16px; line-height: 26px; margin-top: 50px; padding: 0 5px;\">"                                                                                                                    + 
 						"        [우동]에 가입해 주셔서 진심으로 감사드립니다.<br />"                                                                                                                                                        + 
-						"        아래 <b style=\"color: #cc8732\">"+c +"</b> 를 입력하여 회원가입을 완료해 주세요.<br />"                                                                                                                    + 
+						"        인증코드 : <b style=\"color: #cc8732\">"+c +"</b> <br />"                                                                                                                    + 
 						"        감사합니다."                                                                                                                                                                                            + 
 						"    </p>"                                                                                                                                                                                                    + 
 						"    <a style=\"color: #FFF; text-decoration: none; text-align: center;\""                                                                                                                                    +

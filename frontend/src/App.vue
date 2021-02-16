@@ -1,7 +1,8 @@
 <template>
   <div id="app" class="pb-5">  
     <div v-if="login"><Navbar /></div>
-    <router-view :address="$route.fullPath" :groupId="$route.fullPath"></router-view>   
+    <router-view ></router-view>   
+ 
   </div>
 </template>
 
@@ -12,7 +13,7 @@ import 'vue-select/dist/vue-select.css';
 export default {
   name: 'App',
   components: {
-     Navbar,
+    Navbar,
   },
   data: function () {
     return {
@@ -70,12 +71,15 @@ export default {
 #box {
   display: block;
   width: 50%;
-  /* height: 50%; */
   position: absolute;
   left: 25%;
   margin-top: 5%;
   padding-bottom: 7%;
 }
 
+#top_title {
+  color: #695549;
+  font-family: 'Nanum Pen Script', cursive;
+}
 
 </style>

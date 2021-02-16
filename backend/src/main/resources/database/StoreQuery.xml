@@ -52,6 +52,57 @@
 		where store_id = #{storeId}
 
 	</select>
+	
+	
+		<!--지역코드로 best ctg조회 -->
+	<select id="selectBestCtg" parameterType="String"
+		resultType="String">
+
+		select  s.store_ctg_3, COUNT(r.store_id) as reviewcount from
+		store s LEFT OUTER JOIN review r on s.store_id
+		= r.store_id
+		where s.store_dong_code like CONCAT('%', #{dongCode} ,'%')
+		GROUP BY
+		s.store_ctg_3
+		ORDER BY COUNT(r.store_id) DESC
+		limit 8;
+	</select>
+	
+			<!--지역코드로 best 상점조회 -->
+	<select id="selectBestStore" parameterType="map"
+		resultType="com.ssafy.udong.dto.StoreDto">
+
+		select  s.store_id, s.loc_lat, s.loc_lng, s.store_ctg_1,
+		s.store_ctg_2, s.store_ctg_3, s.store_ctg_4, s.store_dong_name,
+		s.store_dong2_name, s.store_sido_name, s.store_gugun_name, s.store_dong_code,
+		s.store_dong2_code,
+		s.store_sido_code, s.store_gugun_code, s.store_name, s.store_addr, s.store_name_detail, COUNT(r.store_id) as reviewcount from
+		store s LEFT OUTER JOIN review r on s.store_id
+		= r.store_id
+		where s.store_dong_code like CONCAT('%', #{dongcode} ,'%')
+		GROUP BY
+		s.store_id
+		ORDER BY COUNT(r.store_id) DESC
+		limit 10;
+	</select>
+	
+	<select id="selectBestCtgStore" parameterType="map"
+		resultType="com.ssafy.udong.dto.StoreDto">
+
+		select  s.store_id, s.loc_lat, s.loc_lng, s.store_ctg_1,
+		s.store_ctg_2, s.store_ctg_3, s.store_ctg_4, s.store_dong_name,
+		s.store_dong2_name, s.store_sido_name, s.store_gugun_name, s.store_dong_code,
+		s.store_dong2_code,
+		s.store_sido_code, s.store_gugun_code, s.store_name, s.store_addr, s.store_name_detail, COUNT(r.store_id) as reviewcount from
+		store s LEFT OUTER JOIN review r on s.store_id
+		= r.store_id
+		where s.store_dong_code like CONCAT('%', #{dongcode} ,'%')
+        and s.store_ctg_3 = #{searchWord}
+		GROUP BY
+		s.store_id
+		ORDER BY COUNT(r.store_id) DESC
+        limit 10;
+	</select>
 
 
 

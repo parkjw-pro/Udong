@@ -5,8 +5,6 @@
                 <slot></slot>
             </nav>
             <span class="bm-cross-button cross-style mt-2" @click="closeMenu" :class="{ hidden: !crossIcon }">
-              <!-- style="text-align: justify;" -->
-              <!-- <b-icon class="h2" icon="house-door-fill" variant="dark"></b-icon> -->
               <span v-for="(x, index) in 2" :key="x" class="bm-cross" :style="{ position: 'absolute', width: '3px', height: '25px',transform: index === 1 ? 'rotate(45deg)' : 'rotate(-45deg)'}">
               </span>
             </span>
@@ -216,6 +214,7 @@ export default {
       left: 36px;
       top: 36px;
       cursor: pointer;
+      /* color:  #695549; */
     }
     .bm-burger-button.hidden {
       display: none;
