@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.udong.dto.BadgeDto;
 import com.ssafy.udong.dto.UserDto;
 import com.ssafy.udong.dto.UserParamDto;
 import com.ssafy.udong.service.EmailService;
@@ -265,6 +266,56 @@ public class UserController {
 			return new ResponseEntity<String>("주소 등록 성공", HttpStatus.OK);
 		} else {
 			return new ResponseEntity<String>("주소 등록 실패", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@ApiOperation(value = "뱃지 추가", notes = "획득한 뱃지를 추가합니다..\n")
+	@PostMapping("/badge")
+	public ResponseEntity<String> insertBadge(@RequestParam(value="userId") String userId,@RequestParam(value="badgeId") String badgeId) throws Exception {
+
+		int result = userService.insertBadge(userId, badgeId);
+
+		if (result == SUCCESS) {// 아이디 비밀번호가있으면 ok
+			return new ResponseEntity<String>("뱃지 등록 성공", HttpStatus.OK);
+		} else { // 아이디비밀번호가없으면 fail
+			return new ResponseEntity<String>("뱃지 등록 실패", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@ApiOperation(value = "뱃지 삭제", notes = "뱃지를 삭제합니다..\n")
+	@DeleteMapping("/badge")
+	public ResponseEntity<String> deleteBadge(@RequestParam(value="userId") String userId,@RequestParam(value="badgeId") String badgeId) throws Exception {
+
+		int result = userService.deleteBadge(userId, badgeId);
+
+		if (result == SUCCESS) {// 아이디 비밀번호가있으면 ok
+			return new ResponseEntity<String>("뱃지 삭제 성공", HttpStatus.OK);
+		} else { // 아이디비밀번호가없으면 fail
+			return new ResponseEntity<String>("뱃지 삭제 실패", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@ApiOperation(value = "뱃지 조회", notes = "뱃지를 조회합니다..\n")
+	@GetMapping("/badge")
+	public ResponseEntity<List<BadgeDto>> selectBadge(@RequestParam(value="userId") String userId) throws Exception {
+
+		List<BadgeDto> list = userService.selectBadge(userId);
+
+		return new ResponseEntity<List<BadgeDto>>(list, HttpStatus.OK);
+
+		
+	}
+	
+	@ApiOperation(value = "메인 벳지 업데이트", notes = "뱃지를 업데이트 합니다..\n")
+	@PutMapping("/badge")
+	public ResponseEntity<String> updateBadge(@RequestParam(value="userId") String userId,@RequestParam(value="badgeId") String badgeId) throws Exception {
+
+		int result = userService.updateBadge(userId, badgeId);
+
+		if (result == SUCCESS) {// 아이디 비밀번호가있으면 ok
+			return new ResponseEntity<String>("뱃지 업데이트 성공", HttpStatus.OK);
+		} else { // 아이디비밀번호가없으면 fail
+			return new ResponseEntity<String>("뱃지 업데이트 실패", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	

@@ -25,6 +25,10 @@
 </template>
 
 <script>
+// if (document.location.protocol == 'http:') {
+//     document.location.href = document.location.href.replace('http:', 'https:');
+// }
+
 import axios from 'axios'
 
 const MAP_API_KEY = process.env.VUE_APP_MAP_API_KEY
@@ -134,10 +138,12 @@ export default {
     // asd(data) {
     //   this.userLocation.addressCode = data;
     // },
+
+    
     addScript() {
       const script = document.createElement('script'); /* global kakao */
       script.onload = () => kakao.maps.load(this.initMap);
-      script.src = `http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${MAP_API_KEY}&libraries=services`;
+      script.src = `https://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${MAP_API_KEY}&libraries=services`;
       document.head.appendChild(script);
     },
     addUserAddress: function () {

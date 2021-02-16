@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.ssafy.udong.dto.BadgeDto;
 import com.ssafy.udong.dto.UserDto;
 import com.ssafy.udong.dto.UserParamDto;
 
@@ -42,6 +43,14 @@ public interface UserDao {
 
 	public UserParamDto selectUserAddress(UserParamDto dto);
 
-	public void updateUserAddress(UserParamDto dto);
+	public int updateUserAddress(UserParamDto dto);
+
+	public int insertBadge(String userId, String badgeId);
+
+	public int deleteBadge(String userId, String badgeId);
+
+	public void updateBadge(String userId, String badgeId);
+
+	public List<BadgeDto> selectBadge(String userId);
 }
 
