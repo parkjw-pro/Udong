@@ -1,28 +1,28 @@
 <template>
   <div id="box">
     <!-- 1. 프로필 -->
-     <b-row class="mb-5">
-      <b-col cols="4">
-        <b-avatar size="8rem" variant="info" :src="require('@/assets/app/badge1.jpg')" style="cursor: pointer; width:"></b-avatar>
-      </b-col>
-      <!-- <b-col cols="1">
-        <b-icon class="h2" icon="plus"></b-icon>
-      </b-col> -->
-      <b-col cols="6" align-self="center">
-        <b-row align-h="center" class="mb-4">
-          <b-col>
-            <h2 v-if="$route.params.userId === user.userId" style="font-family: 'Nanum Pen Script', cursive; display: inline;">{{ this.user.nickname }} </h2>
-            <h2 v-else style="font-family: 'Nanum Pen Script', cursive; display: inline;">{{ $route.params.nickname }} </h2>
-            <b-icon v-if="$route.params.userId === user.userId" icon="gear-fill" font-scale="1.5" style="cursor: pointer;" type="bold" @click="toAccountDetail"></b-icon>
-          </b-col>
-        </b-row>
-        <b-row align-h="center">
-          <b-col class="mx-0 px-0"><b-button disabled style="background-color: #695549;">게시물: {{ posts.length }}</b-button></b-col>
-          <b-col class="mx-0 px-0"><b-button disabled style="background-color: #695549;">리뷰: {{reviews.length}}</b-button></b-col>
-          <b-col class="mx-0 px-0"><b-button disabled style="background-color: #695549;">그룹: {{groups.length}}</b-button></b-col>
-        </b-row>
-      </b-col>
-    </b-row>
+    <b-jumbotron>  <!-- head, lead 속성 사용가능! -->
+      <b-row class="mb-5">
+        <b-col cols="4">
+          <b-avatar size="8rem" variant="info" :src="require('@/assets/app/badge/badge1.jpg')" style="cursor: pointer; width:"></b-avatar>
+        </b-col>
+        <b-col cols="6" align-self="center">
+          <b-row align-h="center" class="mb-4">
+            <b-col>
+              <h2 v-if="$route.params.userId === user.userId" style="font-family: 'Nanum Pen Script', cursive; display: inline;">{{ this.user.nickname }} </h2>
+              <h2 v-else style="font-family: 'Nanum Pen Script', cursive; display: inline;">{{ $route.params.nickname }} </h2>
+              <b-icon v-if="$route.params.userId === user.userId" icon="gear-fill" font-scale="1.5" style="cursor: pointer;" type="bold" @click="toAccountDetail"></b-icon>
+            </b-col>
+          </b-row>
+          <b-row align-h="center">
+            <b-col class="mx-0 px-0"><b-button disabled style="background-color: #695549;">게시물: {{ posts.length }}</b-button></b-col>
+            <b-col class="mx-0 px-0"><b-button disabled style="background-color: #695549;">리뷰: {{reviews.length}}</b-button></b-col>
+            <b-col class="mx-0 px-0"><b-button disabled style="background-color: #695549;">그룹: {{groups.length}}</b-button></b-col>
+          </b-row>
+        </b-col>
+      </b-row>
+    </b-jumbotron>
+     
     <!-- 2. 탭 -->
     <b-tabs
       active-nav-item-class="font-weight-bold text-uppercase text-dark"
@@ -99,7 +99,6 @@ export default {
     this.getUserPosts();
     this.getReviews();
     this.getGroups();
-    
   },
   methods: {
     getUserPosts(){
