@@ -58,10 +58,6 @@ export default {
   },
   methods: {
     getLikeInfo() {
-      console.log(this.getUserId);
-      console.log(this.comment['postId']);
-      console.log(this.comment['clubId']);
-      console.log(this.comment['commentId']);
       axios
         .get(`${SERVER_URL}/${this.type}/comment/like`, {
           params: {
@@ -73,7 +69,6 @@ export default {
         })
         .then(
           (response) => (
-            console.log(response),
             this.liked = response.data
           )
         );

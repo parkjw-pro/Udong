@@ -172,6 +172,7 @@
 <script>
 import axios from "axios";
 import { ValidationProvider } from "vee-validate";
+
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
 export default {
@@ -215,8 +216,8 @@ export default {
     },
     // onSubmit2 이메일 인증코드 인풋에 넣고 post하기
     async onSubmit2() {
-      axios
-        .post(`${SERVER_URL}/user/email/${this.emailcode}`)
+      axios  
+        .post(`${SERVER_URL}/user/email/${this.credentials.userId}/${this.emailcode}`)
         .then(() => {
           alert("인증번호  확인 ");
           this.makepassword = true;

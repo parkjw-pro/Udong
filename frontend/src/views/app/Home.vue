@@ -22,7 +22,7 @@
         <h1 color="black" style="font-family: 'Nanum Pen Script', cursive;">우리 동네 공간</h1>
       </b-col>
       <b-col cols="5" align-self="center">
-        <img src="@/assets/logo.png" alt="우동" style="width: 60%;">
+        <img src="@/assets/logo.png" alt="우동" style="width: 40%;">
       </b-col>
     </b-row>
     <!-- 1. 우리 동네 리뷰 -->
@@ -36,14 +36,14 @@
         </b-row>
       </b-col>
       <b-col cols="4" align-self="center">
-        <img alt="Vue logo" src="@/assets/app/home_review.png" style="width: 100%; cursor: pointer;" @click="toReview">
+        <img alt="Vue logo" src="@/assets/app/home/home_review.png" style="width: 100%; cursor: pointer;" @click="toReview">
         <p style="cursor: pointer;" @click="toReview"><img alt="Vue logo" src="@/assets/udonge.png" style="width: 8%;">우동 리뷰 보러가기!</p>
       </b-col>
     </b-row>
     <!-- 2. 우리 동네 소식 -->
     <b-row id="paper" class="color_red">
       <b-col cols="3" offset="2" align-self="center">
-        <img class="mb-3" alt="Vue logo" src="@/assets/app/home_news.png" style="width: 80%; cursor: pointer;" @click="toNews">
+        <img class="mb-3" alt="Vue logo" src="@/assets/app/home/home_news.png" style="width: 80%; cursor: pointer;" @click="toNews">
         <p style="cursor: pointer;" @click="toNews">서비스 준비중입니다</p>
       </b-col>
       <b-col cols="4" offset="2" align-self="center">
@@ -66,14 +66,14 @@
         </b-row>
       </b-col>
       <b-col cols="4" align-self="center">
-        <img alt="Vue logo" src="@/assets/app/home_story.png" style="width: 80%; cursor: pointer;" @click="toStory">
+        <img alt="Vue logo" src="@/assets/app/home/home_story.png" style="width: 80%; cursor: pointer;" @click="toStory">
         <p style="cursor: pointer;" @click="toStory"><img alt="Vue logo" src="@/assets/udonge.png" style="width: 6%;">우동 이야기 보러가기!</p>
       </b-col>
     </b-row>
     <!-- 4. 내 피드 -->
     <b-row id="paper" class="color_green">
       <b-col cols="3" offset="2" align-self="center">
-        <img class="mb-2" alt="Vue logo" src="@/assets/app/home_myfeed.png" style="width: 100%; cursor: pointer;" @click="toMyFeed">
+        <img class="mb-2" alt="Vue logo" src="@/assets/app/home/home_myfeed.png" style="width: 100%; cursor: pointer;" @click="toMyFeed">
         <p style="cursor: pointer;" @click="toMyFeed"><img alt="Vue logo" src="@/assets/udonge.png" style="width: 8%;">내 피드 가기!</p>
       </b-col>
       <b-col cols="4" offset="2" align-self="center">
@@ -85,28 +85,34 @@
         </b-row>
       </b-col>
     </b-row>
-    <b-row id="paper">
+    <b-row id="paper" style="font-family: 'Nanum Pen Script', cursive;">
       <b-col align-self="center">
         <b-row>
-          <b-col><h1 style="font-family: 'Nanum Pen Script', cursive;">소비자들에게 전하고 싶은 가치</h1></b-col>
+          <b-col><h1>Core Values of Consumers</h1></b-col>
         </b-row>
-        <b-row class="mt-5">
-          <!-- <b-col><b-icon icon="newspaper" font-scale="3"></b-icon></b-col> -->
+        <b-row class="mt-5" align-h="center">
+          <b-col cols="2"><img src="@/assets/app/home/value_news.png" alt="" style="width: 60%;"></b-col>
+          <b-col cols="2"><img src="@/assets/app/home/value_connection.png" alt="" style="width: 60%;"></b-col>
+          <b-col cols="2"><img src="@/assets/app/home/value_user.jpg" alt="" style="width: 60%;"></b-col>
         </b-row>
-        <!-- newspaper` -->
+        <b-row class="mt-5" align-h="center">
+          <b-col cols="2"><h3>Sophisticated Information</h3></b-col>
+          <b-col cols="2"><h3>Neighborhood Connections</h3></b-col>
+          <b-col cols="2"><h3>User-Friendly</h3></b-col>
+        </b-row>
       </b-col>
     </b-row>
-    <b-row id="paper" class="color_purple">
+    <b-row id="paper" class="color_purple" style="font-family: 'Nanum Pen Script', cursive;">
       <b-col cols="3" offset="3" align-self="center">
         <b-row class="mb-3">
-          <h1 style="font-family: 'Nanum Pen Script', cursive;">개발자들</h1>
+          <h1>Developers</h1>
         </b-row>
         <b-row>
-          <p>이걸 만들기 위해 쎄빠지게 고생한 개발자들...</p>
+          <h4 class="ml-1">outstanding developers to be honoured</h4>
         </b-row>
       </b-col>
       <b-col cols="4" align-self="center">
-        <p style="cursor: pointer;" @click="toDevelopers"><img alt="Vue logo" src="@/assets/udonge.png" style="width: 10%;">그 명예의 이름 확인하러 가기...!</p>
+        <h4 style="cursor: pointer;" @click="toDevelopers"><img alt="Vue logo" src="@/assets/udonge.png" style="width: 10%;">Check it out here</h4>
       </b-col>
     </b-row>
   </div>
@@ -124,6 +130,10 @@ export default {
     return {
       reviewList: [],
       storyList: [],
+      user: {
+        userId: JSON.parse(localStorage.getItem('Login-token'))['user-id'],
+        nickname: JSON.parse(localStorage.getItem('Login-token'))['user-name']
+      }
     }
   },
   methods: {
@@ -131,7 +141,8 @@ export default {
       this.$router.push({ name: 'Developers' })
     },
     toMyFeed: function () {
-      this.$router.push({ name: 'MyFeed' })
+      // this.$router.push({ name: 'MyFeed' })
+      this.$router.push({ name: 'MyFeed', params: { userId: this.user.userId, nickname: this.user.nickname}})
     },
     toNews: function () {
       this.$router.push({ name: 'NewsHome' })

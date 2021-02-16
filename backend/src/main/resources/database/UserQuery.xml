@@ -126,9 +126,22 @@
 		where user_id = #{param1}
 		and badge_id = #{param2}
 	</delete>
+
+	<insert id="createEmailCode"
+		parameterType="map">
+		insert into emailcode( user_id , email_code) values( #{param1},#{param2})
+	</insert>
 	
+	<select id="selectEmailCode"
+		parameterType="String" resultType="com.ssafy.udong.dto.EmailCodeDto">
+		select * from emailcode
+		where user_id = #{userId}
+	</select>
 	
-
-
-
+	<update id="updateEmailCode"
+		parameterType="String">
+		UPDATE emailcode set email_code = #{param2}
+		WHERE user_id = #{param1}
+	</update>
+	
 </mapper>

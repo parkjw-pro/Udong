@@ -18,6 +18,7 @@
             <b-icon icon="search" variant="black" @click="FindStore"/>
           </span>
         </div>
+        <b-button class="ml-3" pill size="sm" variant="transparent" style="color: #695549;" v-b-popover.hover.top="'카테고리, 상점명 등을 검색해보세요!'" title="검색 팁!">검색팁</b-button>
       </b-col>
       
     </b-row>
@@ -33,23 +34,23 @@
     <div v-if="bestCtgList.length > 0">
       <b-row align-h="center" >
         <b-card-group deck style="width: 75%;">
+          <CategoryCard category="가장 인기 많은 상점"/>
           <CategoryCard :category="bestCtgList[0]"/>
           <CategoryCard :category="bestCtgList[1]"/>
-          <CategoryCard :category="bestCtgList[2]"/>
         </b-card-group>
       </b-row>
       <b-row align-h="center">
         <b-card-group deck style="width: 75%;">
+          <CategoryCard :category="bestCtgList[2]"/>
           <CategoryCard :category="bestCtgList[3]"/>
           <CategoryCard :category="bestCtgList[4]"/>
-          <CategoryCard :category="bestCtgList[5]"/>
         </b-card-group>
       </b-row>
       <b-row align-h="center">
         <b-card-group deck style="width: 75%;">
+          <CategoryCard :category="bestCtgList[5]"/>
           <CategoryCard :category="bestCtgList[6]"/>
           <CategoryCard :category="bestCtgList[7]"/>
-          <CategoryCard category="가장 인기 많은 상점"/>
         </b-card-group>
       </b-row>
     </div>

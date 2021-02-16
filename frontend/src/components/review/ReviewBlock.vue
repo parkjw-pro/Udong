@@ -1,33 +1,22 @@
 <template>
   <div>
     <!-- <b-card-group deck> -->
-    <b-card
-      header-tag="header"
-      header-bg-variant="white"
-      footer-tag="footer"
-      footer-bg-variant="white"
-    >
-      <!-- 1. title 부분  -->
-      <template #header>
-        <b-card-text>
-          <b-row align-h="justify">
-            <!-- <span class="mr-5">뱃지 img</span> -->
-            <b-col
-              ><div class="mt-2" style="text-align: left">
-                <span class="font-weight-bold" style="font-size: large;">{{ review.nickname }}</span
-                >님의 리뷰 {{ rate }}
-              </div></b-col
-            >
-            <b-col style="text-align: right;">
-              <b-dropdown
-                size="lg"
-                dropup
-                variant="link"
-                toggle-class="text-decoration-none"
-                no-caret
-              >
+      <b-card
+        header-tag="header"
+        header-bg-variant="white"
+        footer-tag="footer"
+        footer-bg-variant="white"
+      > 
+        <!-- 1. title 부분  -->
+        <template #header>
+          <b-card-text>
+            <b-row align-h="justify">
+              <!-- <span class="mr-5">뱃지 img</span> -->
+              <b-col><div class="mt-2" style="text-align: left"><span class="font-weight-bold" style="font-size: large;">{{review.nickname}}</span>님의 리뷰</div></b-col>
+              <b-col style="text-align: right;">
+                <b-dropdown size="lg" dropup variant="link" toggle-class="text-decoration-none" no-caret>
                 <template #button-content>
-                  <b-icon icon="three-dots" variant="dark"></b-icon>
+                  <b-icon icon="three-dots-vertical" variant="dark"></b-icon>
                 </template>
                 <div v-if="review.userId === userId">
                   <b-dropdown-item href="" variant="danger" v-b-modal.review-delete-modal
@@ -49,63 +38,78 @@
         </b-card-text>
       </template>
 
-      <!-- 2. 본문 부분 -->
-      <b-row v-if="fileId.length > 0" align-h="center">
-        <b-carousel
-          id="carousel-1"
-          v-if="fileId.length > 0"
-          v-model="slide"
-          controls
-          indicators
-          background="#ababab"
-          img-width="1024"
-          img-height="480"
-          style="text-shadow: 1px 1px 2px #333; width: 30em; height: 15em;"
-          :fade="true"
-        >
-          <b-carousel-slide
-            id="review_img"
-            v-for="(item, index) in fileId"
-            :key="index"
-            :img-src="url + `/review/download/` + item"
-          ></b-carousel-slide>
-        </b-carousel>
-      </b-row>
-      <b-row>
-        <div class="my-3 mx-5" style="text-align: left;">
-          <h6>{{ review.reviewContent }}</h6>
-        </div>
-      </b-row>
+        <!-- 2. 본문 부분 -->
+        <!-- 2.1 carousel -->
+        <b-row v-if="fileId.length > 0" align-h="center">
+          <b-carousel
+            id="carousel-1"
+            v-if="fileId.length > 0"
+            v-model="slide"
+            controls
+            indicators
+            background="#ababab"
+            img-width="1024"
+            img-height="480"
+            style="text-shadow: 1px 1px 2px #333; width: 30em; height: 15em;"
+            :fade="true"
+          >
+            <b-carousel-slide
+              id="review_img"
+              v-for="(item, index) in fileId"
+              :key="index"   
+              :img-src="url+`/review/download/` + item" 
+            ></b-carousel-slide>
+          </b-carousel>
+        </b-row>
+        <!-- 2.2 별점 -->
+        <b-row class="ml-3 pl-3 mb-2">
+          <star-rating
+            :rating="review.rate"
+            :star-size="30"
+            :show-rating="false"
+            read-only
+          ></star-rating>
+        </b-row>
+        <!-- 2.3 리뷰 내용 -->
+        <b-row>
+          <div class="my-3 mx-5" style="text-align: left;">
+            <h6>{{review.reviewContent}}</h6>
+          </div>
+        </b-row>
+        <!-- 2.4 리뷰 생성일자 -->
+        <b-row class="ml-3 pl-3">
+          <small>{{ review.createdAt }}</small>
+        </b-row>
 
-      <!-- 3. footer 부분 -->
-      <template #footer>
-        <div style="text-align: left;">
-          <span class="reviewLike mt-5">
-            <!--좋아요 여부와 좋아요 수-->
-            <b-icon
-              icon="suit-heart-fill"
-              variant="danger"
-              v-if="liked"
-              @click="likeReview()"
-            ></b-icon>
-            <b-icon icon="suit-heart" variant="danger" v-else @click="likeReview()"></b-icon>
-          </span>
-          <small class="ml-2">{{ review.reviewLikeCount }}명이 좋아합니다.</small>
-        </div>
-      </template>
-    </b-card>
-    <div></div>
+    
+        <!-- 3. footer 부분 -->
+          <template #footer>
+            <div style="text-align: left;">
+            <span class="reviewLike mt-5"> <!--좋아요 여부와 좋아요 수-->
+              <b-icon icon="suit-heart-fill" variant="danger" font-scale="1.5" v-if="liked" @click="likeReview()"></b-icon>
+              <b-icon icon="suit-heart" variant="danger" font-scale="1.5" v-else @click="likeReview()"></b-icon>
+            </span>
+              <small class="ml-2">{{review.reviewLikeCount}}명이 좋아합니다.</small>
+            </div>
+          </template>
+        </b-card>
+      <div>
+    </div>   
   </div>
 </template>
 
 <script>
-import axios from 'axios';
-import { mapGetters } from 'vuex';
-const SERVER_URL = process.env.VUE_APP_SERVER_URL;
+import axios from 'axios'
+import { mapGetters } from "vuex";
+import StarRating from 'vue-star-rating'
+
+const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
 export default {
   name: 'ReviewBlock',
-  components: {},
+  components: {
+    StarRating,
+  },
   props: {
     review: {},
   },
@@ -119,7 +123,7 @@ export default {
   data: function() {
     return {
       liked: false,
-      rate: '',
+      // rate : "",
       userId: '',
       reviewDetail: {},
       url: SERVER_URL,
@@ -158,12 +162,13 @@ export default {
     },
     GetReviewDetail: function() {
       axios
-        .get(`${SERVER_URL}/review/` + `${this.review.reviewId}`)
-        .then((response) => {
-          this.fileId = response.data.fileId;
-          for (let index = 0; index < response.data.dto.rate; index++) {
-            this.rate = this.rate + '★';
-          }
+      .get(`${SERVER_URL}/review/` + `${this.review.reviewId}`)
+      .then((response) => {
+        this.fileId = response.data.fileId;
+        // for (let index = 0; index < response.data.dto.rate; index++) {
+        //   this.rate = this.rate + "★";
+          
+        // }
 
           // console.log( this.fileId);
         })

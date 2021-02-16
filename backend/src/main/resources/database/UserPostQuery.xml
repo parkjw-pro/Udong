@@ -55,11 +55,11 @@
 		SELECT p.post_id, p.user_id, u.nickname, p.post_content, p.created_at, p.post_views,
 		p.is_open, p.post_like_count, p.post_tag, p.is_updated, p.updated_at, p.post_comment_count
 		FROM user_post p, user u
-		WHERE p.user_id = u.user_id AND p.post_content LIKE CONCAT('%', #{searchWord} ,'%')
+		WHERE p.user_id = u.user_id AND (p.post_content LIKE CONCAT('%', #{searchWord},'%') or u.nickname LIKE CONCAT('%', #{searchWord},'%'))
 		ORDER BY p.post_id DESC
 		LIMIT #{limit} OFFSET #{offset}
 	</select>
-	
+		
 	<!-- 유저 한 명이 작성한 글 중 검색어로 가져오기 -->
 	<select id="selectUserPostByUserIdAndWord" parameterType="com.ssafy.udong.dto.UserPostParamDto"
 		resultType="com.ssafy.udong.dto.UserPostDto">
@@ -81,8 +81,8 @@
 	<select id="userPostBySearchWordTotalCount"
 		parameterType="string" resultType="int">
 		SELECT COUNT(*)
-		FROM user_post
-		WHERE post_content LIKE CONCAT('%', #{searchWord} ,'%')
+		FROM user_post p, user u
+		WHERE p.user_id = u.user_id AND (p.post_content LIKE CONCAT('%', #{searchWord},'%') or u.nickname LIKE CONCAT('%', #{searchWord},'%'))
 	</select>
 	
 	<!-- 글 총개수(user 별) -->

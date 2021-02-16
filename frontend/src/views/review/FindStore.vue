@@ -14,7 +14,7 @@
         style="text-align: center; width: 40%;"
       />
       <b-button class="ml-3" size="sm" style="background-color: #695549;" @click="searchWord">검색</b-button>
-     
+      <b-button class="ml-3" pill size="sm" variant="transparent" style="color: #695549;" v-b-popover.hover.top="'카테고리, 상점명 등을 검색해보세요!'" title="검색 팁!">검색팁</b-button>
 
       <div v-if="getSearchStoreList.length > 0" style="overflow: auto; height: 650px;">
         <table
@@ -43,7 +43,15 @@
       <div v-else class="mt-5 pt-5">
         <img alt="Vue logo" src="@/assets/udonge.png" style="width: 10%" />
         <br />
-        <h5 class="mt-3">검색 결과가 없어요 ㅠㅠ</h5>
+        <h5 class="my-3">검색 결과가 없어요 ㅠㅠ</h5>
+        <div class="mb-2">
+          이런 검색어는 어떠세요?
+        </div>
+        <div>
+          <a class="mx-1" href="#" @click="searchRec('카페')">카페</a>
+          <a class="mx-1" href="#" @click="searchRec('독서실')">독서실</a>
+          <a class="mx-1" href="#" @click="searchRec('편의점')">편의점</a>
+        </div>
       </div>
     </b-col>
 
@@ -96,16 +104,14 @@ export default {
     },
 
   },
-
-  // async mounted() {},
-  created() {
+  async created() {
     this.storeParamDto.dongcode = this.$route.params.address;
     if (this.storeParamDto.searchWord === '') {
       this.storeParamDto.searchWord = this.$route.params.keyword;
     }
     console.log("11")
     
-    this.search();
+    await this.search();
   },
   methods: {
     searchWord: function () {
@@ -201,9 +207,8 @@ export default {
       axios
         .post(`${SERVER_URL}/store/stores`, this.storeParamDto)
         .then((response) => {
-          // console.log(response.data);
           this.getSearchStoreList = response.data;
-          console.log("res",this.getSearchStoreList )
+          // console.log("res",this.getSearchStoreList )
           if(this.getSearchStoreList!=null){
             window.kakao && window.kakao.maps ? this.initMap() : this.addScript();
           }
@@ -222,6 +227,13 @@ export default {
       el.className = 'item';
 
       return el;
+    },
+
+
+
+    // 추천 검색어로 검색
+    searchRec (wordRec) {
+      location.href = `/store/find/${this.storeParamDto.dongcode}/${wordRec}`
     },
   },
 };

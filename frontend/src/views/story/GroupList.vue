@@ -9,21 +9,14 @@
         <hr>
         <b-row>
           <b-card-group   >
-            <div id="group_card" v-for="(title, idx) in club" :key="idx"> 
-                <GroupCard :group="title"/>
-            </div>
-          </b-card-group>
-        </b-row>
-      <!-- <div>
-        <h4 id="group_list_category">내 그룹</h4>
-        <b-button pill variant="primary">+</b-button>
-      </div> -->
-        <b-card-group   >
           <div v-for="(title, idx) in myClub" :key="idx"> 
-              <GroupCard :group = "title"/>
+              <GroupCard :group ="title"/>
           </div>
-   
+          
         </b-card-group>
+        </b-row>
+      
+   
         <!-- <GroupCard /> -->
     </div>
     <!-- 2. 공개 그룹 -->
@@ -85,16 +78,15 @@ export default {
     axios.get(`${SERVER_URL}/club/clubs/${JSON.parse(localStorage.getItem('Login-token'))['user_address']}`)
     .then((res)=>{
      console.log("전체그룹 (공개,비공개) 조회성공")
-
-      for(var i in res.data){
-       
-        if(res.data[i].isOpen== "1"){
-       
-          this.openClub.push(res.data[i])
+      var group = res.data
+      for(var i in group){
+        
+        if(group[i].isOpen== "1"){
+          this.openClub.push(group[i])
           
         }else{
       
-           this.closeClub.push(res.data[i])
+           this.closeClub.push(group[i])
         }
       }
      

@@ -316,7 +316,7 @@ public class ClubPostServiceImpl implements ClubPostService {
 
 		try {
 
-			int count = clubPostDao.userPostCommentTotalCount();
+			int count = clubPostDao.userPostCommentTotalCount(postId);
 			List<CommentDto> list = clubPostDao.selectClubPostComment(postId, limit, offset);
 			
 			commentResultDto.setList(list);

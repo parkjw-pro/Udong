@@ -8,8 +8,11 @@
           <b-row align-h="justify" style="text-align: left;">
             <b-col align-self="center">
               <span style="cursor: pointer;" @click="toFeed">
+                <!--그룹 게시물 - 그룹 정보-->
+                <span style="">[그룹] {{groupName}} </span>
+                <br>
                 <!-- 뱃지 -->
-                <b-avatar :src="require('@/assets/app/badge1.jpg')"></b-avatar>
+                <b-avatar :src="require('@/assets/app/badge/badge1.jpg')"></b-avatar>
                 <!-- 닉네임 -->
                 <span class="ml-1" style="">{{ post.nickname }}</span>
               </span>
@@ -46,7 +49,8 @@
             img-width="1024"
             img-height="480"
             style="text-shadow: 1px 1px 2px #333; width: 30em; height: 15em;"
-            fade="true"
+            fade
+            :interval="0"
           > 
             <!-- fileId 정의해주어야한다!!! -->
             <b-carousel-slide
@@ -70,15 +74,20 @@
 
         <b-row class="h2 mb-2 ml-2" align-h="start">
           <!-- 좋아요 -->
-          <div class="postLike mr-3">
-            <b-icon v-if="liked" font-scale="1" icon="suit-heart-fill" variant="danger" @click="likePost()" ></b-icon>
-            <b-icon v-else font-scale="1" icon="suit-heart" variant="danger" @click="likePost()"></b-icon>
+          <div class="postLike mr-2" style="margin-top: 2px;">
+            <div class="h4" v-if="liked"><b-icon icon="suit-heart-fill" variant="danger" @click="likePost()"></b-icon></div>
+            <div class="h4" v-else><b-icon icon="suit-heart" variant="danger" @click="likePost()"></b-icon></div>
           </div>
-          
-          <!-- 댓글 버튼 -->
-          <div class="postComment" @click="getArticleComments">
-            <b-icon v-if="comments.length > 0" font-scale="1" icon="chat-fill" variant="warning" ></b-icon>
-            <b-icon v-else font-scale="1" icon="chat" variant="warning"></b-icon>
+          <!-- 댓글 수 -->
+          <div class="postComment" @click="showComment">
+            <div class="h4" v-if="commentFlag">
+              <b-icon icon="chat-fill" variant="warning"></b-icon>
+              <span class="ml-1" style="color:orange"><small>{{commentCount}}</small></span>
+            </div>
+            <div class="h4" v-else>
+              <b-icon icon="chat" variant="warning"></b-icon>
+              <span class="ml-1" style="color:orange"><small>{{commentCount}}</small></span>
+            </div>
           </div>
         </b-row>
 
@@ -86,16 +95,15 @@
           <div v-if="post.postLikeCount >= 0">{{post.postLikeCount}}명이 좋아합니다</div>
         </b-row>
 
-        <!-- 댓글 목록 -->
-        
-        <!-- <div v-if="cmtCount === -1">
-          <div>아직 작성된 댓글이 없습니다.</div>
-        </div> -->
-        <div>
-          <div style="width: 80%; display: inline-block">
+        <!-- 댓글 -->
+        <div v-show="commentFlag">
+          <div v-if="comments.length > 0" style="width: 80%; display: inline-block">
             <div v-for="(comm, i) in comments" :key="i">
-              <Comment :comment="comm" type="clubpost" />
+              <Comment :comment="comm" type="userpost" />
             </div>
+          </div>
+          <div v-else>
+            아직 댓글이 없어요! 처음으로 댓글을 달아보세요!
           </div>
               
           <b-row class="mt-3" v-if="comments.length > 0 && comments.length < commentCount">
@@ -106,9 +114,9 @@
                 </span>
               </b-col>
           </b-row>
-
         </div>
         <br>
+
         <!--댓글 입력창-->
         <div class="container">
           <b-row align-h="justify">
@@ -134,7 +142,8 @@ const SERVER_URL = process.env.VUE_APP_SERVER_URL
 export default {
   name: 'PostBlock',
   props: {
-    post: Object
+    post: Object,
+    groupName: String
   },
   components: {
     Comment
@@ -144,10 +153,12 @@ export default {
   },
   data() {
     return {
+      slide: 0,  //이미지 carousel 부분
       liked: false,
       comments: [],
       comment: "",
       commentCount: 0,
+      commentFlag: false,
       limit: 5,
       offset: 0,
       fileId: Object,
@@ -166,12 +177,11 @@ export default {
   created() {
     axios.get(`${SERVER_URL}/clubpost/postId/${this.post.postId}`)
     .then((res)=>{
-    
       this.fileId= res.data.fileId
     })
 
-    this.getLikeInfo();
-    this.fileCheck();
+    this.getComments();
+    // this.fileCheck();
   },
   async mounted() {
     await this.getLikeInfo();
@@ -179,7 +189,6 @@ export default {
     this.userId = userInfo["userId"]
   },
   methods: {
-    
     deletePost() {
       axios
         .delete(`${SERVER_URL}/clubpost`, {
@@ -188,28 +197,6 @@ export default {
         .then((response) => {
           console.log(response);
         });
-    },
-    getArticleComments(){
-      // if(this.comments.length > 0) return;
-      axios
-        .get(`${SERVER_URL}/clubpost/comment`, {
-          params: {
-            postId: this.post.postId,
-            limit: this.limit,
-            offset: this.offset
-          }
-        })
-        .then(
-          (response) => {
-            this.comments = response.data.list;
-            this.commentCount = response.data.count;
-            // comment가 없으면 -1 값 넣어주기
-            console.log(response.data.count)
-            if (response.data.count === 0) {
-              this.commentCount = -1
-            }
-            console.log(this.commentCount);
-          });
     },
     getLikeInfo(){
       axios
@@ -226,12 +213,10 @@ export default {
           )
         );
     },
-    getMoreComments() {
-      if(this.commentCount <= this.comments.length){
-        return;
-      }
-
-      this.offset += this.limit;
+    showComment() {
+      this.commentFlag = !this.commentFlag;
+    },
+    getComments() {
       axios
         .get(`${SERVER_URL}/clubpost/comment`, {
           params: {
@@ -242,8 +227,17 @@ export default {
         })
         .then(
           (response) => {
+            console.log(response.data);
             this.comments.push(...response.data.list);
+            this.commentCount = response.data.count;
           });
+    },
+    getMoreComments(){
+      if(this.commentCount <= this.comments.length){
+        return;
+      }
+      this.offset += this.limit;
+      this.getComments();
     },
     likePost() {
       axios
@@ -261,29 +255,6 @@ export default {
             }
         });
     },
-    // reportPost() {
-    //   var content = "";
-    //   var category = "";
-
-    //   //모달창으로 신고 내역 보여주기
-    //   //content, category 입력 해야 함!
-
-    //   //axios 요청
-    //   axios
-    //     .post(`${SERVER_URL}/clubpost/report`, {
-    //       userId: this.getUserId,
-    //       postId: this.post['postId'],
-    //       clubId: this.post['clubId'],
-    //       content: content,
-    //       category: category
-    //     })
-    //     .then((response) => {
-    //       console.log(response);
-    //     });
-    // },
-    toFeed: function () {
-      this.$router.push({name: 'MyFeed', params: { userId: this.post.userId, nickname: this.post.nickname}})
-    },
     writeComment() {
       axios
         .post(`${SERVER_URL}/clubpost/comment`, {
@@ -294,9 +265,37 @@ export default {
         })
         .then((response) => {
           console.log(response);
-          this.getArticleComments();
+          this.offset = 0;
+          this.comments = [];  //댓글 초기화
+          this.getComments();
           this.post.postCommentCount = this.post.postCommentCount*1 + 1;
+          this.comment = ''
         });
+    },
+    reportPost() {
+
+      //모달창으로 신고 내역 보여주기
+      //content, category 입력 해야 함!
+
+      //axios 요청
+      
+      // var content = "";
+      // var category = "";
+      // axios
+      //   .post(`${SERVER_URL}/clubpost/report`, {
+      //     userId: this.getUserId,
+      //     postId: this.post['postId'],
+      //     clubId: this.post['clubId'],
+      //     content: content,
+      //     category: category
+      //   })
+      //   .then((response) => {
+      //     console.log(response);
+      //   });
+    },
+    toFeed: function () {
+      console.log(this.post.userId)
+      this.$router.push({name: 'MyFeed', params: { userId: this.post.userId, nickname: this.post.nickname}})
     },
 
 
