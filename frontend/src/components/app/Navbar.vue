@@ -61,6 +61,7 @@
             </b-col>
             <!-- dropdown 표시하기 -->
         </b-row>
+        <b-col v-if="toggle" class="small" id="option_v3" @click="toBadge">뱃지</b-col>
         <b-col v-if="toggle" class="small" id="option_v3" @click="toAccountDetail">개인정보</b-col>
         <b-col v-if="toggle" class="small" id="option_v3" @click="logout">로그아웃</b-col>
         <b-col v-if="toggle" class="small" id="option_v3" @click="toDevelopers">개발진</b-col>

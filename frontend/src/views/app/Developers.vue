@@ -1,11 +1,12 @@
 <template>
-  <div>
+  <div class="mt-5 pt-5">
     <h2>개발진 소개</h2>
-    <div class="pt-5 mt-5">
+    <div class="pt-5 mt-5 mx-5">
       <b-card-group>
         <!-- 강용욱 -->
         <b-card
           title="강용욱"
+          id="developers_card"
           img-src="https://ppss.kr/wp-content/uploads/2015/01/MP9102208971.jpg"
           img-alt="Image"
           img-top
@@ -30,6 +31,7 @@
         <!-- 박종원 -->
         <b-card
           title="박종원"
+          id="developers_card"
           img-src="https://funshop.akamaized.net/abroad/034/17450/Blacn%202_3.png"
           img-alt="Image"
           img-top
@@ -56,6 +58,7 @@
 
         <b-card
           title="이규용"
+          id="developers_card"
           img-src="https://i.pinimg.com/736x/95/6c/1d/956c1d1df35320eb4ee1ff967a489474.jpg"
           img-alt="Image"
           img-top
@@ -88,6 +91,7 @@
         <!-- 이송영 -->
         <b-card
           title="이송영"
+          id="developers_card"
           img-src="https://t1.daumcdn.net/cfile/blog/257A65445542EA850F"
           img-alt="Image"
           img-top
@@ -116,6 +120,7 @@
         <!-- 우진하 -->
         <b-card
           title="우진하"
+          id="developers_card"
           img-src="https://img.sbs.co.kr/newsnet/etv/upload/2013/11/15/30000333550_700.jpg"
           img-alt="Image"
           img-top
@@ -176,5 +181,10 @@ export default {
 </script>
 
 <style>
-
+#developers_card {
+  /* min-width: 20em;
+  min-height: 15em;
+  max-width: 20em;
+  max-height: 15em; */
+}
 </style>

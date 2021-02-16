@@ -8,7 +8,7 @@
           placeholder="상점의 종류 혹은 상점명을 입력하세요"
           v-model="storeParamDto.searchWord"
           @keypress.enter="search"
-          style="text-align: center; width: 65%;"
+          style="text-align: center; width: 40%;"
           autofocus
         >
         <b-button class="ml-3" size="sm" style="background-color: #695549;" @click="search">검색</b-button>
