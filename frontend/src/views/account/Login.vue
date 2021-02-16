@@ -68,7 +68,7 @@ export default {
           // } else {
           //   this.$router.replace('/location')
           // }
-          this.$router.replace('/location')
+          this.$router.replace('/location/first')
         })
         .catch(({ message }) => (this.msg = message));
     },
