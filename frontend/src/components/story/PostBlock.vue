@@ -50,6 +50,7 @@
             img-height="480"
             style="text-shadow: 1px 1px 2px #333; width: 30em; height: 15em;"
             fade
+            :interval="0"
           > 
             <!-- fileId 정의해주어야한다!!! -->
             <b-carousel-slide
@@ -268,6 +269,7 @@ export default {
           this.comments = [];  //댓글 초기화
           this.getComments();
           this.post.postCommentCount = this.post.postCommentCount*1 + 1;
+          this.comment = ''
         });
     },
     reportPost() {

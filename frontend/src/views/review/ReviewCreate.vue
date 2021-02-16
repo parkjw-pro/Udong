@@ -8,7 +8,8 @@
             <span style="font-family: 'Hanna', sans-serif;">{{ store.storeName }} </span>
             <span class="small">리뷰하기</span>
           </h1>
-          <h4 class="small">{{ store.storeAddr}}</h4>
+          <h6 v-b-popover.hover.top="''" :title="store.storeCtg2" style="text-align: center;">{{ store.storeCtg3 }}</h6>
+          
         </div>
 
         <!-- 1. 평점 -->
@@ -92,7 +93,8 @@
       </div>
     </b-col>
 
-    <b-col class="mt-5 pt-3 mr-3 ml-0 pl-0">
+    <b-col class="mt-5 pt-2 mr-3 ml-0 pl-0">
+      <div class="mb-2 small">주소: {{ store.storeAddr}}</div>
       <div class="map_wrap2" style="width: 80%;">
         <div id="map" style="width:100%; height:100%; position:relative; overflow:hidden;"></div>
         <div class="hAddr">
@@ -118,19 +120,22 @@ export default {
   },
   data: function() {
     return {
+      // store 정보
       storeId: '',
       store: {},
+      // review 정보
       review: {
         userId: '',
         reviewContent: '',
         rate: 0,
         nickName: '',
       },
+
+      // 기타
       imageUrl: [],
-      modal: true, //true : modal열림, false : modal닫힘
       files: [],
-      
-      isValid: 0,
+      modal: true, //true : modal열림, false : modal닫힘
+      isValid: 0, // 작성한 리뷰 유효성 검사
     }
   },
   computed: {

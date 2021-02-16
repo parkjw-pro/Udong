@@ -51,6 +51,7 @@
             img-height="480"
             style="text-shadow: 1px 1px 2px #333; width: 30em; height: 15em;"
             :fade="true"
+            :interval=0
           >
             <b-carousel-slide
               id="post_img"
@@ -251,6 +252,10 @@ export default {
           this.comments = [];  //댓글 초기화
           this.getComments();
           this.post.postCommentCount = this.post.postCommentCount*1 + 1;
+          this.comment = ''
+          if (this.commentFlag === false) {
+            this.showComment()
+          }
         });
     },
     showModal () {
