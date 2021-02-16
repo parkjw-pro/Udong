@@ -37,7 +37,7 @@
       </b-tab>
       <b-tab title="리뷰">
         <div v-for="(item, index) in reviews" :key="index">
-          <ReviewBlock :review="item"  />
+          <ReviewBlock :review="item" :user="user"  />
         </div>
       </b-tab>
       <b-tab title="태그">
@@ -51,31 +51,31 @@
     <br>
     <br>
     <br>
+    <Button />
   </div>
 </template>
 
 
 <script>
-import GroupBox from '@/components/story/GroupBox'
-import ReviewBlock from '@/components/review/ReviewBlock'
-import PostBlockMy from '@/components/story/PostBlockMy'
-import EndBlock from '@/components/story/EndBlock'
-import TagBox from '@/components/story/TagBox'
 import axios from "axios";
-const SERVER_URL = "http://localhost:8000";
+import Button from '@/components/story/Button'
+import EndBlock from '@/components/story/EndBlock'
+import GroupBox from '@/components/story/GroupBox'
+import PostBlockMy from '@/components/story/PostBlockMy'
+import ReviewBlock from '@/components/story/ReviewBlock'
+import TagBox from '@/components/story/TagBox'
 
-// import axios from 'axios';
-
-// const SERVER_URL = "http://localhost:8000";
+const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
 export default {
   name: 'MyFeed',
   components: {
+    Button,
+    EndBlock,
     GroupBox,
     PostBlockMy,
-    EndBlock,
-    TagBox,
     ReviewBlock,
+    TagBox,
   },
   data() {
     return {

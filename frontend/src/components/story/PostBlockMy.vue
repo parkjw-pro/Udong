@@ -169,12 +169,7 @@ export default {
   methods: {
     toFeed: function () {
       // 자신의 배지를 누르기 때문에 새로고침! 기록을 남기지 않기 위해 replace 사용
-      if (this.post.userId === this.userId) {
-        location.replace(`/story/${this.userId}`)
-      }
-      else {
-        this.$router.push({name: 'MyFeed', params: { userId: this.post.userId, nickname: this.post.nickname}})
-      }
+      this.$router.push({name: 'MyFeed', params: { userId: this.post.userId, nickname: this.post.nickname}})
     },
     getLikeInfo(){
       axios
@@ -267,7 +262,14 @@ export default {
 
 
 <style>
-  
+#post_img {
+  top: 0%;
+  left: 0%;
+  min-width: 30em;
+  min-height: 15em;
+  max-width: 30em;
+  max-height: 15em;
+}
   /* 적용안됨 */
   b-card-img {
     height: 5px;
