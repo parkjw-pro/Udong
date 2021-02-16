@@ -81,8 +81,8 @@ export default {
   data() {
     return {
       user: {
-        userId: "",
-        nickname: "",
+        userId: this.$route.params.userId,
+        nickname: this.$route.params.nickname
       },
       posts: [],
       postCount: 0,
@@ -94,8 +94,6 @@ export default {
     };
   },
   created() {
-    this.user.nickname = JSON.parse(localStorage.getItem('Login-token'))['user-name']
-    this.user.userId = JSON.parse(localStorage.getItem('Login-token'))['user-id']
     this.getUserPosts();
     this.getReviews();
     this.getGroups();
