@@ -130,6 +130,10 @@ export default {
     return {
       reviewList: [],
       storyList: [],
+      user: {
+        userId: JSON.parse(localStorage.getItem('Login-token'))['user-id'],
+        nickname: JSON.parse(localStorage.getItem('Login-token'))['user-name']
+      }
     }
   },
   methods: {
@@ -137,7 +141,8 @@ export default {
       this.$router.push({ name: 'Developers' })
     },
     toMyFeed: function () {
-      this.$router.push({ name: 'MyFeed' })
+      // this.$router.push({ name: 'MyFeed' })
+      this.$router.push({ name: 'MyFeed', params: { userId: this.user.userId, nickname: this.user.nickname}})
     },
     toNews: function () {
       this.$router.push({ name: 'NewsHome' })
