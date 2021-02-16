@@ -244,9 +244,9 @@ public class UserController {
 	@ApiOperation(value = "인증 메일 일치 확인", notes = "인증을 위해 발송한 이메일 코드가 알맞는지 확인합니다.\n" +
 			"## 필수값\n" + " - code : 인증 메일로 발송한 코드\n")
 
-	@PostMapping("/email/{code}")
-	public ResponseEntity<String> checkDuplicateEmail(@PathVariable String code) throws Exception {
-		int result = emailService.gmailCheck(code);
+	@PostMapping("/email/{userId}/{code}")
+	public ResponseEntity<String> checkDuplicateEmail(@PathVariable String code, @PathVariable String userId) throws Exception {
+		int result = emailService.gmailCheck(userId,code);
 		if (result == SUCCESS) { // 코드가 일치하면
 			return new ResponseEntity<String>("인증 완료.\n", HttpStatus.OK);
 		} else { // 코드가 불일치하면

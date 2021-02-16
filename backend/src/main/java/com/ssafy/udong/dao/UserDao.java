@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.ssafy.udong.dto.EmailCodeDto;
 import com.ssafy.udong.dto.UserDto;
 import com.ssafy.udong.dto.UserParamDto;
 
@@ -43,5 +44,11 @@ public interface UserDao {
 	public UserParamDto selectUserAddress(UserParamDto dto);
 
 	public void updateUserAddress(UserParamDto dto);
+	
+	public int createEmailCode(String userId, String emailCode);
+	
+	public int updateEmailCode(String userId,String emailCode);
+	
+	public EmailCodeDto selectEmailCode(String userId);
 }
 
