@@ -26,7 +26,7 @@
             :perView="perView"
             :gap="0"
           >
-            <vue-glide-slide v-for="(group, i) in groupNames" :key="i"><b-button  variant="info" @click="selectGroup(i)">{{group}}</b-button></vue-glide-slide>
+            <vue-glide-slide v-for="(group, i) in groupNames" :key="i"><b-button pill variant="outline-info" @click="selectGroup(i)">{{group}}</b-button></vue-glide-slide>
             <template slot="control">
               <b-button variant="transparent" size="sm" data-glide-dir="<">◀</b-button>
               <b-button variant="transparent" size="sm" data-glide-dir=">">▶</b-button>
@@ -92,7 +92,7 @@ export default {
   },
   data: function () {
     return {
-      perView: 5,
+      perView: 3,
       groups: [], // 가입한 그룹
       groupNames: [],
       selected: 0,  //선택된 그룹

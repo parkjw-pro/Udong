@@ -9,7 +9,8 @@
             <b-col align-self="center">
               <span style="cursor: pointer;" @click="toFeed">
                 <!--그룹 게시물 - 그룹 정보-->
-                <span style="">{{groupName}} </span>
+                <span style="">[그룹] {{groupName}} </span>
+                <br>
                 <!-- 뱃지 -->
                 <b-avatar :src="require('@/assets/app/badge/badge1.jpg')"></b-avatar>
                 <!-- 닉네임 -->
