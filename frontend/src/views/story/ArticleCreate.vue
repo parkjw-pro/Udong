@@ -127,8 +127,8 @@ export default {
       files: [],
       imageUrl: [],
       content: "",
-      options: ["내 피드"],
-      selected: "내 피드",
+      options: ["우리동네 이야기"],
+      selected: "우리동네 이야기",
       isOpen: "1", //공개면 1, 비공개면 0
       tag: null,
       groupCheck: 0, // 그룹에서 게시물작성 눌렀는지 체크하는 변수

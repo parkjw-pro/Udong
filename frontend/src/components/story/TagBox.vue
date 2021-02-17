@@ -84,6 +84,7 @@ export default {
             this.tags.push(...t2.split("#").slice(1));
         }
       }
+      console.log(this.tags);
     },
     randomize(){
       for (let i = this.tags.length - 1; i > 0; i--) {
