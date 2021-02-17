@@ -37,8 +37,8 @@ import ReviewList from '@/views/review/ReviewList.vue'
 //스토리
 
 import ArticleCreate from '@/views/story/ArticleCreate.vue'
-import ArticleDetail from '@/views/story/ArticleDetail.vue'
-import ArticleUpdate from '@/views/story/ArticleUpdate.vue'
+//import ArticleDetail from '@/views/story/ArticleDetail.vue'
+//import ArticleUpdate from '@/views/story/ArticleUpdate.vue'
 
 import GroupCreate from '@/views/story/GroupCreate.vue'
 import GroupList from '@/views/story/GroupList.vue'
@@ -185,17 +185,7 @@ const routes = [
   {
     path: '/story/:address/article/:groupId/:groupcheck', // 뉴스피드에서 게시물작성과 그룹에서 게시물작성시 구분(groupcheck)
     name: 'ArticleCreate',
-    component: ArticleCreate,
-  },
-  {
-    path: '/story/:address/article/:userId/:groupId',
-    name: 'ArticleDetail',
-    component: ArticleDetail,
-  },
-  {
-    path: '/story/:address/article/:userId/:groupId/update',
-    name: 'ArticleUpdate',
-    component: ArticleUpdate,
+    component: ArticleCreate, 
   },
 
   {
