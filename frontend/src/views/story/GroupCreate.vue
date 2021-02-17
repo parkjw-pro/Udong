@@ -130,7 +130,7 @@ export default {
     return {
       user: "",
       // props or 함수로 받아와야 한다!
-      dong: "역삼동",
+      dong: '역삼2동',
       club: {
         userId : "",
         areaCode : "",
