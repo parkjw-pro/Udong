@@ -45,6 +45,7 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+
 	
 	@Autowired
 	private EmailService emailService;
@@ -139,6 +140,7 @@ public class UserController {
 	@PostMapping
 	public ResponseEntity<String> insertUser(@RequestBody UserDto userDto) throws Exception {
 		int result = userService.insertUser(userDto);
+		int result2 = userService.insertBadge(userDto.getUserId(), "1");
 		if (result == SUCCESS) {
 			return new ResponseEntity<String>("회원가입 성공", HttpStatus.OK);
 		} else {

@@ -38,10 +38,11 @@ export default {
       temp: this.category,
 
       // props한 이미지 가져오기
+      default: "url('" + require(`@/assets/category/default.png`) + "')",
+      temp2: "url('" + require(`@/assets/category/${this.category.replace(/\//g, '')}.png`) + "')",
 
       category_img: {
-        backgroundImage:
-          "url('" + require(`@/assets/category/${this.category.replace(/\//g, '')}.png`) + "')",
+        backgroundImage: "url('" + require(`@/assets/category/default.png`) + "')",
       },
     };
   },
@@ -61,6 +62,29 @@ export default {
     },
   },
   mounted() {},
+  created() {
+    // console.log(require(`@/assets/category/${this.category.replace(/\//g, '')}.png`));
+    // if (
+    //   "url('" + require(`@/assets/category/${this.category.replace(/\//g, '')}.png`) + "')" ==
+    //   null
+    // ) {
+    //   this.category_img.backgroundImage = this.default;
+    // }
+
+    // try {
+    //   console.log(require(`@/assets/category/${this.category.replace(/\//g, '')}.png`));
+    // } catch (error) {
+    //   this.category_img.backgroundImage = this.default;
+    // }
+    console.log(this.default);
+    if (this.default == undefined) {
+      console.log(this.category);
+      // console.log(this.default);
+      // this.category_img.backgroundImage = this.default;
+    } else {
+      this.category_img.backgroundImage = this.temp2;
+    }
+  },
 };
 </script>
 
