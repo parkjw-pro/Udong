@@ -32,26 +32,26 @@
     <hr class="mb-5">
     <!-- 2. 추천 카테고리 -->
     <!-- for문으로 출력한다!!! -->
-    <div v-if="bestCtgList.length > 0">
+    <div>
       <b-row align-h="center" >
         <b-card-group deck style="width: 75%;">
           <CategoryCard category="가장 인기 많은 상점"/>
-          <CategoryCard :category="bestCtgList[0]"/>
-          <CategoryCard :category="bestCtgList[1]"/>
+          <CategoryCard category="패스트푸드"/>
+          <CategoryCard category="호프/맥주"/>
         </b-card-group>
       </b-row>
       <b-row align-h="center">
         <b-card-group deck style="width: 75%;">
-          <CategoryCard :category="bestCtgList[2]"/>
-          <CategoryCard :category="bestCtgList[3]"/>
-          <CategoryCard :category="bestCtgList[4]"/>
+          <CategoryCard category="커피전문점/카페/다방"/>
+          <CategoryCard category="수퍼마켓"/>
+          <CategoryCard category="후라이드/양념치킨"/>
         </b-card-group>
       </b-row>
       <b-row align-h="center">
         <b-card-group deck style="width: 75%;">
-          <CategoryCard :category="bestCtgList[5]"/>
-          <CategoryCard :category="bestCtgList[6]"/>
-          <CategoryCard :category="bestCtgList[7]"/>
+          <CategoryCard category="편의점"/>
+          <CategoryCard category="라면김밥분식"/>
+          <CategoryCard category="욕탕업-종합"/>
         </b-card-group>
       </b-row>
     </div>
@@ -86,7 +86,7 @@ export default {
     };
   },
   async mounted() {
-    await this.search();
+   // await this.search();
   },
   methods: {
     FindStore: function () {
