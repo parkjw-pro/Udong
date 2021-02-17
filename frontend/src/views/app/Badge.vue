@@ -197,7 +197,4 @@ export default {
   filter: brightness(100%);
 }
 
- {
-  color: #cec4ea;
-}
 </style>
