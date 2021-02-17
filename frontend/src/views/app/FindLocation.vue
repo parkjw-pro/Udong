@@ -25,6 +25,10 @@
 </template>
 
 <script>
+// if (document.location.protocol == 'http:') {
+//     document.location.href = document.location.href.replace('http:', 'https:');
+// }
+
 import axios from 'axios'
 
 const MAP_API_KEY = process.env.VUE_APP_MAP_API_KEY
@@ -134,6 +138,8 @@ export default {
     // asd(data) {
     //   this.userLocation.addressCode = data;
     // },
+
+    
     addScript() {
       const script = document.createElement('script'); /* global kakao */
       script.onload = () => kakao.maps.load(this.initMap);

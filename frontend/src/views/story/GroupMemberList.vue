@@ -1,21 +1,12 @@
 <template>
-  <div>
+  <div class="my-5 py-5">
     <!-- 참고 사이트: https://www.bootdey.com/snippets/view/User-list-page#preview -->
-    <!-- 아래와 같이 분기나눠주기
-    v-if="user.group.status == Admin"
-      v-if="user.group.type == private"
-        가입신청자 리스트 표시
-      회원 리스트(관리) 표시
-    v-else
-      회원 리스트(조회) 표시 -->
-
     <link
       href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"
       rel="stylesheet"
     />
-
     <h3>승인대기 목록</h3>
-    <div class="container">
+    <div class="container mb-5">
       <div class="row">
         <div class="col-lg-12">
           <div class="main-box clearfix">
@@ -23,10 +14,9 @@
               <table class="table user-list">
                 <thead>
                   <tr>
-                    <th><span>User</span></th>
-                    <th><span>requested_at</span></th>
-                    <th class="text-center"><span> Join Greeting</span></th>
-
+                    <th><span>가입신청 대기자</span></th>
+                    <th><span>가입신청 일시</span></th>
+                    <th class="text-center"><span>가입인사</span></th>
                     <th>&nbsp;</th>
                   </tr>
                 </thead>
@@ -97,7 +87,7 @@
       </div>
     </div>
 
-    <h3>회원 목록</h3>
+    <h3 class="mt-5 pt-5">그룹원 관리</h3>
     <div class="container">
       <div class="row">
         <div class="col-lg-12">
@@ -106,9 +96,9 @@
               <table class="table user-list">
                 <thead>
                   <tr>
-                    <th><span>User</span></th>
-                    <th><span>Created</span></th>
-                    <th class="text-center"><span>Status</span></th>
+                    <th><span>그룹원</span></th>
+                    <th><span>가입일시</span></th>
+                    <th class="text-center"><span>직책</span></th>
 
                     <th>&nbsp;</th>
                   </tr>
@@ -128,7 +118,7 @@
                     </td>
                     <td class="text-center">
                       <span class="label label-default">{{
-                        member.type == 1 ? "manager" : "member"
+                        member.type == 1 ? "매니저" : "멤버"
                       }}</span>
                     </td>
 
@@ -183,25 +173,30 @@
 </template>
 
 <script>
-// Data를 props로 받는다.
-const SERVER_URL = process.env.VUE_APP_SERVER_URL;
-import axios from "axios";
+import axios from "axios"
+
+const SERVER_URL = process.env.VUE_APP_SERVER_URL
+
 export default {
   name: "GroupMemberList",
-  component: {},
   data() {
     return {
+      userId: JSON.parse(localStorage.getItem('Login-token'))['user-id'],
       members: Object,
       membersWating: Object,
       check: false,
+      // group 정보를 params로 받아왔다 -> 새로고침하면 안됨!!
+      group: this.$route.params.group,
     };
   },
   created() {
     this.memberList();
     this.memberWatingList();
     if (this.$route.params.groupcheck == 1) {
+      // 공개그룹
       this.check = true;
     } else {
+      // 비공개그룹
       this.check = false;
     }
   },
@@ -234,7 +229,10 @@ export default {
     },
     // 멤버 탈퇴시키기
     deleteMember(data) {
-      axios
+      if (this.userId === this.group.userId) {
+        alert("본인을 삭제할 수는 없습니다.")
+      } else {
+        axios
         .delete(
           `${SERVER_URL}/club/member?clubId=${this.$route.params.groupId}&&userId=${data}&&type=1&&contents=aaa`
         )
@@ -253,6 +251,8 @@ export default {
           console.log(err);
           alert("서버에 오류발생하였습니다.");
         });
+      }
+      
     },
   },
 };

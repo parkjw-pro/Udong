@@ -19,19 +19,24 @@
                   <b-icon icon="three-dots-vertical" variant="dark"></b-icon>
                 </template>
                 <div v-if="review.userId === userId">
-                  <b-dropdown-item href="" variant="danger" v-b-modal.review-delete-modal>삭제</b-dropdown-item>
+                  <b-dropdown-item href="" variant="danger" v-b-modal.review-delete-modal
+                    >삭제</b-dropdown-item
+                  >
                   <b-modal id="review-delete-modal" @ok="deleteReview">
-                    <p><img alt="Vue logo" src="@/assets/udonge.png" style="width: 10%" />소중한 리뷰를 정말 삭제하시겠습니까?</p>
+                    <p>
+                      <img alt="Vue logo" src="@/assets/udonge.png" style="width: 10%" />소중한
+                      리뷰를 정말 삭제하시겠습니까?
+                    </p>
                   </b-modal>
                 </div>
                 <div v-else>
                   <b-dropdown-item href="#" variant="danger">신고</b-dropdown-item>
                 </div>
               </b-dropdown>
-              </b-col>
-            </b-row>
-          </b-card-text>
-        </template>
+            </b-col>
+          </b-row>
+        </b-card-text>
+      </template>
 
         <!-- 2. 본문 부분 -->
         <!-- 2.1 carousel -->
@@ -106,12 +111,11 @@ export default {
     StarRating,
   },
   props: {
-    review : {},
-
+    review: {},
   },
   computed: {
-    ...mapGetters(["getUserId"]),
-    ...mapGetters(["getUserName"])
+    ...mapGetters(['getUserId']),
+    ...mapGetters(['getUserName']),
   },
   created() {
     this.getLikeInfo();
@@ -121,38 +125,42 @@ export default {
       liked: false,
       // rate : "",
       userId: '',
-      reviewDetail : {},
-      url : SERVER_URL,
-      fileId : Array,
-      
+      reviewDetail: {},
+      url: SERVER_URL,
+      fileId: Array,
+
       slick_settings: {
-        "dots": true,
-        "fade": true,
-        "infinite": true,
-        "speed": 500,
-        "slidesToShow": 1,
-        "slidesToScroll": 1,
-        "arrows": true,
+        dots: true,
+        fade: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        arrows: true,
       },
 
       // Carousel에 사용하는 데이터
       slide: 0,
-      thumbnailContent : [],  
-    }
+      thumbnailContent: [],
+    };
   },
-  
+
   methods: {
-    deleteReview: function () {
+    deleteReview: function() {
+      console.log(this.review);
       // axios.delete(`${SERVER_URL}/review` + `${this.review.reviewId}`)
-      axios.delete(`${SERVER_URL}/review`, this.review)
+      axios
+        .delete(`${SERVER_URL}/review`, {
+          params: {
+            reviewId: this.review['reviewId'],
+          },
+        })
         .then((res) => {
-          console.log(res)
-        })
-        .catch((err) => {
-          console.log(err)
-        })
+          console.log(res);
+        });
+        window.location.reload();
     },
-      GetReviewDetail: function() {
+    GetReviewDetail: function() {
       axios
       .get(`${SERVER_URL}/review/` + `${this.review.reviewId}`)
       .then((response) => {
@@ -162,51 +170,45 @@ export default {
           
         // }
 
-        // console.log( this.fileId);
+          // console.log( this.fileId);
+        })
+        .catch((response) => {
+          console.log(response);
+          
+        });
 
-      })
-      .catch((response) => {
-        console.log(response);
-      });
     },
     likeReview() {
       axios
         .post(`${SERVER_URL}/review/comment/like`, {
-            storeId: this.review['storeId'],
-            userId: this.getUserId,
-            reviewId: this.review['reviewId'],
+          storeId: this.review['storeId'],
+          userId: this.getUserId,
+          reviewId: this.review['reviewId'],
         })
         .then((response) => {
-            this.liked = !response.data.includes("취소");
-            if(this.liked) {
-              this.review['reviewLikeCount'] = this.review['reviewLikeCount']*1 + 1;
-            } else {
-              this.review['reviewLikeCount'] = this.review['reviewLikeCount']*1 - 1;
-            }
+          this.liked = !response.data.includes('취소');
+          if (this.liked) {
+            this.review['reviewLikeCount'] = this.review['reviewLikeCount'] * 1 + 1;
+          } else {
+            this.review['reviewLikeCount'] = this.review['reviewLikeCount'] * 1 - 1;
+          }
         });
     },
-    getLikeInfo(){
+    getLikeInfo() {
       axios
         .get(`${SERVER_URL}/review/comment/like`, {
           params: {
             userId: this.getUserId,
-            reviewId: this.review['reviewId']
-            
-          }
+            reviewId: this.review['reviewId'],
+          },
         })
-        .then(
-          (response) => (
-            this.liked = response.data
-          )
-        );
+        .then((response) => (this.liked = response.data));
     },
-
-
   },
-  async mounted () {
+  async mounted() {
     await this.GetReviewDetail();
-    const userInfo = JSON.parse(localStorage.getItem('Info-token'))
-    this.userId = userInfo["userId"]
+    const userInfo = JSON.parse(localStorage.getItem('Info-token'));
+    this.userId = userInfo['userId'];
   },
 };
 </script>

@@ -37,7 +37,7 @@
       </b-col>
       <b-col cols="4" align-self="center">
         <img alt="Vue logo" src="@/assets/app/home/home_review.png" style="width: 100%; cursor: pointer;" @click="toReview">
-        <p style="cursor: pointer;" @click="toReview"><img alt="Vue logo" src="@/assets/udonge.png" style="width: 8%;">우동 리뷰 보러가기!</p>
+        <p class="mt-2" style="cursor: pointer;" @click="toReview"><img class="mr-2" alt="Vue logo" src="@/assets/udonge.png" style="width: 6%;">우동 리뷰 보러가기!</p>
       </b-col>
     </b-row>
     <!-- 2. 우리 동네 소식 -->
@@ -67,14 +67,14 @@
       </b-col>
       <b-col cols="4" align-self="center">
         <img alt="Vue logo" src="@/assets/app/home/home_story.png" style="width: 80%; cursor: pointer;" @click="toStory">
-        <p style="cursor: pointer;" @click="toStory"><img alt="Vue logo" src="@/assets/udonge.png" style="width: 6%;">우동 이야기 보러가기!</p>
+        <p class="mt-2" style="cursor: pointer;" @click="toStory"><img class="mr-2" alt="Vue logo" src="@/assets/udonge.png" style="width: 6%;">우동 이야기 보러가기!</p>
       </b-col>
     </b-row>
     <!-- 4. 내 피드 -->
     <b-row id="paper" class="color_green">
       <b-col cols="3" offset="2" align-self="center">
         <img class="mb-2" alt="Vue logo" src="@/assets/app/home/home_myfeed.png" style="width: 100%; cursor: pointer;" @click="toMyFeed">
-        <p style="cursor: pointer;" @click="toMyFeed"><img alt="Vue logo" src="@/assets/udonge.png" style="width: 8%;">내 피드 가기!</p>
+        <p class="mt-2" style="cursor: pointer;" @click="toMyFeed"><img class="mr-2" alt="Vue logo" src="@/assets/udonge.png" style="width: 8%;">내 피드 가기!</p>
       </b-col>
       <b-col cols="4" offset="2" align-self="center">
         <b-row class="mb-3">
@@ -112,7 +112,7 @@
         </b-row>
       </b-col>
       <b-col cols="4" align-self="center">
-        <h4 style="cursor: pointer;" @click="toDevelopers"><img alt="Vue logo" src="@/assets/udonge.png" style="width: 10%;">Check it out here</h4>
+        <h4 style="cursor: pointer;" @click="toDevelopers"><img class="mr-2" alt="Vue logo" src="@/assets/udonge.png" style="width: 8%;">Check it out here</h4>
       </b-col>
     </b-row>
   </div>

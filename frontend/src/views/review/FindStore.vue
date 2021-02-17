@@ -104,14 +104,12 @@ export default {
     },
 
   },
-  async created() {
+  created() {
     this.storeParamDto.dongcode = this.$route.params.address;
     if (this.storeParamDto.searchWord === '') {
       this.storeParamDto.searchWord = this.$route.params.keyword;
     }
-    console.log("11")
-    
-    await this.search();
+    this.search()
   },
   methods: {
     searchWord: function () {
@@ -207,6 +205,7 @@ export default {
       axios
         .post(`${SERVER_URL}/store/stores`, this.storeParamDto)
         .then((response) => {
+          this.getSearchStoreList = {}
           this.getSearchStoreList = response.data;
           // console.log("res",this.getSearchStoreList )
           if(this.getSearchStoreList!=null){

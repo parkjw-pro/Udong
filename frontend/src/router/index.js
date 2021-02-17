@@ -126,12 +126,12 @@ const routes = [
     component: Developers,
   },
   {
-    path: '/location/first',
+    path: '/location',
     name: 'FindLocation',
     component: FindLocation,
   },
   {
-    path: '/location',
+    path: '/location/first',
     name: 'GetLocation',
     component: GetLocation,
   }, 
@@ -230,7 +230,7 @@ const routes = [
   },
 
   {
-    path: '/story/:userId',
+    path: '/story/:userId/:nickname',
     name: 'MyFeed',
     component: MyFeed,
   },

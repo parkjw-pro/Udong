@@ -1,14 +1,16 @@
 <template>
-  <div class="mb-5 pb-5">
-    <b-button variant="primary" v-on:click="randomize">SHUFFLE</b-button>
-    <br>
-    <br>
-    <div>
-      <span v-for="(tag, i) in tags" :key="i" class="circle" :style="{background: colors[Math.floor(Math.random()*colors.length)]}"># {{tag}}</span>
+  <div class="mb-5 pb-5" style="font-family: 'Nanum Pen Script', cursive;">
+    <div class="my-5">
+      <b-button size="" variant="info" v-on:click="randomize" v-b-tooltip.hover title="내가 사용한 태그">Shuffle</b-button>
     </div>
-    <br>
-    <br>
-    <br>
+    <div>
+      <h3
+        v-for="(tag, i) in tags" 
+        :key="i"
+        class="circle" 
+        :style="{background: colors[Math.floor(Math.random()*colors.length)]}"
+      ># {{tag}}</h3>
+    </div>
   </div>
 </template>
 
@@ -120,5 +122,12 @@ export default {
   position: relative;
   margin: 2%;
   /* box-shadow: 0.375em 0.375em 0 0 rgba(15, 28, 63, 0.125); */
+}
+
+#tags {
+  width: 10rem;
+  height: 10rem;
+  max-width: 10rem;
+  max-height: 10rem;
 }
 </style>

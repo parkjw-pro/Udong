@@ -1,6 +1,6 @@
 <template>
   <div id="box">
-    <img class="mt-5" alt="Vue logo" src="@/assets/udonge.png" style="width: 25%">
+    <img class="my-5" alt="Vue logo" src="@/assets/udonge.png" style="width: 15%">
     <div style="font-family: 'Nanum Pen Script', cursive;">
       <h3>서비스 준비중입니다!</h3>
       <h3>We are getting ready for the service!</h3>

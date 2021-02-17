@@ -177,6 +177,7 @@ public class ReviewServiceImpl implements ReviewService {
 	
 	@Override
 	public int deleteReview(String reviewId) {
+		System.out.println(reviewId);
 		try {
 			return dao.deleteReview(reviewId);
 		} catch (Exception e) {

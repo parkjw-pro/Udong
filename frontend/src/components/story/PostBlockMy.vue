@@ -52,6 +52,7 @@
             img-height="480"
             style="text-shadow: 1px 1px 2px #333; width: 30em; height: 15em;"
             :fade="true"
+            :interval=0
           >
             <b-carousel-slide
               id="post_img"
@@ -62,7 +63,7 @@
           </b-carousel>
         </b-row>
         <!--2.2 내용-->
-        <b-row class="mt-3" align-h="center">
+        <b-row class="mt-3 mx-5" align-h="center">
           <div class="my-3 mx-3" style="text-align: left;">
             <h6 @click="detail(post)">{{post.postContent}}</h6>
           </div>
@@ -252,6 +253,10 @@ export default {
           this.comments = [];  //댓글 초기화
           this.getComments();
           this.post.postCommentCount = this.post.postCommentCount*1 + 1;
+          this.comment = ''
+          if (this.commentFlag === false) {
+            this.showComment()
+          }
         });
     },
     showModal () {

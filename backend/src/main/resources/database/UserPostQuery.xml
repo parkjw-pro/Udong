@@ -157,7 +157,7 @@
 		
 		update user_post
 		set post_like_count = post_like_count + 1
-		where user_id = #{userId} and post_id = #{postId};
+		where post_id = #{postId};
 	</insert>
 
 	<select id="selectUserPostLike"
@@ -174,7 +174,7 @@
 		
 		update user_post
 		set post_like_count = post_like_count - 1
-		where user_id = #{userId} and post_id = #{postId};
+		where post_id = #{postId};
 	</delete>
 	
 	

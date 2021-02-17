@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.udong.dao.UserDao;
+import com.ssafy.udong.dto.BadgeDto;
 import com.ssafy.udong.dto.UserDto;
 import com.ssafy.udong.dto.UserParamDto;
 
@@ -230,6 +231,53 @@ public class UserServiceImpl implements UserService {
 			e.printStackTrace();
 		}
 		return 0;
+	}
+
+	@Override
+	public int insertBadge(String userId, String badgeId) {
+		try {
+			userDao.insertBadge(userId, badgeId);
+			return 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+
+	@Override
+	public int deleteBadge(String userId, String badgeId) {
+		try {
+			userDao.deleteBadge(userId, badgeId);
+			return 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+
+	@Override
+	public int updateBadge(String userId, String badgeId) {
+		try {
+			userDao.updateBadge(userId, badgeId);
+			return 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+		
+	}
+
+	@Override
+	public List<BadgeDto> selectBadge(String userId) {
+		List<BadgeDto> list = null;
+		try {
+			list = userDao.selectBadge(userId);
+			return list;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return list;
+		}
+
 	}
 
 }

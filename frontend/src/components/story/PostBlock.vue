@@ -9,7 +9,7 @@
             <b-col align-self="center">
               <span style="cursor: pointer;" @click="toFeed">
                 <!--그룹 게시물 - 그룹 정보-->
-                <span style="">[그룹] {{groupName}} </span>
+                <span style="">[그룹명] {{groupName}} </span>
                 <br>
                 <!-- 뱃지 -->
                 <b-avatar :src="require('@/assets/app/badge/badge1.jpg')"></b-avatar>
@@ -51,6 +51,7 @@
             img-height="480"
             style="text-shadow: 1px 1px 2px #333; width: 30em; height: 15em;"
             fade
+            :interval="0"
           > 
             <!-- fileId 정의해주어야한다!!! -->
             <b-carousel-slide
@@ -66,7 +67,7 @@
         </b-row>
 
         <!--2.2 내용-->
-        <b-row class="mt-3" align-h="center">
+        <b-row class="mt-3 mx-5" align-h="center">
           <div class="my-3 mx-3" style="text-align: left;">
             <h6>{{post.postContent}}</h6>
           </div>
@@ -267,6 +268,7 @@ export default {
           this.comments = [];  //댓글 초기화
           this.getComments();
           this.post.postCommentCount = this.post.postCommentCount*1 + 1;
+          this.comment = ''
         });
     },
     reportPost() {
