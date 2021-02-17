@@ -143,7 +143,7 @@ export default {
         .then((response) => {
           this.badgeList = response.data;
           this.badgecount = response.data.length;
-          alert('대표뱃지 변경이 완료되었습니다! \n왼쪽 메뉴에서 확인해주세요!')
+          // alert('대표뱃지 변경이 완료되었습니다! \n왼쪽 메뉴에서 확인해주세요!')
         });
     },
 
@@ -197,7 +197,4 @@ export default {
   filter: brightness(100%);
 }
 
- {
-  color: #cec4ea;
-}
 </style>

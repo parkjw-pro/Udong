@@ -163,7 +163,7 @@ export default {
     createArticle() {
       var tags = this.getTag();
       var formData = new FormData();
-
+      console.log(this.selected)
       formData.append("isOpen", this.isOpen);
       formData.append("postContent", this.content);
       formData.append("userId", this.getUserId);

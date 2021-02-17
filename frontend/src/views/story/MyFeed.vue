@@ -118,7 +118,7 @@ export default {
       limit: 5, //한 페이지에 노출될 게시글의 수
       offset: 0, //게시글 번호 오프셋,
       liked: false,
-      reviews: [],
+      reviews: [],  
       groups: [],
       badge: '',
 
