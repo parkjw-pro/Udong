@@ -298,6 +298,7 @@ public class UserController {
 	@ApiOperation(value = "뱃지 조회", notes = "뱃지를 조회합니다..\n")
 	@GetMapping("/badge")
 	public ResponseEntity<List<BadgeDto>> selectBadge(@RequestParam(value="userId") String userId) throws Exception {
+		System.out.println(userId);
 
 		List<BadgeDto> list = userService.selectBadge(userId);
 
@@ -308,7 +309,9 @@ public class UserController {
 	
 	@ApiOperation(value = "메인 벳지 업데이트", notes = "뱃지를 업데이트 합니다..\n")
 	@PutMapping("/badge")
-	public ResponseEntity<String> updateBadge(@RequestParam(value="userId") String userId,@RequestParam(value="badgeId") String badgeId) throws Exception {
+	public ResponseEntity<String> updateBadge(@RequestParam String userId, @RequestParam String badgeId) throws Exception {
+		System.out.println(badgeId);
+		System.out.println(userId);
 
 		int result = userService.updateBadge(userId, badgeId);
 
