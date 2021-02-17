@@ -15,7 +15,7 @@
             <b-col
               ><div class="mt-2" style="text-align: left">
                 <span class="font-weight-bold" style="font-size: large;">{{ store.storeName }}</span
-                >에 대한 리뷰
+                ><span class="small"> {{ store.storeDongName}}</span>
               </div></b-col
             >
             <b-col style="text-align: right;">
