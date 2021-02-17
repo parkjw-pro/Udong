@@ -232,7 +232,8 @@ export default {
         this.dongcode = JSON.parse(localStorage.getItem('Login-token'))['user_address'];
         axios
           .get(`${SERVER_URL}/club/${this.club.clubName}/${this.dongcode}`)
-          .then(() => {
+          .then((res) => {
+            console.log(res)
             this.isVerified = true;
           })
           .catch((err) => {

@@ -8,7 +8,8 @@
             <span style="font-family: 'Hanna', sans-serif;">{{ store.storeName }} </span>
             <span class="small">리뷰하기</span>
           </h1>
-          <h6 v-b-popover.hover.top="''" :title="store.storeCtg2" style="text-align: center;">{{ store.storeCtg3 }}</h6>
+          <h6 id="ReviewCreateCtg" style="text-align: center;">{{ store.storeCtg3 }}</h6>
+          <b-tooltip target="ReviewCreateCtg">{{ store.storeCtg2 }}</b-tooltip>
           
         </div>
 

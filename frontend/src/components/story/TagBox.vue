@@ -29,7 +29,7 @@ export default {
       userPostCount: 0,
       groupposts: [],
       groupPostCount: 0,
-      limit: 5,  //한 페이지에 노출될 게시글의 수
+      limit: 100,  //태그를 가져올 게시글 순(최근순 정렬)
       offset: 0,  //게시글 번호 오프셋,
       tags: [],
       colors: ['#D5D6EA', '#F6F6EB', '#D7ECD9', '#F5D5CB', '#F6ECF5', '#F3DDF2'],
@@ -38,7 +38,6 @@ export default {
   async created() {
     await this.getPosts()
     this.getTags();
-    console.log(this.tags);
   },
   methods: {
     async getPosts() {
@@ -71,9 +70,11 @@ export default {
     getTags: async function() {
       for(let up of this.userposts){
         if(up.postTag != ""){
+
+          console.log(up.postTag)
           var t1 = up.postTag;
           if(t1 != null)
-            this.tags = t1.split("#").slice(1);
+            this.tags.push(...t1.split("#").slice(1));
         }
       }
       for(let gp of this.groupposts){
@@ -121,6 +122,7 @@ export default {
   display: inline;
   position: relative;
   margin: 2%;
+  margin-bottom: 30rem;
   /* box-shadow: 0.375em 0.375em 0 0 rgba(15, 28, 63, 0.125); */
 }
 
