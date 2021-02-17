@@ -27,6 +27,7 @@
                 <b-modal :ref="post.postId" @ok="deletePost">
 
                   <p><img alt="Vue logo" src="@/assets/udonge.png" style="width: 10%" />소중한 게시글을 정말 삭제하시겠습니까?</p>
+            
                 </b-modal>
               </div>
               <div v-else>
@@ -187,11 +188,11 @@ export default {
     },
     deletePost() {
       axios
-        .delete(`${SERVER_URL}/userpost`, {
-          params:{ postId: this.post['postId'] }
-        })
+        .delete(`${SERVER_URL}/userpost?postId=${this.post.postId}`
+        )
         .then((response) => {
           console.log(response);
+          location.reload(true)
         });
     },
     reportPost() {

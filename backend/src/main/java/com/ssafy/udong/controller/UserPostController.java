@@ -150,8 +150,7 @@ public class UserPostController {
 	@ApiOperation(value = "유저 글 삭제", notes = "유저의 개인 피드에 노출되는 글을 삭제합니다.\n" +
 			"## 필수값\n" + " - postId : 삭제할 게시글 아이디\n")
 	@DeleteMapping
-	private ResponseEntity<String> deleteUserPost(@RequestBody UserPostParamDto userPostParamDto){
-		String postId = String.valueOf(userPostParamDto.getPostId());
+	private ResponseEntity<String> deleteUserPost(@RequestParam String postId){
 		int result = service.deleteUserPost(postId);
 
 		if( result == SUCCESS ) {
