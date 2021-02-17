@@ -12,17 +12,17 @@
           <b-card-text>
             <b-row align-h="justify">
               <!-- <span class="mr-5">뱃지 img</span> -->
-              <b-col><div class="mt-2" style="text-align: left"><span class="font-weight-bold" style="font-size: large;">{{ user.nickname }}</span>님의 리뷰</div></b-col>
+              <b-col><div class="mt-2" style="text-align: left"><span class="font-weight-bold" style="font-size: large;">{{ review }}</span>님의 리뷰</div></b-col>
               <b-col style="text-align: right;">
                 <b-dropdown size="lg" dropup variant="link" toggle-class="text-decoration-none" no-caret>
                 <template #button-content>
                   <b-icon icon="three-dots-vertical" variant="dark"></b-icon>
                 </template>
                 <div v-if="review.userId === userId">
-                  <b-dropdown-item href="" variant="danger" v-b-modal.review-delete-modal>삭제</b-dropdown-item>
-                  <b-modal id="review-delete-modal" @ok="deleteReview">
+                  <b-dropdown-item href="" variant="danger" @click="deleteReview">삭제</b-dropdown-item>
+                  <!-- <b-modal id="review-delete-modal" @ok="deleteReview">
                     <p><img alt="Vue logo" src="@/assets/udonge.png" style="width: 10%" />소중한 리뷰를 정말 삭제하시겠습니까?</p>
-                  </b-modal>
+                  </b-modal> -->
                 </div>
                 <div v-else>
                   <b-dropdown-item href="#" variant="danger">신고</b-dropdown-item>
@@ -145,7 +145,7 @@ export default {
   methods: {
     deleteReview: function () {
       // axios.delete(`${SERVER_URL}/review` + `${this.review.reviewId}`)
-      axios.delete(`${SERVER_URL}/review`, this.review)
+      axios.delete(`${SERVER_URL}/review`, this.review.reviewId)
         .then((res) => {
           console.log(res)
         })
