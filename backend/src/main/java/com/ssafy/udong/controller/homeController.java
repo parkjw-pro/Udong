@@ -76,20 +76,20 @@
 //public String jss( ) {
 //    return "/index.html";
 //}
-//@GetMapping(value = "/review")
+//@GetMapping(value = "/reviews")
 //public String j( ) {
 //    return "/index.html";
 //}
 //
-//@GetMapping(value = "/review/create/{storeId}")
+//@GetMapping(value = "/reviews/create/{storeId}")
 //public String m( ) {
 //    return "/index.html";
 //}
-//@GetMapping(value = "/review/{category}")
+//@GetMapping(value = "/reviews/{category}")
 //public String n( ) {
 //    return "/index.html";
 //}
-//@GetMapping(value = "/review/detail/{storeId}")
+//@GetMapping(value = "/reviews/detail/{storeId}")
 //public String o( ) {
 //    return "/index.html";
 //}
