@@ -1,6 +1,6 @@
 <template>
-  <div class="mx-5 mt-5">
-    <img alt="Vue logo" src="@/assets/udonge.png" style="width: 10%" @click="trigger">
+  <div class="mx-5 mb-3">
+    <img alt="Vue logo" src="@/assets/udonge.png" style="width: 8%" @click="trigger">
   </div>
 </template>
 

@@ -32,15 +32,15 @@
     <div class="mb-5">
       <!-- for문 넣기 -->
       <div class="mb-5" v-for="(post, i) in posts" :key="i">
-        <PostBlock :post="post" />
+        <PostBlock :post="post" :groupName="group.clubName" />
       </div>
     </div>
     <br class="my-5" />
     <br class="my-5" />
     <br class="my-5" />
     <br class="my-5" />
-    아직 게시글이 없어요..!
     <EndBlock />
+    안녕 여기는 첫지점이야!
     <!-- <Button /> -->
   </div>
 </template>
@@ -66,7 +66,7 @@ export default {
       posts: [],
       limit: 5, //한 페이지에 노출될 게시글의 수
       offset: 0, //게시글 번호 오프셋
-      user_address: "",
+      user_address: JSON.parse(localStorage.getItem("Login-token"))["user_address"],
       groupcheck: "0",
     };
   },
@@ -123,6 +123,7 @@ export default {
             address: this.user_address,
             groupId: this.group.clubId,
             groupcheck: 2,
+            group: this.group
           },
         });
       } // 디르면
@@ -133,6 +134,7 @@ export default {
             address: this.user_address,
             groupId: this.group.clubId,
             groupcheck: 1,
+            group: this.group
           },
         });
       }
@@ -150,6 +152,7 @@ export default {
             address: this.user_address,
             groupId: this.group.clubId,
             groupcheck: 1,
+            group: this.group,
           },
         });
       } // 디르면
@@ -160,6 +163,7 @@ export default {
             address: this.user_address,
             groupId: this.group.clubId,
             groupcheck: 0,
+            group: this.group,
           },
         });
       }
@@ -168,9 +172,6 @@ export default {
   created() {
     this.getGroup();
     this.getGroupPosts();
-    this.user_address = JSON.parse(localStorage.getItem("Login-token"))[
-      "user_address"
-    ];
   },
 };
 </script>

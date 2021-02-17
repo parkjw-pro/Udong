@@ -62,7 +62,7 @@
           </b-carousel>
         </b-row>
         <!--2.2 내용-->
-        <b-row class="mt-3" align-h="center">
+        <b-row class="mt-3 mx-5" align-h="center">
           <div class="my-3 mx-3" style="text-align: left;">
             <h6 @click="detail(post)">{{post.postContent}}</h6>
           </div>

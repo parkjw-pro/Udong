@@ -4,13 +4,13 @@
     <b-jumbotron>  <!-- head, lead 속성 사용가능! -->
       <b-row class="mb-5">
         <b-col cols="4">
-          <b-avatar size="8rem" variant="info" :src="require('@/assets/app/badge/badge1.jpg')" style="cursor: pointer; width:"></b-avatar>
+          <span @click="toBadge" style="cursor: pointer;"><b-avatar size="8rem" variant="info" :src="require('@/assets/app/badge/badge1.jpg')" ></b-avatar></span>
         </b-col>
         <b-col cols="6" align-self="center">
           <b-row align-h="center" class="mb-4">
             <b-col>
-              <h2 style="font-family: 'Nanum Pen Script', cursive; display: inline;">{{ this.user.nickname }} </h2>
-              <b-icon v-if="$route.params.userId === user.userId" icon="gear-fill" font-scale="1.5" style="cursor: pointer;" type="bold" @click="toAccountDetail"></b-icon>
+              <h2 style="font-family: 'Nanum Pen Script', cursive; display: inline;">{{ user.nickname }} </h2>
+              <b-icon v-if="userId === user.userId" icon="gear-fill" font-scale="1.5" style="cursor: pointer;" type="bold" @click="toAccountDetail"></b-icon>
             </b-col>
           </b-row>
           <b-row align-h="center">
@@ -32,6 +32,8 @@
         <div v-for="(post , idx) in posts" :key ="idx" >
           <PostBlockMy :post="post" />
         </div>
+        <br>
+        <br>
         <EndBlock v-on:more="getMorePosts" />
         <span v-if="this.postCount > this.posts.length">더보기</span>
       </b-tab>
@@ -79,6 +81,7 @@ export default {
   },
   data() {
     return {
+      // 사용자 정보
       user: {
         userId: this.$route.params.userId,
         nickname: this.$route.params.nickname
@@ -90,6 +93,9 @@ export default {
       liked: false,
       reviews: [],
       groups: [],
+
+      // 내 정보
+      userId: JSON.parse(localStorage.getItem('Login-token'))['user-id'],
     };
   },
   created() {
@@ -111,9 +117,6 @@ export default {
           this.posts = response.data.list;
           this.postCount = response.data.count;
         });
-    },
-    toAccountDetail: function () {
-      this.$router.push({name: 'AccountDetail'})
     },
     getReviews: function() {
     axios
@@ -151,6 +154,18 @@ export default {
           (response) => {
             this.posts.push(...response.data.list);
         });
+    },
+    toAccountDetail: function () {
+      this.$router.push({name: 'AccountDetail'})
+    },
+    toBadge: function () {
+      // 본인이면 뱃지 페이지로 이동
+      if (this.userId == this.user.userId) {
+        this.$router.push({ name: 'Badge', params: { userId: this.user.userId}})
+      } else {
+        // 아니면
+        alert(`${this.user.userId}님의 대표뱃지!`)
+      }
     },
     toList: function () {
       this.$router.push({ name: 'GroupList'})

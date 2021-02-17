@@ -1,10 +1,10 @@
 <template>
-  <div id="navbar">
+  <div id="navbar" class="pb-5 mb-5">
     <!-- 1. Navbar --> <!-- variant="faded" -->
-    <b-navbar class="pl-5 mt-3" toggleable="sm" type="light" variant="faded">
+    <b-navbar class="pl-5 mt-3" toggleable="sm" type="light" variant="faded" fixed="top">
       <!-- 1.1 Navbar Logo -->
       <b-navbar-brand href="#" @click="toHome" style="color: #695549;">
-        <img src="@/assets/logo.png" alt="우동" style="width: 60px; height: 60px;"> 은
+        <img src="@/assets/logo2.png" alt="우동" style="width: 60px; height: 60px;"> 은
       </b-navbar-brand>
       <!-- 1.2 Navbar dropdowns -->
       <b-navbar-brand href="#">
@@ -16,46 +16,60 @@
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-navbar-brand>
-    </b-navbar>
-    
-    <!-- 2. 햄버거메뉴 -->
-    <component :is="currentMenu" :right="side === 'right' ? true: false" >
-        <b-row id="option_v2" align-h="center">
-          <b-col @click="toBadge"><b-avatar variant="info" :src="require('@/assets/app/badge/badge1.jpg')" style="cursor: pointer;"></b-avatar>{{ user.nickname }}님 <small>안녕하세요!</small></b-col>
+      
+
+
+      <!-- Navbar 오른쪽 메뉴 -->
+      <b-navbar-nav class="ml-auto mr-5 pr-4">
+        <b-navbar-brand><small id="nav_content" @click="toReview">리뷰</small></b-navbar-brand>
+        <b-navbar-brand><small id="nav_content" @click="toNews">소식</small></b-navbar-brand>
+        <b-navbar-brand><small id="nav_content" @click="toStory">이야기</small></b-navbar-brand>
+      </b-navbar-nav>
+
+      <!-- 2. 햄버거메뉴 -->
+      <component :is="currentMenu" :right="side === 'right' ? true: false" >
+        <b-row id="option_v2" align-h="center" class="px-0 py-0 my-0">
+          <b-col @click="toBadge">
+            <b-avatar variant="info" :src="require('@/assets/app/badge/badge1.jpg')" style="cursor: pointer;"></b-avatar>
+            {{ user.nickname }}님 <small>안녕하세요!</small>
+          </b-col>
         </b-row>
-        <!-- <b-row id="option_v2"></b-row> -->
         <hr>
-        <b-row id="option_v1" class="pl-0" @click="toReview">
+        <b-row id="option_v1" class="pl-3" @click="toReview">
             <!-- <i class="fas fa-book-open"></i> -->
             <b-col id="option_v2"><h2>우리동네 리뷰</h2></b-col>
         </b-row>
-        <b-row id="option_v1" class="pl-0" @click="toNews">
+        <b-row id="option_v1" class="pl-3" @click="toNews">
             <!-- <i class="far fa-newspaper"></i> -->
             <b-col id="option_v2"><h2>우리동네 소식</h2></b-col>
         </b-row>
         <!-- <router-link :to="{ name: 'NewsFeed' }" class="text-white"><p class="h5 mt-4" id="option_v2">뉴스피드</p></router-link> -->
-        <b-row id="option_v1" class="pl-0" @click="toStory">
+        <b-row id="option_v1" class="pl-3" @click="toStory">
             <!-- <i class="fas fa-globe-americas"></i> -->
             <b-col id="option_v2"><h2>우리동네 이야기</h2></b-col>
         </b-row>
-        <b-row id="option_v1" class="pl-0" @click="toMyfeed">
+        <b-row id="option_v1" class="pl-3" @click="toMyfeed">
             <!-- <i class="fas fa-star"></i> -->
             <b-col id="option_v2"><h3>내 피드</h3></b-col>
         </b-row>
-        <b-row id="option_v1" class="pl-0" @click="arrowToggle()" align-h="justify">
+        <b-row id="option_v1" class="pl-3" @click="arrowToggle()" align-h="justify">
             <!-- <i class="fas fa-cog"></i> -->
             <b-col id="option_v2"><b-icon icon="gear"></b-icon></b-col>
-            <b-col>
-              <b-icon v-if="!toggle" icon="chevron-down" variant="dark"></b-icon>
-              <b-icon v-else icon="chevron-up" variant="dark"></b-icon>
+            <b-col class="pr-0">
+              <b-icon v-if="!toggle" icon="chevron-down" variant="dark" style="text-align: right;"></b-icon>
+              <b-icon v-else icon="chevron-up" variant="dark" style="text-align: right;"></b-icon>
             </b-col>
             <!-- dropdown 표시하기 -->
         </b-row>
+        <b-col v-if="toggle" class="small" id="option_v3" @click="toBadge">뱃지</b-col>
         <b-col v-if="toggle" class="small" id="option_v3" @click="toAccountDetail">개인정보</b-col>
         <b-col v-if="toggle" class="small" id="option_v3" @click="logout">로그아웃</b-col>
         <b-col v-if="toggle" class="small" id="option_v3" @click="toDevelopers">개발진</b-col>
         <b-col v-if="toggle && user.isManager === 1" class="small" id="option_v3" @click="toAdmin">관리자페이지</b-col>
-    </component>
+      </component>
+    </b-navbar>
+    
+    
   </div>
 </template>
 
@@ -116,17 +130,20 @@ export default {
     },
     toNews: function () {
       this.$router.push({name: 'NewsHome'})
+      // location.reload(true)
     },
     toStory: function () {
       // location.replace(`/story/${this.user.address}/${this.user.userId}`)
       this.$router.push({name: 'NewsFeed', params: {address: this.user.address, userId: this.user.userId}})
+      // location.reload(true)
     },
     toMyfeed: function () {
-      // location.replace(`/story/${this.user.userId}`)
       this.$router.push({name: 'MyFeed', params: { userId: this.user.userId, nickname: this.user.nickname}})
+      // location.reload(true)
     },
     toAccountDetail: function () {
       this.$router.push({name: 'AccountDetail'})
+      location.reload(true)
     },  
     logout: function () { 
       this.$store
@@ -139,6 +156,7 @@ export default {
     },
     toDevelopers: function () {
       this.$router.push({name: 'Developers'})
+      location.reload(true)
     },
     arrowToggle() {
       this.isToggled = !this.isToggled;
@@ -174,6 +192,10 @@ export default {
 <style lang="less">
     #navbar {
       height: 100%;
+    }
+    
+    #nav_content {
+      cursor: pointer
     }
 
     #option_v1 {
