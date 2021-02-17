@@ -51,7 +51,7 @@
         <b-card-group deck style="width: 75%;">
           <CategoryCard category="편의점"/>
           <CategoryCard category="라면김밥분식"/>
-          <CategoryCard category="욕탕업-종합"/>
+          <CategoryCard category="호텔/콘도"/>
         </b-card-group>
       </b-row>
     </div>
