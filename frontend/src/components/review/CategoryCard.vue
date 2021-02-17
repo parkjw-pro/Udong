@@ -3,7 +3,7 @@
     <b-col class="category packery-item" v-draggabilly v-packery-item>
       <div class="category_img" :style="category_img">
         <div id="category_name" class="category_img_content" @click="toReviewList">
-          <h4>{{ category }}</h4>
+          <h2 style="font-family: 'Nanum Pen Script', cursive;">{{ category }}</h2>
           <!-- <h2>{{ this.category.fileId }}</h2> -->
         </div>
         <div class="category_img_cover"></div>
