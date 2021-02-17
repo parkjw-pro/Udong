@@ -3,8 +3,7 @@
     <b-col class="category packery-item" v-draggabilly v-packery-item>
       <div class="category_img" :style="category_img">
         <div id="category_name" class="category_img_content" @click="toReviewList">
-          <h2 style="font-family: 'Nanum Pen Script', cursive;">{{ category }}</h2>
-          <!-- <h2>{{ this.category.fileId }}</h2> -->
+          <h4 style="font-family: 'Jua', sans-serif;">{{ category }}</h4>
         </div>
         <div class="category_img_cover"></div>
       </div>
@@ -114,7 +113,7 @@ export default {
   top: 95px;
   left: 95px;
   transform: translate(-50%, -50%);
-  font-size: medium;
+  /* font-size: medium; */
   color: white;
   z-index: 2;
   text-align: center;
