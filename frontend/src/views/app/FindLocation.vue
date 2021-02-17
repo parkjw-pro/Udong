@@ -14,12 +14,14 @@
         <span id="dong" style="display: none;"></span>
       </div>
     </div>
-    <div class="mt-1">
-      현재위치가 아닌가요? <a href="" @click="relocation">다시찾기</a>
-    </div>
+    <div class="mt-1">현재위치가 아닌가요? <a href="" @click="relocation">다시찾기</a></div>
     <div class="mt-5">
-      <b-button class="mr-3" style="background-color: #695549;" v-on:click="createUserAddress()">여기로 갈께요!</b-button>
-      <b-button class="ml-3" style="background-color: #695549;" v-on:click="addUserAddress()">역삼동으로 갈께요!</b-button>
+      <b-button class="mr-3" style="background-color: #695549;" v-on:click="createUserAddress()"
+        >여기로 갈께요!</b-button
+      >
+      <b-button class="ml-3" style="background-color: #695549;" v-on:click="addUserAddress()"
+        >역삼동으로 갈께요!</b-button
+      >
     </div>
   </div>
 </template>
@@ -29,10 +31,10 @@
 //     document.location.href = document.location.href.replace('http:', 'https:');
 // }
 
-import axios from 'axios'
+import axios from 'axios';
 
-const MAP_API_KEY = process.env.VUE_APP_MAP_API_KEY
-const SERVER_URL = process.env.VUE_APP_SERVER_URL
+const MAP_API_KEY = process.env.VUE_APP_MAP_API_KEY;
+const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
 export default {
   name: 'FindLocation',
@@ -41,13 +43,11 @@ export default {
       location: {
         lat: '37.50126268403',
         lng: '127.03955376031',
-
       },
-      userLocation:{
+      userLocation: {
         addressCode: '11',
         addressName: '',
-        userId: ''
-
+        userId: '',
       },
     };
   },
@@ -57,10 +57,7 @@ export default {
 
     navigator.geolocation.getCurrentPosition(this.success, this.fail);
 
-
-    this.userLocation.userId = JSON.parse(localStorage.getItem('Login-token'))["user-id"]
-
-
+    this.userLocation.userId = JSON.parse(localStorage.getItem('Login-token'))['user-id'];
 
     //navigator 객체를 이용해 현재 위치를 받아온다.
     // navigator.geolocation.getCurrentPosition(this.success, this.fail);
@@ -109,7 +106,7 @@ export default {
 
           for (var i = 0; i < result.length; i++) {
             if (result[i].region_type === 'H') {
-              const address = result[i].address_name
+              const address = result[i].address_name;
               infoDiv.innerHTML = address;
               dong.innerHTML = result[i].code;
 
@@ -139,64 +136,59 @@ export default {
     //   this.userLocation.addressCode = data;
     // },
 
-    
     addScript() {
       const script = document.createElement('script'); /* global kakao */
       script.onload = () => kakao.maps.load(this.initMap);
       script.src = `https://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${MAP_API_KEY}&libraries=services`;
       document.head.appendChild(script);
     },
-    addUserAddress: function () {
-      const userInfo = JSON.parse(localStorage.getItem('Login-token'))
-      userInfo.user_address =  "1168065000"
-      userInfo.user_address_name = "역삼2동"
-      localStorage.setItem("Login-token", JSON.stringify(userInfo));
+    addUserAddress: function() {
+      const userInfo = JSON.parse(localStorage.getItem('Login-token'));
+      userInfo.user_address = '1168065000';
+      userInfo.user_address_name = '역삼2동';
+      localStorage.setItem('Login-token', JSON.stringify(userInfo));
 
-      this.userLocation.addressCode = "1168065000"
-      this.userLocation.addressName = "역삼2동"
+      this.userLocation.addressCode = '1168065000';
+      this.userLocation.addressName = '역삼2동';
       axios
-        .post(`${SERVER_URL}/user/address`, this.userLocation )
+        .post(`${SERVER_URL}/user/address`, this.userLocation)
         .then(() => {
           // console.log(response.data);
-          location.replace('/home')
+          location.replace('/home');
           // window.location.reload(true);
           // this.$router.push({ name: 'Home'});
-
-        })  
-        .catch((response) => {
-          console.log(response);
-        });
-    }, 
-    createUserAddress: function() {
-      this.userLocation.addressCode = document.getElementById('dong').innerHTML;
-      var arealist= document.getElementById('centerAddr').innerHTML.split(" ",4);
-      this.userLocation.addressName = arealist[arealist.length-1];
-      // console.log(this.userLocation.addressCode);
-      // console.log(this.userLocation.userId);
-      const userInfo = JSON.parse(localStorage.getItem('Login-token'))
-      userInfo.user_address = this.userLocation.addressCode;
-      userInfo.user_address_name = this.userLocation.addressName;
-      localStorage.setItem("Login-token", JSON.stringify(userInfo));
-      // localStorage.setItem("auth-token",response.data["auth-token"]);
-      axios
-        .post(`${SERVER_URL}/user/address`, this.userLocation )
-        .then(() => {
-          // console.log(response.data);
-          location.replace('/home')
-          // window.location.reload(true);
-          // this.$router.push({ name: 'Home'});
-
         })
         .catch((response) => {
           console.log(response);
         });
     },
-    relocation: function () {
+    createUserAddress: function() {
+      this.userLocation.addressCode = document.getElementById('dong').innerHTML;
+      var arealist = document.getElementById('centerAddr').innerHTML.split(' ', 4);
+      this.userLocation.addressName = arealist[arealist.length - 1];
+      // console.log(this.userLocation.addressCode);
+      // console.log(this.userLocation.userId);
+      const userInfo = JSON.parse(localStorage.getItem('Login-token'));
+      userInfo.user_address = this.userLocation.addressCode;
+      userInfo.user_address_name = this.userLocation.addressName;
+      localStorage.setItem('Login-token', JSON.stringify(userInfo));
+      // localStorage.setItem("auth-token",response.data["auth-token"]);
+      axios
+        .post(`${SERVER_URL}/user/address`, this.userLocation)
+        .then(() => {
+          // console.log(response.data);
+          location.replace('/home');
+          // window.location.reload(true);
+          // this.$router.push({ name: 'Home'});
+        })
+        .catch((response) => {
+          console.log(response);
+        });
+    },
+    relocation: function() {
       location.reload(true);
     },
-
   },
-
 };
 </script>
 

@@ -12,7 +12,8 @@
           autofocus
         >
         <b-button class="ml-3" size="sm" style="background-color: #695549;" @click="search">검색</b-button>
-        <b-button class="ml-3" pill size="sm" variant="transparent" style="color: #695549;" v-b-popover.hover.top="'카테고리, 상점명 등을 검색해보세요!'" title="검색 팁!">검색팁</b-button>
+        <b-button id="GetStoreTip" class="ml-3" pill size="sm" variant="transparent" style="color: #695549;">검색팁</b-button>
+        <b-tooltip target="GetStoreTip">카테고리, 상점명 등을 검색해보세요!</b-tooltip>
     <div v-if="getSearchStoreList.length > 0" style="overflow: auto; height: 650px;">
       <table class="table table-hover" striped hover style="background-color: #695549;">
       <thead style="color: white;" class="small">

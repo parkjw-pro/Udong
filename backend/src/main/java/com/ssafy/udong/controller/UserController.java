@@ -45,6 +45,7 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+
 	
 	@Autowired
 	private EmailService emailService;
@@ -78,6 +79,7 @@ public class UserController {
 				resultMap.put("is-manager", loginUser.getIsManager());
 				resultMap.put("user_address", "1111");
 				resultMap.put("user_address_name", "동이름");
+				resultMap.put("user_badge", "뱃지");
 				// resultMap.put("status", true);
 				// resultMap.put("data", loginUser);
 				status = HttpStatus.ACCEPTED;
@@ -138,6 +140,7 @@ public class UserController {
 	@PostMapping
 	public ResponseEntity<String> insertUser(@RequestBody UserDto userDto) throws Exception {
 		int result = userService.insertUser(userDto);
+		int result2 = userService.insertBadge(userDto.getUserId(), "1");
 		if (result == SUCCESS) {
 			return new ResponseEntity<String>("회원가입 성공", HttpStatus.OK);
 		} else {
