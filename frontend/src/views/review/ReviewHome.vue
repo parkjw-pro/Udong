@@ -35,7 +35,7 @@
     <div>
       <b-row align-h="center" >
         <b-card-group deck style="width: 75%;">
-          <CategoryCard category="가장 인기 많은 상점"/>
+          <CategoryCard category="리뷰 많은 상점"/>
           <CategoryCard category="패스트푸드"/>
           <CategoryCard category="호프/맥주"/>
         </b-card-group>

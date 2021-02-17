@@ -79,7 +79,7 @@ export default {
     console.log(this.storeParamDto.searchWord);
     console.log(this.storeParamDto.dongcode);
 
-    if (this.storeParamDto.searchWord != '가장 인기 많은 상점') {
+    if (this.storeParamDto.searchWord != '리뷰 많은 상점') {
       this.searchBestStore();
     } else {
       console.log('최다리뷰');
