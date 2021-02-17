@@ -78,6 +78,7 @@ public class UserController {
 				resultMap.put("is-manager", loginUser.getIsManager());
 				resultMap.put("user_address", "1111");
 				resultMap.put("user_address_name", "동이름");
+				resultMap.put("user_badge", "뱃지");
 				// resultMap.put("status", true);
 				// resultMap.put("data", loginUser);
 				status = HttpStatus.ACCEPTED;

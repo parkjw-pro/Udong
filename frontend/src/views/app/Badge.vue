@@ -22,7 +22,7 @@
       </b-col>
       <b-col class="badge">
         <img
-        @click="mainBadge(3)"
+          @click="mainBadge(3)"
           v-bind:class="[badgecount > 2 ? acquired : '', unacquired]"
           alt="Vue logo"
           src="@/assets/app/badge/badge3.jpg"
@@ -33,7 +33,7 @@
     <b-row>
       <b-col class="badge">
         <img
-        @click="mainBadge(4)"
+          @click="mainBadge(4)"
           v-bind:class="[badgecount > 3 ? acquired : '', unacquired]"
           alt="Vue logo"
           src="@/assets/app/badge/badge4.jpg"
@@ -42,7 +42,7 @@
       </b-col>
       <b-col class="badge">
         <img
-        @click="mainBadge(5)"
+          @click="mainBadge(5)"
           v-bind:class="[badgecount > 4 ? acquired : '', unacquired]"
           alt="Vue logo"
           src="@/assets/app/badge/badge5.jpg"
@@ -51,7 +51,7 @@
       </b-col>
       <b-col class="badge">
         <img
-        @click="mainBadge(6)"
+          @click="mainBadge(6)"
           v-bind:class="[badgecount > 5 ? acquired : '', unacquired]"
           alt="Vue logo"
           src="@/assets/app/badge/badge6.jpg"
@@ -62,7 +62,7 @@
     <b-row>
       <b-col class="badge">
         <img
-        @click="mainBadge(7)"
+          @click="mainBadge(7)"
           v-bind:class="[badgecount > 5 ? acquired : '', unacquired]"
           alt="Vue logo"
           src="@/assets/app/badge/badge7.jpg"
@@ -71,7 +71,7 @@
       </b-col>
       <b-col class="badge">
         <img
-        @click="mainBadge(8)"
+          @click="mainBadge(8)"
           v-bind:class="[badgecount > 5 ? acquired : '', unacquired]"
           alt="Vue logo"
           src="@/assets/app/badge/badge8.jpg"
@@ -80,7 +80,7 @@
       </b-col>
       <b-col class="badge">
         <img
-        @click="mainBadge(9)"
+          @click="mainBadge(9)"
           v-bind:class="[badgecount > 5 ? acquired : '', unacquired]"
           alt="Vue logo"
           src="@/assets/app/badge/badge9.jpg"
@@ -94,7 +94,7 @@
         메인벳지로 하시겠습니까??
       </p>
     </b-modal>
-        <b-modal v-model="modalShow2">
+    <b-modal v-model="modalShow2">
       <p>
         <img alt="Vue logo" src="@/assets/udonge.png" style="width: 10%" />
         활동이 부족해요!!
@@ -139,28 +139,32 @@ export default {
           console.log(response.data);
           this.badgeList = response.data;
           this.badgecount = response.data.length;
-          console.log(this.badgecount);
         });
     },
 
     mainBadge(index) {
-      if(index>this.badgecount){
+      if (index > this.badgecount) {
         this.modalShow2 = !this.modalShow2;
-
-      }else{
-      this.index = index;
-      this.modalShow = !this.modalShow;
+      } else {
+        this.index = index;
+        this.modalShow = !this.modalShow;
       }
-
     },
     setmainBadge() {
       console.log(this.userId);
       console.log(this.index);
       axios
-        .put(`${SERVER_URL}/user/badge?userId=${this.userId}&&badgeId=${this.index}`
-          )
+        .put(`${SERVER_URL}/user/badge?userId=${this.userId}&&badgeId=${this.index}`)
         .then((response) => {
           console.log(response);
+
+          const userInfo = JSON.parse(localStorage.getItem('Login-token'));
+          userInfo.user_badge = 'badge' + this.index;
+          localStorage.setItem('Login-token', JSON.stringify(userInfo));
+          console.log(this.badgecount);
+          location.replace(true);
+          // location.href='abc.php'
+          // location.replace();
         });
     },
   },
