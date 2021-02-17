@@ -30,15 +30,12 @@
                   <b-icon icon="three-dots-vertical" variant="dark"></b-icon>
                 </template>
                 <div v-if="review.userId === userId">
-                  <b-dropdown-item href="" variant="danger" v-b-modal.review-delete-modal
+                  <b-dropdown-item href="" variant="danger" @click="deleteReview"
                     >삭제</b-dropdown-item
                   >
-                  <b-modal id="review-delete-modal" @ok="deleteReview">
-                    <p>
-                      <img alt="Vue logo" src="@/assets/udonge.png" style="width: 10%" />소중한
-                      리뷰를 정말 삭제하시겠습니까?
-                    </p>
-                  </b-modal>
+                  <!-- <b-modal id="review-delete-modal" @ok="deleteReview">
+                    <p><img alt="Vue logo" src="@/assets/udonge.png" style="width: 10%" />소중한 리뷰를 정말 삭제하시겠습니까?</p>
+                  </b-modal> -->
                 </div>
                 <div v-else>
                   <b-dropdown-item href="#" variant="danger">신고</b-dropdown-item>
