@@ -57,6 +57,8 @@
           <div class="my-2">역사적인 순간!</div>
           <h5>우리 동네 첫 게시글을 작성해주세요<b-icon icon="heart-fill" variant="danger"></b-icon></h5>
         </div>
+        <br>
+        <br>
         <EndBlock v-on:more="getMorePosts" />
     <Button />
     </div>
