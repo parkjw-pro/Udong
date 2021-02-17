@@ -78,7 +78,7 @@
             <div class="h4" v-if="liked"><b-icon icon="suit-heart-fill" variant="danger" @click="likePost()"></b-icon></div>
             <div class="h4" v-else><b-icon icon="suit-heart" variant="danger" @click="likePost()"></b-icon></div>
           </div>
-          <!-- 댓글 수 -->
+          <!-- 댓글 -->
           <div class="postComment" @click="showComment">
             <div class="h4" v-if="commentFlag">
               <b-icon icon="chat-fill" variant="warning"></b-icon>
@@ -266,7 +266,13 @@ export default {
           this.offset = 0;
           this.comments = [];  //댓글 초기화
           this.getComments();
-          this.post.postCommentCount = this.post.postCommentCount*1 + 1;
+          this.post.postCommentCount = this.post.postCommentCount * 1 + 1;
+          this.comment = '';
+
+          // 댓글창 열어주기
+          if (this.commentFlag === false) {
+            this.showComment();
+          }
         });
     },
     reportPost() {

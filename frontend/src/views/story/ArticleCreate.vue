@@ -102,6 +102,8 @@
     >
       리뷰 작성을 취소하시겠습니까?
     </b-modal>
+    <br>
+    <br>
   </div>
 </template>
 
@@ -138,7 +140,6 @@ export default {
   },
   created() {
     this.areaCode = this.areaCode.substring(1,this.areaCode.length-1)
-    console.log(this.areaCode)
     this.groupCheck = this.$route.params.groupcheck;
     if (this.groupCheck == 0) {
         //가입한 그룹 정보 가져오기
@@ -155,11 +156,6 @@ export default {
           this.options.push(response.data.dto.clubName);
           this.selected = response.data.dto.clubName;
         });
-
-      // this.clubs = this.$route.params.group.clubName
-      // console.log("이름 "+ this.clubs)
-      // this.options = (this.clubs);
-      // this.selected = this.clubs
     }
   },
   methods: {
@@ -219,8 +215,7 @@ export default {
           .post(`${SERVER_URL}/clubpost`, formData, {
             headers: { "Content-Type": `application/json; charset=UTF-8` },
           })
-          .then((response) => {
-            console.log(response.data);
+          .then(() => {
             if (this.groupCheck == 0) {
               this.$router.push({
                 name: "NewsFeed",
@@ -261,17 +256,14 @@ export default {
       this.$refs["image-modal"].hide();
     },
     previewImage(event) {
-      console.log(this.imageUrl);
       for (var i = 0; i < this.imageUrl.length; i++) {
         this.imageUrl[i] = "";
       }
 
       for (var image of event.target.files) {
         const file = image;
-        console.log(file);
         this.imageUrl.push(URL.createObjectURL(file));
       }
-      console.log(this.imageUrl);
     },
     setOptions() {
       //그룹명만 따로 저장
