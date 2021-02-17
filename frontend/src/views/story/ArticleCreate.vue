@@ -167,7 +167,7 @@ export default {
     createArticle() {
       var tags = this.getTag();
       var formData = new FormData();
-
+      console.log(this.selected)
       formData.append("isOpen", this.isOpen);
       formData.append("postContent", this.content);
       formData.append("userId", this.getUserId);
@@ -182,7 +182,7 @@ export default {
       }
 
       //userpost / clubpost 구분 -> 적절한 url로 axios 보내기
-      if (this.selected == "내 피드") {
+      if (this.selected == "우리동네 이야기") {
         formData.append("areaCode", this.areaCode);
         
         //userpost`
