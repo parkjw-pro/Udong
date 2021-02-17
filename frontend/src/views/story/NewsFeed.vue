@@ -131,7 +131,7 @@ export default {
   },
   methods: {
     getGroupNames(data){
-      this.groupNames.push('모두의 이야기');
+      this.groupNames.push('우리동네 이야기');
       for(var g of data){
         this.groupNames.push(g.clubName);
       }
