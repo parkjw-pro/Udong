@@ -47,7 +47,7 @@ export default {
           console.log("내그룹 조회성공");
 
           for (var i in this.myClub) {
-            console.log(this.myClub[i].clubId);
+         
             if (this.group.clubId == this.myClub[i].clubId) {
               // 내그룹에 있으면 체크변수 1로
               this.checkMygroup = "1";
