@@ -162,7 +162,7 @@ export default {
           // window.location.reload(true);
           // this.$router.push({ name: 'Home'});
 
-        })
+        })  
         .catch((response) => {
           console.log(response);
         });

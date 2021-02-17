@@ -237,6 +237,7 @@ export default {
           })
           .catch((err) => {
             console.log(err);
+            alert("중복된 그룹명입니다. 다시작성 바랍니다.")
             this.isVerified = false;
           });
       }

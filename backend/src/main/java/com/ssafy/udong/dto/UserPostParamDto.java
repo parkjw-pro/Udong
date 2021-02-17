@@ -5,11 +5,23 @@ public class UserPostParamDto {
 	private int limit;
 	private int offset;
 	private String searchWord;
+	private String areaCode;
 	private int postId;
 	private String userId;
 	
 	public UserPostParamDto() {}
 	
+	
+	public String getAreaCode() {
+		return areaCode;
+	}
+
+
+	public void setAreaCode(String areaCode) {
+		this.areaCode = areaCode;
+	}
+
+
 	public int getLimit() {
 		return limit;
 	}

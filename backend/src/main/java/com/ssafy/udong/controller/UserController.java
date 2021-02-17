@@ -234,6 +234,7 @@ public class UserController {
 	public ResponseEntity<String> selectDuplicateEmail(@RequestBody UserDto userDto) throws Exception {
 		System.out.println(userDto.getEmail());
 		String result = userService.selectDuplicateEmail(userDto.getEmail());
+		System.out.println(result);
 		if (result != null) { // 이메일이 이미 있으면
 			return new ResponseEntity<String>("현재 사용중인 이메일입니다.\n", HttpStatus.INTERNAL_SERVER_ERROR);
 		} else { // 이메일이 없으면

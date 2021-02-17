@@ -133,17 +133,20 @@ export default {
       tag: null,
       groupCheck: 0, // 그룹에서 게시물작성 눌렀는지 체크하는 변수
       groupName: 0, // 그룹에서 게시물작성할때 넘어온 그룹내임
+      areaCode: JSON.stringify(JSON.parse(localStorage.getItem('Login-token'))['user_address'])
     };
   },
   created() {
+    this.areaCode = this.areaCode.substring(1,this.areaCode.length-1)
+    console.log(this.areaCode)
     this.groupCheck = this.$route.params.groupcheck;
     if (this.groupCheck == 0) {
-      //뉴스피드에서 게시물작성   //가입한 그룹 정보 가져오기
+        //가입한 그룹 정보 가져오기
       axios
         .get(`${SERVER_URL}/club/user/${this.getUserId}/member`)
         .then((response) => ((this.clubs = response.data), this.setOptions()));
     } else {
-      //  그룹에서 게시물작성
+      //  해당그룹에  이름가져오기
       axios
         .get(`${SERVER_URL}/club/${this.$route.params.groupId}`)
         .then((response) => {
@@ -160,13 +163,16 @@ export default {
     }
   },
   methods: {
+    // 글작성
     createArticle() {
       var tags = this.getTag();
       var formData = new FormData();
+
       formData.append("isOpen", this.isOpen);
       formData.append("postContent", this.content);
       formData.append("userId", this.getUserId);
       formData.append("postTag", tags);
+  
       for (let i = 0; i < this.files.length; i++) {
         formData.append("file", this.files[i]);
       }
@@ -177,6 +183,8 @@ export default {
 
       //userpost / clubpost 구분 -> 적절한 url로 axios 보내기
       if (this.selected == "내 피드") {
+        formData.append("areaCode", this.areaCode);
+        
         //userpost`
         //file 넣어야 함
         console.log(formData);

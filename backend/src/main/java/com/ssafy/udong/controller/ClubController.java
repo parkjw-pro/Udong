@@ -117,7 +117,7 @@ public class ClubController {
 		System.out.println(areaCode);
 		String result = clubService.selectDuplicateClubName(clubName, areaCode);
 
-		
+		System.out.println(result);
 		if (result != null) {
 			return new ResponseEntity<String>("현재 사용중인 그룹명입니다.", HttpStatus.INTERNAL_SERVER_ERROR);
 		} else {

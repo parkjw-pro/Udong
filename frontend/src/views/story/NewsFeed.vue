@@ -107,6 +107,7 @@ export default {
       user: {
         userId: '',
         nickname: '',
+        userAddress: '',
       },
     }
   },
@@ -115,7 +116,7 @@ export default {
     const user = JSON.parse(localStorage.getItem('Login-token'))
     this.user.userId = user["user-id"]
     this.user.nickname = user["user-name"]
-
+    this.user.userAddress = user["user_address"]
     //가입한 그룹 정보 가져오기
     axios
       .get(`${SERVER_URL}/club/user/${this.getUserId}/member`)
@@ -150,15 +151,17 @@ export default {
         this.getGroupPosts();
       }
     },
-    getUserPosts() {
+    getUserPosts() { //해당동에 해당하는 글가져오기
       axios
-        .get(`${SERVER_URL}/userpost`, {
+        .get(`${SERVER_URL}/userpost`, {  
           params: {
             limit: this.limit,
-            offset: this.offset
+            offset: this.offset,
+            areaCode : this.user.userAddress
           }
         })
-        .then((response) => {
+        .then((response) => { 
+    
             this.posts.push(...response.data.list);
             this.postCount = response.data.count;
         });

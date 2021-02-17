@@ -97,11 +97,11 @@ public class UserPostServiceImpl implements UserPostService {
 
 	// 글전체조회
 	@Override
-	public UserPostResultDto selectAllUserPost(int limit, int offset) {
+	public UserPostResultDto selectAllUserPost(int limit, int offset,String areaCode) {
 		UserPostParamDto userPostParamDto = new UserPostParamDto();
 		userPostParamDto.setLimit(limit);
 		userPostParamDto.setOffset(offset);
-		
+		userPostParamDto.setAreaCode(areaCode);
 		UserPostResultDto userPostResultDto = new UserPostResultDto();
 		try {
 

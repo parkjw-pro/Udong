@@ -6,8 +6,8 @@
 	<!-- 글쓰기 -->
 	<insert id="createUserPost"
 		parameterType="com.ssafy.udong.dto.UserPostDto">
-		INSERT INTO user_post ( user_id, post_content, post_views, is_open, post_like_count, post_tag, is_updated, post_comment_count )
-		VALUES ( #{userId}, #{postContent}, 0, #{isOpen}, 0, #{postTag}, 0, 0)
+		INSERT INTO user_post ( user_id, post_content, post_views, is_open, post_like_count, post_tag, is_updated, post_comment_count, area_code )
+		VALUES ( #{userId}, #{postContent}, 0, #{isOpen}, 0, #{postTag}, 0, 0,#{areaCode})
 	</insert>
 
 	<!--유저post 이미지삽입 -->
@@ -31,9 +31,9 @@
 	<select id="selectAllUserPost" parameterType="com.ssafy.udong.dto.UserPostParamDto"
 		resultType="com.ssafy.udong.dto.UserPostDto">
 		SELECT p.post_id, p.user_id, u.nickname, p.post_content, p.created_at, p.post_views,
-		p.is_open, p.post_like_count, p.post_tag, p.is_updated, p.updated_at, p.post_comment_count
+		p.is_open, p.post_like_count, p.post_tag, p.is_updated, p.updated_at, p.post_comment_count , p.area_code
 		FROM user_post p, user u
-		WHERE p.user_id = u.user_id
+		WHERE p.user_id = u.user_id and p.area_code = #{areaCode} 
 		ORDER BY p.post_id DESC
 		LIMIT #{limit} OFFSET #{offset}
 	</select>

@@ -18,7 +18,7 @@ public interface UserPostService {
 	public int createUserPost(UserPostDto userBoardDto, MultipartFile[] files);
 
 	// 모든 게시물 조회
-	public UserPostResultDto selectAllUserPost(int limit, int offset);
+	public UserPostResultDto selectAllUserPost(int limit, int offset,String areaCode);
 	
 	// 유저 별 게시물 조회
 	public UserPostResultDto selectAllUserPostByUserId(String userId, int limit, int offset);

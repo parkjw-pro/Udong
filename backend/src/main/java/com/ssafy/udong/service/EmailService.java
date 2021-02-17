@@ -32,7 +32,7 @@ public class EmailService {
 			String c = rc.randomcodes();
 			EmailCodeDto codeDto = dao.selectEmailCode(userDto.getUserId()); //인증코드에 있는지없는지 확인하고 있으면 
 			
-			if(codeDto.getUserID() == null) { // 이메일 코드 넣어줌
+			if(codeDto == null) { // 이메일 코드 넣어줌
 	
 				dao.createEmailCode(userDto.getUserId(), c);
 			}else {

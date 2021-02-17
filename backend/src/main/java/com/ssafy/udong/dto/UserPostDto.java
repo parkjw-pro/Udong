@@ -9,6 +9,7 @@ public class UserPostDto {
 	private String createdAt;
 	private String isOpen;
 	private String postLikeCount;
+	private String areaCode;
 	
 	private String postTag;
 	private String isUpdated;
@@ -28,6 +29,14 @@ public class UserPostDto {
 	}
 
 	
+	public String getAreaCode() {
+		return areaCode;
+	}
+
+	public void setAreaCode(String areaCode) {
+		this.areaCode = areaCode;
+	}
+
 	public String getUserId() {
 		return userId;
 	}
