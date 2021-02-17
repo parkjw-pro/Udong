@@ -1,6 +1,5 @@
 //package com.ssafy.udong.controller;
 //
-//
 //import org.springframework.stereotype.Controller;
 //import org.springframework.web.bind.annotation.GetMapping;
 //
@@ -130,6 +129,5 @@
 //	public String x( ) {
 //		return "/index.html";
 //	}
-//
-//
 //}
+//

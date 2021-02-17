@@ -305,8 +305,10 @@ public class UserPostController {
 		System.out.println("다운로드" +fileId);
 		List<String> url = clubService.selectFileUrl(fileId);
 		System.out.println("가져온 url:" +url.get(0));
-		System.out.println("./uploads/userpost/"+url.get(0).substring(17));
-		String madeUrl = "./uploads/userpost/"+url.get(0).substring(17);
+//		System.out.println("/home/ec2-user/0218/uploads/userPost/"+url.get(0).substring(17));
+//		String madeUrl = "/home/ec2-user/0218/uploads/userPost/"+url.get(0).substring(17);
+		System.out.println("./uploads/userPost/"+url.get(0).substring(17));
+		String madeUrl = "./uploads/userPost/"+url.get(0).substring(17);
 		Path path = Paths.get(madeUrl);
 			
 		String contentType = Files.probeContentType(path);

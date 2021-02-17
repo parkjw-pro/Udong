@@ -2,8 +2,8 @@
   <div id="box">
     <div id="border" class="my-5 py-5">
       <div class="mb-5">
-        <span><img alt="Vue logo" src="@/assets/udonge.png" style="width: 10%"></span>
-        <span class="font-weight-bold" style="color: #695549;">우리동네 주민등록증</span>
+        <span><img alt="Vue logo" src="@/assets/udonge.png" style="width: 5%"></span>
+        <span class="font-weight-bold ml-2" style="color: #695549;">우리동네 주민등록증</span>
       </div>
       <!-- 0. 동네 설정 -->
       <b-row id="accountBox" align-h="center">
