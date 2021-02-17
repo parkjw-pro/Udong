@@ -33,11 +33,14 @@
                   <b-dropdown-item href="" variant="danger" v-b-modal.post-delete-modal
                     >삭제</b-dropdown-item
                   >
-                  <b-modal id="post-delete-modal" @ok="deletePost">
+                  <b-modal id="post-delete-modal" @ok="deletePost()">
                     <p>
                       <img alt="Vue logo" src="@/assets/udonge.png" style="width: 10%" />소중한
                       이야기를 정말 삭제하시겠습니까?
                     </p>
+                    <b-button class="ml-3" style="background-color: #695549;"
+                      >역삼동으로 갈께요!</b-button
+                    >
                   </b-modal>
                 </div>
                 <div v-else>
@@ -217,13 +220,9 @@ export default {
   },
   methods: {
     deletePost() {
-      axios
-        .delete(`${SERVER_URL}/clubpost`, {
-          postId: this.post['postId'],
-        })
-        .then((response) => {
-          console.log(response);
-        });
+      axios.delete(`${SERVER_URL}/clubpost?clubId=${this.post.postId}`).then((response) => {
+        console.log(response);
+      });
     },
     getLikeInfo() {
       axios

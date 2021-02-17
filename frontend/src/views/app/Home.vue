@@ -132,7 +132,8 @@ export default {
       storyList: [],
       user: {
         userId: JSON.parse(localStorage.getItem('Login-token'))['user-id'],
-        nickname: JSON.parse(localStorage.getItem('Login-token'))['user-name']
+        nickname: JSON.parse(localStorage.getItem('Login-token'))['user-name'],
+        address : JSON.parse(localStorage.getItem('Login-token'))['user_address'] 
       }
     }
   },
@@ -151,7 +152,7 @@ export default {
       this.$router.push({ name: 'ReviewHome' })
     },
     toStory: function () {
-      this.$router.push({ name: 'NewsFeed' })
+      this.$router.push({ name: 'NewsFeed' , params: { address : this.user.address, userId: this.user.userId} })
     },
     // getReview: function () {
     //   axios.get(`${SERVER_URL}/review`)

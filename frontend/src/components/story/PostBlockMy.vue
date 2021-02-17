@@ -212,13 +212,10 @@ export default {
         .then((response) => (this.liked = response.data));
     },
     deletePost() {
-      axios
-        .delete(`${SERVER_URL}/userpost`, {
-          params: { postId: this.post['postId'] },
-        })
-        .then((response) => {
-          console.log(response);
-        });
+      axios.delete(`${SERVER_URL}/userpost?postId=${this.post.postId}`).then((response) => {
+        console.log(response);
+        location.reload(true);
+      });
     },
     reportPost() {},
     likePost() {

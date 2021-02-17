@@ -207,8 +207,8 @@ public class ClubPostController {
 	// 글 삭제
 	@ApiOperation(value = "게시 글 삭제", notes = "그룹의 게시판에 노출되는 글을 삭제합니다.\n" + "## 필수값\n" + " - postId : 삭제할 게시글 아이디\n")
 	@DeleteMapping
-	private ResponseEntity<String> deleteClubPost(@RequestBody ClubPostDto clubPostDto) {
-		int result = service.deleteClubPost(clubPostDto.getPostId());
+	private ResponseEntity<String> deleteClubPost(@RequestParam("clubId") String clubId) {
+		int result = service.deleteClubPost(clubId);
 
 		if (result == SUCCESS) {
 			return new ResponseEntity<String>("글 삭제 성공", HttpStatus.OK);
