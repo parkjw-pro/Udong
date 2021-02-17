@@ -8,8 +8,8 @@
     <div id="border" class="my-5 py-5">
       <!-- 1. 제목 -->
       <div id="title" class="mb-5">
-        <span><img alt="Vue logo" src="@/assets/udonge.png" style="width: 10%"></span>
-        <span class="font-weight-bold " style="color: #695549;">회원정보</span>
+        <span><img alt="Vue logo" src="@/assets/udonge.png" style="width: 5%"></span>
+        <span class="font-weight-bold ml-2" style="color: #695549;">회원정보</span>
       </div>
       <!-- 2. 내용 -->
       <!-- 2.1 input창 -->

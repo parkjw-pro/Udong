@@ -40,6 +40,7 @@ export default {
 /* 3번 폰트 - Hanna */
 @import url(//fonts.googleapis.com/earlyaccess/hanna.css);
 
+@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
 
 #app {
   font-family: 'Jeju Gothic', sans-serif;
