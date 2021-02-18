@@ -80,8 +80,9 @@
       </b-row>
       <!-- 2.3 리뷰 내용 -->
       <b-row>
+       
         <div class="my-3 mx-5" style="text-align: left;">
-          <h6>{{ review.reviewContent }}</h6>
+          <h6 v-html="review.reviewContent"></h6>
         </div>
       </b-row>
       <!-- 2.4 리뷰 생성일자 -->
@@ -139,6 +140,7 @@ export default {
   },
   created() {
     this.getLikeInfo();
+    this.enterMakeContent();
   },
   data: function() {
     return {
@@ -233,6 +235,9 @@ export default {
         })
         .then((response) => (this.liked = response.data));
     },
+    enterMakeContent(){
+      console.log(this.review.reviewContent)
+    }
   },
   async mounted() {
     await this.GetReviewDetail();
