@@ -9,7 +9,7 @@
             ><b-avatar
               size="8rem"
               variant="info"
-              :src="require(`@/assets/app/badge/${this.badge}.jpg`)"
+              :src="require(`@/assets/app/badge/${this.badge}.png`)"
             ></b-avatar
           ></span>
         </b-col>

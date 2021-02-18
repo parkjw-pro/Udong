@@ -171,7 +171,7 @@ const routes = [
     component: ReviewDetail,
   },
   {
-    path: '/review',
+    path: '/reviews',
     name: 'ReviewHome',
     component: ReviewHome,
   },
