@@ -77,7 +77,7 @@ export default {
     // }
     console.log(this.default);
     if (this.default == undefined) {
-      console.log(this.category);
+      // console.log(this.category);
       // console.log(this.default);
       // this.category_img.backgroundImage = this.default;
     } else {
