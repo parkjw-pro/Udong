@@ -31,6 +31,7 @@
         >
           <b-img class="px-3" id="img_thumbnail" thumbnail fluid :src="url">
           </b-img>
+          
         </b-col>
         <b-col cols="3" class="ml-0 pl-0" align-self="center">
           <b-icon
@@ -259,7 +260,9 @@ export default {
       for (var i = 0; i < this.imageUrl.length; i++) {
         this.imageUrl[i] = "";
       }
-
+      // 이미올라간거 초기화
+      this.imageUrl.length = 0;
+      // 업로드한거 사진 뿌리기
       for (var image of event.target.files) {
         const file = image;
         this.imageUrl.push(URL.createObjectURL(file));
