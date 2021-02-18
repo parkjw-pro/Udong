@@ -31,6 +31,7 @@
         >
           <b-img class="px-3" id="img_thumbnail" thumbnail fluid :src="url">
           </b-img>
+          
         </b-col>
         <b-col cols="3" class="ml-0 pl-0" align-self="center">
           <b-icon

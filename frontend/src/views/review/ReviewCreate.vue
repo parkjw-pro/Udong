@@ -43,7 +43,7 @@
             <b-col cols="3" v-for="(url, index) in imageUrl" :key="index" left align-self="center">
               <b-img class="px-3"  id="img_thumbnail" thumbnail fluid :src="url">
               </b-img>
-              <div class="close"></div>
+             
             </b-col>
             <b-col cols="3" class="ml-0 pl-0" align-self="center">
               <b-icon icon="plus" v-b-modal.image-modal font-scale="4" variant="dark" style="cursor: pointer;">
@@ -319,7 +319,7 @@ export default {
   max-height: 12rem;
 }
 
-/* x 버튼 */
+/* x 버튼
   .close{
 
     display:inline-block;
@@ -386,7 +386,7 @@ export default {
 
     transform: rotate(-45deg);
 
-  }
+  } */
 
 
 </style>
