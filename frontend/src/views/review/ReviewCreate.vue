@@ -182,7 +182,7 @@ export default {
       this.checkValidity()
       if (this.isValid) {
         var text = document.getElementById("textarea-rows").value;
-        text = text.replace(/(?:\r\n|\r|\n)/g, '<br/>')
+        text = text.replace(/(?:\r\n|\r|\n)/g, '<br>')
         document.getElementById("textarea-rows").value = text
         this.review.reviewContent = text
         var formData = new FormData();

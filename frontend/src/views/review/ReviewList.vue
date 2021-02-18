@@ -76,13 +76,13 @@ export default {
     const userInfo = JSON.parse(localStorage.getItem('Login-token'))
     this.storeParamDto.dongcode = userInfo["user_address"]
 
-    console.log(this.storeParamDto.searchWord);
-    console.log(this.storeParamDto.dongcode);
+    // console.log(this.storeParamDto.searchWord);
+    // console.log(this.storeParamDto.dongcode);
 
     if (this.storeParamDto.searchWord != '리뷰 많은 상점') {
       this.searchBestStore();
     } else {
-      console.log('최다리뷰');
+      // console.log('최다리뷰');
       this.searchBestStore2();
     }
   },
@@ -96,10 +96,10 @@ export default {
         .then((response) => {
           // console.log(response.data);
           this.getSearchStoreList = response.data;
-          console.log('res', this.getSearchStoreList);
+          // console.log('res', this.getSearchStoreList);
         })
         .catch(() => {
-          console.log('fail');
+          // console.log('fail');
         });
       // ReviewList로 이동하기
       // this.$router.push({name: 'GroupPage', params: {address:  JSON.parse(localStorage.getItem('Login-token'))['user_address'], categorys : this.category }})
@@ -110,7 +110,7 @@ export default {
         .then((response) => {
           // console.log(response.data);
           this.getSearchStoreList = response.data;
-          console.log('res', this.getSearchStoreList);
+          // console.log('res', this.getSearchStoreList);
         })
         .catch(() => {
           console.log('fail');
