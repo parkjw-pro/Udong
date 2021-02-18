@@ -360,8 +360,8 @@ public class ClubPostController {
 		System.out.println("다운로드" +fileId);
 		List<String> url = clubService.selectFileUrl(fileId);
 		System.out.println("가져온 url:" +url.get(0));
-		System.out.println("./uploads/clubpost/"+url.get(0).substring(17));
-		String madeUrl = "./uploads/clubpost/"+url.get(0).substring(17);	
+		System.out.println("./uploads/clubPost/"+url.get(0).substring(17));
+		String madeUrl = "./uploads/clubPost/"+url.get(0).substring(17);	
 		Path path = Paths.get(madeUrl);
 			
 		String contentType = Files.probeContentType(path);
