@@ -122,7 +122,7 @@ export default {
   height: 20rem;
   max-width: 20rem;
   max-height: 20rem;
-},
+}
 #group_list_category {
   text-align: left;
   font-weight: bold;

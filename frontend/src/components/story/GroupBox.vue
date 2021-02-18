@@ -25,9 +25,12 @@ const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
 export default {
   name: 'GroupBox',
+  props: {
+    userId: String, 
+  },
   data: function () {
     return {
-      userId: JSON.parse(localStorage.getItem('Info-token'))["userId"],
+      // userId: JSON.parse(localStorage.getItem('Info-token'))["userId"],
       groups: [], // 가입한 그룹 
       selected: 0,  //선택된 그룹
       colors: ['#D5D6EA', '#F6F6EB', '#D7ECD9', '#F5D5CB', '#F6ECF5', '#F3DDF2'],
