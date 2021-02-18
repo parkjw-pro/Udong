@@ -31,7 +31,7 @@
           <b-col @click="toBadge">
             <b-avatar
               variant="info"
-              :src="require(`@/assets/app/badge/${this.badge}.jpg`)"
+              :src="require(`@/assets/app/badge/${this.badge}.png`)"
               style="cursor: pointer;"
             ></b-avatar>
             {{ user.nickname }}님 <small>안녕하세요!</small>
@@ -136,7 +136,7 @@ export default {
     },
     toReview: function() {
       // this.$router.push({name: 'ReviewHome'})
-      location.replace('/review');
+      location.replace('/reviews');
     },
     toNews: function() {
       this.$router.push({ name: 'NewsHome' });
@@ -144,17 +144,19 @@ export default {
     },
     toStory: function() {
       // location.replace(`/story/${this.user.address}/${this.user.userId}`)
-      this.$router.push({
-        name: 'NewsFeed',
-        params: { address: this.user.address, userId: this.user.userId },
-      });
+      // this.$router.push({
+      //   name: 'NewsFeed',
+      //   params: { address: this.user.address, userId: this.user.userId },
+      // });
+      location.replace(`/story/${this.user.address}/${this.user.userId}`);
       // location.reload(true)
     },
     toMyfeed: function() {
-      this.$router.push({
-        name: 'MyFeed',
-        params: { userId: this.user.userId, nickname: this.user.nickname },
-      });
+      // this.$router.push({
+      //   name: 'MyFeed',
+      //   params: { userId: this.user.userId, nickname: this.user.nickname },
+      // });
+      location.replace(`/story/feed/${this.user.userId}/${this.user.nickname}`);
       // location.reload(true)
     },
     toAccountDetail: function() {

@@ -12,14 +12,17 @@
         <b-icon icon="suit-heart-fill" variant="danger" v-if="liked" @click="likeComment"></b-icon>
         <b-icon icon="suit-heart" variant="danger" v-else @click="likeComment"></b-icon>
         <span>{{comment.commLikeCount}}</span>
+        <span v-if="comment.userId == getUserId" style="display: inline; margin-left: 2rem;">
+        </span>
 
-        <b-dropdown size="sm" dropup variant="secondary-muted" no-caret>
+        <b-dropdown v-else size="sm" dropup variant="secondary-muted" no-caret>
           <template #button-content>
             <b-icon icon="three-dots-vertical"></b-icon>
           </template>
-          <b-dropdown-item href="#" variant="danger" v-if="comment.userId != getUserId" @click="reportComment">신고</b-dropdown-item>
+          <b-dropdown-item href="#" variant="danger" @click="reportComment">신고</b-dropdown-item>
           <!-- <b-dropdown-item href="#" variant="danger" v-else @click="deleteComment">삭제</b-dropdown-item> -->
         </b-dropdown>
+        
       </b-col>
     </b-row>
   </div>
