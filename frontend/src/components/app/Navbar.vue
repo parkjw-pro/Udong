@@ -31,7 +31,7 @@
           <b-col @click="toBadge">
             <b-avatar
               variant="info"
-              :src="require(`@/assets/app/badge/${this.badge}.jpg`)"
+              :src="require(`@/assets/app/badge/${this.badge}.png`)"
               style="cursor: pointer;"
             ></b-avatar>
             {{ user.nickname }}님 <small>안녕하세요!</small>

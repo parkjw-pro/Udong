@@ -8,85 +8,55 @@
           @click="mainBadge(1)"
           v-bind:class="[badgecount > 0 ? acquired : '', unacquired]"
           alt="Badge"
-          src="@/assets/app/badge/badge1.jpg"
+          src="@/assets/app/badge/badge1.png"
+          style="width: 100%;"
         />
-        <p class="mt-2">열정적인 노동자</p>
+        <p class="mt-2">첫 리뷰</p>
       </b-col>
       <b-col class="badge">
         <img
           @click="mainBadge(2)"
           v-bind:class="[badgecount > 1 ? acquired : '', unacquired]"
           alt="Badge"
-          src="@/assets/app/badge/badge2.jpg"
+          src="@/assets/app/badge/badge2.png"
+          style="width: 100%;"
         />
-        <p class="mt-2">우동 영웅</p>
+        <p class="mt-2">첫 게시글</p>
       </b-col>
       <b-col class="badge">
         <img
           @click="mainBadge(3)"
           v-bind:class="[badgecount > 2 ? acquired : '', unacquired]"
           alt="Badge"
-          src="@/assets/app/badge/badge3.jpg"
+          src="@/assets/app/badge/badge3.png"
+          style="width: 100%;"
         />
-        <p class="mt-2">우동 귀요미</p>
+        <p class="mt-2">그룹장</p>
       </b-col>
     </b-row>
-    <b-row>
+    <b-row class="my-5">
       <b-col class="badge">
         <img
           @click="mainBadge(4)"
           v-bind:class="[badgecount > 3 ? acquired : '', unacquired]"
           alt="Badge"
-          src="@/assets/app/badge/badge4.jpg"
+          src="@/assets/app/badge/badge4.png"
+          style="width: 100%;"
         />
-        <p class="mt-2">코끼끼끼리리리</p>
+        <p class="mt-2">카페홀릭</p>
       </b-col>
       <b-col class="badge">
         <img
           @click="mainBadge(5)"
           v-bind:class="[badgecount > 4 ? acquired : '', unacquired]"
           alt="Badge"
-          src="@/assets/app/badge/badge5.jpg"
+          src="@/assets/app/badge/badge5.png"
+          style="width: 100%;"
         />
-        <p class="mt-2">창과 방패와의 싸움</p>
+        <p class="mt-2">리뷰왕</p>
       </b-col>
-      <b-col class="badge">
-        <img
-          @click="mainBadge(6)"
-          v-bind:class="[badgecount > 5 ? acquired : '', unacquired]"
-          alt="Badge"
-          src="@/assets/app/badge/badge6.jpg"
-        />
-        <p class="mt-2">무지개떡</p>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col class="badge">
-        <img
-          @click="mainBadge(7)"
-          v-bind:class="[badgecount > 5 ? acquired : '', unacquired]"
-          alt="Badge"
-          src="@/assets/app/badge/badge7.jpg"
-        />
-        <p class="mt-2">리뷰왕!</p>
-      </b-col>
-      <b-col class="badge">
-        <img
-          @click="mainBadge(8)"
-          v-bind:class="[badgecount > 5 ? acquired : '', unacquired]"
-          alt="Badge"
-          src="@/assets/app/badge/badge8.jpg"
-        />
-        <p class="mt-2">21번 도로의 지배자</p>
-      </b-col>
-      <b-col class="badge">
-        <img
-          @click="mainBadge(9)"
-          v-bind:class="[badgecount > 5 ? acquired : '', unacquired]"
-          alt="Badge"
-          src="@/assets/app/badge/badge9.jpg"
-        />
-        <p class="mt-2">우동 큐피터</p>
+      <b-col class="badge" cols="4" style="display: block;">
+        
       </b-col>
     </b-row>
     <b-modal v-model="modalShow" @ok="setmainBadge">
@@ -191,7 +161,7 @@ export default {
 }
 
 .unacquired {
-  filter: brightness(50%);
+  filter: brightness(20%);
 }
 .acquired {
   filter: brightness(100%);
