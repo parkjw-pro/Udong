@@ -12,7 +12,7 @@
                 <span style="">[그룹] {{groupName}} </span>
                 <br>
                 <!-- 뱃지 -->
-                <b-avatar :src="require('@/assets/app/badge/badge2.png')"></b-avatar>
+                <b-avatar :src="require('@/assets/app/badge/badge1.png')"></b-avatar>
                 <!-- 닉네임 -->
                 <span class="ml-1" style="">{{ post.nickname }}</span>
               </span>
