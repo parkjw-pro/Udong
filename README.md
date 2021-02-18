@@ -34,6 +34,83 @@
 
 
 
+## 서비스 소개
+
+> `우동` 플랫폼에서는 크게 `리뷰`, `소식`, `이야기`의 3가지 세부서비스를 제공한다.
+>
+> - In this platform, users can utilize 3 services of `review`, `news`, and `story`
+> - 디자인의 경우 사용자들의 편의성과 UX 증진을 위해서 심플하고 감각적인 레이아웃을 채택하였다.
+
+**Main Page**
+
+- 메인 페이지로는 로그인 화면이 띄워지게 된다.
+
+![Main(Login)](DOCS/img/main.png)
+
+- 로그인을 한 후, 위치인증을 한 사용자만 서비스를 사용할 수 있다.
+
+![위치인증](DOCS/img/location.png)
+
+
+
+**Home Page**
+
+- 로그인과 위치인증을 마치면 홈 화면으로 비로소 넘어갈 수 있다.
+
+![Home](DOCS/img/home.png)
+
+
+
+### 1. Review
+
+- 리뷰 서비스에서는 위치인증을 한 local 사용자들이 직접 리뷰를 작성한다.
+- 위치인증을 하지 않은 사용자들은 리뷰를 열람할 수 있다.
+- 카테고리, 업종구분, 필터링된 검색 기능으로 쉽게 원하는 정보에 접근할 수 있다.
+
+**Review Category**
+
+![ReviewHome](DOCS/img/review.png)
+
+**Review Search**
+
+![FindStore](DOCS/img/review2.png)
+
+
+
+### 2. News
+
+- News 서비스는 시/구/동의 행정 소식을 포함하여 동네의 다양한 소식을 모아볼 수 있는 공간이다.
+- 이후 단계에서 해당 서비스를 구현할 예정이다.
+
+
+
+### 3. Story
+
+- 스토리는 동네 사람들과 소통할 수 있는 커뮤니티 공간이다.
+
+**Story**
+
+- 동네 사람들이 올린 다양한 이야기 및 정보들을 하나의 공간에서 확인할 수 있다.
+
+![NewsFeed](DOCS/img/story.png)
+
+**MyFeed**
+
+- 내 피드에서는 내가 `우동`에서 작성한 게시글 및 리뷰를 확인 할 수 있다.
+- 게시글에 작성한 `#태그`로 나만의 추억을 간직할 수 있다.
+- 내가 가입한 그룹을 한 눈에 볼 수 있다.
+
+![MyFeed](DOCS/img/story2.png)
+
+**Group**
+
+- `우동`에서는 `그룹` 기능을 통해서 SNS 서비스의 폐쇄적인 기능도 제공한다.
+- local 사용자들이 자유롭게 공개/비공개 그룹을 개설하여 다른 사람들과 소통할 수 있는 공간을 제공한다.
+
+![Group](DOCS/img/group.png)
+
+
+
 ## 설치 안내
 
 > `git clone`을 한 후 아래의 작업을 진행해야 프론트 서버를 실행할 수 있다.
@@ -211,8 +288,40 @@ npm install
 
 ## Credits
 
-- 이송영 [@github](https://github.com/SongArtish)
-- 강용욱 [@github](https://github.com/KangYongWook)
-- 박종원 [@github](https://github.com/parkjw-pro)
-- 이규용 [@github](https://github.com/gyuyong290)
+### 이송영(Lee Songyoung)
 
+> [@github](https://github.com/SongArtish)
+
+- Team Leader
+- Frtontend
+- Presentation
+
+
+
+### 강용욱(Kang Yongwook)
+
+> [@github](https://github.com/KangYongWook)
+
+- Backend
+- Database
+- Frontend
+
+
+
+### 박종원(Park Jongwon)
+
+> [@github](https://github.com/parkjw-pro)
+
+- Backend
+- Database
+- Server
+
+
+
+### 이규용(Lee Gyuyong)
+
+>[@github](https://github.com/gyuyong290)
+
+- Backend
+- Database
+- UCC
