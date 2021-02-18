@@ -12,7 +12,7 @@
         <b-icon icon="suit-heart-fill" variant="danger" v-if="liked" @click="likeComment"></b-icon>
         <b-icon icon="suit-heart" variant="danger" v-else @click="likeComment"></b-icon>
         <span>{{comment.commLikeCount}}</span>
-        <span v-if="comment.userId == getUserId" style="display: inline; margin-left: 2rem;">
+        <span v-if="comment.userId == getUserId" style="display: inline; margin-left: 2.2rem;">
         </span>
 
         <b-dropdown v-else size="sm" dropup variant="secondary-muted" no-caret>
