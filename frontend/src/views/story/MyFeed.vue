@@ -27,6 +27,7 @@
                 type="bold"
                 @click="toAccountDetail"
               ></b-icon>
+              
             </b-col>
           </b-row>
           <b-row align-h="center">

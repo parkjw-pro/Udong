@@ -43,6 +43,7 @@
             <b-col cols="3" v-for="(url, index) in imageUrl" :key="index" left align-self="center">
               <b-img class="px-3"  id="img_thumbnail" thumbnail fluid :src="url">
               </b-img>
+              <div class="close"></div>
             </b-col>
             <b-col cols="3" class="ml-0 pl-0" align-self="center">
               <b-icon icon="plus" v-b-modal.image-modal font-scale="4" variant="dark" style="cursor: pointer;">
@@ -222,7 +223,10 @@ export default {
     // 이미지 preview 보여주는 함수
     previewImage(event) {
       for(var i =0; i < this.imageUrl.length;i++){ this.imageUrl[i] = ""} 
-    
+
+      // 이미지 이미올라간거 초기화
+      this.imageUrl.length = 0;
+      // 이미지  미리보기 개수만큼 올리기
       for (var image of event.target.files) {
         const file = image;
         console.log(file)
@@ -314,4 +318,75 @@ export default {
   max-width: 10rem;
   max-height: 12rem;
 }
+
+/* x 버튼 */
+  .close{
+
+    display:inline-block;
+
+    position:relative;
+
+    border:6px solid red;
+
+    width:120px;
+
+    height:120px;
+
+    border-radius:50%;
+
+    margin-top:2em;
+
+  }
+
+
+
+  .close:before{
+
+    content: '';
+
+    position:absolute;
+
+    top:0;
+
+    left:0;
+
+    margin-top:1.25em;
+
+    margin-left:4em;
+
+    height: 80px;
+
+    border: solid red;
+
+    border-width: 0 6px 0px 0;
+
+    transform: rotate(45deg);
+
+  }
+
+  .close:after{
+
+    content: '';
+
+    position:absolute;
+
+    top:0;
+
+    left:0;
+
+    margin-top:1.25em;
+
+    margin-left:4em;
+
+    height: 80px;
+
+    border: solid red;
+
+    border-width: 0 6px 0px 0;
+
+    transform: rotate(-45deg);
+
+  }
+
+
 </style>
