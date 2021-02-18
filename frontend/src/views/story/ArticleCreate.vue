@@ -140,7 +140,7 @@ export default {
       content: "",
       options: ["우리동네 이야기"],
       selected: "우리동네 이야기",
-      isOpen: "1", //공개면 1, 비공개면 0
+      isOpen: JSON.parse(localStorage.getItem('Login-token')).user_badge,//공개면 1, 비공개면 0
       tag: null,
       groupCheck: 0, // 그룹에서 게시물작성 눌렀는지 체크하는 변수
       groupName: 0, // 그룹에서 게시물작성할때 넘어온 그룹내임
