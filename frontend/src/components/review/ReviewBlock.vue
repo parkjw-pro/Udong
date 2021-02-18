@@ -74,6 +74,10 @@
         <b-row>
           <div class="my-3 mx-5" style="text-align: left;">
             <h6 v-html="review.reviewContent"></h6>
+<<<<<<< HEAD
+=======
+          
+>>>>>>> afd6772064f915b1acf4d3c020736340ae0291e1
           </div>
         </b-row>
         <!-- 2.4 리뷰 생성일자 -->
@@ -119,9 +123,11 @@ export default {
   },
   created() {
     this.getLikeInfo();
+  
   },
   data: function() {
     return {
+    
       liked: false,
       // rate : "",
       userId: '',
@@ -204,12 +210,14 @@ export default {
         })
         .then((response) => (this.liked = response.data));
     },
+
   },
   async mounted() {
     await this.GetReviewDetail();
     const userInfo = JSON.parse(localStorage.getItem('Info-token'));
     this.userId = userInfo['userId'];
   },
+  
 };
 </script>
 
