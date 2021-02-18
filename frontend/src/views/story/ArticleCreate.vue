@@ -174,7 +174,7 @@ export default {
     createArticle() {
       var tags = this.getTag();
       var formData = new FormData();
-      console.log(this.selected);
+      this.content = this.content.replace(/(?:\r\n|\r|\n)/g, '<br>')
       formData.append("isOpen", this.isOpen);
       formData.append("postContent", this.content);
       formData.append("userId", this.getUserId);
