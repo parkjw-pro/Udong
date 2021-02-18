@@ -1,20 +1,19 @@
 <template>
-  <div
-    class="group_list_img"
-    :style="background_image"
-    @click="groupDetail()"
-  >
+  <div class="group_list_img" :style="background_image" @click="groupDetail()">
     <div class="group_list_img_content">
       <h2>{{ this.group.clubName }}</h2>
+    
     </div>
-    <div class="group_list_img_cover"></div>
+    <div class="group_list_img_cover">
+      <div v-if="this.masterCheck" id="triangle-topleft"></div>
+    </div>
   </div>
 </template>
 
 <script>
-import axios from "axios"
+import axios from "axios";
 
-const SERVER_URL = process.env.VUE_APP_SERVER_URL
+const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
 export default {
   name: "GroupCard",
@@ -23,17 +22,29 @@ export default {
   },
   data: function() {
     return {
-      urls: "",
-      result: "",
       myClub: Object,
       checkMygroup: "0",
+      masterCheck: false,
       // props한 이미지 가져오기
       background_image: {
         backgroundImage: `url(${SERVER_URL}/club/download/${this.group.fileId})`,
       },
     };
   },
+  created(){
+    this. groupMasterCheck()
+  },
   methods: {
+    groupMasterCheck() {
+      if (
+        this.group.userId==JSON.parse(localStorage.getItem("Login-token"))["user-id"]
+      ) {
+        this.masterCheck = true;
+      }
+      else{
+        this.masterCheck = false;
+      }
+    },
     groupDetail() {
       // 내그룹 내역 가져오기
       axios
@@ -47,14 +58,14 @@ export default {
           console.log("내그룹 조회성공");
 
           for (var i in this.myClub) {
-         
             if (this.group.clubId == this.myClub[i].clubId) {
               // 내그룹에 있으면 체크변수 1로
               this.checkMygroup = "1";
             }
           }
 
-          if (this.checkMygroup == "1") { // 내그룹에 있을떄  
+          if (this.checkMygroup == "1") {
+            // 내그룹에 있을떄
             this.$router.push({
               name: "GroupPage",
               params: {
@@ -64,7 +75,8 @@ export default {
                 groupId: this.group.clubId,
               },
             });
-          } else { // 내그룹에 없을때  가입창으로 
+          } else {
+            // 내그룹에 없을때  가입창으로
             this.$router.push({
               name: "GroupProfile",
               params: {
@@ -112,5 +124,12 @@ export default {
   color: white;
   z-index: 2;
   text-align: center;
+}
+
+#triangle-topleft {
+  width: 0;
+  height: 0;
+  border-top: 70px solid rgb(79, 170, 99);
+  border-right: 70px solid transparent;
 }
 </style>

@@ -31,6 +31,7 @@
         >
           <b-img class="px-3" id="img_thumbnail" thumbnail fluid :src="url">
           </b-img>
+          
         </b-col>
         <b-col cols="3" class="ml-0 pl-0" align-self="center">
           <b-icon
@@ -131,7 +132,7 @@ export default {
       content: "",
       options: ["우리동네 이야기"],
       selected: "우리동네 이야기",
-      isOpen: "1", //공개면 1, 비공개면 0
+      isOpen: JSON.parse(localStorage.getItem('Login-token')).user_badge,//공개면 1, 비공개면 0
       tag: null,
       groupCheck: 0, // 그룹에서 게시물작성 눌렀는지 체크하는 변수
       groupName: 0, // 그룹에서 게시물작성할때 넘어온 그룹내임
@@ -259,7 +260,9 @@ export default {
       for (var i = 0; i < this.imageUrl.length; i++) {
         this.imageUrl[i] = "";
       }
-
+      // 이미올라간거 초기화
+      this.imageUrl.length = 0;
+      // 업로드한거 사진 뿌리기
       for (var image of event.target.files) {
         const file = image;
         this.imageUrl.push(URL.createObjectURL(file));
