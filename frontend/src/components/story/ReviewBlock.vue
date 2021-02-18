@@ -38,7 +38,7 @@
                   </b-modal> -->
                 </div>
                 <div v-else>
-                  <b-dropdown-item href="#" variant="danger">신고</b-dropdown-item>
+                  <b-dropdown-item href="#" variant="danger" @click="reportPost">신고</b-dropdown-item>
                 </div>
               </b-dropdown>
             </b-col>
@@ -237,6 +237,9 @@ export default {
     },
     enterMakeContent(){
       console.log(this.review.reviewContent)
+    },
+    reportPost(){
+      alert("신고되었습니다.")
     }
   },
   async mounted() {
