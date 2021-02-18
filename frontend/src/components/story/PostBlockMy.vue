@@ -8,7 +8,7 @@
           <b-col align-self="center">
             <span style="cursor: pointer;" @click="toFeed">
               <!-- 뱃지 -->
-              <b-avatar :src="require(`@/assets/app/badge/${this.badge}.png`)"></b-avatar>
+              <b-avatar :src="require(`@/assets/app/badge/${this.post.isOpen}.png`)"></b-avatar>
               <!-- 닉네임 -->
               <span class="ml-1" style="">{{ post.nickname }}</span>
             </span>

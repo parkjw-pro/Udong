@@ -59,7 +59,8 @@
         </div>
         <br>
         <br>
-        <EndBlock v-on:more="getMorePosts" />
+        <EndBlock v-on:more="getMorePosts" style="cursor: pointer;"/>
+        리뷰 더보기
     <Button />
     </div>
 </template>
