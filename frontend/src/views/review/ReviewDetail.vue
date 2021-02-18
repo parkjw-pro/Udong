@@ -104,19 +104,19 @@ export default {
       thumbnailContent : [],
     };
   },
-  computed: {
-    before3() {
-      return this.store;
+  // computed: {
+  //   before3() {
+  //     return this.store;
       
-    },
-  },
-  watch: {
-    before3() {
+  //   },
+  // },
+  // watch: {
+  //   before3() {
       
-      this.selectBestReview();
-      this.selectAllImage();
-    },
-  },
+  //     this.selectBestReview();
+  //     this.selectAllImage();
+  //   },
+  // },
   async mounted() {
     this.storeId = this.$route.params.storeId;
     // this.fileId = [];
@@ -124,6 +124,8 @@ export default {
     // this.temp = "",
     await this.getReview();
     await this.getStore();
+    // await this.selectBestReview();
+    // await this.selectAllImage();
     
 
     // console.log(this.store);
@@ -133,17 +135,21 @@ export default {
 
   methods: {
     getReview: function() {
+      // console.log(this.storeId, "getReview");
       axios
         .get(`${SERVER_URL}/review/store/` + `${this.storeId}`)
         .then((response) => {
           this.reviews2 = response.data;
           this.reviews = response.data;
+          // console.log(this.reviews2.length, "getReview를 통해 만들어진 리뷰리스트");
+          this.selectBestReview();
         })
         .catch((err) => {
           console.log(err);
         });
     },
     getStore: function() {
+      // console.log(this.storeId, "getStore");
       axios
         .get(`${SERVER_URL}/store/` + `${this.storeId}`)
         .then((res) => {
@@ -157,6 +163,7 @@ export default {
         });
     },
     selectBestReview: function() {
+      // console.log(this.reviews2.length, "selectBestReview");
       
       this.bestReviewlist = this.reviews2.sort(function(a, b) {
         var o1 = b['reviewLikeCount'];
@@ -166,10 +173,13 @@ export default {
         if (o1 > o2) return 1;
 
       });
+      this.selectAllImage();
+
 
       // console.log(this.bestReviewlist);
     },
     selectAllImage: function() {
+      // console.log(this.bestReviewlist.length, "selectAllImage");
       for (let index = 0; index < this.bestReviewlist.length; index++) {
         this.temp = this.bestReviewlist[index].reviewContent;
         this.GetReviewDetail(this.bestReviewlist[index]);
@@ -181,6 +191,7 @@ export default {
     },
     
     GetReviewDetail: function(review) {
+      // console.log(review.reviewId, "GetReviewDetail");
       axios
       .get(`${SERVER_URL}/review/` + review.reviewId)
       .then((response) => {

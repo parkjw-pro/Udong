@@ -161,22 +161,22 @@ const routes = [
   },
 
   {
-    path: '/review/create/:storeId',
+    path: '/reviews/create/:storeId',
     name: 'ReviewCreate',
     component: ReviewCreate,
   },
   {
-    path: '/review/detail/:storeId',
+    path: '/reviews/detail/:storeId',
     name: 'ReviewDetail',
     component: ReviewDetail,
   },
   {
-    path: '/review',
+    path: '/reviews',
     name: 'ReviewHome',
     component: ReviewHome,
   },
   {
-    path: '/review/:category',
+    path: '/reviews/:category',
     name: 'ReviewList',
     component: ReviewList,
   },

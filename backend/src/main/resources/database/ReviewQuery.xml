@@ -56,6 +56,7 @@
 		rate, created_at as createdAt, review_like_count as reviewLikeCount
 		FROM review
 		WHERE user_id = #{user_id}
+		order by reviewLikeCount desc;
 	</select>
 
 	<!--리뷰 상세조회 -->
