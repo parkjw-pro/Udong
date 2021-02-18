@@ -18,7 +18,7 @@
     ></b-form-textarea>
     <p style="text-align: right;">{{ contentLength }} / 500</p>
     <br />
-
+    
     <!-- 3. 이미지 -->
     <b-container fluid class="my-3 pb-5" style="">
       <b-row class="py-3">
@@ -29,9 +29,17 @@
           left
           align-self="center"
         >
-          <b-img class="px-3" id="img_thumbnail" thumbnail fluid :src="url">
-          </b-img>
-          
+          <div >
+            <b-img
+              class="px-3"
+              id="img_thumbnail"
+              thumbnail
+              fluid
+              :src="url"
+            ></b-img>
+            <div class="exit" @click="imageClose(index)"></div>
+
+          </div>
         </b-col>
         <b-col cols="3" class="ml-0 pl-0" align-self="center">
           <b-icon
@@ -103,8 +111,8 @@
     >
       리뷰 작성을 취소하시겠습니까?
     </b-modal>
-    <br>
-    <br>
+    <br />
+    <br />
   </div>
 </template>
 
@@ -136,14 +144,16 @@ export default {
       tag: null,
       groupCheck: 0, // 그룹에서 게시물작성 눌렀는지 체크하는 변수
       groupName: 0, // 그룹에서 게시물작성할때 넘어온 그룹내임
-      areaCode: JSON.stringify(JSON.parse(localStorage.getItem('Login-token'))['user_address'])
+      areaCode: JSON.stringify(
+        JSON.parse(localStorage.getItem("Login-token"))["user_address"]
+      ),
     };
   },
   created() {
-    this.areaCode = this.areaCode.substring(1,this.areaCode.length-1)
+    this.areaCode = this.areaCode.substring(1, this.areaCode.length - 1);
     this.groupCheck = this.$route.params.groupcheck;
     if (this.groupCheck == 0) {
-        //가입한 그룹 정보 가져오기
+      //가입한 그룹 정보 가져오기
       axios
         .get(`${SERVER_URL}/club/user/${this.getUserId}/member`)
         .then((response) => ((this.clubs = response.data), this.setOptions()));
@@ -153,7 +163,7 @@ export default {
         .get(`${SERVER_URL}/club/${this.$route.params.groupId}`)
         .then((response) => {
           this.options.pop();
-          this.clubs = response.data
+          this.clubs = response.data;
           this.options.push(response.data.dto.clubName);
           this.selected = response.data.dto.clubName;
         });
@@ -164,12 +174,12 @@ export default {
     createArticle() {
       var tags = this.getTag();
       var formData = new FormData();
-      console.log(this.selected)
+      console.log(this.selected);
       formData.append("isOpen", this.isOpen);
       formData.append("postContent", this.content);
       formData.append("userId", this.getUserId);
       formData.append("postTag", tags);
-  
+
       for (let i = 0; i < this.files.length; i++) {
         formData.append("file", this.files[i]);
       }
@@ -181,7 +191,7 @@ export default {
       //userpost / clubpost 구분 -> 적절한 url로 axios 보내기
       if (this.selected == "우리동네 이야기") {
         formData.append("areaCode", this.areaCode);
-        
+
         //userpost`
         //file 넣어야 함
         console.log(formData);
@@ -190,15 +200,15 @@ export default {
             headers: { "Content-Type": `application/json; charset=UTF-8` },
           })
           .then(() => {
-             this.$router.push({
-                name: "NewsFeed",
-                params: {
-                  address: JSON.parse(localStorage.getItem("Login-token"))[
-                    "user_address"
-                  ],
-                  userId: this.getUserId,
-                },
-              });
+            this.$router.push({
+              name: "NewsFeed",
+              params: {
+                address: JSON.parse(localStorage.getItem("Login-token"))[
+                  "user_address"
+                ],
+                userId: this.getUserId,
+              },
+            });
           });
       } else {
         //clubpost
@@ -239,9 +249,9 @@ export default {
               });
             }
           })
-          .catch(()=> {
-            console.log("글작성 오류")
-          })
+          .catch(() => {
+            console.log("글작성 오류");
+          });
       }
     },
     getTag() {
@@ -267,6 +277,11 @@ export default {
         const file = image;
         this.imageUrl.push(URL.createObjectURL(file));
       }
+    },
+    imageClose(res){ // x버튼 누르면 미리보기랑 파일데이터 뺴기
+      console.log(res)
+      this.imageUrl.splice(res, 1); //인덱스 res부분 1개제거
+      this.files.splice(res, 1); //인덱스 res부분 1개제거
     },
     setOptions() {
       //그룹명만 따로 저장
@@ -297,5 +312,48 @@ export default {
   height: 12rem;
   max-width: 10rem;
   max-height: 12rem;
+}
+.group_list_img_cover {
+  position: absolute;
+  height: 300px;
+  width: 300px;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 1;
+}
+/* x 버튼 */
+.exit {
+  display: inline-block;
+  position: relative;
+  border: 2px solid red;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  margin-top: 2em;
+}
+
+.exit:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-top: 0.15em;
+  margin-left: 0.55em;
+  height: 15px;
+  border: solid red;
+  border-width: 0 3px 0px 0;
+  transform: rotate(45deg);
+}
+
+.exit:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-top: 0.15em;
+  margin-left: 0.55em;
+  height: 15px;
+  border: solid red;
+  border-width: 0 3px 0px 0;
+  transform: rotate(-45deg);
 }
 </style>

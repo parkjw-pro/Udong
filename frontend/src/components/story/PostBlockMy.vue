@@ -58,7 +58,7 @@
           background="#ababab"
           img-width="1024"
           img-height="480"
-          style="text-shadow: 1px 1px 2px #333; width: 30em; height: 15em;"
+          style="text-shadow: 1px 1px 2px #333; width: 100%; height: 20rem;"
           :fade="true"
           :interval="0"
         >
@@ -288,10 +288,10 @@ export default {
 #post_img {
   top: 0%;
   left: 0%;
-  min-width: 30em;
-  min-height: 15em;
-  max-width: 30em;
-  max-height: 15em;
+  min-width: 100%;
+  min-height: 20em;
+  max-width: 100%;
+  max-height: 20em;
 }
 /* 적용안됨 */
 b-card-img {

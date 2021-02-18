@@ -75,7 +75,7 @@
         <TagBox :reviews="reviews" :userposts="posts" :user="user" />
       </b-tab>
       <b-tab title="그룹">
-        <GroupBox />
+        <GroupBox :userId="user.userId"/>
       </b-tab>
     </b-tabs>
 

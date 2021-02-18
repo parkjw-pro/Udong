@@ -41,9 +41,11 @@
         <b-container fluid class="my-3 pb-5" style=""><!-- width: 70% -->
           <b-row class="py-3">
             <b-col cols="3" v-for="(url, index) in imageUrl" :key="index" left align-self="center">
+              <div>
               <b-img class="px-3"  id="img_thumbnail" thumbnail fluid :src="url">
               </b-img>
-             
+               <div class="exit" @click="imageClose(index)"></div>
+              </div>
             </b-col>
             <b-col cols="3" class="ml-0 pl-0" align-self="center">
               <b-icon icon="plus" v-b-modal.image-modal font-scale="4" variant="dark" style="cursor: pointer;">
@@ -229,10 +231,15 @@ export default {
       // 이미지  미리보기 개수만큼 올리기
       for (var image of event.target.files) {
         const file = image;
-        console.log(file)
+     
         this.imageUrl.push(URL.createObjectURL(file));
       }
       this.$refs['image-modal'].hide()
+    },
+    imageClose(res){ // x버튼 누르면 미리보기랑 파일데이터 뺴기
+      console.log(res)
+      this.imageUrl.splice(res, 1); //인덱스 res부분 1개제거
+      this.files.splice(res, 1); //인덱스 res부분 1개제거
     },
     hideModal() {
       this.$refs['image-modal'].hide()
@@ -319,74 +326,42 @@ export default {
   max-height: 12rem;
 }
 
-/* x 버튼
-  .close{
+/* x 버튼 */
+.exit {
+  display: inline-block;
+  position: relative;
+  border: 2px solid red;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  margin-top: 2em;
+}
 
-    display:inline-block;
+.exit:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-top: 0.15em;
+  margin-left: 0.55em;
+  height: 15px;
+  border: solid red;
+  border-width: 0 3px 0px 0;
+  transform: rotate(45deg);
+}
 
-    position:relative;
-
-    border:6px solid red;
-
-    width:120px;
-
-    height:120px;
-
-    border-radius:50%;
-
-    margin-top:2em;
-
-  }
-
-
-
-  .close:before{
-
-    content: '';
-
-    position:absolute;
-
-    top:0;
-
-    left:0;
-
-    margin-top:1.25em;
-
-    margin-left:4em;
-
-    height: 80px;
-
-    border: solid red;
-
-    border-width: 0 6px 0px 0;
-
-    transform: rotate(45deg);
-
-  }
-
-  .close:after{
-
-    content: '';
-
-    position:absolute;
-
-    top:0;
-
-    left:0;
-
-    margin-top:1.25em;
-
-    margin-left:4em;
-
-    height: 80px;
-
-    border: solid red;
-
-    border-width: 0 6px 0px 0;
-
-    transform: rotate(-45deg);
-
-  } */
+.exit:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-top: 0.15em;
+  margin-left: 0.55em;
+  height: 15px;
+  border: solid red;
+  border-width: 0 3px 0px 0;
+  transform: rotate(-45deg);
+}
 
 
 </style>

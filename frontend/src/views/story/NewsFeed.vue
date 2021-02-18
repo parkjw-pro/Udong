@@ -60,7 +60,7 @@
         <br>
         <br>
         <EndBlock v-on:more="getMorePosts" style="cursor: pointer;"/>
-        게시글 더보기
+        이야기 더보기
     <Button />
     </div>
 </template>
