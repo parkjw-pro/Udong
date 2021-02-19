@@ -146,15 +146,17 @@
           <h3><span id="UL2">#openjdk 11.0.9 #npm 6.14.10 #vue/cli 4.5.19 #MySQL 8.0.22</span></h3>
         </b-jumbotron>
 
-        <b-jumbotron header="Programs">
-          <br>
-          <h2><span id="UL">#Spring Boot #VSCode #Swagger #GitLab #Jira #AWS EC2</span></h2>
-        </b-jumbotron>
-
         <b-jumbotron header="Framework">
           <br>
-          <h3><span id="UL2">#Bootstrap</span></h3>
+          <h3><span id="UL">#Spring Boot #Bootstrap</span></h3>
         </b-jumbotron>
+
+        <b-jumbotron header="Programs">
+          <br>
+          <h2><span id="UL2">#VSCode #Swagger #GitLab #Jira #AWS EC2 #MobaXterm</span></h2>
+        </b-jumbotron>
+
+
 
       </div>
       <!-- <coverflow :coverList="coverList" :coverWidth="260" :index="2"></coverflow> -->
