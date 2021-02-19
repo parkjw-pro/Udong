@@ -233,7 +233,7 @@ export default {
         axios
           .get(`${SERVER_URL}/club/${this.club.clubName}/${this.dongcode}`)
           .then(() => {
-            // console.log(res)
+          
             this.isVerified = true;
           })
           .catch((err) => {

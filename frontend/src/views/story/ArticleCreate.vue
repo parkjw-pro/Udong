@@ -194,7 +194,7 @@ export default {
 
         //userpost`
         //file 넣어야 함
-        console.log(formData);
+        
         axios
           .post(`${SERVER_URL}/userpost`, formData, {
             headers: { "Content-Type": `application/json; charset=UTF-8` },
@@ -279,7 +279,7 @@ export default {
       }
     },
     imageClose(res){ // x버튼 누르면 미리보기랑 파일데이터 뺴기
-      console.log(res)
+    
       this.imageUrl.splice(res, 1); //인덱스 res부분 1개제거
       this.files.splice(res, 1); //인덱스 res부분 1개제거
     },
