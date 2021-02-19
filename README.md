@@ -223,7 +223,9 @@ spring.mail.password= <Password>
 
 ## 저작권 및 사용권 정보
 
-- 다음의 라이브러리를 사용하였다.
+- 리뷰에서 사용되는 상가 정보는 소상공인시장진흥공단에서 제공하는 [상가(상권) 정보 API](https://www.data.go.kr/data/15012005/fileData.do)를 활용하였다.
+
+- 또한, 다음의 라이브러리를 사용하였다.
 - Below libraries are used in this project.
 
 ```markdown
@@ -296,6 +298,14 @@ spring.mail.password= <Password>
 ## 알려진 버그
 
 > 2021년 2월 19일 현재까지 없음
+
+
+
+## 배포
+
+> AWS EC2와 `MobaXterm`, `jar 파일`, `npm run build`를 활용하여 배포하였다.
+
+배포 주소는 **https://udong.shop**이다.
 
 
 
