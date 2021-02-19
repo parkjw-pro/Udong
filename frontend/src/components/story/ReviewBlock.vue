@@ -170,7 +170,7 @@ export default {
 
   methods: {
     deleteReview: function() {
-      console.log(this.review);
+      // console.log(this.review);
       // axios.delete(`${SERVER_URL}/review` + `${this.review.reviewId}`)
       axios
         .delete(`${SERVER_URL}/review`, {
@@ -236,7 +236,7 @@ export default {
         .then((response) => (this.liked = response.data));
     },
     enterMakeContent(){
-      console.log(this.review.reviewContent)
+      // console.log(this.review.reviewContent)
     },
     reportPost(){
       alert("신고되었습니다.")

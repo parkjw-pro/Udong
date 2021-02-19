@@ -205,7 +205,7 @@ export default {
         formData.append('file', this.fileId)
         //formData.append('file', this.fileId[1])
         // formData.append('club', this.club)
-        console.log(formData);
+        // console.log(formData);
       // if (this.verification) {
           axios.post(`${SERVER_URL}/club`, formData, 
           { headers: { "Content-Type": `application/json; charset=UTF-8`}
@@ -232,8 +232,8 @@ export default {
         this.dongcode = JSON.parse(localStorage.getItem('Login-token'))['user_address'];
         axios
           .get(`${SERVER_URL}/club/${this.club.clubName}/${this.dongcode}`)
-          .then((res) => {
-            console.log(res)
+          .then(() => {
+            // console.log(res)
             this.isVerified = true;
           })
           .catch((err) => {
