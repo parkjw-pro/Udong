@@ -16,11 +16,11 @@
 
 ### Service
 
-- 동네 사람들을 연결하는 커뮤니티 기능을 제공한다.
+- 동네 사람들을 연결하는 **커뮤니티 기능**을 제공한다.
 - In this service, users can be connected with their neighbours.
-- 위치 인증 방식으로 신뢰도 높은 리뷰 서비스를 제공한다.
+- 위치 인증 방식으로 신뢰도 높은 **리뷰 서비스**를 제공한다.
 - With location-based authentication system, users can access reviews of highly elevated reliability.
-- 사용자들은 동네 이야기 및 정보를 효과적으로 공유할 수 있다.
+- 사용자들은 동네 이야기 및 **정보를 효과적으로 공유**할 수 있다.
 - Users can share stories and information of town effectively with each other.
 
 ### Compatibility
@@ -36,18 +36,18 @@
 
 ## 서비스 소개
 
-> `우동` 플랫폼에서는 크게 `리뷰`, `소식`, `이야기`의 3가지 세부서비스를 제공한다.
+> `우동` 플랫폼에서는 크게 **리뷰, 소식, 이야기**의 3가지 세부서비스를 제공한다.
 >
 > - In this platform, users can utilize 3 services of `review`, `news`, and `story`
 > - 디자인의 경우 사용자들의 편의성과 UX 증진을 위해서 심플하고 감각적인 레이아웃을 채택하였다.
 
 **Main Page**
 
-- 메인 페이지로는 로그인 화면이 띄워지게 된다.
+- 메인 페이지로는 **로그인 화면**이 띄워지게 된다.
 
 ![Main(Login)](DOCS/img/main.png)
 
-- 로그인을 한 후, 위치인증을 한 사용자만 서비스를 사용할 수 있다.
+- 로그인을 한 후, **위치인증**을 한 사용자만 서비스를 사용할 수 있다.
 
 ![위치인증](DOCS/img/location.png)
 
@@ -88,7 +88,7 @@
 
 - 스토리는 동네 사람들과 소통할 수 있는 커뮤니티 공간이다.
 
-**Story**
+**NewsFeed**
 
 - 동네 사람들이 올린 다양한 이야기 및 정보들을 하나의 공간에서 확인할 수 있다.
 
@@ -282,7 +282,7 @@ npm install
 
 ## 알려진 버그
 
-> 2021년 2월 18일 현재까지 없음
+> 2021년 2월 19일 현재까지 없음
 
 
 
@@ -325,3 +325,8 @@ npm install
 - Backend
 - Database
 - UCC
+
+
+
+***Copyright* © 2021 SSAFY_SEOUL4_TEAM4_UDONG**
+
