@@ -24,11 +24,6 @@
       
     </b-row>
     <!-- 게시글 작성을 위한 버튼 -->
-    <b-row>
-      <b-col offset="8" @click="CreateReview">
-        리뷰작성<b-button pill variant="transparent" class="font-weight-bold" size="lg">+</b-button>
-      </b-col>
-    </b-row>
     <hr class="mb-5">
     <!-- 2. 추천 카테고리 -->
     <!-- for문으로 출력한다!!! -->

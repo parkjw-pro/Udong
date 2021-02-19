@@ -75,7 +75,7 @@ export default {
   width: 50%;
   position: absolute;
   left: 25%;
-  margin-top: 5%;
+  margin-top: 0%;
   padding-bottom: 7%;
 }
 

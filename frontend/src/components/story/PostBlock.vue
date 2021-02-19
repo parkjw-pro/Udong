@@ -225,7 +225,7 @@ export default {
         })
         .then(
           (response) => {
-            console.log(response.data);
+            // console.log(response.data);
             this.comments.push(...response.data.list);
             this.commentCount = response.data.count;
           });

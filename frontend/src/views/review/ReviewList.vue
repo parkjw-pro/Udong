@@ -113,21 +113,21 @@ export default {
           // console.log('res', this.getSearchStoreList);
         })
         .catch(() => {
-          console.log('fail');
+          // console.log('fail');
         });
       // ReviewList로 이동하기
       // this.$router.push({name: 'GroupPage', params: {address:  JSON.parse(localStorage.getItem('Login-token'))['user_address'], categorys : this.category }})
     },
     toDetail: function(store) {
-      console.log('toDetail');
-      console.log(store);
+      // console.log('toDetail');
+      // console.log(store);
       // 리뷰 작성 페이지로 넘어가준다!!
       this.$router.push({ name: 'ReviewDetail', params: { storeId: store.storeId } });
     },
     LookMap: function() {
       //기존 태그 사이즈 조정
       //history.go(0);
-      console.log("makeMap");
+      // console.log("makeMap");
      // el.removeChild(el.lastChild);
       if(this.flag==false){
         this.flag = true;
@@ -164,8 +164,8 @@ export default {
       };
       var rou = this.$router;
       var toDetail = function(store) {
-        console.log('toDetail');
-        console.log(store);
+        // console.log('toDetail');
+        // console.log(store);
         // 리뷰 작성 페이지로 넘어가준다!!
         rou.push({ name: 'ReviewDetail', params: { storeId: store.storeId } });
       };
@@ -183,8 +183,8 @@ export default {
         });
         (function(marker, title) {
           kakao.maps.event.addListener(marker, 'click', function() {
-            console.log('markerClick');
-            console.log(list[index]);
+            // console.log('markerClick');
+            // console.log(list[index]);
             toDetail(list[index]);
           });
           kakao.maps.event.addListener(marker, 'mouseover', function() {

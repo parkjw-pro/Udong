@@ -236,7 +236,7 @@ export default {
         .then((response) => (this.liked = response.data));
     },
     enterMakeContent(){
-      console.log(this.review.reviewContent)
+      // console.log(this.review.reviewContent)
     }
   },
   async mounted() {
