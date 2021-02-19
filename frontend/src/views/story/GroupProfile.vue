@@ -214,8 +214,8 @@ export default {
             type: 0,
             content: this.contents,
           })
-          .then((res) => {
-            console.log(res);
+          .then(() => {
+           
             alert("가입완료되었습니다.");
             this.$router.push({
               name: "GroupList",
@@ -234,8 +234,8 @@ export default {
             type: 0,
             content: this.contents,
           })
-          .then((res) => {
-            console.log(res);
+          .then(() => {
+           
             alert("가입신청되었습니다.");
             this.$router.push({
               name: "GroupList",
@@ -252,7 +252,7 @@ export default {
       axios
         .get(`${SERVER_URL}/club/${this.club.dto.clubId}/member`)
         .then((res) => {
-          console.log(res.data[0].nickname);
+     
           this.options.length = 0;
           for (var i in res.data) this.options.push(res.data[i].nickname);
         })
@@ -271,8 +271,8 @@ export default {
               JSON.parse(localStorage.getItem("Login-token"))["user-id"]
             }&&clubId=${this.club.dto.clubId}`
           )
-          .then((res) => {
-            console.log(res);
+          .then(() => {
+          
 
             axios
               .delete(

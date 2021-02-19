@@ -237,8 +237,8 @@ export default {
         .delete(
           `${SERVER_URL}/club/member?clubId=${this.$route.params.groupId}&&userId=${data}&&type=1&&contents=aaa`
         )
-        .then((res) => {
-          console.log(res);
+        .then(() => {
+          
           this.$router.push({
             name: "GroupProfile",
             params: {
@@ -261,8 +261,8 @@ export default {
       axios
         .post(
           `${SERVER_URL}/club/member/waiting`,data)
-        .then((res) => {
-          console.log(res);
+        .then(() => {
+      
           this.memberWatingList();
           this.memberList();
         })

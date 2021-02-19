@@ -77,7 +77,7 @@ export default {
     .then((res)=>{
      
      this.myClub = res.data
-     console.log("내그룹 조회성공")
+   
     
      }) 
     .catch(()=>{
@@ -87,7 +87,7 @@ export default {
     // 해당 동코드에 생성된 전체 그룹
     axios.get(`${SERVER_URL}/club/clubs/${JSON.parse(localStorage.getItem('Login-token'))['user_address']}`)
     .then((res)=>{
-     console.log("전체그룹 (공개,비공개) 조회성공")
+    
       var group = res.data
       for(var i in group){
         
