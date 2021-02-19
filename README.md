@@ -145,6 +145,17 @@ npm install
 - STS에서 `Run as` > `Spring Boot App`으로 BE 서버를 실행한다.
 - :white_check_mark: 본 프로젝트 소스코드에서는 BE의 로컬호스트 포트를 `8000`번을 사용하도록 설정해놓았다.
 
+**3단계. Gmail 이메일 계정 등록하기**
+
+> 이메일 인증 기능을 사용하기 위해서는 `Backend > src/main/resources > application.properties`에서 **Gmail** 계정을 등록해주어야한다.
+
+```java
+// Backend > src/main/resources > application.properties
+
+spring.mail.username= <GMAIL Email>
+spring.mail.password= <Password>
+```
+
 
 
 ## File Manifest
