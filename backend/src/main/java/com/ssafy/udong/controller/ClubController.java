@@ -254,6 +254,7 @@ public class ClubController {
 	public ResponseEntity<String> joinClub(@RequestBody MemberDto member){
 		try {
 			member.setType("0");
+		
 			if(clubService.createClubMember(member) == SUCCESS) {
 				return new ResponseEntity<String>("SUCCESS: club joining", HttpStatus.OK);
 			}

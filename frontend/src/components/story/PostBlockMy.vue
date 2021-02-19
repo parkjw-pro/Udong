@@ -217,7 +217,9 @@ export default {
         location.reload(true);
       });
     },
-    reportPost() {},
+    reportPost() {
+      alert("신고되었습니다.")
+    },
     likePost() {
       axios
         .post(`${SERVER_URL}/userpost/like`, {

@@ -276,7 +276,7 @@ export default {
         });
     },
     reportPost() {
-
+      alert("신고되었습니다.")
       //모달창으로 신고 내역 보여주기
       //content, category 입력 해야 함!
 

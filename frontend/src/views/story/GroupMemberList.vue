@@ -46,12 +46,7 @@
                           <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
                         </span>
                       </a>
-                      <a href="#" class="table-link">
-                        <span class="fa-stack">
-                          <i class="fa fa-square fa-stack-2x"></i>
-                          <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
-                        </span>
-                      </a> -->
+                     -->
                       <div v-if="check">
                         <a
                           href="#"
@@ -63,6 +58,12 @@
                             <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
                           </span>
                         </a>
+                          <a href="#" class="table-link" @click="createMember(memberWating)"> 
+                        <span class="fa-stack">
+                          <i class="fa fa-square fa-stack-2x"></i>
+                          <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                        </span>
+                      </a>
                       </div>
                     </td>
                   </tr>
@@ -219,7 +220,7 @@ export default {
       axios
         .get(`${SERVER_URL}/club/${this.$route.params.groupId}/waiting`)
         .then((res) => {
-          console.log(res.data);
+          
           this.membersWating = res.data;
         })
         .catch((err) => {
@@ -254,6 +255,22 @@ export default {
       }
       
     },
+    //가입신청 멤버승인하기 
+    createMember(data){
+      console.log(data)
+      axios
+        .post(
+          `${SERVER_URL}/club/member/waiting`,data)
+        .then((res) => {
+          console.log(res);
+          this.memberWatingList();
+          this.memberList();
+        })
+        .catch((err) => {
+          console.log(err);
+          alert("서버에 오류발생하였습니다.");
+        });
+    }
   },
 };
 </script>
