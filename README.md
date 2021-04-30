@@ -337,7 +337,7 @@ spring.mail.password= <Password>
 
 - Backend
 - Database
-- Server
+- Server(AWS)
 
 
 
