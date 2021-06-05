@@ -305,7 +305,7 @@ spring.mail.password= <Password>
 
 > AWS EC2와 `MobaXterm`, `jar 파일`, `build파일`을 활용하여 배포하였다.
 
-배포 주소는 **https://udong.shop**이다.//현재 배포중단
+배포 주소는 **https://udong.shop**이다.//현재 배포준비중
 
 
 
